@@ -1,27 +1,44 @@
-<?php 
-get_header(); 
-global $post;
-$src = wp_get_attachment_image_src( get_post_thumbnail_id($post->ID), 'full' );
-$url = $src[0];
+<?php
+/**
+ * Default page template.
+ *
+ * Generic pages without a dedicated page-template fall back here.
+ *
+ * @package LewisEdward
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+get_header();
 ?>
 
-	<div class="deafult-page">
-		<?php if( !empty( $src ) ){ echo '<img src="'.$url.'" alt"">'; } ?>
-		<div class="container">
-			<h2><?php the_title(); ?></h2>
+<main id="main" class="site-main site-main--page">
+	<?php
+	while ( have_posts() ) :
+		the_post();
+		?>
+		<article <?php post_class( 'page' ); ?>>
+			<header class="page__header container">
+				<?php le_breadcrumbs(); ?>
+				<h1 class="page__title"><?php the_title(); ?></h1>
+			</header>
 
-			<?php if (have_posts()): while (have_posts()) : the_post(); ?>
+			<div class="page__content container prose">
+				<?php the_content(); ?>
+				<?php
+				wp_link_pages( array(
+					'before' => '<nav class="page-links">',
+					'after'  => '</nav>',
+				) );
+				?>
+			</div>
+		</article>
+		<?php
+	endwhile;
+	?>
+</main>
 
-					<?php the_content(); ?>
-
-			<?php endwhile; ?>
-
-			<?php else: ?>
-
-
-			<?php endif; ?>
-		</div>
-
-	</div>
-
-<?php get_footer(); ?>
+<?php
+get_footer();

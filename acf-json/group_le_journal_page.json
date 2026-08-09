@@ -1,0 +1,329 @@
+{
+    "key": "group_le_journal_page",
+    "title": "Journal Page",
+    "fields": [
+        {
+            "key": "field_jrp_tab_hero",
+            "label": "Hero",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_jrp_eyebrow",
+            "label": "Eyebrow",
+            "name": "journalp_eyebrow",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Journal",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_jrp_right",
+            "label": "Right label",
+            "name": "journalp_right_label",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Notes from the studio",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_jrp_h1",
+            "label": "Headline part 1",
+            "name": "journalp_h1_1",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Field notes,",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_jrp_h2",
+            "label": "Headline part 2 (muted)",
+            "name": "journalp_h1_2",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "build notes, and",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_jrp_h3",
+            "label": "Headline part 3 (accent)",
+            "name": "journalp_h1_3",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "34",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "relevant reads.",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_jrp_lead",
+            "label": "Lead paragraph",
+            "name": "journalp_lead",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_jrp_featlabel",
+            "label": "Featured label",
+            "name": "journalp_featured_label",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Latest entry",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_jrp_featured",
+            "label": "Featured entry",
+            "name": "journalp_featured",
+            "type": "post_object",
+            "instructions": "The large featured tile. Leave empty to use the most recent entry.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "post"
+            ],
+            "post_status": "",
+            "taxonomy": [],
+            "return_format": "object",
+            "multiple": 0,
+            "allow_null": 1,
+            "bidirectional": 0,
+            "ui": 1,
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_jrp_tab_archive",
+            "label": "Archive",
+            "name": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_jrp_arch_eyebrow",
+            "label": "Eyebrow",
+            "name": "journalp_archive_eyebrow",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Archive",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_jrp_arch_h1",
+            "label": "Heading part 1",
+            "name": "journalp_archive_h1",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Browse the",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_jrp_arch_acc",
+            "label": "Heading part 2 (muted)",
+            "name": "journalp_archive_accent",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "back catalogue",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_jrp_arch_h3",
+            "label": "Heading part 3 (accent)",
+            "name": "journalp_archive_h3",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "34",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "by topic.",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_jrp_alllabel",
+            "label": "'All' filter label",
+            "name": "journalp_all_label",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "All entries",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_jrp_empty",
+            "label": "Empty message",
+            "name": "journalp_empty",
+            "type": "text",
+            "instructions": "Shown when a filter has no entries.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "No entries in this topic yet \u2014 try another filter.",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_type",
+                "operator": "==",
+                "value": "posts_page"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Content for the Journal listing page.",
+    "show_in_rest": 0,
+    "modified": 1786265633
+}

@@ -1,102 +1,71 @@
-<?php get_header(); ?>
+<?php
+/**
+ * Journal archives (category, tag, date, author) — same editorial design as the
+ * blog index, filtered to the queried term. Category pills mark the active one.
+ *
+ * @package LewisEdward
+ */
 
-	<div class="blog-page arch-pg">
-		<?php
-			#print_r(get_post_format()); die;
-			$postFormt = 'post-format-'.get_post_format();
-			#print_r($postFormt); die;
-			$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-			$blogs = new WP_Query(
-				array(
-					'post_type' => 'post',
-					'posts_per_page' => 25,
-					'paged' => $paged,
-					'tax_query' => array(
-						array(                
-							'taxonomy' => 'post_format',
-							'field' => 'slug',
-							'terms' => $postFormt,
-						)
-					)
-				)
-			);
-		#print_r($blogs); die;
-		if ( $blogs->have_posts() ): ?>
-			<div class="blog-grid">
-			<?php while ( $blogs->have_posts() ) : $blogs->the_post(); ?>
-				<?php
-				$getDate = get_the_date();
-				#print_r(get_the_category( ));
-				$allCat = get_the_category();
-				$catName = [];
-				$catId = [];
-				foreach( $allCat as $key=>$cat ){
-					$catName[$key] = $cat->name;
-					$catId[$key] = $cat->cat_ID;
-				}
-				?>
-				<div class="grid-item">
-					<?php
-					if( ( count( $catName ) == 1 ) && ( $catName[0] == 'Quotes' ) ){
-					?>
-					<a>
-						<div class="quote">
-							<div class="quote-inner">
-								<span class="icon"></span>
-								<?php the_content(); ?>
-							</div>
-						</div>
-					</a>
-					<?php
-					}else{
-					?>
-					<div class="blog-item">
-						<div class="img-box">
-							<a href="<?php echo get_permalink(); ?>">
-								<?php
-									$feauredIm = wp_get_attachment_image_src( get_post_thumbnail_id(), 'large' );
-								?>
-								<img src="<?php echo $feauredIm[0]; ?>" alt="">
-							</a>
-						</div>
-						
-						<?php if( !empty( get_field('youtube_video_code',$post->ID) ) ){ ?>
-							<a href="<?php echo get_permalink(); ?>">
-								<div class="video-icon"></div>
-							</a>
-						<?php } ?>
-						
-						<div class="text-box">
-							<?php
-								foreach( $catId as $singleCat ){
-									echo '<a class="cat" href="'.get_category_link($singleCat).'">'.get_cat_name( $singleCat ).'</a>';
-								}
-							?>
-							<a href="<?php echo get_permalink(); ?>">
-								<h3><?php the_title(); ?></h3>
-								<p><?php the_excerpt(); ?></p>
-							</a>
-							<div class="auther-desc">
-								<?php $author_id=$post->post_author; ?>
-								<?php echo get_avatar( $author_id ); ?>
-								<a href="<?php echo get_author_posts_url($author_id); ?>"><?php the_author_meta( 'user_nicename' , $author_id ); ?> </a>
-								<span><?php echo $getDate; ?></span>
-							</div>
-						</div>
-					</div>
-					<?php
-					}
-					?>
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+get_header();
+
+global $wp_query;
+$pp     = le_journal_page_id();
+$paged  = max( 1, (int) get_query_var( 'paged' ) );
+$per    = (int) get_option( 'posts_per_page' );
+$base   = ( $paged - 1 ) * $per;
+$total  = (int) $wp_query->found_posts;
+
+$queried      = get_queried_object();
+$active_slug  = ( $queried instanceof WP_Term && 'category' === $queried->taxonomy ) ? $queried->slug : '';
+$archive_name = single_term_title( '', false );
+if ( ! $archive_name ) {
+	$archive_name = get_the_archive_title();
+}
+?>
+
+<main id="main" class="site-main site-main--journal">
+
+	<?php /* ================= ARCHIVE HEAD ================= */ ?>
+	<section class="section section--jr-archive" aria-label="<?php echo esc_attr( $archive_name ); ?>">
+		<div class="section__inner">
+			<div class="jr-archive glass jr-archive--standalone" data-reveal>
+				<div class="jr-archive__head">
+					<a class="eyebrow jr-archive__back" href="<?php echo esc_url( $pp ? get_permalink( $pp ) : home_url( '/journal' ) ); ?>"><?php esc_html_e( 'Journal', 'lewisedward' ); ?></a>
+					<span class="jr-archive__rule" aria-hidden="true"></span>
+					<span class="eyebrow"><?php echo esc_html( str_pad( (string) $total, 2, '0', STR_PAD_LEFT ) ); ?> <?php esc_html_e( 'entries', 'lewisedward' ); ?></span>
+					<span class="pulse-dot" aria-hidden="true"></span>
 				</div>
-			<?php endwhile; ?>
-			</div>
-			<nav class="pagination">
-				<?php pagination_bar( $blogs ); ?>
-			</nav>
-		<?php 
-		wp_reset_postdata();
-		endif; 
-		?>
-	</div>
 
-<?php get_footer(); ?>
+				<h1 class="jr-archive__title"><?php echo esc_html( le_field( 'journalp_archive_h1', $pp ) ); ?> <span class="about-muted"><?php echo esc_html( le_field( 'journalp_archive_accent', $pp ) ); ?></span> <span class="text-primary"><?php echo esc_html( $archive_name ); ?>.</span></h1>
+
+				<?php le_journal_pills( $active_slug ); ?>
+
+				<?php if ( have_posts() ) : ?>
+					<ul class="jr-list">
+						<?php
+						$num = $base;
+						while ( have_posts() ) :
+							the_post();
+							$num++;
+							le_journal_row( $num );
+						endwhile;
+						?>
+					</ul>
+					<?php le_journal_pagination(); ?>
+				<?php else : ?>
+					<p class="jr-empty"><?php echo esc_html( le_field( 'journalp_empty', $pp ) ); ?></p>
+				<?php endif; ?>
+			</div>
+		</div>
+	</section>
+
+	<?php get_template_part( 'template-parts/home/contact-cta' ); ?>
+
+</main>
+
+<?php
+get_footer();

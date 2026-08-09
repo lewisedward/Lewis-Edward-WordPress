@@ -1,0 +1,262 @@
+{
+    "key": "group_le_quotes",
+    "title": "Quotes Page",
+    "fields": [
+        {
+            "key": "field_qt_tab_intro",
+            "label": "Intro",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_qt_eyebrow",
+            "label": "Eyebrow",
+            "name": "quotes_eyebrow",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Quote Request",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_qt_h1",
+            "label": "Headline (H1)",
+            "name": "quotes_h1",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Use a line break for two lines.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Request a quote",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_qt_lead",
+            "label": "Lead paragraph",
+            "name": "quotes_lead",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_qt_tab_card",
+            "label": "Side card",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_qt_c_badge",
+            "label": "Badge label",
+            "name": "quotes_card_badge",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Quick chat",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_qt_c_title",
+            "label": "Card title",
+            "name": "quotes_card_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Just have a few questions?",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_qt_c_desc",
+            "label": "Card description",
+            "name": "quotes_card_desc",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "No commitment needed - let's have a quick chat first.",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_qt_c_btn",
+            "label": "Button label",
+            "name": "quotes_card_btn",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Contact us",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_qt_c_url",
+            "label": "Button link",
+            "name": "quotes_card_url",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Relative (\/contact) or full URL.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "\/contact",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_qt_tab_form",
+            "label": "Form",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_qt_form",
+            "label": "Gravity Forms shortcode",
+            "name": "quotes_form_shortcode",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Paste the Gravity Forms shortcode for the quote request form, e.g. [gravityform id=\"2\" title=\"false\" description=\"false\" ajax=\"true\"].",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "[gravityform id=\"2\" title=\"false\" description=\"false\" ajax=\"true\"]",
+            "maxlength": "",
+            "rows": 3,
+            "new_lines": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "page-templates\/page-quotes.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Content for the Quotes page.",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1786289616
+}

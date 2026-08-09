@@ -1,19 +1,45 @@
-<?php get_header(); ?>
+<?php
+/**
+ * Fallback template.
+ *
+ * WordPress uses this when no more specific template matches. Individual
+ * views (front-page, single-*, archive-*, page-templates) override it.
+ *
+ * @package LewisEdward
+ */
 
-	<main role="main">
-		<!-- section -->
-		<section>
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-			<h1><?php _e( 'Latest Posts', 'ldavis' ); ?></h1>
+get_header();
+?>
 
-			<?php get_template_part('loop'); ?>
+<main id="main" class="site-main">
+	<div class="container">
+		<?php if ( have_posts() ) : ?>
+			<div class="post-list">
+				<?php
+				while ( have_posts() ) :
+					the_post();
+					?>
+					<article <?php post_class( 'post-list__item' ); ?>>
+						<h2 class="post-list__title">
+							<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+						</h2>
+						<div class="post-list__excerpt"><?php the_excerpt(); ?></div>
+					</article>
+					<?php
+				endwhile;
 
-			<?php get_template_part('pagination'); ?>
+				the_posts_pagination();
+				?>
+			</div>
+		<?php else : ?>
+			<p><?php esc_html_e( 'Nothing found.', 'lewisedward' ); ?></p>
+		<?php endif; ?>
+	</div>
+</main>
 
-		</section>
-		<!-- /section -->
-	</main>
-
-<?php get_sidebar(); ?>
-
-<?php get_footer(); ?>
+<?php
+get_footer();
