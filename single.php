@@ -1,122 +1,156 @@
-<?php get_header(); ?>
-	<?php if (have_posts()): while (have_posts()) : the_post(); ?>
-	<?php
-		$allCat = get_the_category();
-		$catName = [];
-		$catId = [];
-		foreach( $allCat as $key=>$cat ){
-			$catName[$key] = $cat->name;
-			$catId[$key] = $cat->cat_ID;
+<?php
+/**
+ * Single Journal entry (built-in Posts, relabelled "Journal") — /journal/{slug}.
+ *
+ * Ported from the React JournalDetailPage. The article body is the standard
+ * editor (the_content); meta (category, date, read time) come from native
+ * fields and the auto reading-time helper. Sections: hero, article body,
+ * next/prev, then the shared Contact CTA.
+ *
+ * SEO: the entry title is the single <h1>; body headings from the editor are
+ * <h2>/<h3>; section labels are <h2>.
+ *
+ * @package LewisEdward
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+get_header();
+
+while ( have_posts() ) :
+	the_post();
+	$jr_id   = get_the_ID();
+	$jr_cats = get_the_category( $jr_id );
+	$jr_cat  = ( ! empty( $jr_cats ) && $jr_cats[0] instanceof WP_Term ) ? $jr_cats[0]->name : '';
+	$jr_date = get_the_date( 'M Y' );
+	$jr_read = le_reading_time( $jr_id ) . ' ' . __( 'min read', 'lewisedward' );
+
+	// Build up to two "continue reading" entries: previous + next, else recents.
+	$jr_more = array();
+	$prev    = get_previous_post();
+	$next    = get_next_post();
+	foreach ( array( $prev, $next ) as $adj ) {
+		if ( $adj instanceof WP_Post ) {
+			$jr_more[ $adj->ID ] = $adj;
 		}
+	}
+	if ( count( $jr_more ) < 2 ) {
+		$fill = get_posts( array(
+			'post_type'      => 'post',
+			'posts_per_page' => 3,
+			'post__not_in'   => array_merge( array( $jr_id ), array_keys( $jr_more ) ),
+			'orderby'        => 'date',
+			'order'          => 'DESC',
+			'no_found_rows'  => true,
+		) );
+		foreach ( $fill as $f ) {
+			if ( count( $jr_more ) >= 2 ) { break; }
+			$jr_more[ $f->ID ] = $f;
+		}
+	}
+	$jr_more = array_slice( $jr_more, 0, 2, true );
 	?>
-	<div class="blog-post">
-		<div class="container">
-			<div class="meta-category">
-				<?php
-				
-				foreach( $allCat as $singleCat ){
-					echo '<a href="'.get_category_link($singleCat->cat_ID).'">'.get_cat_name( $singleCat->cat_ID ).'</a>';
-				}
-				?>
-			</div>
-			<div class="blog-post-head">
-				<h1><?php the_title(); ?></h1>
-				<div class="meta"> 
-					<span class="meta-date"><?php the_date(); ?></span> 
-				</div>
-			</div>
-			<?php 
-			if( ( count( $catName ) == 1 ) && ( $catName[0] == 'Quotes' ) ){
-			?>
-				<div class="blog-post-quote">
-					<span class="quote"></span>
-					<?php the_content(); ?>
-				</div>
-			<?php
-			}
-			else{
-			?>
-			<div class="blog-post-content">
-				<?php
-					$youtube_video_code = get_field('youtube_video_code',$post->ID);
-					if( !empty( $youtube_video_code ) ){
-				?>
-					<div class="video">
-						<iframe src="https://www.youtube.com/embed/<?php echo $youtube_video_code; ?>"></iframe>
-					</div>
-				<?php
-					}else{
-						$feauredIm = wp_get_attachment_image_src( get_post_thumbnail_id(), 'full' );
-				?>
-					<div class="faturd-img">
-						<img src="<?php echo $feauredIm[0]; ?>">
-					</div>
-				<?php
-					}
-				?>
-				<div class="content">
-					<?php the_content(); ?>
-				</div>
-			</div>
-			<?php 
-			}
-			?>
-		
-		</div>
-		<?php 
-			$previous = get_previous_post(false, '5');
-			$next = get_next_post(false, '5');
-		?>
-		<?php if( !$previous || !$next){ ?>
-			<div class="next-prev content-align-center">
-		<?php }else{?>
-		 	<div class="next-prev">
-		<?php } ?>
-		
-			<?php if( get_next_post() ){ 
-			$nxtIm = wp_get_attachment_image_src( get_post_thumbnail_id($next->ID), 'full' );
-			if( !empty( $nxtIm ) ){
-				$imageN = '<img src="'.$nxtIm[0].'">';
-			}
-			?>
-			<a href="<?php echo get_the_permalink($next->ID); ?>">
-				<div class="button prev">
-					<?php echo $imageN; ?>
-					<div class="info">
-						<p>Previous Post</p>
-						<h3><?php echo get_the_title($next->ID); ?></h3>
-						<i class="arrow-icons"></i>
-					</div>
-				</div>
-			</a>
-			<?php } ?>
-			<?php if( get_previous_post() ){ 
-			$prvsIm = wp_get_attachment_image_src( get_post_thumbnail_id($previous->ID), 'full' );
-			if( !empty( $prvsIm ) ){
-				$imageP = '<img src="'.$prvsIm[0].'">';
-			}
-			?>
-			<a href="<?php echo get_the_permalink($previous->ID); ?>">
-				<div class="button next">
-					<?php echo $imageP; ?>
-					<div class="info">
-						<p>Next Post</p>
-						<h3><?php echo get_the_title($previous->ID); ?></h3>
-						<i class="arrow-icons"></i>
-					</div>
-				</div>
-			</a>
-			<?php } ?>
-			
-		</div>
-<!-- 		<div class="comment-box" id="commentBox">
-			<div class="container"> -->
-				<?php //comments_template(); ?>
-<!-- 			</div>
-		</div> -->
-	</div>
-	<?php endwhile; ?>
-	<?php endif; ?>
 
-<?php get_footer(); ?>
+	<main id="main" class="site-main site-main--journal-single">
 
+		<?php /* ================= HERO ================= */ ?>
+		<section class="section section--jr-hero" aria-label="<?php echo esc_attr( get_the_title() ); ?>">
+			<div class="section__inner">
+				<div class="jr-hero glass" data-reveal>
+					<div class="jr-hero__eyebrow-row">
+						<a class="eyebrow jr-hero__back" href="<?php echo esc_url( home_url( '/journal' ) ); ?>"><?php esc_html_e( 'Journal', 'lewisedward' ); ?></a>
+						<span class="jr-hero__rule" aria-hidden="true"></span>
+						<?php if ( $jr_cat ) : ?><span class="eyebrow jr-hero__cat"><?php echo esc_html( $jr_cat ); ?></span><?php endif; ?>
+						<span class="pulse-dot" aria-hidden="true"></span>
+					</div>
+
+					<h1 class="jr-hero__title"><?php the_title(); ?></h1>
+
+					<div class="jr-hero__meta">
+						<span class="jr-hero__date"><?php echo esc_html( $jr_date ); ?></span>
+						<span class="jr-hero__sep" aria-hidden="true"></span>
+						<span class="jr-hero__read"><?php echo esc_html( $jr_read ); ?></span>
+					</div>
+
+					<?php if ( has_post_thumbnail() ) : ?>
+						<div class="jr-hero__media">
+							<?php the_post_thumbnail( 'le_hero', array( 'alt' => esc_attr( get_the_title() ), 'loading' => 'eager', 'decoding' => 'async', 'fetchpriority' => 'high' ) ); ?>
+							<span class="jr-hero__grad" aria-hidden="true"></span>
+						</div>
+					<?php endif; ?>
+				</div>
+			</div>
+		</section>
+
+		<?php /* ================= ARTICLE BODY ================= */ ?>
+		<section class="section section--jr-body" aria-label="<?php esc_attr_e( 'Article', 'lewisedward' ); ?>">
+			<div class="section__inner">
+				<div class="jr-body glass" data-reveal>
+					<div class="jr-body__inner">
+						<div class="jr-body__head">
+							<span class="eyebrow"><?php esc_html_e( 'Read', 'lewisedward' ); ?><sup class="jr-body__count">01</sup></span>
+							<span class="jr-body__rule" aria-hidden="true"></span>
+							<span class="pulse-dot" aria-hidden="true"></span>
+						</div>
+
+						<?php if ( has_excerpt() ) : ?>
+							<p class="jr-body__lead"><?php echo esc_html( get_the_excerpt() ); ?></p>
+						<?php endif; ?>
+
+						<div class="jr-body__prose">
+							<?php the_content(); ?>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<?php /* ================= CONTINUE ================= */ ?>
+		<?php if ( ! empty( $jr_more ) ) : ?>
+			<section class="section section--jr-next" aria-label="<?php esc_attr_e( 'More from the journal', 'lewisedward' ); ?>">
+				<div class="section__inner">
+					<div class="jr-next glass" data-reveal>
+						<div class="jr-next__head">
+							<span class="eyebrow"><?php esc_html_e( 'Continue', 'lewisedward' ); ?><sup class="jr-next__count">02</sup></span>
+							<span class="jr-next__rule" aria-hidden="true"></span>
+							<span class="eyebrow jr-next__note"><?php esc_html_e( 'More from the journal', 'lewisedward' ); ?></span>
+							<span class="pulse-dot" aria-hidden="true"></span>
+						</div>
+
+						<h2 class="jr-next__title"><?php esc_html_e( 'Keep', 'lewisedward' ); ?> <span class="about-muted"><?php esc_html_e( 'reading', 'lewisedward' ); ?></span> <span class="text-primary"><?php esc_html_e( 'the journal.', 'lewisedward' ); ?></span></h2>
+
+						<div class="jr-next__grid">
+							<?php foreach ( $jr_more as $m ) : $mid = $m->ID; ?>
+								<a class="jr-next__card" href="<?php echo esc_url( get_permalink( $mid ) ); ?>" data-cursor="Read">
+									<?php if ( has_post_thumbnail( $mid ) ) : ?>
+										<div class="jr-next__media">
+											<?php echo get_the_post_thumbnail( $mid, 'le_card_wide', array( 'alt' => esc_attr( get_the_title( $mid ) ), 'loading' => 'lazy', 'decoding' => 'async' ) ); ?>
+											<span class="jr-next__card-grad" aria-hidden="true"></span>
+										</div>
+									<?php endif; ?>
+									<div class="jr-next__body">
+										<div class="jr-next__text">
+											<?php $mcats = get_the_category( $mid ); $mcat = ( ! empty( $mcats ) ) ? $mcats[0]->name : ''; ?>
+											<?php if ( $mcat ) : ?><span class="eyebrow jr-next__card-cat"><?php echo esc_html( $mcat ); ?></span><?php endif; ?>
+											<h3 class="jr-next__card-title"><?php echo esc_html( get_the_title( $mid ) ); ?></h3>
+										</div>
+										<span class="jr-next__arrow" aria-hidden="true"><?php echo le_arrow_diagonal_svg( 14 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+									</div>
+								</a>
+							<?php endforeach; ?>
+						</div>
+					</div>
+				</div>
+			</section>
+		<?php endif; ?>
+
+		<?php get_template_part( 'template-parts/home/contact-cta' ); ?>
+
+	</main>
+
+	<?php
+endwhile;
+
+get_footer();

@@ -1,0 +1,262 @@
+{
+    "key": "group_le_contact",
+    "title": "Contact Page",
+    "fields": [
+        {
+            "key": "field_ct_tab_intro",
+            "label": "Intro",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_ct_eyebrow",
+            "label": "Eyebrow",
+            "name": "contact_eyebrow",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Contact",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ct_h1",
+            "label": "Headline (H1)",
+            "name": "contact_h1",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Start a conversation",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ct_lead",
+            "label": "Lead paragraph",
+            "name": "contact_lead",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Short line under the headline.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_ct_tab_quote",
+            "label": "Quote card",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_ct_q_badge",
+            "label": "Badge label",
+            "name": "contact_quote_badge",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Estimate your project",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ct_q_title",
+            "label": "Card title",
+            "name": "contact_quote_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Need a quote?",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ct_q_desc",
+            "label": "Card description",
+            "name": "contact_quote_desc",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Get a detailed proposal with timeline & budget options.",
+            "maxlength": "",
+            "rows": 2,
+            "new_lines": ""
+        },
+        {
+            "key": "field_ct_q_btn",
+            "label": "Button label",
+            "name": "contact_quote_btn",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Get a quote",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ct_q_url",
+            "label": "Button link",
+            "name": "contact_quote_url",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Relative (\/quotes) or full URL.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "\/quotes",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_ct_tab_form",
+            "label": "Form",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_ct_form",
+            "label": "Gravity Forms shortcode",
+            "name": "contact_form_shortcode",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Paste the Gravity Forms shortcode, e.g. [gravityform id=\"1\" title=\"false\" description=\"false\" ajax=\"true\"]. The form renders in the right-hand column.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "[gravityform id=\"1\" title=\"false\" description=\"false\" ajax=\"true\"]",
+            "maxlength": "",
+            "rows": 3,
+            "new_lines": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "page-templates\/page-contact.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Content for the Contact page template.",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1786222978
+}
