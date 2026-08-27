@@ -327,7 +327,7 @@ h6 { font-size: var(--h6-size); line-height: var(--h6-leading); letter-spacing: 
 	/* Left-aligned to the parent link. Width is clamped to the viewport
 	   (minus gutters) so it can never cause horizontal page overflow; the
 	   global `overflow-x: clip` is the final safety net. */
-	width: min(760px, calc(100vw - 2.5rem));
+	width: min(730px, calc(100vw - 2.5rem));
 	border-radius: 1.5rem;
 	overflow: hidden;
 	box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
@@ -340,6 +340,11 @@ h6 { font-size: var(--h6-size); line-height: var(--h6-leading); letter-spacing: 
 	            visibility 0.2s;
 	pointer-events: none;
 	z-index: 20;
+}
+@media (min-width: 1280px) {
+	.mega-menu {
+		width: min(850px, calc(100vw - 2.5rem));
+	}
 }
 /* Hover bridge so the 2rem gap doesn't drop the hover */
 .nav-item--mega::after {
@@ -361,7 +366,7 @@ h6 { font-size: var(--h6-size); line-height: var(--h6-leading); letter-spacing: 
 
 .mega-menu__grid {
 	display: grid;
-	grid-template-columns: repeat(2, 1fr);
+	grid-template-columns: repeat(3, 1fr);
 	column-gap: 2.5rem;
 	row-gap: 2rem;
 	padding: 2.5rem;
