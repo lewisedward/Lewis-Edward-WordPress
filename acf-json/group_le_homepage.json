@@ -141,6 +141,46 @@
             "delay": 0
         },
         {
+            "key": "field_h_hero_ed_cta_label",
+            "label": "Hero intro CTA \u2014 Label",
+            "name": "home_hero_editorial_cta_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Link text shown under the hero intro (e.g. \"Get in touch\").",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "Get in touch",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_h_hero_ed_cta_url",
+            "label": "Hero intro CTA \u2014 Link",
+            "name": "home_hero_editorial_cta_url",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "URL for the link (e.g. /contact or a full https:// URL).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "/contact",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_h_hero_mval",
             "label": "Metric value",
             "name": "home_hero_metric_value",
@@ -1596,5 +1636,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1786138109
+    "modified": 1787350054
 }

@@ -53,9 +53,12 @@ while ( have_posts() ) :
 		<section class="section section--wk-hero" aria-label="<?php echo esc_attr( get_the_title() ); ?>">
 			<div class="section__inner">
 				<div class="wk-hero glass" data-reveal>
+					<div class="wk-hero__sphere" aria-hidden="true" data-hero-sphere>
+						<canvas class="hero-sphere__canvas"></canvas>
+					</div>
 					<div class="wk-hero__eyebrow-row">
 						<a class="eyebrow wk-hero__back" href="<?php echo esc_url( home_url( '/work' ) ); ?>">
-							<span aria-hidden="true">&larr;</span> <?php esc_html_e( 'Work', 'lewisedward' ); ?>
+							<span aria-hidden="true">&larr;</span> <?php esc_html_e( 'All Projects', 'lewisedward' ); ?>
 						</a>
 						<span class="wk-hero__rule" aria-hidden="true"></span>
 						<?php if ( $wk_year ) : ?><span class="eyebrow wk-hero__year"><?php echo esc_html( $wk_year ); ?></span><?php endif; ?>
@@ -314,6 +317,7 @@ while ( have_posts() ) :
 	if ( ! empty( $wk_feats ) ) {
 		wp_enqueue_script( 'le-work-features' );
 	}
+	wp_enqueue_script( 'le-hero' ); // dot-sphere in the hero
 endwhile;
 
 get_footer();

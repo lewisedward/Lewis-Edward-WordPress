@@ -51,7 +51,7 @@ $le_count    = count( $le_services );
 					foreach ( $le_services as $i => $svc ) :
 						$sid = is_object( $svc ) ? $svc->ID : (int) $svc;
 						?>
-						<a class="service-card glass" href="<?php echo esc_url( get_permalink( $sid ) ); ?>" data-cursor="More" data-reveal>
+						<a class="service-card glass" href="<?php echo esc_url( get_permalink( $sid ) ); ?>" data-cursor-ignore data-reveal>
 							<div class="service-card__head">
 								<span class="eyebrow"><?php echo esc_html( sprintf( __( 'Service / %s', 'lewisedward' ), str_pad( (string) ( $i + 1 ), 2, '0', STR_PAD_LEFT ) ) ); ?></span>
 								<span class="service-card__rule" aria-hidden="true"></span>

@@ -63,7 +63,7 @@ $le_stats      = is_array( $le_stats ) ? $le_stats : array();
 						$s_suffix = isset( $stat['suffix'] ) ? $stat['suffix'] : '';
 						$s_label  = isset( $stat['label'] ) ? $stat['label'] : '';
 						?>
-						<div class="about-stat">
+						<div class="about-stat" data-cursor-invert>
 							<span class="about-stat__num"><?php echo esc_html( $s_num ); ?></span>
 							<span class="about-stat__value" data-counter="<?php echo esc_attr( (string) $s_val ); ?>" data-counter-suffix="<?php echo esc_attr( $s_suffix ); ?>" data-counter-duration="1800"><?php echo esc_html( $s_val . $s_suffix ); ?></span>
 							<span class="about-stat__label"><?php echo esc_html( $s_label ); ?></span>

@@ -155,7 +155,11 @@ $ab_values = is_array( $ab_values ) ? $ab_values : array();
 						<span class="pulse-dot" aria-hidden="true"></span>
 					</div>
 
-					<h2 class="values-card__title"><?php echo esc_html( le_field( 'about_values_h1' ) ); ?> <span class="text-primary"><?php echo esc_html( le_field( 'about_values_h_accent' ) ); ?></span> <span class="about-muted"><?php echo esc_html( le_field( 'about_values_h_muted' ) ); ?></span></h2>
+					<h2 class="values-card__title">
+						<?php echo esc_html( le_field( 'about_values_h1' ) ); ?> 
+						<span class="text-primary"><?php echo esc_html( le_field( 'about_values_h_accent' ) ); ?></span> 
+						<span class="about-muted"><?php echo le_field( 'about_values_h_muted' ); ?></span>
+					</h2>
 
 					<div class="values-grid">
 						<?php foreach ( $ab_values as $i => $value ) : ?>

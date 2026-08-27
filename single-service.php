@@ -44,12 +44,13 @@ function le_service_headline( $headline ) {
 				if ( '[[' === substr( $seg, 0, 2 ) && ']]' === substr( $seg, -2 ) ) {
 					echo '<span class="text-primary">' . esc_html( substr( $seg, 2, -2 ) ) . '</span>';
 				} else {
-					echo esc_html( $seg );
+					echo wp_kses( $seg, array( 'span' => array( 'class' => array(), 'style' => array() ) ) );
 				}
 			}
 		} else {
 			$cls = ( $total > 1 && 0 === $i ) ? '' : 'text-primary';
-			echo '<span class="' . esc_attr( $cls ) . '">' . esc_html( $line ) . '</span>';
+			// Allow an inline <span> in the field so specific words can be coloured.
+			echo '<span class="' . esc_attr( $cls ) . '">' . wp_kses( $line, array( 'span' => array( 'class' => array(), 'style' => array() ) ) ) . '</span>';
 		}
 		echo '</span>';
 	}
@@ -63,6 +64,8 @@ while ( have_posts() ) :
 	$sv_subtitle = le_field( 'service_subtitle', $sv_id );
 	$sv_headline = le_field( 'service_headline', $sv_id );
 	$sv_intro    = le_field( 'service_intro', $sv_id );
+	$whats_included_title    = le_field( 'whats_included_title', $sv_id );
+
 
 	$sv_feats = le_field( 'service_detail_features', $sv_id );
 	$sv_feats = is_array( $sv_feats ) ? $sv_feats : array();
@@ -139,7 +142,7 @@ while ( have_posts() ) :
 									<span class="eyebrow"><?php esc_html_e( "What's included", 'lewisedward' ); ?></span>
 									<span class="eyebrow text-primary"><?php echo esc_html( str_pad( (string) count( $sv_feats ), 2, '0', STR_PAD_LEFT ) ); ?></span>
 								</div>
-								<h2 class="svc-d-title"><?php esc_html_e( 'Everything needed to design, build & evolve a WordPress website.', 'lewisedward' ); ?></h2>
+								<h2 class="svc-d-title"><?php echo $whats_included_title; ?></h2>
 							</div>
 							<div class="svc-d-caps">
 								<?php foreach ( $sv_feats as $i => $row ) : $t = isset( $row['title'] ) ? trim( $row['title'] ) : ''; if ( '' === $t ) { continue; } ?>

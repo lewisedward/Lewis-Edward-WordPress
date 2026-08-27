@@ -55,6 +55,16 @@ $le_team         = le_field( 'home_hero_team' );         // team posts
 						echo wp_kses_post( $le_hero_lede );
 						?>
 					</div>
+
+					<?php
+					$le_ed_cta_label = le_field( 'home_hero_editorial_cta_label', false, __( 'Get in touch', 'lewisedward' ) );
+					$le_ed_cta_url   = le_field( 'home_hero_editorial_cta_url', false, '/contact' );
+					$le_ed_cta_url   = ( 0 === strpos( (string) $le_ed_cta_url, 'http' ) ) ? $le_ed_cta_url : home_url( $le_ed_cta_url );
+					?>
+					<a class="arrow-link hero-editorial__cta" href="<?php echo esc_url( $le_ed_cta_url ); ?>" aria-label="<?php echo esc_attr( $le_ed_cta_label ); ?>">
+						<span class="arrow-link__badge" aria-hidden="true"><?php echo le_arrow_diagonal_svg( 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+						<span class="arrow-link__label"><?php echo esc_html( $le_ed_cta_label ); ?></span>
+					</a>
 				</div>
 			</div>
 
@@ -97,7 +107,7 @@ $le_team         = le_field( 'home_hero_team' );         // team posts
 				<div class="hero-metrics__row">
 					<div class="avatar-stack">
 						<span class="avatar avatar--zap" aria-hidden="true">
-							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+							<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19M12 2.5c2.6 2.6 4 6 4 9.5s-1.4 6.9-4 9.5c-2.6-2.6-4-6-4-9.5s1.4-6.9 4-9.5z"/></svg>
 						</span>
 					</div>
 					<p class="eyebrow eyebrow--t2"><?php echo esc_html( le_field( 'home_hero_ai_label' ) ); ?></p>

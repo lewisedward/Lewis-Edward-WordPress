@@ -43,7 +43,7 @@ $le_count = count( $le_items );
 			</div>
 
 			<div class="work-card__intro">
-				<h2 class="work-card__title"><?php echo esc_html( le_field( 'home_work_title_pre' ) ); ?> <span class="text-primary"><?php echo esc_html( le_field( 'home_work_title_accent' ) ); ?></span> <?php echo esc_html( le_field( 'home_work_title_post' ) ); ?></h2>
+				<h2 class="work-card__title"><?php echo esc_html( le_field( 'home_work_title_pre' ) ); ?> <span class="text-primary"><?php echo esc_html( le_field( 'home_work_title_accent' ) ); ?></span> <span class="text-muted"><?php echo esc_html( le_field( 'home_work_title_post' ) ); ?></span></h2>
 				<div class="work-card__aside">
 					<p class="work-card__lede"><?php echo esc_html( le_field( 'home_work_lede' ) ); ?></p>
 					<a class="arrow-link work-card__all" href="<?php echo esc_url( home_url( '/work' ) ); ?>" aria-label="<?php esc_attr_e( 'View all work', 'lewisedward' ); ?>">
@@ -66,7 +66,7 @@ $le_count = count( $le_items );
 										}
 										?>
 										<div class="work-project__overlay">
-											<div class="work-project__info glass">
+											<div class="work-project__info glass" data-cursor-ignore>
 												<div class="work-project__meta">
 													<span class="work-project__num"><?php echo esc_html( str_pad( (string) ( $i + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
 													<span class="work-project__meta-rule" aria-hidden="true"></span>

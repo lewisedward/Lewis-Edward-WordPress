@@ -179,7 +179,7 @@ $sp_id = function ( $item ) {
 
 						<div class="svc-process__steps">
 							<?php foreach ( $sp_steps as $s => $step ) : ?>
-								<div class="svc-step">
+								<div class="svc-step" data-cursor="hover">
 									<span class="svc-step__num"><?php echo esc_html( str_pad( (string) ( $s + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
 									<div class="svc-step__body">
 										<h3 class="svc-step__title"><?php echo esc_html( isset( $step['title'] ) ? $step['title'] : '' ); ?></h3>

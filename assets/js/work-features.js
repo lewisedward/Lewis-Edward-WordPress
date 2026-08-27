@@ -20,9 +20,33 @@
 			if (next) next.disabled = track.scrollLeft >= max - 10;
 		}
 
+		// Custom eased scroll — one card per click, smooth glide (instead of the
+		// browser's abrupt native "smooth", which also jumped ~1.5 cards).
+		var animId = 0;
+		function easeInOutCubic(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+		function animateTo(to, dur) {
+			cancelAnimationFrame(animId);
+			var max = track.scrollWidth - track.clientWidth;
+			to = Math.max(0, Math.min(to, max));
+			var start = track.scrollLeft, change = to - start, startTime = 0;
+			if (Math.abs(change) < 1) return;
+			function frame(now) {
+				if (!startTime) startTime = now;
+				var t = Math.min((now - startTime) / dur, 1);
+				track.scrollLeft = start + change * easeInOutCubic(t);
+				if (t < 1) animId = requestAnimationFrame(frame);
+			}
+			animId = requestAnimationFrame(frame);
+		}
+		function cardStep() {
+			var card = track.querySelector('.wk-feature');
+			var styles = getComputedStyle(track);
+			var gap = parseFloat(styles.columnGap || styles.gap) || 0;
+			return card ? card.getBoundingClientRect().width + gap : track.clientWidth * 0.5;
+		}
 		function step(dir) {
-			var amount = track.clientWidth * 0.7;
-			track.scrollBy({ left: dir === 'left' ? -amount : amount, behavior: 'smooth' });
+			var amount = cardStep();
+			animateTo(track.scrollLeft + (dir === 'left' ? -amount : amount), 550);
 		}
 
 		if (prev) prev.addEventListener('click', function () { step('left'); });
@@ -33,6 +57,7 @@
 		// Click-drag to pan (desktop).
 		var dragging = false, startX = 0, startScroll = 0, moved = false;
 		track.addEventListener('mousedown', function (e) {
+			cancelAnimationFrame(animId); // stop any arrow glide before dragging
 			dragging = true; moved = false;
 			startX = e.pageX; startScroll = track.scrollLeft;
 			track.classList.add('is-grabbing');

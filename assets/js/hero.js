@@ -140,10 +140,12 @@
 	}
 
 	document.addEventListener('DOMContentLoaded', function () {
-		var wrap = document.querySelector('[data-hero-sphere]');
-		if (!wrap) return;
-		initSphere(wrap);
-		var tile = wrap.closest('.hero-tile--editorial');
-		if (tile) initParallax(tile, wrap);
+		// Init every sphere on the page (home, about, work, service…), not just
+		// the first one.
+		document.querySelectorAll('[data-hero-sphere]').forEach(function (wrap) {
+			initSphere(wrap);
+			var tile = wrap.closest('.hero-tile--editorial');
+			if (tile) initParallax(tile, wrap);
+		});
 	});
 })();

@@ -33,7 +33,7 @@ $le_wordmark = le_field( 'home_overlap_wordmark' );
 function le_overlap_card( $sid, $i, $variant ) {
 	$num = str_pad( (string) ( $i + 1 ), 2, '0', STR_PAD_LEFT );
 	$cls = 'overlap-svc overlap-svc--' . $variant . ' glass';
-	echo '<a class="' . esc_attr( $cls ) . '" href="' . esc_url( get_permalink( $sid ) ) . '" data-cursor="More">';
+	echo '<a class="' . esc_attr( $cls ) . '" href="' . esc_url( get_permalink( $sid ) ) . '" data-cursor="hover">';
 	echo '<span class="overlap-svc__num">' . esc_html( $num ) . '</span>';
 	echo '<span class="overlap-svc__body">';
 	echo '<h3 class="overlap-svc__title">' . esc_html( get_the_title( $sid ) ) . '</h3>';
@@ -65,7 +65,7 @@ function le_rel_id( $item ) {
 			</div>
 
 			<div class="overlap-card__intro">
-				<h2 class="overlap-card__title"><?php echo esc_html( le_field( 'home_overlap_title' ) ); ?></h2>
+				<h2 class="overlap-card__title"><?php echo le_field( 'home_overlap_title' ); ?></h2>
 				<div class="overlap-card__aside">
 					<p class="overlap-card__lede"><?php echo esc_html( le_field( 'home_overlap_lede' ) ); ?></p>
 					<a class="arrow-link overlap-card__all" href="<?php echo esc_url( home_url( '/services' ) ); ?>" aria-label="<?php esc_attr_e( 'See all services', 'lewisedward' ); ?>">
