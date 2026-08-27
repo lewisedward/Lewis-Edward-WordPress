@@ -124,7 +124,7 @@ asort( $jr_filters );
 						<?php foreach ( $jr_filters as $slug => $name ) : ?>
 							<button class="jr-filter" type="button" data-filter="<?php echo esc_attr( $slug ); ?>"><?php echo esc_html( $name ); ?></button>
 						<?php endforeach; ?>
-						<span class="eyebrow jr-filters__count"><span data-jr-visible><?php echo esc_html( str_pad( (string) $jr_count, 2, '0', STR_PAD_LEFT ) ); ?></span> <?php esc_html_e( 'entries', 'lewisedward' ); ?></span>
+						<span class="eyebrow jr-filters__count"><span data-jr-visible><?php echo esc_html( str_pad( (string) $jr_count, 2, '0', STR_PAD_LEFT ) ); ?></span> <?php echo esc_html( le_field( 'journalp_count_label', false, __( 'entries', 'lewisedward' ) ) ); ?></span>
 					</div>
 
 					<ul class="jr-list" data-jr-list>
@@ -147,7 +147,7 @@ asort( $jr_filters );
 										<p class="jr-item__excerpt"><?php echo esc_html( get_the_excerpt( $eid ) ); ?></p>
 									</span>
 									<?php if ( $ecat ) : ?><span class="eyebrow jr-item__cat"><?php echo esc_html( $ecat ); ?></span><?php endif; ?>
-									<span class="eyebrow jr-item__date"><?php echo esc_html( get_the_date( 'M Y', $eid ) . ' · ' . le_reading_time( $eid ) . ' ' . __( 'min', 'lewisedward' ) ); ?></span>
+									<span class="eyebrow jr-item__date"><?php echo esc_html( get_the_date( 'M Y', $eid ) . ' · ' . le_reading_time( $eid ) . ' ' . __( 'min read', 'lewisedward' ) ); ?></span>
 									<span class="jr-item__arrow" aria-hidden="true"><?php echo le_arrow_diagonal_svg( 14 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 									<span class="jr-item__underline" aria-hidden="true"></span>
 								</a>

@@ -73,9 +73,10 @@ function le_render_logo_row( $logos, $direction ) {
 
 				<div class="clients-card__aside">
 					<p class="clients-card__lede"><?php echo esc_html( le_field( 'home_clients_lede' ) ); ?></p>
-					<a class="arrow-link" href="<?php echo esc_url( home_url( '/work' ) ); ?>" aria-label="<?php esc_attr_e( 'See selected work', 'lewisedward' ); ?>">
+					<?php $home_clients_selected = le_link( 'home_clients_selected', '/work', __( 'Selected work', 'lewisedward' ), false ); ?>
+					<a class="arrow-link" href="<?php echo esc_url( $home_clients_selected['url'] ); ?>"<?php le_link_target_attr( $home_clients_selected ); ?> aria-label="<?php esc_attr_e( 'See selected work', 'lewisedward' ); ?>">
 						<span class="arrow-link__badge" aria-hidden="true"><?php echo le_arrow_diagonal_svg( 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-						<span class="arrow-link__label"><?php esc_html_e( 'Selected work', 'lewisedward' ); ?></span>
+						<span class="arrow-link__label"><?php echo esc_html( $home_clients_selected['title'] ); ?></span>
 					</a>
 				</div>
 			</div>

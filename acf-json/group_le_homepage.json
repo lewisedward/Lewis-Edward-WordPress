@@ -62,7 +62,7 @@
         },
         {
             "key": "field_h_hero_t1a",
-            "label": "Title line 1 \u2014 accent",
+            "label": "Title line 1 — accent",
             "name": "home_hero_title_1_accent",
             "aria-label": "",
             "type": "text",
@@ -82,7 +82,7 @@
         },
         {
             "key": "field_h_hero_t2p",
-            "label": "Title line 2 \u2014 before &",
+            "label": "Title line 2 — before &",
             "name": "home_hero_title_2_pre",
             "aria-label": "",
             "type": "text",
@@ -102,7 +102,7 @@
         },
         {
             "key": "field_h_hero_t2s",
-            "label": "Title line 2 \u2014 after &",
+            "label": "Title line 2 — after &",
             "name": "home_hero_title_2_post",
             "aria-label": "",
             "type": "text",
@@ -142,7 +142,7 @@
         },
         {
             "key": "field_h_hero_ed_cta_label",
-            "label": "Hero intro CTA \u2014 Label",
+            "label": "Hero intro CTA — Label",
             "name": "home_hero_editorial_cta_label",
             "aria-label": "",
             "type": "text",
@@ -162,7 +162,7 @@
         },
         {
             "key": "field_h_hero_ed_cta_url",
-            "label": "Hero intro CTA \u2014 Link",
+            "label": "Hero intro CTA — Link",
             "name": "home_hero_editorial_cta_url",
             "aria-label": "",
             "type": "text",
@@ -564,7 +564,7 @@
         },
         {
             "key": "field_h_cl_tpre",
-            "label": "Headline \u2014 before number",
+            "label": "Headline — before number",
             "name": "home_clients_title_pre",
             "aria-label": "",
             "type": "text",
@@ -584,7 +584,7 @@
         },
         {
             "key": "field_h_cl_tpost",
-            "label": "Headline \u2014 after number",
+            "label": "Headline — after number",
             "name": "home_clients_title_post",
             "aria-label": "",
             "type": "text",
@@ -712,7 +712,7 @@
         },
         {
             "key": "field_h_wk_tpre",
-            "label": "Heading \u2014 before accent",
+            "label": "Heading — before accent",
             "name": "home_work_title_pre",
             "aria-label": "",
             "type": "text",
@@ -732,7 +732,7 @@
         },
         {
             "key": "field_h_wk_tacc",
-            "label": "Heading \u2014 accent",
+            "label": "Heading — accent",
             "name": "home_work_title_accent",
             "aria-label": "",
             "type": "text",
@@ -752,7 +752,7 @@
         },
         {
             "key": "field_h_wk_tpost",
-            "label": "Heading \u2014 after accent",
+            "label": "Heading — after accent",
             "name": "home_work_title_post",
             "aria-label": "",
             "type": "text",
@@ -1158,7 +1158,7 @@
         },
         {
             "key": "field_h_ab_h1",
-            "label": "Headline \u2014 plain",
+            "label": "Headline — plain",
             "name": "home_about_headline_1",
             "aria-label": "",
             "type": "text",
@@ -1178,7 +1178,7 @@
         },
         {
             "key": "field_h_ab_hmuted",
-            "label": "Headline \u2014 muted",
+            "label": "Headline — muted",
             "name": "home_about_headline_muted",
             "aria-label": "",
             "type": "text",
@@ -1198,7 +1198,7 @@
         },
         {
             "key": "field_h_ab_hsince",
-            "label": "Headline \u2014 accent word",
+            "label": "Headline — accent word",
             "name": "home_about_headline_since",
             "aria-label": "",
             "type": "text",
@@ -1218,7 +1218,7 @@
         },
         {
             "key": "field_h_ab_hyear",
-            "label": "Headline \u2014 accent year",
+            "label": "Headline — accent year",
             "name": "home_about_headline_year",
             "aria-label": "",
             "type": "text",
@@ -1497,7 +1497,7 @@
         },
         {
             "key": "field_h_cta_l2p",
-            "label": "Heading line 2 \u2014 before word",
+            "label": "Heading line 2 — before word",
             "name": "home_cta_line2_pre",
             "aria-label": "",
             "type": "text",
@@ -1517,7 +1517,7 @@
         },
         {
             "key": "field_h_cta_word",
-            "label": "Heading \u2014 hover word",
+            "label": "Heading — hover word",
             "name": "home_cta_word",
             "aria-label": "",
             "type": "text",
@@ -1600,6 +1600,240 @@
             "max": "",
             "return_format": "object",
             "bidirectional_target": []
+        },
+        {
+            "key": "field_hml_tab",
+            "label": "Section labels",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_hml_hero_metrics_label",
+            "label": "Hero — Metrics label",
+            "name": "home_hero_metrics_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Metrics",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_hml_hero_caps_label",
+            "label": "Hero — Capabilities label",
+            "name": "home_hero_caps_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Capabilities",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_hml_services_explore",
+            "label": "Services — card Explore label",
+            "name": "home_services_explore",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Explore",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_hml_recentwork_title",
+            "label": "Recent Work — eyebrow",
+            "name": "home_recentwork_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Recent Work",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_hml_recentwork_meta",
+            "label": "Recent Work — card meta label",
+            "name": "home_recentwork_meta",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Case study",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_hml_recentwork_discover",
+            "label": "Recent Work — card CTA label",
+            "name": "home_recentwork_discover",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Discover",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_hml_hero_caps_all",
+            "label": "Hero — Capabilities ‘All services’ link",
+            "name": "home_hero_caps_all",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Leave blank to use the default: “All services” → /services",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_hml_about_more",
+            "label": "About — ‘More about us’ link",
+            "name": "home_about_more",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Leave blank to use the default: “More about us” → /about",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_hml_services_all",
+            "label": "Services — ‘All services’ link",
+            "name": "home_services_all",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Leave blank to use the default: “All services” → /services",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_hml_overlap_more",
+            "label": "Overlap — ‘More services’ link",
+            "name": "home_overlap_more",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Leave blank to use the default: “More services” → /services",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_hml_recentwork_all",
+            "label": "Recent Work — ‘View all work’ link",
+            "name": "home_recentwork_all",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Leave blank to use the default: “View all work” → /work",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_hml_clients_selected",
+            "label": "Clients — ‘Selected work’ link",
+            "name": "home_clients_selected",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Leave blank to use the default: “Selected work” → /work",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
         }
     ],
     "location": [
@@ -1636,5 +1870,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1787350054
+    "modified": 1787661100
 }

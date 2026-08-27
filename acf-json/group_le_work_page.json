@@ -310,6 +310,64 @@
             "max": "",
             "return_format": "object",
             "bidirectional_target": []
+        },
+        {
+            "key": "field_wpl_tab",
+            "label": "Section labels",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_wpl_filter_all",
+            "label": "Filter — All label",
+            "name": "workp_filter_all",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "All",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_wpl_count_label",
+            "label": "Count — unit label",
+            "name": "workp_count_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "projects",
+            "prepend": "",
+            "append": ""
         }
     ],
     "location": [
@@ -317,7 +375,7 @@
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "page-templates\/page-work.php"
+                "value": "page-templates/page-work.php"
             }
         ]
     ],
@@ -333,5 +391,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1786194563
+    "modified": 1787661200
 }

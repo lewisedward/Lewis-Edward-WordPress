@@ -36,7 +36,7 @@ $le_count = count( $le_items );
 
 			<div class="work-card__head">
 				<span class="eyebrow">
-					<?php esc_html_e( 'Recent Work', 'lewisedward' ); ?><?php if ( $le_count ) : ?><sup class="work-card__count"><?php echo esc_html( (string) $le_count ); ?></sup><?php endif; ?>
+					<?php echo esc_html( le_field( 'home_recentwork_title', false, __( 'Recent Work', 'lewisedward' ) ) ); ?><?php if ( $le_count ) : ?><sup class="work-card__count"><?php echo esc_html( (string) $le_count ); ?></sup><?php endif; ?>
 				</span>
 				<span class="work-card__rule" aria-hidden="true"></span>
 				<span class="pulse-dot" aria-hidden="true"></span>
@@ -46,9 +46,10 @@ $le_count = count( $le_items );
 				<h2 class="work-card__title"><?php echo esc_html( le_field( 'home_work_title_pre' ) ); ?> <span class="text-primary"><?php echo esc_html( le_field( 'home_work_title_accent' ) ); ?></span> <span class="text-muted"><?php echo esc_html( le_field( 'home_work_title_post' ) ); ?></span></h2>
 				<div class="work-card__aside">
 					<p class="work-card__lede"><?php echo esc_html( le_field( 'home_work_lede' ) ); ?></p>
-					<a class="arrow-link work-card__all" href="<?php echo esc_url( home_url( '/work' ) ); ?>" aria-label="<?php esc_attr_e( 'View all work', 'lewisedward' ); ?>">
+					<?php $home_recentwork_all = le_link( 'home_recentwork_all', '/work', __( 'View all work', 'lewisedward' ), false ); ?>
+						<a class="arrow-link work-card__all" href="<?php echo esc_url( $home_recentwork_all['url'] ); ?>"<?php le_link_target_attr( $home_recentwork_all ); ?> aria-label="<?php echo esc_attr( $home_recentwork_all['title'] ); ?>">
 						<span class="arrow-link__badge" aria-hidden="true"><?php echo le_arrow_diagonal_svg( 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-						<span class="arrow-link__label"><?php esc_html_e( 'View all work', 'lewisedward' ); ?></span>
+						<span class="arrow-link__label"><?php echo esc_html( $home_recentwork_all['title'] ); ?></span>
 					</a>
 				</div>
 			</div>
@@ -70,13 +71,13 @@ $le_count = count( $le_items );
 												<div class="work-project__meta">
 													<span class="work-project__num"><?php echo esc_html( str_pad( (string) ( $i + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
 													<span class="work-project__meta-rule" aria-hidden="true"></span>
-													<span class="work-project__meta-label"><?php esc_html_e( 'Case study', 'lewisedward' ); ?></span>
+													<span class="work-project__meta-label"><?php echo esc_html( le_field( 'home_recentwork_meta', false, __( 'Case study', 'lewisedward' ) ) ); ?></span>
 												</div>
 												<h3 class="work-project__title"><?php echo esc_html( $p['title'] ); ?></h3>
 												<p class="work-project__desc"><?php echo esc_html( $p['desc'] ); ?></p>
 												<div class="work-project__cta">
 													<span class="work-project__cta-badge" aria-hidden="true"><?php echo le_arrow_diagonal_svg( 14 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-													<span class="work-project__cta-label"><?php esc_html_e( 'Discover', 'lewisedward' ); ?></span>
+													<span class="work-project__cta-label"><?php echo esc_html( le_field( 'home_recentwork_discover', false, __( 'Discover', 'lewisedward' ) ) ); ?></span>
 												</div>
 											</div>
 										</div>

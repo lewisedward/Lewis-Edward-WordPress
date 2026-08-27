@@ -1,6 +1,6 @@
 {
     "key": "group_le_work",
-    "title": "Work \u2014 Details",
+    "title": "Work — Details",
     "fields": [
         {
             "key": "field_wk_tab_overview",
@@ -142,7 +142,7 @@
             "name": "work_services",
             "aria-label": "",
             "type": "post_object",
-            "instructions": "Pick the Services delivered. Shown as hero pills and under \u201cAt a glance \u2192 Services\u201d.",
+            "instructions": "Pick the Services delivered. Shown as hero pills and under “At a glance → Services”.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -168,7 +168,7 @@
             "name": "work_technologies",
             "aria-label": "",
             "type": "repeater",
-            "instructions": "Shown under \u201cAt a glance \u2192 Stack\u201d.",
+            "instructions": "Shown under “At a glance → Stack”.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -349,7 +349,7 @@
             "name": "work_features",
             "aria-label": "",
             "type": "repeater",
-            "instructions": "The \u201cExplore some features\u201d slider \u2014 one image + caption per slide.",
+            "instructions": "The “Explore some features” slider — one image + caption per slide.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -413,6 +413,500 @@
                     "parent_repeater": ""
                 }
             ]
+        },
+        {
+            "key": "field_wkl_tab",
+            "label": "Section labels",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_wkl_glance_eyebrow",
+            "label": "At a glance — eyebrow",
+            "name": "wk_glance_eyebrow",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "At a glance",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_wkl_glance_year",
+            "label": "Glance — Year label",
+            "name": "wk_glance_year",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Year",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_wkl_glance_duration",
+            "label": "Glance — Duration label",
+            "name": "wk_glance_duration",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Duration",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_wkl_glance_platform",
+            "label": "Glance — Platform label",
+            "name": "wk_glance_platform",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Platform",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_wkl_glance_services",
+            "label": "Glance — Services label",
+            "name": "wk_glance_services",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Services",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_wkl_glance_stack",
+            "label": "Glance — Stack label",
+            "name": "wk_glance_stack",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Stack",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_wkl_visit_label",
+            "label": "Glance — Visit link label",
+            "name": "wk_visit_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Visit website",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_wkl_brief_eyebrow",
+            "label": "Brief — eyebrow",
+            "name": "wk_brief_eyebrow",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Brief",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_wkl_brief_title_pre",
+            "label": "Brief — heading (pre)",
+            "name": "wk_brief_title_pre",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "The",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_wkl_brief_title_mid",
+            "label": "Brief — heading (mid)",
+            "name": "wk_brief_title_mid",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "challenge",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_wkl_brief_title_end",
+            "label": "Brief — heading (end)",
+            "name": "wk_brief_title_end",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "& the solution.",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_wkl_challenge_label",
+            "label": "Brief — Challenge label",
+            "name": "wk_challenge_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "The Challenge",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_wkl_solution_label",
+            "label": "Brief — Solution label",
+            "name": "wk_solution_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "The Solution",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_wkl_results_eyebrow",
+            "label": "Results — eyebrow",
+            "name": "wk_results_eyebrow",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Results",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_wkl_results_title_pre",
+            "label": "Results — heading (pre)",
+            "name": "wk_results_title_pre",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "What we",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_wkl_results_title_mid",
+            "label": "Results — heading (mid)",
+            "name": "wk_results_title_mid",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "delivered for",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_wkl_features_eyebrow",
+            "label": "Features — eyebrow",
+            "name": "wk_features_eyebrow",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Visual journey",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_wkl_features_title_pre",
+            "label": "Features — heading (pre)",
+            "name": "wk_features_title_pre",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Explore",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_wkl_features_title_mid",
+            "label": "Features — heading (mid)",
+            "name": "wk_features_title_mid",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "some",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_wkl_features_title_end",
+            "label": "Features — heading (end)",
+            "name": "wk_features_title_end",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "features.",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_wkl_next_eyebrow",
+            "label": "More projects — eyebrow",
+            "name": "wk_next_eyebrow",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "More projects",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_wkl_next_title_pre",
+            "label": "More projects — heading (pre)",
+            "name": "wk_next_title_pre",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Keep exploring",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_wkl_next_title_end",
+            "label": "More projects — heading (end)",
+            "name": "wk_next_title_end",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "our work.",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_wkl_hero_back",
+            "label": "Hero — back link",
+            "name": "wk_hero_back",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Leave blank to use the default: “All Projects” → /work",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
         }
     ],
     "location": [
@@ -445,5 +939,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1786199231
+    "modified": 1787660900
 }

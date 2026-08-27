@@ -1,0 +1,161 @@
+{
+    "key": "group_le_footer",
+    "title": "Footer",
+    "fields": [
+        {
+            "key": "field_fo_col_discover",
+            "label": "Column 1 title",
+            "name": "footer_col_discover",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Discover",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_fo_col_services",
+            "label": "Column 2 title",
+            "name": "footer_col_services",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Services",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_fo_col_take_action",
+            "label": "Column 3 title",
+            "name": "footer_col_take_action",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Take Action",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_fo_copyright_name",
+            "label": "Copyright name",
+            "name": "footer_copyright_name",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Lewis Edward Ltd",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_fo_location",
+            "label": "Location label",
+            "name": "footer_location",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "London",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_fo_backtotop",
+            "label": "Back-to-top label",
+            "name": "footer_backtotop",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Back to top",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_fo_privacy_link",
+            "label": "Privacy link",
+            "name": "footer_privacy_link",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Leave blank to use the default: “Privacy Policy” → /privacy",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "options_page",
+                "operator": "==",
+                "value": "le-options-footer"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Footer labels & links. Blank = default shown in grey.",
+    "show_in_rest": 0,
+    "modified": 1787661000
+}

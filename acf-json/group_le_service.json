@@ -1,11 +1,12 @@
 {
     "key": "group_le_service",
-    "title": "Service \u2014 Details",
+    "title": "Service — Details",
     "fields": [
         {
             "key": "field_sv_tab_card",
             "label": "Card",
             "name": "",
+            "aria-label": "",
             "type": "tab",
             "instructions": "",
             "required": 0,
@@ -16,14 +17,16 @@
                 "id": ""
             },
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_sv_subtitle",
             "label": "Subtitle",
             "name": "service_subtitle",
+            "aria-label": "",
             "type": "text",
-            "instructions": "Short line under the name on the Services page \u201cmore services\u201d list, and the single-service hero eyebrow.",
+            "instructions": "Short line under the name on the Services page “more services” list, and the single-service hero eyebrow.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -41,6 +44,7 @@
             "key": "field_sv_desc",
             "label": "Short description",
             "name": "service_short_description",
+            "aria-label": "",
             "type": "textarea",
             "instructions": "Used on the homepage Services section (and as the Services-page card fallback).",
             "required": 0,
@@ -60,6 +64,7 @@
             "key": "field_sv_excerpt",
             "label": "Services-page description",
             "name": "service_excerpt",
+            "aria-label": "",
             "type": "textarea",
             "instructions": "Description shown on the Services page cards. If empty, the Short description is used.",
             "required": 0,
@@ -79,6 +84,7 @@
             "key": "field_sv_features",
             "label": "Feature tags",
             "name": "service_features",
+            "aria-label": "",
             "type": "repeater",
             "instructions": "Pills shown on the Services page cards.",
             "required": 0,
@@ -100,6 +106,7 @@
                     "key": "field_sv_feature_tag",
                     "label": "Tag",
                     "name": "tag",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -114,7 +121,7 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "parent_repeater": ""
+                    "parent_repeater": "field_sv_features"
                 }
             ]
         },
@@ -122,6 +129,7 @@
             "key": "field_sv_tab_detail",
             "label": "Detail page",
             "name": "",
+            "aria-label": "",
             "type": "tab",
             "instructions": "",
             "required": 0,
@@ -132,12 +140,14 @@
                 "id": ""
             },
             "placement": "top",
-            "endpoint": 0
+            "endpoint": 0,
+            "selected": 0
         },
         {
             "key": "field_sv_headline",
             "label": "Hero headline",
             "name": "service_headline",
+            "aria-label": "",
             "type": "textarea",
             "instructions": "Big hero headline. Put each line on its own line. Wrap a word in [[double brackets]] to make it lime.",
             "required": 0,
@@ -157,6 +167,7 @@
             "key": "field_sv_intro",
             "label": "Hero intro",
             "name": "service_intro",
+            "aria-label": "",
             "type": "textarea",
             "instructions": "Intro paragraph in the hero sidebar.",
             "required": 0,
@@ -173,9 +184,31 @@
             "new_lines": ""
         },
         {
+            "key": "field_6a8d88e295d9a",
+            "label": "Whats Included Title",
+            "name": "whats_included_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Intro paragraph in the hero sidebar.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_sv_dfeatures",
-            "label": "What's included",
+            "label": "Whats included",
             "name": "service_detail_features",
+            "aria-label": "",
             "type": "repeater",
             "instructions": "The numbered capability list on the single-service page.",
             "required": 0,
@@ -197,6 +230,7 @@
                     "key": "field_sv_df_title",
                     "label": "Title",
                     "name": "title",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -211,12 +245,13 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "parent_repeater": ""
+                    "parent_repeater": "field_sv_dfeatures"
                 },
                 {
                     "key": "field_sv_df_desc",
                     "label": "Description",
                     "name": "description",
+                    "aria-label": "",
                     "type": "textarea",
                     "instructions": "",
                     "required": 0,
@@ -231,7 +266,7 @@
                     "maxlength": "",
                     "rows": 2,
                     "new_lines": "",
-                    "parent_repeater": ""
+                    "parent_repeater": "field_sv_dfeatures"
                 }
             ]
         },
@@ -239,8 +274,9 @@
             "key": "field_sv_process",
             "label": "Process steps",
             "name": "service_process",
+            "aria-label": "",
             "type": "repeater",
-            "instructions": "\u201cHow we deliver\u201d \u2014 the approach timeline.",
+            "instructions": "“How we deliver” — the approach timeline.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -260,6 +296,7 @@
                     "key": "field_sv_ps_step",
                     "label": "Step no.",
                     "name": "step",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -274,12 +311,13 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "parent_repeater": ""
+                    "parent_repeater": "field_sv_process"
                 },
                 {
                     "key": "field_sv_ps_title",
                     "label": "Title",
                     "name": "title",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -294,12 +332,13 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "parent_repeater": ""
+                    "parent_repeater": "field_sv_process"
                 },
                 {
                     "key": "field_sv_ps_desc",
                     "label": "Description",
                     "name": "description",
+                    "aria-label": "",
                     "type": "textarea",
                     "instructions": "",
                     "required": 0,
@@ -314,7 +353,7 @@
                     "maxlength": "",
                     "rows": 2,
                     "new_lines": "",
-                    "parent_repeater": ""
+                    "parent_repeater": "field_sv_process"
                 }
             ]
         },
@@ -322,8 +361,9 @@
             "key": "field_sv_benefits",
             "label": "Benefits",
             "name": "service_benefits",
+            "aria-label": "",
             "type": "repeater",
-            "instructions": "\u201cWhy work with us\u201d checklist.",
+            "instructions": "“Why work with us” checklist.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -343,6 +383,7 @@
                     "key": "field_sv_b_item",
                     "label": "Benefit",
                     "name": "benefit",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -357,7 +398,7 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "parent_repeater": ""
+                    "parent_repeater": "field_sv_benefits"
                 }
             ]
         },
@@ -365,6 +406,7 @@
             "key": "field_sv_faq",
             "label": "FAQ",
             "name": "service_faq",
+            "aria-label": "",
             "type": "repeater",
             "instructions": "Frequently asked questions for this service.",
             "required": 0,
@@ -386,6 +428,7 @@
                     "key": "field_sv_faq_q",
                     "label": "Question",
                     "name": "question",
+                    "aria-label": "",
                     "type": "text",
                     "instructions": "",
                     "required": 0,
@@ -400,12 +443,13 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "parent_repeater": ""
+                    "parent_repeater": "field_sv_faq"
                 },
                 {
                     "key": "field_sv_faq_a",
                     "label": "Answer",
                     "name": "answer",
+                    "aria-label": "",
                     "type": "textarea",
                     "instructions": "",
                     "required": 0,
@@ -420,7 +464,7 @@
                     "maxlength": "",
                     "rows": 3,
                     "new_lines": "",
-                    "parent_repeater": ""
+                    "parent_repeater": "field_sv_faq"
                 }
             ]
         },
@@ -428,8 +472,9 @@
             "key": "field_sv_related_work",
             "label": "Featured work",
             "name": "service_related_work",
+            "aria-label": "",
             "type": "relationship",
-            "instructions": "Work case studies shown in the \u201cFeatured work\u201d slider on this service.",
+            "instructions": "Work case studies shown in the “Featured work” slider on this service.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -450,12 +495,14 @@
             ],
             "min": "",
             "max": "",
-            "return_format": "object"
+            "return_format": "object",
+            "bidirectional_target": []
         },
         {
             "key": "field_sv_related",
             "label": "Related services",
             "name": "service_related",
+            "aria-label": "",
             "type": "relationship",
             "instructions": "Other services to cross-link at the bottom.",
             "required": 0,
@@ -478,7 +525,450 @@
             ],
             "min": "",
             "max": "",
-            "return_format": "object"
+            "return_format": "object",
+            "bidirectional_target": []
+        },
+        {
+            "key": "field_svl_tab",
+            "label": "Section labels",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_svl_hero_status",
+            "label": "Hero — status line",
+            "name": "svc_hero_status",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "LDN / WordPress / 51.5074° N",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_svl_hero_scroll",
+            "label": "Hero — scroll label",
+            "name": "svc_hero_scroll",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Scroll to explore",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_svl_included_eyebrow",
+            "label": "What's included — eyebrow",
+            "name": "svc_included_eyebrow",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "What's included",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_svl_process_eyebrow",
+            "label": "Process — eyebrow",
+            "name": "svc_process_eyebrow",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Our approach",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_svl_process_title",
+            "label": "Process — heading",
+            "name": "svc_process_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "How we deliver.",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_svl_process_note",
+            "label": "Process — note",
+            "name": "svc_process_note",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Step by step",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_svl_benefits_eyebrow",
+            "label": "Benefits — eyebrow",
+            "name": "svc_benefits_eyebrow",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Why work with us",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_svl_benefits_title",
+            "label": "Benefits — heading",
+            "name": "svc_benefits_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "The benefits of partnering with us.",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_svl_benefits_intro",
+            "label": "Benefits — intro",
+            "name": "svc_benefits_intro",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": 2,
+            "placeholder": "We pair deep WordPress expertise with a transparent, collaborative approach — so every project lands with clarity and confidence.",
+            "new_lines": ""
+        },
+        {
+            "key": "field_svl_faq_eyebrow",
+            "label": "FAQ — eyebrow",
+            "name": "svc_faq_eyebrow",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Common questions",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_svl_faq_title",
+            "label": "FAQ — heading",
+            "name": "svc_faq_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Frequently asked.",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_svl_faq_intro",
+            "label": "FAQ — intro",
+            "name": "svc_faq_intro",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "rows": 2,
+            "placeholder": "Quick answers to the things we get asked most. Still need clarity? Drop us a line.",
+            "new_lines": ""
+        },
+        {
+            "key": "field_svl_work_eyebrow",
+            "label": "Featured work — eyebrow",
+            "name": "svc_work_eyebrow",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Case studies",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_svl_work_title",
+            "label": "Featured work — heading",
+            "name": "svc_work_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Featured work",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_svl_work_discover",
+            "label": "Featured work — card label",
+            "name": "svc_work_discover",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Discover",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_svl_related_eyebrow",
+            "label": "Related — eyebrow",
+            "name": "svc_related_eyebrow",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Related services",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_svl_related_title",
+            "label": "Related — heading",
+            "name": "svc_related_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "You might also need.",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_svl_related_explore",
+            "label": "Related — card label",
+            "name": "svc_related_explore",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Explore",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_svl_hero_crumb",
+            "label": "Hero — breadcrumb link",
+            "name": "svc_hero_crumb",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Leave blank to use the default: “Services” → /services",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_svl_hero_cta",
+            "label": "Hero — CTA link",
+            "name": "svc_hero_cta",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Leave blank to use the default: “Start a project” → /contact",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_svl_work_viewall",
+            "label": "Featured work — ‘View all’ link",
+            "name": "svc_work_viewall",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Leave blank to use the default: “View all” → /work",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_svl_related_all",
+            "label": "Related — ‘All services’ link",
+            "name": "svc_related_all",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Leave blank to use the default: “All services” → /services",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
         }
     ],
     "location": [
@@ -501,5 +991,8 @@
     "active": true,
     "description": "Fields for Services.",
     "show_in_rest": 0,
-    "modified": 1786222884
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1787660800
 }

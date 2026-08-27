@@ -19,9 +19,11 @@ $le_logo     = le_option( 'site_logo' );
 $le_logo_url = ( is_array( $le_logo ) && ! empty( $le_logo['url'] ) ) ? $le_logo['url'] : LE_URI . '/assets/images/lewis-edward-logo.webp';
 $le_logo_alt = get_bloginfo( 'name' ) . ' — London WordPress & AI developers logo';
 
-// CTA (Theme Options -> Header, with sensible defaults).
-$le_cta_url   = le_option( 'header_cta_url', home_url( '/quotes' ) );
-$le_cta_label = le_option( 'header_cta_label', __( 'Get a Quote', 'lewisedward' ) );
+// CTA (Theme Options -> Header). Single ACF Link field, current default kept
+// when empty. $le_cta_url / $le_cta_label are derived for the markup below.
+$le_cta       = le_link( 'header_cta', '/quotes', __( 'Get a Quote', 'lewisedward' ), 'option' );
+$le_cta_url   = $le_cta['url'];
+$le_cta_label = $le_cta['title'];
 
 // Availability flag for the status widget.
 $le_available = le_option( 'header_available', true );
@@ -63,14 +65,14 @@ $le_menu_args = array(
 				<span class="status__sep" aria-hidden="true"></span>
 				<span class="status__group status__group--loc">
 					<img class="status__flag" src="<?php echo esc_url( LE_URI . '/assets/images/united-kingdom.svg' ); ?>" alt="UK" width="14" height="10" />
-					<span class="status__city"><?php esc_html_e( 'London', 'lewisedward' ); ?></span>
+					<span class="status__city"><?php echo esc_html( le_option( 'header_status_city', __( 'London', 'lewisedward' ) ) ); ?></span>
 					<span class="status__sep" aria-hidden="true"></span>
 					<time class="status__clock" data-london-clock aria-label="<?php esc_attr_e( 'Current time in London', 'lewisedward' ); ?>">--:--</time>
 				</span>
 			</div>
 			<?php endif; ?>
 
-			<a class="btn-cta" href="<?php echo esc_url( $le_cta_url ); ?>">
+			<a class="btn-cta" href="<?php echo esc_url( $le_cta_url ); ?>"<?php le_link_target_attr( $le_cta ); ?>>
 				<?php echo esc_html( $le_cta_label ); ?><?php echo le_arrow_diagonal_svg( 14 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			</a>
 		</nav>
@@ -102,7 +104,7 @@ $le_menu_args = array(
 			) );
 			?>
 			<span class="mobile-drawer__sep" aria-hidden="true"></span>
-			<a class="btn-cta btn-cta--mobile" href="<?php echo esc_url( $le_cta_url ); ?>">
+			<a class="btn-cta btn-cta--mobile" href="<?php echo esc_url( $le_cta_url ); ?>"<?php le_link_target_attr( $le_cta ); ?>>
 				<?php echo esc_html( $le_cta_label ); ?><?php echo le_arrow_diagonal_svg( 14 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			</a>
 		</div>

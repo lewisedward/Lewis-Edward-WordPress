@@ -90,7 +90,8 @@ while ( have_posts() ) :
 
 					<div class="svc-d-hero__bar">
 						<nav class="svc-d-hero__crumbs" aria-label="<?php esc_attr_e( 'Breadcrumb', 'lewisedward' ); ?>">
-							<a href="<?php echo esc_url( home_url( '/services' ) ); ?>" class="eyebrow"><?php esc_html_e( 'Services', 'lewisedward' ); ?></a>
+							<?php $svc_crumb = le_link( 'svc_hero_crumb', '/services', __( 'Services', 'lewisedward' ), $sv_id ); ?>
+							<a href="<?php echo esc_url( $svc_crumb['url'] ); ?>" class="eyebrow"<?php le_link_target_attr( $svc_crumb ); ?>><?php echo esc_html( $svc_crumb['title'] ); ?></a>
 							<span class="eyebrow svc-d-hero__crumb-current">/ <?php echo esc_html( strtolower( get_the_title() ) ); ?></span>
 						</nav>
 						<span class="svc-d-hero__rule" aria-hidden="true"></span>
@@ -115,16 +116,17 @@ while ( have_posts() ) :
 
 						<div class="svc-d-hero__aside">
 							<?php if ( $sv_intro ) : ?><p class="svc-d-hero__intro"><?php echo esc_html( $sv_intro ); ?></p><?php endif; ?>
-							<a class="svc-d-hero__cta" href="<?php echo esc_url( home_url( '/contact' ) ); ?>">
+							<?php $svc_hero_cta = le_link( 'svc_hero_cta', '/contact', __( 'Start a project', 'lewisedward' ), $sv_id ); ?>
+							<a class="svc-d-hero__cta" href="<?php echo esc_url( $svc_hero_cta['url'] ); ?>"<?php le_link_target_attr( $svc_hero_cta ); ?>>
 								<span class="svc-d-hero__cta-badge" aria-hidden="true"><?php echo le_arrow_diagonal_svg( 14 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-								<span class="eyebrow"><?php esc_html_e( 'Start a project', 'lewisedward' ); ?></span>
+								<span class="eyebrow"><?php echo esc_html( $svc_hero_cta['title'] ); ?></span>
 							</a>
 						</div>
 					</div>
 
 					<div class="svc-d-hero__status">
-						<span class="svc-d-hero__loc"><span class="pulse-dot" aria-hidden="true"></span> <span class="eyebrow"><?php esc_html_e( 'LDN / WordPress / 51.5074° N', 'lewisedward' ); ?></span></span>
-						<span class="svc-d-hero__scroll"><span class="eyebrow text-primary"><?php esc_html_e( 'Scroll to explore', 'lewisedward' ); ?></span><span class="svc-d-hero__scroll-bar" aria-hidden="true"><span class="svc-d-hero__scroll-fill"></span></span></span>
+						<span class="svc-d-hero__loc"><span class="pulse-dot" aria-hidden="true"></span> <span class="eyebrow"><?php echo esc_html( le_field( 'svc_hero_status', $sv_id, __( 'LDN / WordPress / 51.5074° N', 'lewisedward' ) ) ); ?></span></span>
+						<span class="svc-d-hero__scroll"><span class="eyebrow text-primary"><?php echo esc_html( le_field( 'svc_hero_scroll', $sv_id, __( 'Scroll to explore', 'lewisedward' ) ) ); ?></span><span class="svc-d-hero__scroll-bar" aria-hidden="true"><span class="svc-d-hero__scroll-fill"></span></span></span>
 					</div>
 
 				</div>
@@ -139,7 +141,7 @@ while ( have_posts() ) :
 						<div class="svc-d-split">
 							<div class="svc-d-split__head">
 								<div class="svc-d-eyebrow-row">
-									<span class="eyebrow"><?php esc_html_e( "What's included", 'lewisedward' ); ?></span>
+									<span class="eyebrow"><?php echo esc_html( le_field( 'svc_included_eyebrow', $sv_id, __( "What's included", 'lewisedward' ) ) ); ?></span>
 									<span class="eyebrow text-primary"><?php echo esc_html( str_pad( (string) count( $sv_feats ), 2, '0', STR_PAD_LEFT ) ); ?></span>
 								</div>
 								<h2 class="svc-d-title"><?php echo $whats_included_title; ?></h2>
@@ -169,12 +171,12 @@ while ( have_posts() ) :
 						<div class="svc-d-bar">
 							<div>
 								<div class="svc-d-eyebrow-row">
-									<span class="eyebrow"><?php esc_html_e( 'Our approach', 'lewisedward' ); ?></span>
+									<span class="eyebrow"><?php echo esc_html( le_field( 'svc_process_eyebrow', $sv_id, __( 'Our approach', 'lewisedward' ) ) ); ?></span>
 									<span class="eyebrow text-primary"><?php echo esc_html( str_pad( (string) count( $sv_proc ), 2, '0', STR_PAD_LEFT ) ); ?></span>
 								</div>
-								<h2 class="svc-d-title"><?php esc_html_e( 'How we deliver.', 'lewisedward' ); ?></h2>
+								<h2 class="svc-d-title"><?php echo esc_html( le_field( 'svc_process_title', $sv_id, __( 'How we deliver.', 'lewisedward' ) ) ); ?></h2>
 							</div>
-							<span class="eyebrow eyebrow--faint svc-d-bar__note"><?php esc_html_e( 'Step by step', 'lewisedward' ); ?></span>
+							<span class="eyebrow eyebrow--faint svc-d-bar__note"><?php echo esc_html( le_field( 'svc_process_note', $sv_id, __( 'Step by step', 'lewisedward' ) ) ); ?></span>
 						</div>
 						<div class="svc-d-steps">
 							<?php foreach ( $sv_proc as $i => $row ) : $st = isset( $row['title'] ) ? trim( $row['title'] ) : ''; if ( '' === $st ) { continue; } ?>
@@ -198,11 +200,11 @@ while ( have_posts() ) :
 						<div class="svc-d-split svc-d-split--wide">
 							<div class="svc-d-split__head">
 								<div class="svc-d-eyebrow-row">
-									<span class="eyebrow"><?php esc_html_e( 'Why work with us', 'lewisedward' ); ?></span>
+									<span class="eyebrow"><?php echo esc_html( le_field( 'svc_benefits_eyebrow', $sv_id, __( 'Why work with us', 'lewisedward' ) ) ); ?></span>
 									<span class="pulse-dot" aria-hidden="true"></span>
 								</div>
-								<h2 class="svc-d-title"><?php esc_html_e( 'The benefits of partnering with us.', 'lewisedward' ); ?></h2>
-								<p class="svc-d-split__intro"><?php esc_html_e( 'We pair deep WordPress expertise with a transparent, collaborative approach — so every project lands with clarity and confidence.', 'lewisedward' ); ?></p>
+								<h2 class="svc-d-title"><?php echo esc_html( le_field( 'svc_benefits_title', $sv_id, __( 'The benefits of partnering with us.', 'lewisedward' ) ) ); ?></h2>
+								<p class="svc-d-split__intro"><?php echo esc_html( le_field( 'svc_benefits_intro', $sv_id, __( 'We pair deep WordPress expertise with a transparent, collaborative approach — so every project lands with clarity and confidence.', 'lewisedward' ) ) ); ?></p>
 							</div>
 							<div class="svc-d-benefits">
 								<?php foreach ( $sv_bens as $row ) : $b = isset( $row['benefit'] ) ? trim( $row['benefit'] ) : ''; if ( '' === $b ) { continue; } ?>
@@ -226,11 +228,11 @@ while ( have_posts() ) :
 						<div class="svc-d-split">
 							<div class="svc-d-split__head">
 								<div class="svc-d-eyebrow-row">
-									<span class="eyebrow"><?php esc_html_e( 'Common questions', 'lewisedward' ); ?></span>
+									<span class="eyebrow"><?php echo esc_html( le_field( 'svc_faq_eyebrow', $sv_id, __( 'Common questions', 'lewisedward' ) ) ); ?></span>
 									<span class="eyebrow text-primary"><?php echo esc_html( str_pad( (string) count( $sv_faq ), 2, '0', STR_PAD_LEFT ) ); ?></span>
 								</div>
-								<h2 class="svc-d-title"><?php esc_html_e( 'Frequently asked.', 'lewisedward' ); ?></h2>
-								<p class="svc-d-split__intro"><?php esc_html_e( 'Quick answers to the things we get asked most. Still need clarity? Drop us a line.', 'lewisedward' ); ?></p>
+								<h2 class="svc-d-title"><?php echo esc_html( le_field( 'svc_faq_title', $sv_id, __( 'Frequently asked.', 'lewisedward' ) ) ); ?></h2>
+								<p class="svc-d-split__intro"><?php echo esc_html( le_field( 'svc_faq_intro', $sv_id, __( 'Quick answers to the things we get asked most. Still need clarity? Drop us a line.', 'lewisedward' ) ) ); ?></p>
 							</div>
 							<div class="svc-d-faq">
 								<?php foreach ( $sv_faq as $i => $row ) : $q = isset( $row['question'] ) ? trim( $row['question'] ) : ''; if ( '' === $q ) { continue; } ?>
@@ -267,8 +269,8 @@ while ( have_posts() ) :
 					<div class="svc-d-block glass" data-reveal data-svc-work>
 						<div class="svc-work__head">
 							<div>
-								<span class="eyebrow eyebrow--faint"><?php esc_html_e( 'Case studies', 'lewisedward' ); ?><sup class="svc-work__count"><?php echo esc_html( (string) count( $sv_relwk ) ); ?></sup></span>
-								<h2 class="svc-d-title svc-work__title"><?php esc_html_e( 'Featured work', 'lewisedward' ); ?></h2>
+								<span class="eyebrow eyebrow--faint"><?php echo esc_html( le_field( 'svc_work_eyebrow', $sv_id, __( 'Case studies', 'lewisedward' ) ) ); ?><sup class="svc-work__count"><?php echo esc_html( (string) count( $sv_relwk ) ); ?></sup></span>
+								<h2 class="svc-d-title svc-work__title"><?php echo esc_html( le_field( 'svc_work_title', $sv_id, __( 'Featured work', 'lewisedward' ) ) ); ?></h2>
 							</div>
 							<div class="svc-work__nav">
 								<button class="svc-work__arrow" type="button" data-svc-work-prev aria-label="<?php esc_attr_e( 'Previous project', 'lewisedward' ); ?>">
@@ -281,9 +283,10 @@ while ( have_posts() ) :
 						</div>
 
 						<div class="svc-work__viewall">
-							<a class="svc-work__viewall-link" href="<?php echo esc_url( home_url( '/work' ) ); ?>">
+							<?php $svc_work_viewall = le_link( 'svc_work_viewall', '/work', __( 'View all', 'lewisedward' ), $sv_id ); ?>
+							<a class="svc-work__viewall-link" href="<?php echo esc_url( $svc_work_viewall['url'] ); ?>"<?php le_link_target_attr( $svc_work_viewall ); ?>>
 								<span class="svc-work__viewall-badge" aria-hidden="true"><?php echo le_arrow_diagonal_svg( 14 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-								<span class="eyebrow"><?php esc_html_e( 'View all', 'lewisedward' ); ?></span>
+								<span class="eyebrow"><?php echo esc_html( $svc_work_viewall['title'] ); ?></span>
 							</a>
 						</div>
 
@@ -303,7 +306,7 @@ while ( have_posts() ) :
 												<?php if ( $wd ) : ?><p class="svc-work__desc"><?php echo esc_html( $wd ); ?></p><?php endif; ?>
 												<span class="svc-work__discover">
 													<span class="svc-work__discover-badge" aria-hidden="true"><?php echo le_arrow_diagonal_svg( 14 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-													<span class="eyebrow"><?php esc_html_e( 'Discover', 'lewisedward' ); ?></span>
+													<span class="eyebrow"><?php echo esc_html( le_field( 'svc_work_discover', $sv_id, __( 'Discover', 'lewisedward' ) ) ); ?></span>
 												</span>
 											</div>
 										</div>
@@ -326,12 +329,13 @@ while ( have_posts() ) :
 						<div class="svc-d-bar">
 							<div>
 								<div class="svc-d-eyebrow-row">
-									<span class="eyebrow"><?php esc_html_e( 'Related services', 'lewisedward' ); ?></span>
+									<span class="eyebrow"><?php echo esc_html( le_field( 'svc_related_eyebrow', $sv_id, __( 'Related services', 'lewisedward' ) ) ); ?></span>
 									<span class="pulse-dot" aria-hidden="true"></span>
 								</div>
-								<h2 class="svc-d-title"><?php esc_html_e( 'You might also need.', 'lewisedward' ); ?></h2>
+								<h2 class="svc-d-title"><?php echo esc_html( le_field( 'svc_related_title', $sv_id, __( 'You might also need.', 'lewisedward' ) ) ); ?></h2>
 							</div>
-							<a class="eyebrow svc-d-related__all" href="<?php echo esc_url( home_url( '/services' ) ); ?>"><?php esc_html_e( 'All services', 'lewisedward' ); ?> &rarr;</a>
+							<?php $svc_related_all = le_link( 'svc_related_all', '/services', __( 'All services', 'lewisedward' ), $sv_id ); ?>
+								<a class="eyebrow svc-d-related__all" href="<?php echo esc_url( $svc_related_all['url'] ); ?>"<?php le_link_target_attr( $svc_related_all ); ?>><?php echo esc_html( $svc_related_all['title'] ); ?> &rarr;</a>
 						</div>
 						<div class="svc-d-related__grid">
 							<?php
@@ -347,7 +351,7 @@ while ( have_posts() ) :
 										<h3 class="svc-d-rel__title"><?php echo esc_html( get_the_title( $rid ) ); ?></h3>
 									</div>
 									<div class="svc-d-rel__foot">
-										<span class="eyebrow eyebrow--faint"><?php esc_html_e( 'Explore', 'lewisedward' ); ?></span>
+										<span class="eyebrow eyebrow--faint"><?php echo esc_html( le_field( 'svc_related_explore', $sv_id, __( 'Explore', 'lewisedward' ) ) ); ?></span>
 										<span class="svc-d-rel__arrow" aria-hidden="true"><?php echo le_arrow_diagonal_svg( 14 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 									</div>
 								</a>

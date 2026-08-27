@@ -153,11 +153,11 @@ if ( is_array( $wp_all_terms ) ) {
 
 					<?php if ( ! empty( $wp_filters ) ) : ?>
 						<div class="work-filters" data-work-filters>
-							<button class="work-filter is-active" type="button" data-filter="all"><?php esc_html_e( 'All', 'lewisedward' ); ?></button>
+							<button class="work-filter is-active" type="button" data-filter="all"><?php echo esc_html( le_field( 'workp_filter_all', false, __( 'All', 'lewisedward' ) ) ); ?></button>
 							<?php foreach ( $wp_filters as $slug => $name ) : ?>
 								<button class="work-filter" type="button" data-filter="<?php echo esc_attr( $slug ); ?>"><?php echo esc_html( $name ); ?></button>
 							<?php endforeach; ?>
-							<span class="eyebrow work-filters__count"><span data-work-visible><?php echo esc_html( str_pad( (string) $wp_count, 2, '0', STR_PAD_LEFT ) ); ?></span> <?php esc_html_e( 'projects', 'lewisedward' ); ?></span>
+							<span class="eyebrow work-filters__count"><span data-work-visible><?php echo esc_html( str_pad( (string) $wp_count, 2, '0', STR_PAD_LEFT ) ); ?></span> <?php echo esc_html( le_field( 'workp_count_label', false, __( 'projects', 'lewisedward' ) ) ); ?></span>
 						</div>
 					<?php endif; ?>
 

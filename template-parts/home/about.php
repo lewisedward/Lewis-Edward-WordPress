@@ -48,9 +48,10 @@ $le_stats      = is_array( $le_stats ) ? $le_stats : array();
 
 			<div class="about-card__body">
 				<p class="about-card__lede"><?php echo esc_html( le_field( 'home_about_lede' ) ); ?></p>
-				<a class="arrow-link about-card__more" href="<?php echo esc_url( home_url( '/about' ) ); ?>" aria-label="<?php esc_attr_e( 'More about us', 'lewisedward' ); ?>">
+				<?php $home_about_more = le_link( 'home_about_more', '/about', __( 'More about us', 'lewisedward' ), false ); ?>
+				<a class="arrow-link about-card__more" href="<?php echo esc_url( $home_about_more['url'] ); ?>"<?php le_link_target_attr( $home_about_more ); ?> aria-label="<?php echo esc_attr( $home_about_more['title'] ); ?>">
 					<span class="arrow-link__badge" aria-hidden="true"><?php echo le_arrow_diagonal_svg( 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-					<span class="arrow-link__label"><?php esc_html_e( 'More about us', 'lewisedward' ); ?></span>
+					<span class="arrow-link__label"><?php echo esc_html( $home_about_more['title'] ); ?></span>
 				</a>
 			</div>
 

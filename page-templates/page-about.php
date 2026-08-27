@@ -87,8 +87,9 @@ $ab_values = is_array( $ab_values ) ? $ab_values : array();
 										<span class="about-bio__role"><?php echo esc_html( le_field( 'about_bio_role' ) ); ?></span>
 									</span>
 								</span>
-								<a class="arrow-link about-bio__cta" href="<?php echo esc_url( home_url( '/contact' ) ); ?>" aria-label="<?php esc_attr_e( 'Get in touch', 'lewisedward' ); ?>">
-									<span class="arrow-link__label"><?php esc_html_e( 'Get in touch', 'lewisedward' ); ?></span>
+								<?php $about_bio_cta = le_link( 'about_bio_cta', '/contact', __( 'Get in touch', 'lewisedward' ), false ); ?>
+								<a class="arrow-link about-bio__cta" href="<?php echo esc_url( $about_bio_cta['url'] ); ?>"<?php le_link_target_attr( $about_bio_cta ); ?> aria-label="<?php echo esc_attr( $about_bio_cta['title'] ); ?>">
+									<span class="arrow-link__label"><?php echo esc_html( $about_bio_cta['title'] ); ?></span>
 									<span class="arrow-link__badge" aria-hidden="true"><?php echo le_arrow_diagonal_svg( 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 								</a>
 							</footer>

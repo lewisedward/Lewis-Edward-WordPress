@@ -71,7 +71,7 @@ $le_team         = le_field( 'home_hero_team' );         // team posts
 			<?php /* ---- Metrics tile ---- */ ?>
 			<div class="hero-tile hero-tile--metrics glass">
 				<div class="hero-metrics__head">
-					<p class="eyebrow"><?php esc_html_e( 'Metrics', 'lewisedward' ); ?></p>
+					<p class="eyebrow"><?php echo esc_html( le_field( 'home_hero_metrics_label', false, __( 'Metrics', 'lewisedward' ) ) ); ?></p>
 					<span class="pulse-dot" aria-hidden="true"></span>
 				</div>
 
@@ -139,9 +139,10 @@ $le_team         = le_field( 'home_hero_team' );         // team posts
 			<?php /* ---- Capabilities tile ---- */ ?>
 			<div class="hero-tile hero-tile--caps">
 				<div class="hero-caps__head">
-					<p class="eyebrow"><?php esc_html_e( 'Capabilities', 'lewisedward' ); ?></p>
+					<p class="eyebrow"><?php echo esc_html( le_field( 'home_hero_caps_label', false, __( 'Capabilities', 'lewisedward' ) ) ); ?></p>
 					<span class="hero-caps__rule" aria-hidden="true"></span>
-					<a class="eyebrow hero-caps__all" href="<?php echo esc_url( home_url( '/services' ) ); ?>"><?php esc_html_e( 'All services', 'lewisedward' ); ?></a>
+					<?php $home_caps_all = le_link( 'home_hero_caps_all', '/services', __( 'All services', 'lewisedward' ), false ); ?>
+						<a class="eyebrow hero-caps__all" href="<?php echo esc_url( $home_caps_all['url'] ); ?>"<?php le_link_target_attr( $home_caps_all ); ?>><?php echo esc_html( $home_caps_all['title'] ); ?></a>
 				</div>
 
 				<div class="hero-caps__list">

@@ -66,17 +66,17 @@ $le_footer_menu = function ( $location ) {
 				</div>
 
 				<div class="footer-col">
-					<p class="footer-col__title"><?php esc_html_e( 'Discover', 'lewisedward' ); ?></p>
+					<p class="footer-col__title"><?php echo esc_html( le_option( 'footer_col_discover', __( 'Discover', 'lewisedward' ) ) ); ?></p>
 					<?php $le_footer_menu( 'footer_discover' ); ?>
 				</div>
 
 				<div class="footer-col">
-					<p class="footer-col__title"><?php esc_html_e( 'Services', 'lewisedward' ); ?></p>
+					<p class="footer-col__title"><?php echo esc_html( le_option( 'footer_col_services', __( 'Services', 'lewisedward' ) ) ); ?></p>
 					<?php $le_footer_menu( 'footer_services' ); ?>
 				</div>
 
 				<div class="footer-col">
-					<p class="footer-col__title"><?php esc_html_e( 'Take Action', 'lewisedward' ); ?></p>
+					<p class="footer-col__title"><?php echo esc_html( le_option( 'footer_col_take_action', __( 'Take Action', 'lewisedward' ) ) ); ?></p>
 					<?php $le_footer_menu( 'footer_take_action' ); ?>
 				</div>
 
@@ -85,20 +85,21 @@ $le_footer_menu = function ( $location ) {
 
 		<div class="footer-bottom glass">
 			<div class="footer-bottom__left">
-				<span class="footer-bottom__copy">&copy; <?php echo esc_html( date_i18n( 'Y' ) ); ?> <?php esc_html_e( 'Lewis Edward Ltd', 'lewisedward' ); ?></span>
-				<a class="footer-link footer-bottom__privacy" href="<?php echo esc_url( home_url( '/privacy' ) ); ?>"><span class="footer-link__text"><?php esc_html_e( 'Privacy Policy', 'lewisedward' ); ?></span><span class="footer-link__underline" aria-hidden="true"></span></a>
+				<span class="footer-bottom__copy">&copy; <?php echo esc_html( date_i18n( 'Y' ) ); ?> <?php echo esc_html( le_option( 'footer_copyright_name', __( 'Lewis Edward Ltd', 'lewisedward' ) ) ); ?></span>
+				<?php $footer_privacy = le_link( 'footer_privacy_link', '/privacy', __( 'Privacy Policy', 'lewisedward' ), 'option' ); ?>
+				<a class="footer-link footer-bottom__privacy" href="<?php echo esc_url( $footer_privacy['url'] ); ?>"<?php le_link_target_attr( $footer_privacy ); ?>><span class="footer-link__text"><?php echo esc_html( $footer_privacy['title'] ); ?></span><span class="footer-link__underline" aria-hidden="true"></span></a>
 			</div>
 
 			<div class="footer-bottom__right">
 				<span class="footer-bottom__loc">
 					<img src="<?php echo esc_url( LE_URI . '/assets/images/united-kingdom.svg' ); ?>" alt="UK" width="14" height="10" />
-					<span><?php esc_html_e( 'London', 'lewisedward' ); ?></span>
+					<span><?php echo esc_html( le_option( 'footer_location', __( 'London', 'lewisedward' ) ) ); ?></span>
 				</span>
 				<span class="footer-bottom__sep" aria-hidden="true"></span>
 				<time class="footer-bottom__clock" data-london-clock aria-label="<?php esc_attr_e( 'Current time in London', 'lewisedward' ); ?>">--:--</time>
 				<span class="footer-bottom__sep" aria-hidden="true"></span>
 				<button class="footer-top" type="button" data-scroll-top aria-label="<?php esc_attr_e( 'Back to top', 'lewisedward' ); ?>">
-					<span class="footer-top__label"><?php esc_html_e( 'Back to top', 'lewisedward' ); ?></span>
+					<span class="footer-top__label"><?php echo esc_html( le_option( 'footer_backtotop', __( 'Back to top', 'lewisedward' ) ) ); ?></span>
 					<span class="footer-top__icon" aria-hidden="true">
 						<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
 					</span>

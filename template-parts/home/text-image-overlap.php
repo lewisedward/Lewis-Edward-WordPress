@@ -68,9 +68,10 @@ function le_rel_id( $item ) {
 				<h2 class="overlap-card__title"><?php echo le_field( 'home_overlap_title' ); ?></h2>
 				<div class="overlap-card__aside">
 					<p class="overlap-card__lede"><?php echo esc_html( le_field( 'home_overlap_lede' ) ); ?></p>
-					<a class="arrow-link overlap-card__all" href="<?php echo esc_url( home_url( '/services' ) ); ?>" aria-label="<?php esc_attr_e( 'See all services', 'lewisedward' ); ?>">
+					<?php $home_overlap_more = le_link( 'home_overlap_more', '/services', __( 'More services', 'lewisedward' ), false ); ?>
+					<a class="arrow-link overlap-card__all" href="<?php echo esc_url( $home_overlap_more['url'] ); ?>"<?php le_link_target_attr( $home_overlap_more ); ?> aria-label="<?php esc_attr_e( 'See all services', 'lewisedward' ); ?>">
 						<span class="arrow-link__badge" aria-hidden="true"><?php echo le_arrow_diagonal_svg( 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-						<span class="arrow-link__label"><?php esc_html_e( 'More services', 'lewisedward' ); ?></span>
+						<span class="arrow-link__label"><?php echo esc_html( $home_overlap_more['title'] ); ?></span>
 					</a>
 				</div>
 			</div>
