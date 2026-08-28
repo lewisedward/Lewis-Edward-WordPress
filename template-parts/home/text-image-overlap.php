@@ -81,7 +81,7 @@ function le_rel_id( $item ) {
 				<span class="overlap-wordmark" aria-hidden="true"><?php echo esc_html( $le_wordmark ); ?></span>
 				<?php if ( $le_video ) : ?>
 					<div class="overlap-video">
-						<video autoplay loop muted playsinline preload="none"<?php echo $le_poster_u ? ' poster="' . esc_url( $le_poster_u ) . '"' : ''; ?>>
+						<video autoplay loop muted playsinline preload="none" aria-hidden="true" tabindex="-1"<?php echo $le_poster_u ? ' poster="' . esc_url( $le_poster_u ) . '"' : ''; ?>>
 							<source src="<?php echo esc_url( $le_video ); ?>" type="video/mp4" />
 						</video>
 					</div>
@@ -97,7 +97,7 @@ function le_rel_id( $item ) {
 			<div class="overlap-desktop" data-overlap>
 				<?php if ( $le_video ) : ?>
 					<div class="overlap-desktop__video" data-overlap-image>
-						<video autoplay loop muted playsinline preload="none"<?php echo $le_poster_u ? ' poster="' . esc_url( $le_poster_u ) . '"' : ''; ?>>
+						<video autoplay loop muted playsinline preload="none" aria-hidden="true" tabindex="-1"<?php echo $le_poster_u ? ' poster="' . esc_url( $le_poster_u ) . '"' : ''; ?>>
 							<source src="<?php echo esc_url( $le_video ); ?>" type="video/mp4" />
 						</video>
 					</div>
