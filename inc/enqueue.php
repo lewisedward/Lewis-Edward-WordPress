@@ -31,13 +31,7 @@ function le_asset_ver( $rel_path ) {
  * Enqueue front-end assets.
  */
 function le_enqueue_assets() {
-	// Main compiled stylesheet: design tokens, @font-face (Chillax), base.
-	wp_enqueue_style(
-		'le-theme',
-		LE_URI . '/assets/css/theme.css',
-		array(),
-		le_asset_ver( 'assets/css/theme.css' )
-	);
+	// theme.css is not enqueued: it is inlined in <head>. See le_inline_theme_css().
 
 	/*
 	 * The root style.css carries only the WordPress theme header - no rules.
@@ -178,31 +172,35 @@ function le_enqueue_assets() {
 add_action( 'wp_enqueue_scripts', 'le_enqueue_assets' );
 
 /**
- * Preload the above-the-fold Chillax weights.
+ * Inline the compiled stylesheet instead of linking it.
  *
- * The @font-face URLs live inside theme.css, so the browser cannot discover
- * them until that stylesheet has downloaded AND parsed - three round trips
- * deep. With the Google Fonts request gone the page now paints at ~1.7s,
- * which is *before* the fonts arrive, so the swap reflows the hero after
- * first paint (CLS 0.133, attributed by Lighthouse to these four files).
+ * theme.css was the last render-blocking request on the page (~330ms on
+ * mobile). At ~29.5 KiB over the wire the round trip costs more than the bytes
+ * do, so the whole file goes into <head> instead. Unlike a critical-CSS split
+ * every rule is present, so there is no risk of an unstyled flash; the trade is
+ * that the CSS travels with each document rather than being cached separately.
  *
- * Preloading starts them in parallel with the stylesheet instead, so they are
- * in place by first paint. All four weights are used above the fold (300 lede,
- * 400 headings, 500 eyebrows, 600 strong eyebrows), so this changes the order
- * these bytes are requested, not how many.
- *
- * crossorigin is required even same-origin: fonts are always fetched in CORS
- * mode, and without it the preload will not match and the file downloads twice.
+ * The file lives in /assets/css/, so its relative url(../fonts/...) references
+ * MUST be rewritten to absolute. Once inlined they would otherwise resolve
+ * against the page URL rather than the stylesheet's, and every @font-face 404s.
  */
-function le_preload_fonts() {
-	foreach ( array( 'Chillax-Light', 'Chillax-Regular', 'Chillax-Medium', 'Chillax-Semibold' ) as $le_font ) {
-		printf(
-			'<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n",
-			esc_url( LE_URI . '/assets/fonts/' . $le_font . '.woff2' )
-		);
+function le_inline_theme_css() {
+	$le_css_file = LE_DIR . '/assets/css/theme.css';
+	if ( ! is_readable( $le_css_file ) ) {
+		return;
 	}
+	$le_css = file_get_contents( $le_css_file ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- local theme asset, not a remote request.
+	if ( false === $le_css ) {
+		return;
+	}
+	$le_css = str_replace(
+		array( "url('../", 'url("../', 'url(../' ),
+		array( "url('" . LE_URI . '/assets/', 'url("' . LE_URI . '/assets/', 'url(' . LE_URI . '/assets/' ),
+		$le_css
+	);
+	echo "<style id=\"le-theme-inline\">\n" . $le_css . "\n</style>\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- first-party stylesheet, never user input.
 }
-add_action( 'wp_head', 'le_preload_fonts', 1 );
+add_action( 'wp_head', 'le_inline_theme_css', 2 );
 
 /**
  * Editor styles — light editor stylesheet (theme font only).

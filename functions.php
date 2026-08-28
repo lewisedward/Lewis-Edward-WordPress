@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Theme constants.
  */
-define( 'LE_VERSION', '1.0.1' );
+define( 'LE_VERSION', '1.0.2' );
 define( 'LE_DIR', get_template_directory() );
 define( 'LE_URI', get_template_directory_uri() );
 

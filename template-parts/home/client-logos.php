@@ -41,10 +41,18 @@ function le_render_logo_row( $logos, $direction ) {
 		$name = isset( $row['name'] ) ? $row['name'] : '';
 		$dupe = $idx >= count( $logos ) ? ' aria-hidden="true"' : '';
 		echo '<div class="client-logo"' . $dupe . '>';
+		// Intrinsic dimensions let the browser reserve the box before the file
+		// lands. CSS still controls the rendered size. SVGs may report none.
+		$le_w = isset( $logo['width'] ) ? (int) $logo['width'] : 0;
+		$le_h = isset( $logo['height'] ) ? (int) $logo['height'] : 0;
+		$le_dims = ( $le_w > 0 && $le_h > 0 )
+			? sprintf( ' width="%d" height="%d"', $le_w, $le_h )
+			: '';
 		printf(
-			'<img class="client-logo__img" src="%1$s" alt="%2$s" loading="lazy" />',
+			'<img class="client-logo__img" src="%1$s" alt="%2$s" loading="lazy"%3$s />',
 			esc_url( $logo['url'] ),
-			esc_attr( $name ? $name . ' logo' : ( $logo['alt'] ?? '' ) )
+			esc_attr( $name ? $name . ' logo' : ( $logo['alt'] ?? '' ) ),
+			$le_dims // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built from ints above.
 		);
 		echo '</div>';
 	}
