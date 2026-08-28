@@ -685,6 +685,40 @@
             "max": "",
             "return_format": "object",
             "bidirectional_target": []
+        },
+        {
+            "key": "field_spl_tab",
+            "label": "Section labels",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_spl_process_cta",
+            "label": "Process — ‘Get in touch’ link",
+            "name": "services_process_cta",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Leave blank to use the default: “Get in touch” → /contact",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
         }
     ],
     "location": [
@@ -692,7 +726,7 @@
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "page-templates\/page-services.php"
+                "value": "page-templates/page-services.php"
             }
         ]
     ],
@@ -708,5 +742,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1786222966
+    "modified": 1787661200
 }

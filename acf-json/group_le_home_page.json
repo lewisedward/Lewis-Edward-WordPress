@@ -1,0 +1,45 @@
+{
+    "key": "group_le_home_page",
+    "title": "Homepage (template)",
+    "fields": [
+        {
+            "key": "field_hpl_tpl_eyebrow",
+            "label": "Eyebrow",
+            "name": "homepage_tpl_eyebrow",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "London",
+            "prepend": "",
+            "append": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "page-templates/page-home.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Homepage template labels. Blank = default shown in grey.",
+    "show_in_rest": 0,
+    "modified": 1787661200
+}

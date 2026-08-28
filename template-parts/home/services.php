@@ -38,9 +38,10 @@ $le_count    = count( $le_services );
 
 				<p class="services-intro__lede"><?php echo esc_html( le_field( 'home_services_lede' ) ); ?></p>
 
-				<a class="services-intro__all" href="<?php echo esc_url( home_url( '/services' ) ); ?>" aria-label="<?php esc_attr_e( 'See all services', 'lewisedward' ); ?>">
+				<?php $home_services_all = le_link( 'home_services_all', '/services', __( 'All services', 'lewisedward' ), false ); ?>
+				<a class="services-intro__all" href="<?php echo esc_url( $home_services_all['url'] ); ?>"<?php le_link_target_attr( $home_services_all ); ?> aria-label="<?php esc_attr_e( 'See all services', 'lewisedward' ); ?>">
 					<span class="services-intro__badge" aria-hidden="true"><?php echo le_arrow_diagonal_svg( 16 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-					<span class="eyebrow services-intro__all-label"><?php esc_html_e( 'All services', 'lewisedward' ); ?></span>
+					<span class="eyebrow services-intro__all-label"><?php echo esc_html( $home_services_all['title'] ); ?></span>
 				</a>
 			</div>
 
@@ -51,11 +52,11 @@ $le_count    = count( $le_services );
 					foreach ( $le_services as $i => $svc ) :
 						$sid = is_object( $svc ) ? $svc->ID : (int) $svc;
 						?>
-						<a class="service-card glass" href="<?php echo esc_url( get_permalink( $sid ) ); ?>" data-cursor="More" data-reveal>
+						<a class="service-card glass" href="<?php echo esc_url( get_permalink( $sid ) ); ?>" data-cursor-ignore data-reveal>
 							<div class="service-card__head">
 								<span class="eyebrow"><?php echo esc_html( sprintf( __( 'Service / %s', 'lewisedward' ), str_pad( (string) ( $i + 1 ), 2, '0', STR_PAD_LEFT ) ) ); ?></span>
 								<span class="service-card__rule" aria-hidden="true"></span>
-								<span class="eyebrow service-card__explore"><?php esc_html_e( 'Explore', 'lewisedward' ); ?></span>
+								<span class="eyebrow service-card__explore"><?php echo esc_html( le_field( 'home_services_explore', false, __( 'Explore', 'lewisedward' ) ) ); ?></span>
 							</div>
 							<div class="service-card__body">
 								<h3 class="service-card__title"><?php echo esc_html( get_the_title( $sid ) ); ?></h3>

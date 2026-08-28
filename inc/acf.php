@@ -120,3 +120,48 @@ function le_field( $selector, $post_id = false, $default = '' ) {
 function le_option( $selector, $default = '' ) {
 	return le_field( $selector, 'option', $default );
 }
+
+/**
+ * Null-safe wrapper for an ACF Link field.
+ *
+ * Returns a normalised array of url/title/target. When the field is empty the
+ * supplied defaults are used, so the current hard-coded link keeps working
+ * until the client fills the field on the dashboard. A site-relative default
+ * (e.g. "/contact") is resolved against the site root; absolute URLs picked in
+ * the ACF link picker are left untouched.
+ *
+ * @param string $selector      Field name.
+ * @param string $default_url   Fallback URL (absolute, or "/path" for internal).
+ * @param string $default_title Fallback link text.
+ * @param mixed  $post_id       Post ID / 'option' / false for current post.
+ * @return array{url:string,title:string,target:string}
+ */
+function le_link( $selector, $default_url = '', $default_title = '', $post_id = false ) {
+	$link   = function_exists( 'get_field' ) ? get_field( $selector, $post_id ) : null;
+	$url    = ( is_array( $link ) && ! empty( $link['url'] ) ) ? $link['url'] : $default_url;
+	$title  = ( is_array( $link ) && ! empty( $link['title'] ) ) ? $link['title'] : $default_title;
+	$target = ( is_array( $link ) && ! empty( $link['target'] ) ) ? $link['target'] : '';
+
+	// Resolve a site-relative default ("/contact") against the site root. An
+	// absolute URL (http(s)://, mailto:, tel:, #anchor) is returned as-is.
+	if ( '' !== $url && '/' === $url[0] ) {
+		$url = home_url( $url );
+	}
+
+	return array(
+		'url'    => $url,
+		'title'  => $title,
+		'target' => $target,
+	);
+}
+
+/**
+ * Echo the target/rel attributes for a le_link() result.
+ *
+ * @param array $link Result from le_link().
+ */
+function le_link_target_attr( $link ) {
+	if ( ! empty( $link['target'] ) ) {
+		echo ' target="' . esc_attr( $link['target'] ) . '" rel="noopener noreferrer"';
+	}
+}

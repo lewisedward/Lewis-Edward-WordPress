@@ -99,8 +99,10 @@ class LE_Mega_Walker extends Walker_Nav_Menu {
 	public function end_lvl( &$output, $depth = 0, $args = null ) {
 		if ( 0 === $depth ) {
 			$output .= '</div>'; // .mega-menu__grid
+			
+			$services_count = wp_count_posts( 'service' );
+			$count = isset( $services_count->publish ) ? (int) $services_count->publish : 0;
 
-			$count = isset( $this->mega['count'] ) ? (int) $this->mega['count'] : 0;
 			$url   = isset( $this->mega['url'] ) ? $this->mega['url'] : '#';
 			$label = isset( $this->mega['label'] ) ? $this->mega['label'] : __( 'Services', 'lewisedward' );
 

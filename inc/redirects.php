@@ -100,6 +100,7 @@ function le_legacy_redirects() {
 		'/product/lite' => '/services',
 		'/product/premium' => '/services',
 		'/privacy-and-cookie-policy' => '/privacy',
+		'/services/website-auditing' => '/services/website-audits',
 	);
 }
 

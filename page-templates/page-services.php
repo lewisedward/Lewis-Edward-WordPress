@@ -174,12 +174,13 @@ $sp_id = function ( $item ) {
 						<div class="svc-process__intro">
 							<h2 class="svc-process__title"><?php echo esc_html( le_field( 'services_process_h1' ) ); ?> <span class="about-muted"><?php echo esc_html( le_field( 'services_process_h_muted' ) ); ?></span> <span class="text-primary"><?php echo esc_html( le_field( 'services_process_h_accent' ) ); ?></span></h2>
 							<p class="svc-process__lede"><?php echo esc_html( le_field( 'services_process_intro' ) ); ?></p>
-							<a class="btn btn--ghost svc-process__cta" href="<?php echo esc_url( home_url( '/contact' ) ); ?>"><?php esc_html_e( 'Get in touch', 'lewisedward' ); ?><?php echo le_arrow_diagonal_svg( 12 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+							<?php $services_process_cta = le_link( 'services_process_cta', '/contact', __( 'Get in touch', 'lewisedward' ), false ); ?>
+							<a class="btn btn--ghost svc-process__cta" href="<?php echo esc_url( $services_process_cta['url'] ); ?>"<?php le_link_target_attr( $services_process_cta ); ?>><?php echo esc_html( $services_process_cta['title'] ); ?><?php echo le_arrow_diagonal_svg( 12 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 						</div>
 
 						<div class="svc-process__steps">
 							<?php foreach ( $sp_steps as $s => $step ) : ?>
-								<div class="svc-step">
+								<div class="svc-step" data-cursor="hover">
 									<span class="svc-step__num"><?php echo esc_html( str_pad( (string) ( $s + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
 									<div class="svc-step__body">
 										<h3 class="svc-step__title"><?php echo esc_html( isset( $step['title'] ) ? $step['title'] : '' ); ?></h3>

@@ -38,10 +38,10 @@ function le_setup() {
 	) );
 
 	// Image sizes used by cards and hero art.
-	add_image_size( 'le_card', 800, 600, true );
-	add_image_size( 'le_card_wide', 1200, 800, true );
-	add_image_size( 'le_hero', 2000, 1200, true );
-	add_image_size( 'le_thumb', 480, 360, true );
+	add_image_size( 'le_card', 800, 600, false );
+	add_image_size( 'le_card_wide', 1200, 800, false );
+	add_image_size( 'le_hero', 2000, 1200, false );
+	add_image_size( 'le_thumb', 480, 360, false );
 	add_image_size( 'le_portrait', 600, 800, array( 'center', 'top' ) ); // 3:4 — team cards, crop from top (keeps faces)
 	add_image_size( 'le_avatar', 240, 240, array( 'center', 'top' ) );   // 1:1 — round avatars, crop from top
 }

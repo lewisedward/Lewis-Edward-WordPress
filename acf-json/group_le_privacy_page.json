@@ -1,0 +1,108 @@
+{
+    "key": "group_le_privacy_page",
+    "title": "Privacy Policy Page",
+    "fields": [
+        {
+            "key": "field_pp_eyebrow",
+            "label": "Eyebrow",
+            "name": "privacy_eyebrow",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Legal",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pp_h1",
+            "label": "Heading (H1)",
+            "name": "privacy_h1",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Privacy Policy",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pp_updated",
+            "label": "Last updated",
+            "name": "privacy_updated",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Optional, e.g. “Last updated: January 2026”.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Last updated: January 2026",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_pp_body",
+            "label": "Policy content",
+            "name": "privacy_body",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "The full privacy policy — use headings, paragraphs and lists.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "delay": 0
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "page-templates\/page-privacy.php"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Content for the Privacy Policy page.",
+    "show_in_rest": 0,
+    "display_title": "",
+    "allow_ai_access": false,
+    "ai_description": "",
+    "modified": 1786465981
+}
