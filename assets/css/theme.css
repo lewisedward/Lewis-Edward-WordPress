@@ -412,7 +412,7 @@ h6 { font-size: var(--h6-size); line-height: var(--h6-leading); letter-spacing: 
 	font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;
 }
 .mega-menu__count-num { color: hsl(var(--primary)); font-variant-numeric: tabular-nums; }
-.mega-menu__count-label { color: hsl(var(--foreground) / 0.40); }
+.mega-menu__count-label { color: hsl(var(--foreground) / var(--eyebrow-alpha)); }
 .mega-menu__all {
 	display: inline-flex; align-items: center; gap: 0.5rem;
 	font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em;
@@ -442,7 +442,7 @@ h6 { font-size: var(--h6-size); line-height: var(--h6-leading); letter-spacing: 
 .status__sep { width: 1px; height: 0.75rem; background-color: hsl(var(--foreground) / 0.10); transition: background-color 0.2s ease; }
 .status:hover .status__sep { background-color: hsl(var(--foreground) / 0.20); }
 .status__flag { opacity: 0.6; }
-.status__city { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: hsl(var(--foreground) / 0.40); line-height: 1; transition: color 0.2s ease; }
+.status__city { font-size: 12px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: hsl(var(--foreground) / var(--eyebrow-alpha)); line-height: 1; transition: color 0.2s ease; }
 .status:hover .status__city { color: hsl(var(--foreground) / 0.60); }
 .status__clock { font-size: 12px; font-weight: 500; letter-spacing: 0.05em; color: hsl(var(--foreground) / 0.80); font-variant-numeric: tabular-nums; line-height: 1; }
 
@@ -726,7 +726,7 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 @media (min-width: 640px) { .services-intro { padding: 2.5rem; border-radius: 2.25rem; } }
 @media (min-width: 1024px) { .services-intro { padding: 3.5rem; border-radius: 2.5rem; position: sticky; top: 7rem; align-self: start; } }
 .services-intro__head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.8rem; }
-.services-intro__eyebrow { color: hsl(var(--primary-foreground) / 0.6); }
+.services-intro__eyebrow { color: hsl(var(--primary-foreground) / 0.75); } /* ink on lime: 7.2:1 */
 .services-intro__count { font-size: 10px; font-weight: 600; margin-left: 0.25rem; color: hsl(var(--primary-foreground)); vertical-align: super; position: relative; top: -5px; }
 .services-intro__title { margin: 0 0 2rem; font-family: var(--font-display); font-weight: 400; font-size: clamp(1.8rem, 3.4vw, 3.5rem); line-height: 0.98; letter-spacing: -0.04em; color: hsl(var(--primary-foreground)); }
 .services-intro__lede { max-width: 36rem; margin: 0 0 2.5rem; font-size: 1rem; line-height: 1.75; color: hsl(var(--primary-foreground) / 0.75); }
