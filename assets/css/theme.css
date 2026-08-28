@@ -8,29 +8,36 @@
 /* ---- Fonts (Chillax, self-hosted). Newsreader was removed: the token was
    declared but never referenced, so it cost a blocking Google Fonts request
    on every page for no visual effect. ---------------------------------------- */
+
+/* font-display: optional (not swap) is deliberate. With swap, Chillax arrives
+   after first paint and the reflow resizes the hero bento grid - CLS 0.100,
+   attributed by Lighthouse to these four files. optional gives the browser a
+   ~100ms block period: if the face is ready it is used, otherwise the page
+   renders in the fallback for that view and never swaps, so a font-driven
+   shift is structurally impossible. Cached repeat visits get Chillax. */
 @font-face {
 	font-family: 'Chillax';
 	src: url('../fonts/Chillax-Light.woff2') format('woff2'),
 	     url('../fonts/Chillax-Light.woff') format('woff');
-	font-weight: 300; font-style: normal; font-display: swap;
+	font-weight: 300; font-style: normal; font-display: optional;
 }
 @font-face {
 	font-family: 'Chillax';
 	src: url('../fonts/Chillax-Regular.woff2') format('woff2'),
 	     url('../fonts/Chillax-Regular.woff') format('woff');
-	font-weight: 400; font-style: normal; font-display: swap;
+	font-weight: 400; font-style: normal; font-display: optional;
 }
 @font-face {
 	font-family: 'Chillax';
 	src: url('../fonts/Chillax-Medium.woff2') format('woff2'),
 	     url('../fonts/Chillax-Medium.woff') format('woff');
-	font-weight: 500; font-style: normal; font-display: swap;
+	font-weight: 500; font-style: normal; font-display: optional;
 }
 @font-face {
 	font-family: 'Chillax';
 	src: url('../fonts/Chillax-Semibold.woff2') format('woff2'),
 	     url('../fonts/Chillax-Semibold.woff') format('woff');
-	font-weight: 600; font-style: normal; font-display: swap;
+	font-weight: 600; font-style: normal; font-display: optional;
 }
 
 /* ---- Design tokens -------------------------------------------------------- */
