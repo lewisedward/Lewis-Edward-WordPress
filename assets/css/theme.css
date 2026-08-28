@@ -5,7 +5,9 @@
    single source of truth for tokens; do not hardcode colours/fonts elsewhere.
    ============================================================================= */
 
-/* ---- Fonts (Chillax; Newsreader loaded via Google Fonts in enqueue) ------- */
+/* ---- Fonts (Chillax, self-hosted). Newsreader was removed: the token was
+   declared but never referenced, so it cost a blocking Google Fonts request
+   on every page for no visual effect. ---------------------------------------- */
 @font-face {
 	font-family: 'Chillax';
 	src: url('../fonts/Chillax-Light.woff2') format('woff2'),
@@ -36,7 +38,6 @@
 	/* Type families */
 	--font-display: 'Chillax', sans-serif;
 	--font-body: 'Chillax', sans-serif;
-	--font-serif: 'Newsreader', serif;
 
 	/* Heading scale */
 	--h1-size: clamp(2rem, 4.5vw, 5rem);   --h1-leading: 110%; --h1-tracking: -2px;   --h1-weight: 400;

@@ -31,29 +31,20 @@ function le_asset_ver( $rel_path ) {
  * Enqueue front-end assets.
  */
 function le_enqueue_assets() {
-	// Google-hosted Newsreader (italic display serif used for accents).
-	wp_enqueue_style(
-		'le-fonts-newsreader',
-		'https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@1,6..72,200..400&display=swap',
-		array(),
-		null
-	);
-
 	// Main compiled stylesheet: design tokens, @font-face (Chillax), base.
 	wp_enqueue_style(
 		'le-theme',
 		LE_URI . '/assets/css/theme.css',
-		array( 'le-fonts-newsreader' ),
+		array(),
 		le_asset_ver( 'assets/css/theme.css' )
 	);
 
-	// WordPress requires the root style.css to be present in the queue.
-	wp_enqueue_style(
-		'le-style',
-		get_stylesheet_uri(),
-		array( 'le-theme' ),
-		LE_VERSION
-	);
+	/*
+	 * The root style.css carries only the WordPress theme header - no rules.
+	 * It is deliberately NOT enqueued: WordPress requires the file to exist,
+	 * not to be in the queue, and as a render-blocking <link> it cost ~490ms
+	 * of first paint on mobile for zero bytes of actual CSS.
+	 */
 
 	// Smooth scroll (lightweight vanilla replacement for Lenis wrapper).
 	wp_enqueue_script(
@@ -185,17 +176,6 @@ function le_enqueue_assets() {
 	}
 }
 add_action( 'wp_enqueue_scripts', 'le_enqueue_assets' );
-
-/**
- * Preconnect to Google Fonts for faster first paint.
- */
-function le_resource_hints( $urls, $relation_type ) {
-	if ( 'preconnect' === $relation_type ) {
-		$urls[] = array( 'href' => 'https://fonts.gstatic.com', 'crossorigin' );
-	}
-	return $urls;
-}
-add_filter( 'wp_resource_hints', 'le_resource_hints', 10, 2 );
 
 /**
  * Editor styles — light editor stylesheet (theme font only).
