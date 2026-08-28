@@ -178,6 +178,33 @@ function le_enqueue_assets() {
 add_action( 'wp_enqueue_scripts', 'le_enqueue_assets' );
 
 /**
+ * Preload the above-the-fold Chillax weights.
+ *
+ * The @font-face URLs live inside theme.css, so the browser cannot discover
+ * them until that stylesheet has downloaded AND parsed - three round trips
+ * deep. With the Google Fonts request gone the page now paints at ~1.7s,
+ * which is *before* the fonts arrive, so the swap reflows the hero after
+ * first paint (CLS 0.133, attributed by Lighthouse to these four files).
+ *
+ * Preloading starts them in parallel with the stylesheet instead, so they are
+ * in place by first paint. All four weights are used above the fold (300 lede,
+ * 400 headings, 500 eyebrows, 600 strong eyebrows), so this changes the order
+ * these bytes are requested, not how many.
+ *
+ * crossorigin is required even same-origin: fonts are always fetched in CORS
+ * mode, and without it the preload will not match and the file downloads twice.
+ */
+function le_preload_fonts() {
+	foreach ( array( 'Chillax-Light', 'Chillax-Regular', 'Chillax-Medium', 'Chillax-Semibold' ) as $le_font ) {
+		printf(
+			'<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n",
+			esc_url( LE_URI . '/assets/fonts/' . $le_font . '.woff2' )
+		);
+	}
+}
+add_action( 'wp_head', 'le_preload_fonts', 1 );
+
+/**
  * Editor styles — light editor stylesheet (theme font only).
  *
  * Deliberately NOT theme.css: that file paints the dark charcoal background on
