@@ -14,14 +14,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Cache-busting version based on file mtime in dev, LE_VERSION in prod.
+ * Cache-busting asset version.
+ *
+ * Uses the file's modified time so every edit automatically busts the browser
+ * cache (no manual version bumps, no stale CSS/JS). Falls back to LE_VERSION if
+ * the file can't be read.
  *
  * @param string $rel_path Path relative to the theme root.
  * @return string
  */
 function le_asset_ver( $rel_path ) {
 	$abs = LE_DIR . '/' . ltrim( $rel_path, '/' );
-	if ( ( defined( 'WP_DEBUG' ) && WP_DEBUG ) && file_exists( $abs ) ) {
+	if ( file_exists( $abs ) ) {
 		return (string) filemtime( $abs );
 	}
 	return LE_VERSION;

@@ -967,13 +967,15 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 .overlap-desktop { display: none; }
 @media (min-width: 1024px) {
 	.overlap-mobile { display: none; }
-	.overlap-desktop { display: block; position: relative; min-height: 32rem; }
+	/* Height follows the service grid (in normal flow); min-height only guards
+	   against a very short list so the video/wordmark composition still works. */
+	.overlap-desktop { display: block; position: relative; min-height: 32rem; padding-top: 1.75rem; }
 }
-@media (min-width: 1280px) { .overlap-desktop { min-height: 40rem; } }
-.overlap-desktop__video { position: absolute; left: 12%; top: 5%; bottom: clamp(1.5rem, 3vw, 3.5rem); z-index: 1; width: clamp(16rem, 28vw, 26rem); border-radius: 1rem; overflow: hidden; border: 1px solid hsl(var(--foreground) / 0.1); background: hsl(var(--foreground) / 0.03); will-change: transform; }
+@media (min-width: 1280px) { .overlap-desktop { min-height: 40rem; padding-top: 2.25rem; } }
+.overlap-desktop__video { position: absolute; left: 12%; top: auto; bottom: clamp(1.5rem, 3vw, 3.5rem); height: min(88%, 40rem); z-index: 1; width: clamp(16rem, 28vw, 26rem); border-radius: 1rem; overflow: hidden; border: 1px solid hsl(var(--foreground) / 0.1); background: hsl(var(--foreground) / 0.03); will-change: transform; }
 .overlap-desktop__video video { width: 100%; height: 100%; object-fit: cover; filter: grayscale(1); }
-.overlap-desktop__grid { position: absolute; right: 0; top: 5%; z-index: 2; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; max-width: 40rem; width: 44vw; }
-.overlap-desktop__wordmark { position: absolute; left: 0; bottom: 0; z-index: 2; line-height: 0.86; }
+.overlap-desktop__grid { position: relative; z-index: 2; margin-left: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; max-width: 40rem; width: 44vw; }
+.overlap-desktop__wordmark { position: absolute; left: 0; bottom: 0; z-index: 2; line-height: 0.86; max-width: 52%; }
 .overlap-desktop__wordmark .overlap-wordmark--clip { position: absolute; inset: 0; color: hsl(var(--primary)); pointer-events: none; clip-path: inset(0 100% 0 0); }
 
 /* =============================================================================
@@ -1010,7 +1012,7 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 .about-card__stats { display: grid; grid-template-columns: 1fr; gap: 1rem; }
 @media (min-width: 640px) { .about-card__stats { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1024px) { .about-card__stats { grid-template-columns: repeat(4, 1fr); } }
-.about-stat { display: flex; flex-direction: column; height: 100%; padding: 1.25rem; border-radius: 1rem; border: 1px solid hsl(var(--primary)); background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
+.about-stat { display: flex; flex-direction: column; height: 100%; padding: 1.25rem; border-radius: 1rem; border: 1px solid hsl(var(--primary)); background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); justify-content: center; }
 @media (min-width: 640px) { .about-stat { padding: 1.5rem; } }
 .about-stat__num { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3em; color: hsl(var(--primary-foreground) / 0.7); font-variant-numeric: tabular-nums; margin-bottom: 1.3rem; }
 .about-stat__value { font-family: var(--font-display); font-weight: 400; font-size: clamp(2.4rem, 4vw, 3.4rem); line-height: 0.95; letter-spacing: -0.04em; color: hsl(var(--primary-foreground)); font-variant-numeric: tabular-nums; }
@@ -2367,9 +2369,10 @@ a.work-tag:hover { color: hsl(var(--primary)); border-color: hsl(var(--primary) 
 .is-cursor-hover .le-cursor-ring { width: 36px; height: 36px; margin: -18px 0 0 -18px; border-color: rgb(var(--cursor-accent) / 0.6); }
 
 /* Labelled elements (data-cursor="More"/"View"…): the DOT becomes a dark glass
-   disc with the label; the RING stays as the outer lime circle around it. */
+   disc with the label. The trailing RING is faded out here — the disc's own
+   lime border is the only circle, so there is no second outer ring. */
 .is-cursor-label .le-cursor-dot { width: 72px; height: 72px; margin: -36px 0 0 -36px; background: #16181830; border-color: rgb(var(--cursor-accent) / 0.8); -webkit-backdrop-filter: blur(7px); backdrop-filter: blur(7px); }
-.is-cursor-label .le-cursor-ring { width: 80px; height: 80px; margin: -40px 0 0 -40px; border-color: rgb(var(--cursor-accent) / 0.8); }
+.is-cursor-label .le-cursor-ring { opacity: 0; }
 .is-cursor-label .le-cursor__label { opacity: 1; transform: scale(1); }
 
 .is-cursor-hidden .le-cursor-dot,
