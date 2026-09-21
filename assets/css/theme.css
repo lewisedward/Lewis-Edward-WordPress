@@ -273,6 +273,9 @@ h6 { font-size: var(--h6-size); line-height: var(--h6-leading); letter-spacing: 
 	width: 100%;
 	max-width: 100rem;
 	margin-inline: auto;
+	/* Inset the pill by the section cards' 1px border on each side so, when the
+	   header sits over a card, it no longer covers the card's left/right border. */
+	padding-inline: 1px;
 }
 
 /* Show/hide the two pills by breakpoint */
