@@ -125,7 +125,7 @@
             "name": "work_live_url",
             "aria-label": "",
             "type": "url",
-            "instructions": "Link to the live site.",
+            "instructions": "Link to the live site. Use the toggle alongside to hide the button without deleting the URL.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -135,6 +135,27 @@
             },
             "default_value": "",
             "placeholder": ""
+        },
+        {
+            "key": "field_wk_live_show",
+            "label": "Show “Visit website” button",
+            "name": "work_live_show",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Turn off if the site is no longer live — the URL is kept but the button is hidden.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 1,
+            "allow_in_bindings": 0,
+            "ui": 1,
+            "ui_on_text": "Shown",
+            "ui_off_text": "Hidden"
         },
         {
             "key": "field_wk_services",
@@ -939,5 +960,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1787660900
+    "modified": 1790070031
 }

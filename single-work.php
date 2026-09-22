@@ -28,6 +28,13 @@ while ( have_posts() ) :
 	$wk_dur      = le_field( 'work_duration', $wk_id );
 	$wk_plat     = le_field( 'work_platform', $wk_id );
 	$wk_live     = le_field( 'work_live_url', $wk_id );
+	// "Show Visit website button" toggle. Read with get_field() directly:
+	// le_field() swaps false for its default, which would ignore a switched-off
+	// toggle. Unset (null) — posts saved before the toggle existed — means shown.
+	$wk_live_on  = function_exists( 'get_field' ) ? get_field( 'work_live_show', $wk_id ) : null;
+	if ( null !== $wk_live_on && ! $wk_live_on ) {
+		$wk_live = '';
+	}
 	$wk_services = le_field( 'work_services', $wk_id );
 	$wk_services = is_array( $wk_services ) ? $wk_services : array();
 	$wk_tech     = le_field( 'work_technologies', $wk_id );
