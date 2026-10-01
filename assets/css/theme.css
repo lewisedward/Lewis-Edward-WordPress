@@ -2415,3 +2415,33 @@ body.admin-bar header {
         top: 46px;
     }
 }
+/* ------------------------------------------------------------------ */
+/* Consistent lime hover outline — remaining section & content cards    */
+/* Extends the lime border-on-hover (with a matching transition) to the */
+/* section/content cards that had no hover rule, so every section the    */
+/* cursor enters responds identically. Already-lime tiles (services-     */
+/* intro, about-stat, hero CTA) are intentionally excluded — a lime      */
+/* border is invisible on them.                                          */
+/* ------------------------------------------------------------------ */
+.footer-pill,
+.hero-tile--caps,
+.work-project__info,
+.svc-hero,
+.svc-d-hero,
+.work-featured,
+.wk-brief__block,
+.jr-featured,
+.about-bio {
+	transition: border-color 0.5s ease, background-color 0.5s ease;
+}
+.footer-pill:hover,
+.hero-tile--caps:hover,
+.work-project__info:hover,
+.svc-hero:hover,
+.svc-d-hero:hover,
+.work-featured:hover,
+.wk-brief__block:hover,
+.jr-featured:hover,
+.about-bio:hover {
+	border-color: hsl(var(--primary) / 0.4);
+}
