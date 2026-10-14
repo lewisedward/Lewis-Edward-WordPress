@@ -171,10 +171,9 @@
 			// Continent dots — day/night terminator.
 			for (k = 0; k < N; k++) {
 				if (pz[k] < -0.02) { continue; }
-				var bright = Math.pow(pl[k], 1.5);
-				var alpha = 0.08 + bright * 0.92;
-				var size = 0.9 + bright * 2.3;
-				if (alpha <= 0.05) { continue; }
+				var bright = Math.pow(pl[k], 1.4);
+				var alpha = 0.3 + bright * 0.7;
+				var size = 1.0 + bright * 2.2;
 				ctx.globalAlpha = alpha < 1 ? alpha : 1;
 				ctx.fillStyle = bright > 0.72 ? 'rgb(228,255,160)' : 'rgb(' + LIME + ')';
 				ctx.beginPath(); ctx.arc(px[k], py[k], size / 2, 0, Math.PI * 2); ctx.fill();
@@ -201,7 +200,7 @@
 					var ok = a1[2] > -0.02;
 					if (ok && prevOk) {
 						var ua = u / (tt || 1);
-						var al = Math.pow(ua, 1.3) * 0.5 * ((a1[2] + 1) * 0.5);
+						var al = Math.pow(ua, 1.3) * 0.62 * ((a1[2] + 1) * 0.5);
 						if (al > 0.015) {
 							ctx.globalAlpha = al < 0.75 ? al : 0.75;
 							ctx.strokeStyle = 'rgb(' + LIME + ')';

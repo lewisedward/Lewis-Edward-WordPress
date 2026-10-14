@@ -2485,6 +2485,6 @@ body.admin-bar header {
 	top: -2.25rem;
 	right: -2.75rem;
 	width: min(47%, 520px);
-	-webkit-mask-image: radial-gradient(112% 112% at 86% 20%, #000 28%, rgba(0,0,0,0.38) 56%, transparent 82%);
-	mask-image: radial-gradient(112% 112% at 86% 20%, #000 28%, rgba(0,0,0,0.38) 56%, transparent 82%);
+	-webkit-mask-image: radial-gradient(135% 135% at 72% 34%, #000 55%, rgba(0,0,0,0.55) 82%, transparent 98%);
+	mask-image: radial-gradient(135% 135% at 72% 34%, #000 55%, rgba(0,0,0,0.55) 82%, transparent 98%);
 }
