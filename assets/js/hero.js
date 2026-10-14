@@ -134,7 +134,7 @@
 			ctx.clearRect(0, 0, w, h);
 			var cx = w / 2, cy = h / 2, radius = Math.min(w, h) * 0.45;
 			var lt = t * 0.00018;
-			var lx = Math.cos(lt * 1.3) * 0.75, ly = Math.sin(lt) * 0.45, lz = 0.6, ln = Math.hypot(lx, ly, lz);
+			var lx = Math.cos(lt * 1.3) * 0.92, ly = Math.sin(lt) * 0.5, lz = 0.38, ln = Math.hypot(lx, ly, lz);
 			var sinA = Math.sin(angle), cosA = Math.cos(angle);
 			var tiltS = Math.sin(-0.32), tiltC = Math.cos(-0.32);
 
@@ -151,10 +151,11 @@
 
 			// --- Planet body: soft shaded orb, lit side toward the sun ---
 			var hx = cx + lx * radius * 0.42, hy = cy + ly * radius * 0.42;
-			var body = ctx.createRadialGradient(hx, hy, radius * 0.08, cx, cy, radius);
-			body.addColorStop(0, 'rgba(46,56,20,0.55)');
-			body.addColorStop(0.55, 'rgba(18,22,11,0.45)');
-			body.addColorStop(1, 'rgba(9,11,7,0.15)');
+			var body = ctx.createRadialGradient(hx, hy, radius * 0.06, cx, cy, radius);
+			body.addColorStop(0, 'rgba(58,70,24,0.62)');
+			body.addColorStop(0.5, 'rgba(18,23,11,0.5)');
+			body.addColorStop(0.9, 'rgba(8,10,6,0.55)');
+			body.addColorStop(1, 'rgba(6,8,5,0.0)');
 			ctx.globalAlpha = 1; ctx.fillStyle = body;
 			ctx.beginPath(); ctx.arc(cx, cy, radius, 0, Math.PI * 2); ctx.fill();
 
@@ -162,7 +163,7 @@
 			var rim = ctx.createRadialGradient(cx, cy, radius * 0.82, cx, cy, radius * 1.07);
 			rim.addColorStop(0, 'rgba(191,255,0,0)');
 			rim.addColorStop(0.86, 'rgba(191,255,0,0)');
-			rim.addColorStop(0.95, 'rgba(191,255,0,0.14)');
+			rim.addColorStop(0.95, 'rgba(191,255,0,0.2)');
 			rim.addColorStop(1, 'rgba(191,255,0,0)');
 			ctx.fillStyle = rim;
 			ctx.beginPath(); ctx.arc(cx, cy, radius * 1.07, 0, Math.PI * 2); ctx.fill();
@@ -182,7 +183,7 @@
 				var a = edges[e][0], b = edges[e][1];
 				if (pz[a] < -0.02 || pz[b] < -0.02) { continue; }
 				var litE = (pl[a] + pl[b]) * 0.5, hot = heat[e];
-				var alpha = 0.02 + litE * 0.12 + hot * 0.55;
+				var alpha = 0.012 + litE * 0.06 + hot * 0.5;
 				if (alpha <= 0.015) { continue; }
 				ctx.globalAlpha = alpha < 0.9 ? alpha : 0.9;
 				ctx.lineWidth = 1 + hot * 1.3;
@@ -194,10 +195,10 @@
 			for (k = 0; k < pts.length; k++) {
 				if (pz[k] < -0.02) { continue; }
 				var lit = pl[k];
-				var bright = Math.pow(lit, 1.25);
-				var alpha2 = 0.1 + bright * 0.88;
-				var size = 0.8 + bright * 2.4;
-				if (alpha2 <= 0.04) { continue; }
+				var bright = Math.pow(lit, 1.6);
+				var alpha2 = 0.05 + bright * 0.95;
+				var size = 0.7 + bright * 2.8;
+				if (alpha2 <= 0.035) { continue; }
 				ctx.globalAlpha = alpha2 < 1 ? alpha2 : 1;
 				ctx.fillStyle = bright > 0.72 ? 'rgb(228,255,160)' : 'rgb(' + LIME + ')';
 				ctx.beginPath(); ctx.arc(px[k], py[k], size / 2, 0, Math.PI * 2); ctx.fill();
