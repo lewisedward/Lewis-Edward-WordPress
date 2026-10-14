@@ -2482,6 +2482,9 @@ body.admin-bar header {
    dissolve toward the headline/lede so the copy stays clean and the globe reads
    as part of the hero rather than sitting on top of the text. Homepage only. */
 .hero-tile--editorial .hero-sphere {
-	-webkit-mask-image: radial-gradient(125% 125% at 80% 26%, #000 36%, rgba(0,0,0,0.45) 64%, transparent 88%);
-	mask-image: radial-gradient(125% 125% at 80% 26%, #000 36%, rgba(0,0,0,0.45) 64%, transparent 88%);
+	top: -2.25rem;
+	right: -2.75rem;
+	width: min(47%, 520px);
+	-webkit-mask-image: radial-gradient(112% 112% at 86% 20%, #000 28%, rgba(0,0,0,0.38) 56%, transparent 82%);
+	mask-image: radial-gradient(112% 112% at 86% 20%, #000 28%, rgba(0,0,0,0.38) 56%, transparent 82%);
 }
