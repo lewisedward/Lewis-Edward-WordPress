@@ -2445,3 +2445,24 @@ body.admin-bar header {
 .about-bio:hover {
 	border-color: hsl(var(--primary) / 0.4);
 }
+
+/* ------------------------------------------------------------------ */
+/* Cookie consent banner                                               */
+/* Ships hidden; revealed client-side by assets/js/consent.js.         */
+/* ------------------------------------------------------------------ */
+.le-consent { position: fixed; z-index: 1000; left: 1rem; right: 1rem; bottom: 1rem; display: flex; justify-content: center; pointer-events: none; opacity: 0; transform: translateY(12px); transition: opacity 0.4s ease, transform 0.4s ease; }
+.le-consent.is-visible { opacity: 1; transform: none; }
+.le-consent[hidden] { display: none; }
+.le-consent__inner { pointer-events: auto; display: flex; flex-wrap: wrap; align-items: center; gap: 0.9rem 1.5rem; width: 100%; max-width: 46rem; padding: 1.1rem 1.35rem; border-radius: 1rem; }
+.le-consent__text { margin: 0; flex: 1 1 18rem; font-size: 0.85rem; line-height: 1.6; font-weight: 300; color: hsl(var(--foreground) / 0.75); }
+.le-consent__text a { color: hsl(var(--primary)); text-decoration: underline; text-underline-offset: 2px; }
+.le-consent__actions { display: flex; gap: 0.6rem; flex-shrink: 0; }
+.le-consent__btn { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em; border-radius: 999px; padding: 0.7rem 1.4rem; cursor: pointer; transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease, filter 0.3s ease; }
+.le-consent__btn--reject { background: transparent; border: 1px solid hsl(var(--foreground) / 0.2); color: hsl(var(--foreground) / 0.7); }
+.le-consent__btn--reject:hover { border-color: hsl(var(--primary) / 0.4); color: hsl(var(--foreground)); }
+.le-consent__btn--accept { background: hsl(var(--primary)); border: 1px solid hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
+.le-consent__btn--accept:hover { filter: brightness(1.06); }
+@media (max-width: 560px) { .le-consent__inner { flex-direction: column; align-items: stretch; } .le-consent__actions { } .le-consent__btn { flex: 1; } }
+
+/* "Cookie settings" trigger in the footer bottom bar — reset the button */
+.footer-bottom__cookies { background: none; border: 0; padding: 0; margin: 0; font: inherit; line-height: inherit; color: inherit; cursor: pointer; }

@@ -15,6 +15,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 </div><!-- .site-wrapper -->
 
+<?php get_template_part( 'template-parts/consent-banner' ); ?>
+
 <?php wp_footer(); ?>
 </body>
 </html>

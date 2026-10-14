@@ -17,60 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<?php // Marks JS as available before first paint, so reveal animations don't hide content for no-JS users and don't flash. ?>
 	<script>document.documentElement.classList.add('js-anim');</script>
 	<?php wp_head(); ?>
-	<?php
-	/*
-	 * Google tag (gtag.js) - deferred until the visitor engages.
-	 *
-	 * Loading it in <head> cost ~261ms of main-thread time and produced the
-	 * only two long tasks on the page, which pushed desktop Total Blocking
-	 * Time over the 150ms mark and made the Lighthouse score swing between
-	 * 89 and 100 run to run.
-	 *
-	 * The measurement stub below is Google's own: gtag() pushes onto
-	 * dataLayer, and the library replays that queue when it eventually loads,
-	 * so the 'js' and 'config' calls are not lost. Only the 155KB library
-	 * download and its execution are postponed - to the first real
-	 * interaction, or 10s, whichever comes first.
-	 *
-	 * Known trade: a visit that leaves within 10s without scrolling, tapping
-	 * or typing is never recorded, so reported sessions will step down and
-	 * will not line up with history from before this change.
-	 */
-	?>
-	<!-- Google tag (gtag.js) -->
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag(){dataLayer.push(arguments);}
-		gtag('js', new Date());
-
-		gtag('config', 'G-JPJ8G70E66');
-
-		(function () {
-			var loaded = false;
-			var timer;
-			var opts = { once: true, passive: true, capture: true };
-			var events = ['pointerdown', 'keydown', 'scroll', 'touchstart'];
-
-			function loadGtag() {
-				if (loaded) { return; }
-				loaded = true;
-				clearTimeout(timer);
-				events.forEach(function (evt) { window.removeEventListener(evt, loadGtag, opts); });
-
-				var s = document.createElement('script');
-				s.async = true;
-				s.src = 'https://www.googletagmanager.com/gtag/js?id=G-JPJ8G70E66';
-				document.head.appendChild(s);
-			}
-
-			events.forEach(function (evt) { window.addEventListener(evt, loadGtag, opts); });
-			timer = setTimeout(loadGtag, 10000);
-		})();
-		</script>
-
-	<?php /* OpenAI (ChatGPT) Ads pixel - oaiq. Pixel ID: VscXZAefYPygZq7saYuX7z. */ ?>
-	<!-- OpenAI Ads Pixel (oaiq) -->
-	<script>!function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};q.q=[];w.oaiq=q;var j=d.createElement(s);j.async=1;j.src=u;var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f)}(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");oaiq("init",{pixelId:"VscXZAefYPygZq7saYuX7z",debug:true});</script>
+	<?php // Analytics (gtag.js) and the OpenAI Ads pixel are consent-gated: loaded from assets/js/consent.js only after the visitor accepts cookies. ?>
 </head>
 
 <body <?php body_class(); ?>>

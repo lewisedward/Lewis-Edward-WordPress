@@ -71,6 +71,15 @@ function le_enqueue_assets() {
 		true
 	);
 
+	// Cookie consent + consent-gated tracking (gtag + OpenAI pixel).
+	wp_enqueue_script(
+		'le-consent',
+		LE_URI . '/assets/js/consent.js',
+		array(),
+		le_asset_ver( 'assets/js/consent.js' ),
+		true
+	);
+
 	// Hero dot-sphere canvas — registered only; enqueued by the hero part.
 	wp_register_script(
 		'le-hero',

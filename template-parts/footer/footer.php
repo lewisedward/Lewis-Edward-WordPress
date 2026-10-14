@@ -88,6 +88,7 @@ $le_footer_menu = function ( $location ) {
 				<span class="footer-bottom__copy">&copy; <?php echo esc_html( date_i18n( 'Y' ) ); ?> <?php echo esc_html( le_option( 'footer_copyright_name', __( 'Lewis Edward Ltd', 'lewisedward' ) ) ); ?></span>
 				<?php $footer_privacy = le_link( 'footer_privacy_link', '/privacy', __( 'Privacy Policy', 'lewisedward' ), 'option' ); ?>
 				<a class="footer-link footer-bottom__privacy" href="<?php echo esc_url( $footer_privacy['url'] ); ?>"<?php le_link_target_attr( $footer_privacy ); ?>><span class="footer-link__text"><?php echo esc_html( $footer_privacy['title'] ); ?></span><span class="footer-link__underline" aria-hidden="true"></span></a>
+				<button class="footer-link footer-bottom__cookies" type="button" data-consent-open><span class="footer-link__text"><?php esc_html_e( 'Cookie settings', 'lewisedward' ); ?></span><span class="footer-link__underline" aria-hidden="true"></span></button>
 			</div>
 
 			<div class="footer-bottom__right">
