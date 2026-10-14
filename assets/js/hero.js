@@ -1,24 +1,22 @@
 /**
- * Hero — rotating network globe, broadcasting from London.
+ * Hero — a glowing network planet, broadcasting from London.
  *
- * Fibonacci points wired to nearest neighbours form a glowing lime mesh.
- * London sits at its real latitude as a bright anchor node that pings, and
- * signal pulses fire outward from London hop-to-hop along the edges toward
- * brands across the globe, flaring each edge as they pass. Meaning: a London
- * studio connected to forward-thinking brands worldwide.
- *
- * Rotation, pulses and pings pause offscreen and under reduced-motion.
- * Desktop only (container hidden <=1024px).
+ * A shaded sphere (soft body + atmospheric rim) whose surface is a field of
+ * lime points lit by a drifting sun, so one hemisphere glows and the other
+ * falls into shadow (a day/night terminator) — reads as a planet, not a wire
+ * mesh. London sits at its real latitude as a bright anchor that pings, and
+ * signal pulses fire outward from London along the surface links toward brands
+ * across the globe. Front hemisphere only, so it looks solid. Rotation/pulses
+ * pause offscreen and under reduced-motion. Desktop only (hidden <=1024px).
  */
 (function () {
 	'use strict';
 
-	var POINT_COUNT = 680;
+	var POINT_COUNT = 900;
 	var NEIGHBORS = 3;
 	var ROT_SPEED = 0.16;
 	var PULSES = 6;
 	var LIME = '191,255,0';
-	// London at ~51.5N on the sphere (longitude is arbitrary — the globe spins).
 	var LONDON = { x: 0.6225, y: 0.7826, z: 0 };
 
 	function fibonacciSphere(n) {
@@ -50,9 +48,7 @@
 				var a = i, b = d[m].j, kk = key(a, b);
 				if (seen[kk] !== undefined) { continue; }
 				seen[kk] = edges.length;
-				edges.push([a, b]);
-				adj[a].push(b);
-				adj[b].push(a);
+				edges.push([a, b]); adj[a].push(b); adj[b].push(a);
 			}
 		}
 		return { edges: edges, adj: adj, index: seen };
@@ -70,8 +66,6 @@
 		var edges = g.edges, adj = g.adj, edgeIndex = g.index;
 		var heat = new Float32Array(edges.length);
 
-		// London = nearest point to the London vector; distance of every node
-		// from it drives the outward bias.
 		var london = 0, best = 1e9, i;
 		for (i = 0; i < pts.length; i++) {
 			var dx = pts[i].x - LONDON.x, dy = pts[i].y - LONDON.y, dz = pts[i].z - LONDON.z;
@@ -100,15 +94,11 @@
 		function advancePulse(p, dt) {
 			p.t += p.speed * dt;
 			while (p.t >= 1) {
-				p.t -= 1;
-				p.hops--;
-				var nbrs = adj[p.to];
-				// prefer outward neighbours (farther from London), never backtrack
-				var cur = distL[p.to], out = [], n;
+				p.t -= 1; p.hops--;
+				var nbrs = adj[p.to], cur = distL[p.to], out = [], n;
 				for (n = 0; n < nbrs.length; n++) { if (nbrs[n] !== p.from && distL[nbrs[n]] > cur - 0.03) { out.push(nbrs[n]); } }
 				if (p.hops <= 0 || !out.length) { var np = spawnPulse(); p.from = np.from; p.to = np.to; p.speed = np.speed; p.hops = np.hops; continue; }
-				var next = out[(Math.random() * out.length) | 0];
-				p.from = p.to; p.to = next;
+				p.from = p.to; p.to = out[(Math.random() * out.length) | 0];
 			}
 			var ei = edgeIndex[key(p.from, p.to)];
 			if (ei !== undefined) { heat[ei] = 1; }
@@ -122,8 +112,7 @@
 			dpr = Math.min(window.devicePixelRatio || 1, 2);
 			canvas.width = Math.max(1, Math.floor(w * dpr));
 			canvas.height = Math.max(1, Math.floor(h * dpr));
-			canvas.style.width = w + 'px';
-			canvas.style.height = h + 'px';
+			canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
 			ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 		}
 		resize();
@@ -143,82 +132,95 @@
 			if (!reduced) { angle += dt * ROT_SPEED; }
 
 			ctx.clearRect(0, 0, w, h);
-			var cx = w / 2, cy = h / 2, radius = Math.min(w, h) * 0.46;
+			var cx = w / 2, cy = h / 2, radius = Math.min(w, h) * 0.45;
 			var lt = t * 0.00018;
 			var lx = Math.cos(lt * 1.3) * 0.75, ly = Math.sin(lt) * 0.45, lz = 0.6, ln = Math.hypot(lx, ly, lz);
 			var sinA = Math.sin(angle), cosA = Math.cos(angle);
 			var tiltS = Math.sin(-0.32), tiltC = Math.cos(-0.32);
 
-			var i;
-			for (i = 0; i < pts.length; i++) {
-				var p = pts[i];
+			var k;
+			for (k = 0; k < pts.length; k++) {
+				var p = pts[k];
 				var x1 = p.x * cosA - p.z * sinA;
 				var z1 = p.x * sinA + p.z * cosA;
 				var y2 = p.y * tiltC - z1 * tiltS;
 				var z2 = p.y * tiltS + z1 * tiltC;
-				px[i] = cx + x1 * radius; py[i] = cy + y2 * radius; pz[i] = z2;
-				pl[i] = Math.max(0, (x1 * lx + y2 * ly + z2 * lz) / ln);
+				px[k] = cx + x1 * radius; py[k] = cy + y2 * radius; pz[k] = z2;
+				pl[k] = Math.max(0, (x1 * lx + y2 * ly + z2 * lz) / ln);
 			}
+
+			// --- Planet body: soft shaded orb, lit side toward the sun ---
+			var hx = cx + lx * radius * 0.42, hy = cy + ly * radius * 0.42;
+			var body = ctx.createRadialGradient(hx, hy, radius * 0.08, cx, cy, radius);
+			body.addColorStop(0, 'rgba(46,56,20,0.55)');
+			body.addColorStop(0.55, 'rgba(18,22,11,0.45)');
+			body.addColorStop(1, 'rgba(9,11,7,0.15)');
+			ctx.globalAlpha = 1; ctx.fillStyle = body;
+			ctx.beginPath(); ctx.arc(cx, cy, radius, 0, Math.PI * 2); ctx.fill();
+
+			// --- Atmosphere rim glow ---
+			var rim = ctx.createRadialGradient(cx, cy, radius * 0.82, cx, cy, radius * 1.07);
+			rim.addColorStop(0, 'rgba(191,255,0,0)');
+			rim.addColorStop(0.86, 'rgba(191,255,0,0)');
+			rim.addColorStop(0.95, 'rgba(191,255,0,0.14)');
+			rim.addColorStop(1, 'rgba(191,255,0,0)');
+			ctx.fillStyle = rim;
+			ctx.beginPath(); ctx.arc(cx, cy, radius * 1.07, 0, Math.PI * 2); ctx.fill();
 
 			var decay = Math.exp(-3.2 * dt);
-			for (i = 0; i < heat.length; i++) { heat[i] *= decay; }
+			for (k = 0; k < heat.length; k++) { heat[k] *= decay; }
 			if (!reduced) {
-				for (i = 0; i < pulses.length; i++) { advancePulse(pulses[i], dt); }
+				for (k = 0; k < pulses.length; k++) { advancePulse(pulses[k], dt); }
 				pingTimer -= dt;
 				if (pingTimer <= 0) { pings.push({ t: 0 }); pingTimer = 1.7; }
-				for (i = pings.length - 1; i >= 0; i--) { pings[i].t += dt; if (pings[i].t > 1.4) { pings.splice(i, 1); } }
+				for (k = pings.length - 1; k >= 0; k--) { pings[k].t += dt; if (pings[k].t > 1.4) { pings.splice(k, 1); } }
 			}
 
-			// Edges — brighter at front and where a signal passes.
+			// --- Surface links (front hemisphere only, faint) ---
 			ctx.strokeStyle = 'rgb(' + LIME + ')';
 			for (var e = 0; e < edges.length; e++) {
 				var a = edges[e][0], b = edges[e][1];
-				var df = ((pz[a] + pz[b]) * 0.5 + 1) * 0.5;
-				var litE = (pl[a] + pl[b]) * 0.5;
-				var hot = heat[e];
-				var alpha = 0.03 + df * 0.13 + Math.pow(litE, 2) * 0.5 * df + hot * 0.6 * df;
+				if (pz[a] < -0.02 || pz[b] < -0.02) { continue; }
+				var litE = (pl[a] + pl[b]) * 0.5, hot = heat[e];
+				var alpha = 0.02 + litE * 0.12 + hot * 0.55;
 				if (alpha <= 0.015) { continue; }
-				ctx.globalAlpha = alpha < 0.95 ? alpha : 0.95;
-				ctx.lineWidth = 1 + hot * 1.4 * df;
+				ctx.globalAlpha = alpha < 0.9 ? alpha : 0.9;
+				ctx.lineWidth = 1 + hot * 1.3;
 				ctx.beginPath(); ctx.moveTo(px[a], py[a]); ctx.lineTo(px[b], py[b]); ctx.stroke();
 			}
 			ctx.lineWidth = 1;
 
-			// Nodes.
-			for (i = 0; i < pts.length; i++) {
-				var z = pz[i];
-				if (z < -0.05) { continue; }
-				var d2 = (z + 1) * 0.5;
-				var intensity = Math.pow(pl[i], 2.4);
-				var size = (0.6 + intensity * 3.4) * (0.5 + d2 * 0.6);
-				var na = (0.12 + intensity * 0.8) * (0.4 + d2 * 0.6);
-				if (na <= 0.02 || size <= 0.2) { continue; }
-				ctx.globalAlpha = na < 1 ? na : 1;
-				ctx.fillStyle = intensity > 0.7 ? 'rgb(226,255,156)' : 'rgb(' + LIME + ')';
-				ctx.beginPath(); ctx.arc(px[i], py[i], size / 2, 0, Math.PI * 2); ctx.fill();
+			// --- Surface points: day/night terminator shading ---
+			for (k = 0; k < pts.length; k++) {
+				if (pz[k] < -0.02) { continue; }
+				var lit = pl[k];
+				var bright = Math.pow(lit, 1.25);
+				var alpha2 = 0.1 + bright * 0.88;
+				var size = 0.8 + bright * 2.4;
+				if (alpha2 <= 0.04) { continue; }
+				ctx.globalAlpha = alpha2 < 1 ? alpha2 : 1;
+				ctx.fillStyle = bright > 0.72 ? 'rgb(228,255,160)' : 'rgb(' + LIME + ')';
+				ctx.beginPath(); ctx.arc(px[k], py[k], size / 2, 0, Math.PI * 2); ctx.fill();
 			}
 
-			// London pings — expanding rings from the origin.
+			// --- London pings ---
 			var lzL = pz[london], ldf = (lzL + 1) * 0.5;
-			if (lzL > -0.1) {
-				for (i = 0; i < pings.length; i++) {
-					var pr = pings[i].t * 52;
-					var pa = Math.max(0, 0.45 * (1 - pings[i].t / 1.4)) * ldf;
+			if (lzL > -0.02) {
+				for (k = 0; k < pings.length; k++) {
+					var pr = pings[k].t * 54;
+					var pa = Math.max(0, 0.42 * (1 - pings[k].t / 1.4)) * ldf;
 					if (pa <= 0.01) { continue; }
-					ctx.globalAlpha = pa;
-					ctx.strokeStyle = 'rgb(' + LIME + ')';
-					ctx.lineWidth = 1;
+					ctx.globalAlpha = pa; ctx.strokeStyle = 'rgb(' + LIME + ')'; ctx.lineWidth = 1;
 					ctx.beginPath(); ctx.arc(px[london], py[london], pr, 0, Math.PI * 2); ctx.stroke();
 				}
 			}
 
-			// Signal pulses firing outward from London.
-			for (i = 0; i < pulses.length; i++) {
-				var pu = pulses[i], f = pu.from, to = pu.to, ptt = pu.t;
-				var sx = px[f] + (px[to] - px[f]) * ptt;
-				var sy = py[f] + (py[to] - py[f]) * ptt;
+			// --- Signal pulses firing outward from London ---
+			for (k = 0; k < pulses.length; k++) {
+				var pu = pulses[k], f = pu.from, to = pu.to, ptt = pu.t;
 				var pzv = pz[f] + (pz[to] - pz[f]) * ptt;
-				if (pzv < -0.1) { continue; }
+				if (pzv < -0.02) { continue; }
+				var sx = px[f] + (px[to] - px[f]) * ptt, sy = py[f] + (py[to] - py[f]) * ptt;
 				var pdf = (pzv + 1) * 0.5;
 				ctx.globalAlpha = 0.22 * pdf; ctx.fillStyle = 'rgb(' + LIME + ')';
 				ctx.beginPath(); ctx.arc(sx, sy, 4.5 * pdf, 0, Math.PI * 2); ctx.fill();
@@ -226,12 +228,12 @@
 				ctx.beginPath(); ctx.arc(sx, sy, 1.7 * pdf + 0.4, 0, Math.PI * 2); ctx.fill();
 			}
 
-			// London anchor node — the brightest, steadiest point on the globe.
-			if (lzL > -0.1) {
-				ctx.globalAlpha = 0.3 * ldf; ctx.fillStyle = 'rgb(' + LIME + ')';
+			// --- London anchor ---
+			if (lzL > -0.02) {
+				ctx.globalAlpha = 0.32 * ldf; ctx.fillStyle = 'rgb(' + LIME + ')';
 				ctx.beginPath(); ctx.arc(px[london], py[london], 7 * ldf, 0, Math.PI * 2); ctx.fill();
-				ctx.globalAlpha = Math.min(1, 0.9 * (0.6 + ldf * 0.4)); ctx.fillStyle = 'rgb(240,255,205)';
-				ctx.beginPath(); ctx.arc(px[london], py[london], 2.6 * ldf + 0.6, 0, Math.PI * 2); ctx.fill();
+				ctx.globalAlpha = Math.min(1, 0.92); ctx.fillStyle = 'rgb(242,255,208)';
+				ctx.beginPath(); ctx.arc(px[london], py[london], 2.7 * ldf + 0.7, 0, Math.PI * 2); ctx.fill();
 			}
 			ctx.globalAlpha = 1;
 
@@ -259,7 +261,7 @@
 		});
 		tile.addEventListener('mouseleave', function () { tx = 0; ty = 0; kick(); });
 		window.addEventListener('scroll', function () {
-			var r = tile.getBoundingClientRect(); var vh = window.innerHeight;
+			var r = tile.getBoundingClientRect(), vh = window.innerHeight;
 			var progress = Math.max(-1, Math.min(1, (r.top + r.height / 2 - vh / 2) / vh));
 			sy = progress * -20; kick();
 		}, { passive: true });
