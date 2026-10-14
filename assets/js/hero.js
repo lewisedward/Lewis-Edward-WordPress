@@ -13,7 +13,7 @@
 (function () {
 	'use strict';
 
-	var GEN = 3200;          // candidate points; land ones are kept
+	var GEN = 5200;          // candidate points; land ones are kept
 	var ROT_SPEED = 0.15;
 	var ARCS = 6;
 	var LIME = '191,255,0';
@@ -172,8 +172,8 @@
 			for (k = 0; k < N; k++) {
 				if (pz[k] < -0.02) { continue; }
 				var bright = Math.pow(pl[k], 1.4);
-				var alpha = 0.3 + bright * 0.7;
-				var size = 1.0 + bright * 2.2;
+				var alpha = 0.32 + bright * 0.68;
+				var size = 0.85 + bright * 1.9;
 				ctx.globalAlpha = alpha < 1 ? alpha : 1;
 				ctx.fillStyle = bright > 0.72 ? 'rgb(228,255,160)' : 'rgb(' + LIME + ')';
 				ctx.beginPath(); ctx.arc(px[k], py[k], size / 2, 0, Math.PI * 2); ctx.fill();
