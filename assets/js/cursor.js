@@ -23,24 +23,35 @@
 		document.body.appendChild(dot);
 		document.body.classList.add('has-custom-cursor', 'is-cursor-hidden');
 
-		// mx/my = mouse. dx/dy = dot position (fast). rx/ry = ring position (slow,
-		// so the ring trails behind the dot as it moves).
-		var mx = 0, my = 0, dx = 0, dy = 0, rx = 0, ry = 0, shown = false;
+		// mx/my = mouse. rx/ry = ring position (eased trail). The dot is locked
+		// to the pointer for crispness; the ring follows with a frame-rate-
+		// independent spring and a subtle stretch when moving fast.
+		var mx = 0, my = 0, rx = 0, ry = 0, shown = false, placed = false, last = 0;
 
 		window.addEventListener('mousemove', function (e) {
 			mx = e.clientX; my = e.clientY;
+			if (!placed) { rx = mx; ry = my; placed = true; } // no swoop from (0,0)
 			if (!shown) { shown = true; document.body.classList.remove('is-cursor-hidden'); }
 		}, { passive: true });
 
-		(function loop() {
-			dx += (mx - dx) * 0.9;   // dot tracks the mouse almost exactly
-			dy += (my - dy) * 0.9;
-			rx += (mx - rx) * 0.15;  // ring lags, trailing the dot
-			ry += (my - ry) * 0.15;
-			dot.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
-			ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px)';
+		function loop(now) {
+			var dt = last ? Math.min((now - last) / 1000, 0.05) : 0.016;
+			last = now;
+
+			// Frame-rate-independent easing: same feel at 60Hz and 120Hz+.
+			var k = 1 - Math.exp(-13 * dt);
+			rx += (mx - rx) * k;
+			ry += (my - ry) * k;
+
+			// Gentle elastic scale — the ring swells slightly while it catches up.
+			var lag = Math.min(Math.hypot(mx - rx, my - ry) * 0.012, 0.32);
+
+			// Dot sits exactly on the pointer; ring trails and breathes.
+			dot.style.transform = 'translate(' + mx + 'px,' + my + 'px)';
+			ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px) scale(' + (1 + lag).toFixed(3) + ')';
 			requestAnimationFrame(loop);
-		})();
+		}
+		requestAnimationFrame(loop);
 
 		function target(el) {
 			return el && el.closest ? el.closest('a, button, [role="button"], [data-cursor]') : null;
