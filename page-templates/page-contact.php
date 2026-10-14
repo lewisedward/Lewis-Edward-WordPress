@@ -81,4 +81,5 @@ $le_form = le_field( 'contact_form_shortcode' );
 
 <?php
 wp_enqueue_script( 'le-form-groups' );
+wp_enqueue_script( 'le-oaiq-forms' );
 get_footer();

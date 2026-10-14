@@ -66,7 +66,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 			events.forEach(function (evt) { window.addEventListener(evt, loadGtag, opts); });
 			timer = setTimeout(loadGtag, 10000);
 		})();
-	</script>
+		</script>
+
+	<?php /* OpenAI (ChatGPT) Ads pixel - oaiq. Pixel ID: VscXZAefYPygZq7saYuX7z. */ ?>
+	<!-- OpenAI Ads Pixel (oaiq) -->
+	<script>!function(w,d,s,u){if(w.oaiq)return;var q=function(){q.q.push(arguments)};q.q=[];w.oaiq=q;var j=d.createElement(s);j.async=1;j.src=u;var f=d.getElementsByTagName(s)[0];f.parentNode.insertBefore(j,f)}(window,document,"script","https://bzrcdn.openai.com/sdk/oaiq.min.js");oaiq("init",{pixelId:"VscXZAefYPygZq7saYuX7z",debug:true});</script>
 </head>
 
 <body <?php body_class(); ?>>

@@ -161,6 +161,15 @@ function le_enqueue_assets() {
 		true
 	);
 
+	// OpenAI (ChatGPT) Ads — form conversion tracking; enqueued by form pages.
+	wp_register_script(
+		'le-oaiq-forms',
+		LE_URI . '/assets/js/oaiq-forms.js',
+		array( 'jquery' ),
+		le_asset_ver( 'assets/js/oaiq-forms.js' ),
+		true
+	);
+
 	// Expose useful values to JS.
 	wp_localize_script( 'le-main', 'LEData', array(
 		'ajaxUrl'  => admin_url( 'admin-ajax.php' ),
