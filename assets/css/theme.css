@@ -9,42 +9,53 @@
    declared but never referenced, so it cost a blocking Google Fonts request
    on every page for no visual effect. ---------------------------------------- */
 
-/* font-display: optional (not swap) is deliberate. With swap, Chillax arrives
-   after first paint and the reflow resizes the hero bento grid - CLS 0.100,
-   attributed by Lighthouse to these four files. optional gives the browser a
-   ~100ms block period: if the face is ready it is used, otherwise the page
-   renders in the fallback for that view and never swaps, so a font-driven
-   shift is structurally impossible. Cached repeat visits get Chillax. */
+/* font-display: swap + a metric-matched 'Chillax Fallback' (see below).
+   swap guarantees Chillax renders as soon as it downloads - even on a cold
+   cache or slow connection, where font-display: optional used to lock the
+   page into the raw fallback for the whole view and never swap it in. The
+   fallback face is Arial scaled (size-adjust + ascent/descent/line-gap
+   overrides) to Chillax's own metrics, so it occupies identical space and the
+   swap is seamless: no layout shift (the CLS that 'optional' guarded against).
+   Overrides computed from Chillax-Regular. */
 @font-face {
 	font-family: 'Chillax';
 	src: url('../fonts/Chillax-Light.woff2') format('woff2'),
 	     url('../fonts/Chillax-Light.woff') format('woff');
-	font-weight: 300; font-style: normal; font-display: optional;
+	font-weight: 300; font-style: normal; font-display: swap;
 }
 @font-face {
 	font-family: 'Chillax';
 	src: url('../fonts/Chillax-Regular.woff2') format('woff2'),
 	     url('../fonts/Chillax-Regular.woff') format('woff');
-	font-weight: 400; font-style: normal; font-display: optional;
+	font-weight: 400; font-style: normal; font-display: swap;
 }
 @font-face {
 	font-family: 'Chillax';
 	src: url('../fonts/Chillax-Medium.woff2') format('woff2'),
 	     url('../fonts/Chillax-Medium.woff') format('woff');
-	font-weight: 500; font-style: normal; font-display: optional;
+	font-weight: 500; font-style: normal; font-display: swap;
 }
 @font-face {
 	font-family: 'Chillax';
 	src: url('../fonts/Chillax-Semibold.woff2') format('woff2'),
 	     url('../fonts/Chillax-Semibold.woff') format('woff');
-	font-weight: 600; font-style: normal; font-display: optional;
+	font-weight: 600; font-style: normal; font-display: swap;
+}
+/* Metric-matched fallback: Arial scaled to Chillax so the swap causes no reflow. */
+@font-face {
+	font-family: 'Chillax Fallback';
+	src: local('Arial');
+	size-adjust: 130.04%;
+	ascent-override: 75.36%;
+	descent-override: 25.38%;
+	line-gap-override: 6.92%;
 }
 
 /* ---- Design tokens -------------------------------------------------------- */
 :root {
 	/* Type families */
-	--font-display: 'Chillax', sans-serif;
-	--font-body: 'Chillax', sans-serif;
+	--font-display: 'Chillax', 'Chillax Fallback', sans-serif;
+	--font-body: 'Chillax', 'Chillax Fallback', sans-serif;
 
 	/* Heading scale */
 	--h1-size: clamp(2rem, 4.5vw, 5rem);   --h1-leading: 110%; --h1-tracking: -2px;   --h1-weight: 400;
