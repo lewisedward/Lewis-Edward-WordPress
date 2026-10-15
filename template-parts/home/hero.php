@@ -37,22 +37,6 @@ $le_team         = le_field( 'home_hero_team' );         // team posts
 					<canvas class="hero-sphere__canvas"></canvas>
 				</div>
 
-				<?php /* RETHINK DEMO: work-led hero (view with ?hero=work). */ ?>
-				<?php $le_sc = array( 'storezar', 'lords-cricket-ground', 'river-action', 'tide-insurance', 'new-horizon-bank', 'hubba' ); ?>
-				<div class="hero-showcase" aria-hidden="true">
-					<div class="hero-showcase__col hero-showcase__col--a">
-						<?php foreach ( array_merge( $le_sc, $le_sc ) as $le_img ) : ?>
-							<img class="hero-showcase__img" src="<?php echo esc_url( LE_URI . '/assets/images/work/' . $le_img . '.jpg' ); ?>" alt="" loading="lazy" />
-						<?php endforeach; ?>
-					</div>
-					<div class="hero-showcase__col hero-showcase__col--b">
-						<?php foreach ( array_merge( array_reverse( $le_sc ), array_reverse( $le_sc ) ) as $le_img ) : ?>
-							<img class="hero-showcase__img" src="<?php echo esc_url( LE_URI . '/assets/images/work/' . $le_img . '.jpg' ); ?>" alt="" loading="lazy" />
-						<?php endforeach; ?>
-					</div>
-				</div>
-				<script>if(location.search.indexOf('hero=work')>-1){document.body.classList.add('hero-alt-work');}</script>
-
 				<p class="eyebrow eyebrow--faint hero-editorial__eyebrow"><?php echo esc_html( le_field( 'home_hero_eyebrow' ) ); ?></p>
 
 				<div class="hero-editorial__body">
