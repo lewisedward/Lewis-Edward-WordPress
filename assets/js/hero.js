@@ -49,32 +49,35 @@
 			return bits[y * MW + x] === 1;
 		}
 
-		// Keep only land points -> continents.
-		var ax = [], ay = [], az = [], i;
+		// All surface points; land ones form continents, ocean ones are faint fill.
+		var ax = [], ay = [], az = [], isL = [], landIdx = [], i;
 		var golden = Math.PI * (3 - Math.sqrt(5));
 		for (i = 0; i < GEN; i++) {
 			var y = 1 - (i / (GEN - 1)) * 2;
 			var r = Math.sqrt(Math.max(0, 1 - y * y));
 			var th = golden * i;
 			var vx = Math.cos(th) * r, vz = Math.sin(th) * r;
-			if (isLand(vx, y, vz)) { ax.push(vx); ay.push(y); az.push(vz); }
+			ax.push(vx); ay.push(y); az.push(vz);
+			var ld = isLand(vx, y, vz) ? 1 : 0; isL.push(ld);
+			if (ld) { landIdx.push(ax.length - 1); }
 		}
 		var N = ax.length;
 		var px = new Float32Array(N), py = new Float32Array(N), pz = new Float32Array(N), pl = new Float32Array(N);
 
-		// London = nearest land point to the London vector.
-		var london = 0, best = 1e9;
-		for (i = 0; i < N; i++) {
-			var dx = ax[i] - LONDON.x, dy = ay[i] - LONDON.y, dz = az[i] - LONDON.z;
+		// London = nearest LAND point to the London vector.
+		var london = landIdx[0], best = 1e9;
+		for (i = 0; i < landIdx.length; i++) {
+			var li = landIdx[i];
+			var dx = ax[li] - LONDON.x, dy = ay[li] - LONDON.y, dz = az[li] - LONDON.z;
 			var dd = dx * dx + dy * dy + dz * dz;
-			if (dd < best) { best = dd; london = i; }
+			if (dd < best) { best = dd; london = li; }
 		}
 		var Lx = ax[london], Ly = ay[london], Lz = az[london];
 
 		function spawnArc() {
 			var to, ang, tries = 0;
 			do {
-				to = (Math.random() * N) | 0;
+				to = landIdx[(Math.random() * landIdx.length) | 0];
 				var dot = Lx * ax[to] + Ly * ay[to] + Lz * az[to];
 				ang = Math.acos(dot < -1 ? -1 : dot > 1 ? 1 : dot);
 				tries++;
@@ -168,14 +171,21 @@
 			ctx.fillStyle = rim;
 			ctx.beginPath(); ctx.arc(cx, cy, radius * 1.07, 0, Math.PI * 2); ctx.fill();
 
-			// Continent dots — day/night terminator.
+			// Surface dots — faint oceans fill the sphere, continents glow; day/night terminator.
 			for (k = 0; k < N; k++) {
 				if (pz[k] < -0.02) { continue; }
 				var bright = Math.pow(pl[k], 1.4);
-				var alpha = 0.32 + bright * 0.68;
-				var size = 0.85 + bright * 1.9;
+				var alpha, size, col;
+				if (isL[k]) {
+					alpha = 0.34 + bright * 0.66; size = 0.9 + bright * 1.9;
+					col = bright > 0.72 ? 'rgb(228,255,160)' : 'rgb(' + LIME + ')';
+				} else {
+					alpha = 0.05 + bright * 0.11; size = 0.6 + bright * 0.5;
+					col = 'rgb(' + LIME + ')';
+				}
+				if (alpha <= 0.03) { continue; }
 				ctx.globalAlpha = alpha < 1 ? alpha : 1;
-				ctx.fillStyle = bright > 0.72 ? 'rgb(228,255,160)' : 'rgb(' + LIME + ')';
+				ctx.fillStyle = col;
 				ctx.beginPath(); ctx.arc(px[k], py[k], size / 2, 0, Math.PI * 2); ctx.fill();
 			}
 
@@ -234,17 +244,26 @@
 				if (pz[ti] < -0.02) { continue; }
 				var adf = (pz[ti] + 1) * 0.5, at = av.t;
 				var ease = 1 - Math.pow(1 - at, 2);
-				var ra = Math.max(0, 0.6 * (1 - at)) * adf;
-				if (ra > 0.012) {
-					ctx.globalAlpha = ra < 0.75 ? ra : 0.75; ctx.strokeStyle = 'rgb(' + LIME + ')'; ctx.lineWidth = 1.3;
-					ctx.beginPath(); ctx.arc(px[ti], py[ti], 2 + ease * 26, 0, Math.PI * 2); ctx.stroke();
+				var ga = Math.max(0, 0.5 * (1 - at)) * adf;
+				if (ga > 0.02) {
+					var gr = (18 + ease * 26) * (0.6 + adf * 0.4);
+					var gg = ctx.createRadialGradient(px[ti], py[ti], 0, px[ti], py[ti], gr);
+					gg.addColorStop(0, 'rgba(191,255,0,' + ga.toFixed(3) + ')');
+					gg.addColorStop(1, 'rgba(191,255,0,0)');
+					ctx.globalAlpha = 1; ctx.fillStyle = gg;
+					ctx.beginPath(); ctx.arc(px[ti], py[ti], gr, 0, Math.PI * 2); ctx.fill();
 				}
+				ctx.strokeStyle = 'rgb(' + LIME + ')';
+				var ra = Math.max(0, 0.65 * (1 - at)) * adf;
+				if (ra > 0.012) { ctx.globalAlpha = ra < 0.8 ? ra : 0.8; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.arc(px[ti], py[ti], 2 + ease * 38, 0, Math.PI * 2); ctx.stroke(); }
+				var at2 = at - 0.18;
+				if (at2 > 0) { var e2 = 1 - Math.pow(1 - at2, 2); var ra2 = Math.max(0, 0.4 * (1 - at2)) * adf; if (ra2 > 0.012) { ctx.globalAlpha = ra2 < 0.6 ? ra2 : 0.6; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(px[ti], py[ti], 2 + e2 * 40, 0, Math.PI * 2); ctx.stroke(); } }
 				var fa = Math.max(0, 1 - at * 1.7) * adf;
 				if (fa > 0.02) {
-					ctx.globalAlpha = 0.28 * fa; ctx.fillStyle = 'rgb(' + LIME + ')';
-					ctx.beginPath(); ctx.arc(px[ti], py[ti], 5.5 * adf, 0, Math.PI * 2); ctx.fill();
+					ctx.globalAlpha = 0.3 * fa; ctx.fillStyle = 'rgb(' + LIME + ')';
+					ctx.beginPath(); ctx.arc(px[ti], py[ti], 6 * adf, 0, Math.PI * 2); ctx.fill();
 					ctx.globalAlpha = 0.95 * fa; ctx.fillStyle = 'rgb(240,255,200)';
-					ctx.beginPath(); ctx.arc(px[ti], py[ti], 2.3 * adf + 0.4, 0, Math.PI * 2); ctx.fill();
+					ctx.beginPath(); ctx.arc(px[ti], py[ti], 2.4 * adf + 0.5, 0, Math.PI * 2); ctx.fill();
 				}
 			}
 
@@ -258,10 +277,28 @@
 					ctx.globalAlpha = pa; ctx.strokeStyle = 'rgb(' + LIME + ')'; ctx.lineWidth = 1;
 					ctx.beginPath(); ctx.arc(px[london], py[london], pr, 0, Math.PI * 2); ctx.stroke();
 				}
-				ctx.globalAlpha = 0.32 * ldf; ctx.fillStyle = 'rgb(' + LIME + ')';
-				ctx.beginPath(); ctx.arc(px[london], py[london], 7 * ldf, 0, Math.PI * 2); ctx.fill();
-				ctx.globalAlpha = 0.95; ctx.fillStyle = 'rgb(242,255,208)';
-				ctx.beginPath(); ctx.arc(px[london], py[london], 2.7 * ldf + 0.7, 0, Math.PI * 2); ctx.fill();
+				var lg = ctx.createRadialGradient(px[london], py[london], 0, px[london], py[london], 16 * ldf + 4);
+				lg.addColorStop(0, 'rgba(191,255,0,' + (0.33 * ldf).toFixed(3) + ')');
+				lg.addColorStop(1, 'rgba(191,255,0,0)');
+				ctx.globalAlpha = 1; ctx.fillStyle = lg;
+				ctx.beginPath(); ctx.arc(px[london], py[london], 16 * ldf + 4, 0, Math.PI * 2); ctx.fill();
+				ctx.globalAlpha = 0.5 * ldf; ctx.strokeStyle = 'rgb(' + LIME + ')'; ctx.lineWidth = 1;
+				ctx.beginPath(); ctx.arc(px[london], py[london], 5 * ldf + 2, 0, Math.PI * 2); ctx.stroke();
+				ctx.globalAlpha = 0.97; ctx.fillStyle = 'rgb(244,255,212)';
+				ctx.beginPath(); ctx.arc(px[london], py[london], 2.9 * ldf + 0.9, 0, Math.PI * 2); ctx.fill();
+				if (ldf > 0.4) {
+					var la = (ldf - 0.4) / 0.6; if (la > 1) { la = 1; }
+					var lxp = px[london], lyp = py[london];
+					var ox = lxp + 12, oy = lyp - 12;
+					ctx.globalAlpha = 0.5 * la; ctx.strokeStyle = 'rgb(' + LIME + ')'; ctx.lineWidth = 1;
+					ctx.beginPath(); ctx.moveTo(lxp + 3, lyp - 3); ctx.lineTo(ox, oy); ctx.lineTo(ox + 54, oy); ctx.stroke();
+					ctx.globalAlpha = 0.9 * la; ctx.fillStyle = 'rgb(214,255,120)';
+					ctx.font = '600 10px Arial, sans-serif';
+					try { ctx.letterSpacing = '2px'; } catch (e) {}
+					ctx.textBaseline = 'bottom';
+					ctx.fillText('LONDON', ox + 2, oy - 2);
+					try { ctx.letterSpacing = '0px'; } catch (e) {}
+				}
 			}
 			ctx.globalAlpha = 1;
 
