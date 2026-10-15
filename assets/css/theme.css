@@ -1859,7 +1859,7 @@ a.work-tag:hover { color: hsl(var(--primary)); border-color: hsl(var(--primary) 
 @media (min-width: 1024px) { .svc-d-hero__grid { grid-template-columns: 2fr 1fr; } }
 .svc-d-hero__headline-col { position: relative; display: flex; align-items: center; padding: 2.5rem 1.75rem; }
 @media (min-width: 1024px) { .svc-d-hero__headline-col { padding: 3.5rem; border-right: 1px solid hsl(var(--foreground) / 0.06); } }
-.svc-d-hero__sphere { position: absolute; top: 50%; right: 0; transform: translateY(-50%); width: 22rem; height: 22rem; opacity: 0.55; pointer-events: none; }
+.svc-d-hero__sphere { position: absolute; top: 50%; right: 0; transform: translateY(-50%); width: 22rem; height: 22rem; opacity: 0.38; pointer-events: none; }
 @media (max-width: 1023px) { .svc-d-hero__sphere { display: none; } }
 .svc-d-hero__sphere .hero-sphere__canvas { width: 100%; height: 100%; display: block; }
 .svc-d-hero__headline { position: relative; z-index: 1; display: flex; flex-direction: column; font-weight: 400; line-height: 1.1; letter-spacing: -0.05em; font-size: clamp(2.2rem, 5.5vw, 6.5rem); max-width: 16ch; margin-bottom: 0; }
