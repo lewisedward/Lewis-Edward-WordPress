@@ -71,6 +71,7 @@
 			{ n: 'Barcelona', lat: 41.39, lon: 2.17 },
 			{ n: 'Los Angeles', lat: 34.05, lon: -118.24 },
 			{ n: 'Zurich', lat: 47.37, lon: 8.54 },
+			{ n: 'Dubai', lat: 25.2, lon: 55.27 },
 			{ n: 'Hong Kong', lat: 22.32, lon: 114.17 },
 			{ n: 'Melbourne', lat: -37.81, lon: 144.96 },
 			{ n: 'Auckland', lat: -36.85, lon: 174.76 }
@@ -221,9 +222,10 @@
 				if (!reduced) {
 					arc.t += arc.speed * dt;
 					if (arc.t >= 1 && !arc.arrived) { arrivals.push({ to: arc.to, t: 0 }); arc.arrived = true; }
-					if (arc.t >= 1.25) { arcs[k] = spawnArc(); continue; }
+					if (arc.t >= 1.7) { arcs[k] = spawnArc(); continue; }
 				}
 				var tt = arc.t < 1 ? arc.t : 1;
+				var lf = arc.t <= 1 ? 1 : Math.max(0, 1 - (arc.t - 1) / 0.7); // connection lingers, then fades
 				var steps = Math.max(2, Math.ceil(tt / 0.045));
 				var prevOk = false, prx = 0, pry = 0;
 				var slf = slerp.bind(arc);
@@ -234,7 +236,7 @@
 					var ok = a1[2] > -0.02;
 					if (ok && prevOk) {
 						var ua = u / (tt || 1);
-						var al = Math.pow(ua, 1.3) * 0.62 * ((a1[2] + 1) * 0.5);
+						var al = (arc.arrived ? 0.4 : Math.pow(ua, 1.3) * 0.62) * ((a1[2] + 1) * 0.5) * lf;
 						if (al > 0.015) {
 							ctx.globalAlpha = al < 0.75 ? al : 0.75;
 							ctx.strokeStyle = 'rgb(' + LIME + ')';
@@ -257,32 +259,24 @@
 				}
 			}
 
-			// Arrival ripples — a signal landing at its destination.
+			// Arrival — the city gently lights up as the connection lands (no blast).
 			for (k = 0; k < arrivals.length; k++) {
 				var av = arrivals[k], ti = av.to;
 				if (pz[ti] < -0.02) { continue; }
 				var adf = (pz[ti] + 1) * 0.5, at = av.t;
-				var ease = 1 - Math.pow(1 - at, 2);
-				var ga = Math.max(0, 0.5 * (1 - at)) * adf;
+				var ga = Math.max(0, 0.4 * (1 - at)) * adf;
 				if (ga > 0.02) {
-					var gr = (18 + ease * 26) * (0.6 + adf * 0.4);
+					var gr = (9 + at * 12) * (0.6 + adf * 0.4);
 					var gg = ctx.createRadialGradient(px[ti], py[ti], 0, px[ti], py[ti], gr);
 					gg.addColorStop(0, 'rgba(191,255,0,' + ga.toFixed(3) + ')');
 					gg.addColorStop(1, 'rgba(191,255,0,0)');
 					ctx.globalAlpha = 1; ctx.fillStyle = gg;
 					ctx.beginPath(); ctx.arc(px[ti], py[ti], gr, 0, Math.PI * 2); ctx.fill();
 				}
-				ctx.strokeStyle = 'rgb(' + LIME + ')';
-				var ra = Math.max(0, 0.65 * (1 - at)) * adf;
-				if (ra > 0.012) { ctx.globalAlpha = ra < 0.8 ? ra : 0.8; ctx.lineWidth = 1.4; ctx.beginPath(); ctx.arc(px[ti], py[ti], 2 + ease * 38, 0, Math.PI * 2); ctx.stroke(); }
-				var at2 = at - 0.18;
-				if (at2 > 0) { var e2 = 1 - Math.pow(1 - at2, 2); var ra2 = Math.max(0, 0.4 * (1 - at2)) * adf; if (ra2 > 0.012) { ctx.globalAlpha = ra2 < 0.6 ? ra2 : 0.6; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(px[ti], py[ti], 2 + e2 * 40, 0, Math.PI * 2); ctx.stroke(); } }
-				var fa = Math.max(0, 1 - at * 1.7) * adf;
-				if (fa > 0.02) {
-					ctx.globalAlpha = 0.3 * fa; ctx.fillStyle = 'rgb(' + LIME + ')';
-					ctx.beginPath(); ctx.arc(px[ti], py[ti], 6 * adf, 0, Math.PI * 2); ctx.fill();
-					ctx.globalAlpha = 0.95 * fa; ctx.fillStyle = 'rgb(240,255,200)';
-					ctx.beginPath(); ctx.arc(px[ti], py[ti], 2.4 * adf + 0.5, 0, Math.PI * 2); ctx.fill();
+				var na = Math.max(0, 0.75 * (1 - at)) * adf;
+				if (na > 0.03) {
+					ctx.globalAlpha = na < 1 ? na : 1; ctx.fillStyle = 'rgb(236,255,190)';
+					ctx.beginPath(); ctx.arc(px[ti], py[ti], 2 * adf + 0.4, 0, Math.PI * 2); ctx.fill();
 				}
 			}
 
