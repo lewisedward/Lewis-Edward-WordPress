@@ -14,7 +14,7 @@
 	'use strict';
 
 	var GEN = 5200;          // candidate points; land ones are kept
-	var ROT_SPEED = 0.15;
+	var ROT_SPEED = 0.12;
 	var ARCS = 6;
 	var LIME = '191,255,0';
 	var LONDON = { x: 0.6225, y: 0.7826, z: 0 }; // ~51.5N, lon 0 (Greenwich)
@@ -108,7 +108,7 @@
 		var pings = [], pingTimer = 0.3, arrivals = [];
 
 		var dpr = Math.min(window.devicePixelRatio || 1, 2);
-		var w = 0, h = 0, raf = 0, visible = true, angle = 0, last = 0;
+		var w = 0, h = 0, raf = 0, visible = true, angle = Math.PI / 2, last = 0, lastLZ = 0;
 		var sinA = 0, cosA = 1, tiltS = Math.sin(-0.32), tiltC = Math.cos(-0.32);
 		var cx = 0, cy = 0, radius = 0;
 
@@ -154,7 +154,7 @@
 		function draw(t) {
 			var dt = Math.min((t - last) / 1000, 0.05);
 			last = t;
-			if (!reduced) { angle += dt * ROT_SPEED; }
+			if (!reduced) { angle += dt * ROT_SPEED * (1.15 - 0.6 * (lastLZ > 0 ? lastLZ : 0)); } // dwell on London/Europe
 
 			ctx.clearRect(0, 0, w, h);
 			cx = w / 2; cy = h / 2; radius = Math.min(w, h) * 0.45;
@@ -173,6 +173,7 @@
 			}
 
 			// Planet body.
+			lastLZ = pz[london];
 			var hx = cx + lx * radius * 0.42, hy = cy + ly * radius * 0.42;
 			var body = ctx.createRadialGradient(hx, hy, radius * 0.06, cx, cy, radius);
 			body.addColorStop(0, 'rgba(40,50,18,0.5)');
@@ -295,6 +296,7 @@
 			// City markers + labels (London is the origin, slightly larger).
 			ctx.font = '600 10px Arial, sans-serif';
 			ctx.textBaseline = 'bottom'; ctx.textAlign = 'left';
+			var labRects = [];
 			for (k = 0; k < cities.length; k++) {
 				var ci = cities[k].idx;
 				if (pz[ci] < -0.02) { continue; }
@@ -308,16 +310,24 @@
 				ctx.beginPath(); ctx.arc(px[ci], py[ci], gr, 0, Math.PI * 2); ctx.fill();
 				ctx.globalAlpha = 0.96; ctx.fillStyle = 'rgb(244,255,212)';
 				ctx.beginPath(); ctx.arc(px[ci], py[ci], (origin ? 2.9 : 2.1) * cdf + 0.7, 0, Math.PI * 2); ctx.fill();
-				if (cdf > 0.42) {
-					var la = (cdf - 0.42) / 0.58; if (la > 1) { la = 1; }
+				if (cdf > 0.33) {
 					var nm = cities[k].n.toUpperCase();
 					var ox = px[ci] + 10, oy = py[ci] - 9;
 					try { ctx.letterSpacing = '1.5px'; } catch (e) {}
 					var tw = ctx.measureText(nm).width;
-					ctx.globalAlpha = 0.42 * la; ctx.strokeStyle = 'rgb(' + LIME + ')'; ctx.lineWidth = 1;
-					ctx.beginPath(); ctx.moveTo(px[ci] + 2.5, py[ci] - 2.5); ctx.lineTo(ox, oy); ctx.lineTo(ox + tw + 6, oy); ctx.stroke();
-					ctx.globalAlpha = (origin ? 0.95 : 0.78) * la; ctx.fillStyle = 'rgb(214,255,120)';
-					ctx.fillText(nm, ox + 3, oy - 2);
+					var rx = ox, ry = oy - 11, rw = tw + 8, rh = 14, clash = false;
+					for (var lr = 0; lr < labRects.length; lr++) {
+						var R = labRects[lr];
+						if (rx < R.x + R.w && rx + rw > R.x && ry < R.y + R.h && ry + rh > R.y) { clash = true; break; }
+					}
+					if (!clash) {
+						labRects.push({ x: rx, y: ry, w: rw, h: rh });
+						var la = (cdf - 0.33) / 0.5; if (la > 1) { la = 1; }
+						ctx.globalAlpha = 0.42 * la; ctx.strokeStyle = 'rgb(' + LIME + ')'; ctx.lineWidth = 1;
+						ctx.beginPath(); ctx.moveTo(px[ci] + 2.5, py[ci] - 2.5); ctx.lineTo(ox, oy); ctx.lineTo(ox + tw + 6, oy); ctx.stroke();
+						ctx.globalAlpha = (origin ? 0.95 : 0.78) * la; ctx.fillStyle = 'rgb(214,255,120)';
+						ctx.fillText(nm, ox + 3, oy - 2);
+					}
 					try { ctx.letterSpacing = '0px'; } catch (e) {}
 				}
 			}
