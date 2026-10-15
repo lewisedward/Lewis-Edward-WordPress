@@ -117,7 +117,7 @@
 			var z1 = vx * sinA + vz * cosA;
 			var y2 = vy * tiltC - z1 * tiltS;
 			var z2 = vy * tiltS + z1 * tiltC;
-			out[0] = cx + x1 * radius; out[1] = cy - y2 * radius; out[2] = z2;
+			out[0] = cx - x1 * radius; out[1] = cy - y2 * radius; out[2] = z2;
 		}
 
 		function resize() {
@@ -168,13 +168,13 @@
 				var z1 = ax[k] * sinA + az[k] * cosA;
 				var y2 = ay[k] * tiltC - z1 * tiltS;
 				var z2 = ay[k] * tiltS + z1 * tiltC;
-				px[k] = cx + x1 * radius; py[k] = cy - y2 * radius; pz[k] = z2;
+				px[k] = cx - x1 * radius; py[k] = cy - y2 * radius; pz[k] = z2;
 				pl[k] = Math.max(0, (x1 * lx + y2 * ly + z2 * lz) / ln);
 			}
 
 			// Planet body.
 			lastLZ = pz[london];
-			var hx = cx + lx * radius * 0.42, hy = cy - ly * radius * 0.42;
+			var hx = cx - lx * radius * 0.42, hy = cy - ly * radius * 0.42;
 			var body = ctx.createRadialGradient(hx, hy, radius * 0.06, cx, cy, radius);
 			body.addColorStop(0, 'rgba(40,50,18,0.5)');
 			body.addColorStop(0.5, 'rgba(15,19,10,0.46)');
