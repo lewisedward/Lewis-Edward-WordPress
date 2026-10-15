@@ -70,7 +70,6 @@
 			{ n: 'New York', lat: 40.71, lon: -74.0 },
 			{ n: 'Barcelona', lat: 41.39, lon: 2.17 },
 			{ n: 'Los Angeles', lat: 34.05, lon: -118.24 },
-			{ n: 'Ottawa', lat: 45.42, lon: -75.7 },
 			{ n: 'Dubai', lat: 25.2, lon: 55.27 },
 			{ n: 'Hong Kong', lat: 22.32, lon: 114.17 },
 			{ n: 'Singapore', lat: 1.35, lon: 103.82 },
