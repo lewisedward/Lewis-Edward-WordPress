@@ -239,20 +239,13 @@
 		counters.forEach(function (el) { io.observe(el); });
 
 		function animate(el) {
+			// Count-up removed: growing digits changed the text width and shifted
+			// the layout (CLS). Show the final value immediately instead.
 			var raw = el.getAttribute('data-counter') || '';
 			var target = parseFloat(raw) || 0;
-			// Preserve decimals (e.g. 1.5 must not round up to 2).
 			var dp = ( raw.split('.')[1] || '' ).length;
 			var suffix = el.getAttribute('data-counter-suffix') || '';
-			var dur = parseFloat(el.getAttribute('data-counter-duration')) || 1400;
-			var start = performance.now();
-			(function tick(now) {
-				var p = Math.min((now - start) / dur, 1);
-				var eased = 1 - Math.pow(1 - p, 3);
-				var val = target * eased;
-				el.textContent = ( dp ? val.toFixed(dp) : Math.round(val).toLocaleString() ) + suffix;
-				if (p < 1) requestAnimationFrame(tick);
-			})(start);
+			el.textContent = ( dp ? target.toFixed(dp) : Math.round(target).toLocaleString() ) + suffix;
 		}
 	}
 
