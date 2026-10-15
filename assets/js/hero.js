@@ -109,7 +109,7 @@
 
 		var dpr = Math.min(window.devicePixelRatio || 1, 2);
 		var w = 0, h = 0, raf = 0, visible = true, angle = Math.PI / 2, last = 0, lastLZ = 0;
-		var sinA = 0, cosA = 1, tiltS = Math.sin(-0.32), tiltC = Math.cos(-0.32);
+		var sinA = 0, cosA = 1, tiltS = Math.sin(0.4), tiltC = Math.cos(0.4);
 		var cx = 0, cy = 0, radius = 0;
 
 		function project(vx, vy, vz, out) {
