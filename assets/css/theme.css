@@ -2477,3 +2477,14 @@ body.admin-bar header {
 
 /* "Cookie settings" trigger in the footer bottom bar — reset the button */
 .footer-bottom__cookies { background: none; border: 0; padding: 0; margin: 0; font: inherit; line-height: inherit; color: inherit; cursor: pointer; }
+
+/* Hero globe integration: keep the mesh dense in the open top-right and let it
+   dissolve toward the headline/lede so the copy stays clean and the globe reads
+   as part of the hero rather than sitting on top of the text. Homepage only. */
+.hero-tile--editorial .hero-sphere {
+	top: -3rem;
+	right: -11rem;
+	width: min(72%, 760px);
+	-webkit-mask-image: radial-gradient(128% 128% at 66% 40%, #000 54%, rgba(0,0,0,0.45) 82%, transparent 100%);
+	mask-image: radial-gradient(128% 128% at 66% 40%, #000 54%, rgba(0,0,0,0.45) 82%, transparent 100%);
+}
