@@ -2488,3 +2488,30 @@ body.admin-bar header {
 	-webkit-mask-image: radial-gradient(130% 130% at 64% 42%, #000 52%, rgba(0,0,0,0.42) 80%, transparent 100%);
 	mask-image: radial-gradient(130% 130% at 64% 42%, #000 52%, rgba(0,0,0,0.42) 80%, transparent 100%);
 }
+
+
+/* ================================================================== */
+/* RETHINK DEMO (staging): work-led hero — a drifting wall of real     */
+/* project screenshots. Shown only with ?hero=work so it can be        */
+/* compared against the globe. Remove this block + the hero.php markup  */
+/* to drop the experiment.                                             */
+/* ================================================================== */
+.hero-showcase { display: none; }
+body.hero-alt-work .hero-sphere { display: none; }
+@media (min-width: 1025px) {
+	body.hero-alt-work .hero-showcase {
+		display: grid; position: absolute; top: 0; right: 0; z-index: 1;
+		width: 46%; height: 100%; grid-template-columns: 1fr 1fr; gap: 0.9rem;
+		padding: 1.25rem 1.25rem 1.25rem 0; overflow: hidden; pointer-events: none;
+		-webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 14%, #000 86%, transparent 100%);
+		mask-image: linear-gradient(to bottom, transparent 0, #000 14%, #000 86%, transparent 100%);
+		transform: perspective(1500px) rotateY(-11deg); transform-origin: right center;
+	}
+}
+.hero-showcase__col { display: flex; flex-direction: column; gap: 0.9rem; will-change: transform; }
+.hero-showcase__col--a { animation: le-hs-up 52s linear infinite; }
+.hero-showcase__col--b { animation: le-hs-down 60s linear infinite; }
+.hero-showcase__img { width: 100%; border-radius: 12px; border: 1px solid hsl(var(--glass-border)); display: block; box-shadow: 0 16px 40px rgba(0,0,0,0.4); }
+@keyframes le-hs-up { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+@keyframes le-hs-down { from { transform: translateY(-50%); } to { transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { .hero-showcase__col { animation: none; } }
