@@ -64,20 +64,38 @@
 		var N = ax.length;
 		var px = new Float32Array(N), py = new Float32Array(N), pz = new Float32Array(N), pl = new Float32Array(N);
 
-		// London = nearest LAND point to the London vector.
-		var london = landIdx[0], best = 1e9;
-		for (i = 0; i < landIdx.length; i++) {
-			var li = landIdx[i];
-			var dx = ax[li] - LONDON.x, dy = ay[li] - LONDON.y, dz = az[li] - LONDON.z;
-			var dd = dx * dx + dy * dy + dz * dz;
-			if (dd < best) { best = dd; london = li; }
+		// Global cities — markers + labels; London is the broadcast origin.
+		var CITY_DEFS = [
+			{ n: 'London', lat: 51.5, lon: 0 },
+			{ n: 'New York', lat: 40.71, lon: -74.0 },
+			{ n: 'Barcelona', lat: 41.39, lon: 2.17 },
+			{ n: 'Los Angeles', lat: 34.05, lon: -118.24 },
+			{ n: 'Zurich', lat: 47.37, lon: 8.54 },
+			{ n: 'Hong Kong', lat: 22.32, lon: 114.17 },
+			{ n: 'Melbourne', lat: -37.81, lon: 144.96 },
+			{ n: 'Auckland', lat: -36.85, lon: 174.76 }
+		];
+		var cities = [];
+		for (i = 0; i < CITY_DEFS.length; i++) {
+			var cd = CITY_DEFS[i];
+			var cla = cd.lat * Math.PI / 180, clo = cd.lon * Math.PI / 180, ccr = Math.cos(cla);
+			var cvx = ccr * Math.cos(clo), cvy = Math.sin(cla), cvz = ccr * Math.sin(clo);
+			var cidx = landIdx[0], cbest = 1e9;
+			for (var cj = 0; cj < landIdx.length; cj++) {
+				var li = landIdx[cj];
+				var ex = ax[li] - cvx, ey = ay[li] - cvy, ez = az[li] - cvz;
+				var ed = ex * ex + ey * ey + ez * ez;
+				if (ed < cbest) { cbest = ed; cidx = li; }
+			}
+			cities.push({ n: cd.n, idx: cidx });
 		}
+		var london = cities[0].idx;
 		var Lx = ax[london], Ly = ay[london], Lz = az[london];
 
 		function spawnArc() {
 			var to, ang, tries = 0;
 			do {
-				to = landIdx[(Math.random() * landIdx.length) | 0];
+				to = cities[1 + ((Math.random() * (cities.length - 1)) | 0)].idx;
 				var dot = Lx * ax[to] + Ly * ay[to] + Lz * az[to];
 				ang = Math.acos(dot < -1 ? -1 : dot > 1 ? 1 : dot);
 				tries++;
@@ -163,10 +181,11 @@
 			ctx.globalAlpha = 1; ctx.fillStyle = body;
 			ctx.beginPath(); ctx.arc(cx, cy, radius, 0, Math.PI * 2); ctx.fill();
 			// Atmosphere rim.
-			var rim = ctx.createRadialGradient(cx, cy, radius * 0.82, cx, cy, radius * 1.07);
+			var rim = ctx.createRadialGradient(cx, cy, radius * 0.72, cx, cy, radius * 1.08);
 			rim.addColorStop(0, 'rgba(191,255,0,0)');
-			rim.addColorStop(0.86, 'rgba(191,255,0,0)');
-			rim.addColorStop(0.95, 'rgba(191,255,0,0.18)');
+			rim.addColorStop(0.8, 'rgba(191,255,0,0)');
+			rim.addColorStop(0.93, 'rgba(191,255,0,0.07)');
+			rim.addColorStop(0.985, 'rgba(191,255,0,0.03)');
 			rim.addColorStop(1, 'rgba(191,255,0,0)');
 			ctx.fillStyle = rim;
 			ctx.beginPath(); ctx.arc(cx, cy, radius * 1.07, 0, Math.PI * 2); ctx.fill();
@@ -267,7 +286,7 @@
 				}
 			}
 
-			// London pings + anchor.
+			// London (origin) pings.
 			var lzL = pz[london], ldf = (lzL + 1) * 0.5;
 			if (lzL > -0.02) {
 				for (k = 0; k < pings.length; k++) {
@@ -277,26 +296,34 @@
 					ctx.globalAlpha = pa; ctx.strokeStyle = 'rgb(' + LIME + ')'; ctx.lineWidth = 1;
 					ctx.beginPath(); ctx.arc(px[london], py[london], pr, 0, Math.PI * 2); ctx.stroke();
 				}
-				var lg = ctx.createRadialGradient(px[london], py[london], 0, px[london], py[london], 16 * ldf + 4);
-				lg.addColorStop(0, 'rgba(191,255,0,' + (0.33 * ldf).toFixed(3) + ')');
-				lg.addColorStop(1, 'rgba(191,255,0,0)');
-				ctx.globalAlpha = 1; ctx.fillStyle = lg;
-				ctx.beginPath(); ctx.arc(px[london], py[london], 16 * ldf + 4, 0, Math.PI * 2); ctx.fill();
-				ctx.globalAlpha = 0.5 * ldf; ctx.strokeStyle = 'rgb(' + LIME + ')'; ctx.lineWidth = 1;
-				ctx.beginPath(); ctx.arc(px[london], py[london], 5 * ldf + 2, 0, Math.PI * 2); ctx.stroke();
-				ctx.globalAlpha = 0.97; ctx.fillStyle = 'rgb(244,255,212)';
-				ctx.beginPath(); ctx.arc(px[london], py[london], 2.9 * ldf + 0.9, 0, Math.PI * 2); ctx.fill();
-				if (ldf > 0.4) {
-					var la = (ldf - 0.4) / 0.6; if (la > 1) { la = 1; }
-					var lxp = px[london], lyp = py[london];
-					var ox = lxp + 12, oy = lyp - 12;
-					ctx.globalAlpha = 0.5 * la; ctx.strokeStyle = 'rgb(' + LIME + ')'; ctx.lineWidth = 1;
-					ctx.beginPath(); ctx.moveTo(lxp + 3, lyp - 3); ctx.lineTo(ox, oy); ctx.lineTo(ox + 54, oy); ctx.stroke();
-					ctx.globalAlpha = 0.9 * la; ctx.fillStyle = 'rgb(214,255,120)';
-					ctx.font = '600 10px Arial, sans-serif';
-					try { ctx.letterSpacing = '2px'; } catch (e) {}
-					ctx.textBaseline = 'bottom';
-					ctx.fillText('LONDON', ox + 2, oy - 2);
+			}
+
+			// City markers + labels (London is the origin, slightly larger).
+			ctx.font = '600 10px Arial, sans-serif';
+			ctx.textBaseline = 'bottom'; ctx.textAlign = 'left';
+			for (k = 0; k < cities.length; k++) {
+				var ci = cities[k].idx;
+				if (pz[ci] < -0.02) { continue; }
+				var cdf = (pz[ci] + 1) * 0.5;
+				var origin = (ci === london);
+				var gr = (origin ? 16 : 11) * cdf + 3;
+				var cg = ctx.createRadialGradient(px[ci], py[ci], 0, px[ci], py[ci], gr);
+				cg.addColorStop(0, 'rgba(191,255,0,' + ((origin ? 0.33 : 0.22) * cdf).toFixed(3) + ')');
+				cg.addColorStop(1, 'rgba(191,255,0,0)');
+				ctx.globalAlpha = 1; ctx.fillStyle = cg;
+				ctx.beginPath(); ctx.arc(px[ci], py[ci], gr, 0, Math.PI * 2); ctx.fill();
+				ctx.globalAlpha = 0.96; ctx.fillStyle = 'rgb(244,255,212)';
+				ctx.beginPath(); ctx.arc(px[ci], py[ci], (origin ? 2.9 : 2.1) * cdf + 0.7, 0, Math.PI * 2); ctx.fill();
+				if (cdf > 0.42) {
+					var la = (cdf - 0.42) / 0.58; if (la > 1) { la = 1; }
+					var nm = cities[k].n.toUpperCase();
+					var ox = px[ci] + 10, oy = py[ci] - 9;
+					try { ctx.letterSpacing = '1.5px'; } catch (e) {}
+					var tw = ctx.measureText(nm).width;
+					ctx.globalAlpha = 0.42 * la; ctx.strokeStyle = 'rgb(' + LIME + ')'; ctx.lineWidth = 1;
+					ctx.beginPath(); ctx.moveTo(px[ci] + 2.5, py[ci] - 2.5); ctx.lineTo(ox, oy); ctx.lineTo(ox + tw + 6, oy); ctx.stroke();
+					ctx.globalAlpha = (origin ? 0.95 : 0.78) * la; ctx.fillStyle = 'rgb(214,255,120)';
+					ctx.fillText(nm, ox + 3, oy - 2);
 					try { ctx.letterSpacing = '0px'; } catch (e) {}
 				}
 			}
