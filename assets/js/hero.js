@@ -79,11 +79,11 @@
 				ang = Math.acos(dot < -1 ? -1 : dot > 1 ? 1 : dot);
 				tries++;
 			} while (ang < 0.5 && tries < 8);
-			return { to: to, ang: ang, t: 0, speed: 0.45 + Math.random() * 0.45 };
+			return { to: to, ang: ang, t: 0, speed: 0.45 + Math.random() * 0.45, arrived: false };
 		}
 		var arcs = [];
 		if (!reduced) { for (i = 0; i < ARCS; i++) { arcs.push(spawnArc()); } }
-		var pings = [], pingTimer = 0.3;
+		var pings = [], pingTimer = 0.3, arrivals = [];
 
 		var dpr = Math.min(window.devicePixelRatio || 1, 2);
 		var w = 0, h = 0, raf = 0, visible = true, angle = 0, last = 0;
@@ -183,12 +183,17 @@
 				pingTimer -= dt;
 				if (pingTimer <= 0) { pings.push({ t: 0 }); pingTimer = 1.8; }
 				for (k = pings.length - 1; k >= 0; k--) { pings[k].t += dt; if (pings[k].t > 1.4) { pings.splice(k, 1); } }
+				for (k = arrivals.length - 1; k >= 0; k--) { arrivals[k].t += dt; if (arrivals[k].t > 1.0) { arrivals.splice(k, 1); } }
 			}
 
 			// Connection arcs from London along great-circle paths.
 			for (k = 0; k < arcs.length; k++) {
 				var arc = arcs[k];
-				if (!reduced) { arc.t += arc.speed * dt; if (arc.t >= 1.25) { arcs[k] = spawnArc(); continue; } }
+				if (!reduced) {
+					arc.t += arc.speed * dt;
+					if (arc.t >= 1 && !arc.arrived) { arrivals.push({ to: arc.to, t: 0 }); arc.arrived = true; }
+					if (arc.t >= 1.25) { arcs[k] = spawnArc(); continue; }
+				}
 				var tt = arc.t < 1 ? arc.t : 1;
 				var steps = Math.max(2, Math.ceil(tt / 0.045));
 				var prevOk = false, prx = 0, pry = 0;
@@ -220,6 +225,26 @@
 						ctx.globalAlpha = 0.95 * hdf; ctx.fillStyle = 'rgb(236,255,190)';
 						ctx.beginPath(); ctx.arc(a1[0], a1[1], 1.7 * hdf + 0.4, 0, Math.PI * 2); ctx.fill();
 					}
+				}
+			}
+
+			// Arrival ripples — a signal landing at its destination.
+			for (k = 0; k < arrivals.length; k++) {
+				var av = arrivals[k], ti = av.to;
+				if (pz[ti] < -0.02) { continue; }
+				var adf = (pz[ti] + 1) * 0.5, at = av.t;
+				var ease = 1 - Math.pow(1 - at, 2);
+				var ra = Math.max(0, 0.6 * (1 - at)) * adf;
+				if (ra > 0.012) {
+					ctx.globalAlpha = ra < 0.75 ? ra : 0.75; ctx.strokeStyle = 'rgb(' + LIME + ')'; ctx.lineWidth = 1.3;
+					ctx.beginPath(); ctx.arc(px[ti], py[ti], 2 + ease * 26, 0, Math.PI * 2); ctx.stroke();
+				}
+				var fa = Math.max(0, 1 - at * 1.7) * adf;
+				if (fa > 0.02) {
+					ctx.globalAlpha = 0.28 * fa; ctx.fillStyle = 'rgb(' + LIME + ')';
+					ctx.beginPath(); ctx.arc(px[ti], py[ti], 5.5 * adf, 0, Math.PI * 2); ctx.fill();
+					ctx.globalAlpha = 0.95 * fa; ctx.fillStyle = 'rgb(240,255,200)';
+					ctx.beginPath(); ctx.arc(px[ti], py[ti], 2.3 * adf + 0.4, 0, Math.PI * 2); ctx.fill();
 				}
 			}
 
