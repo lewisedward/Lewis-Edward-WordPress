@@ -2488,3 +2488,55 @@ body.admin-bar header {
 	-webkit-mask-image: radial-gradient(128% 128% at 66% 40%, #000 54%, rgba(0,0,0,0.45) 82%, transparent 100%);
 	mask-image: radial-gradient(128% 128% at 66% 40%, #000 54%, rgba(0,0,0,0.45) 82%, transparent 100%);
 }
+
+/* ============================================================================
+   Home: Statement section — mono "message thread" into a lime accent card
+   with a framed, muted video. Borrows the stacked-cards-on-black look and
+   blends it into the lime / Chillax brand.
+   ========================================================================== */
+.section--statement { --mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace; }
+.statement { position: relative; padding-block: clamp(2rem, 5vw, 5rem); }
+
+.statement__head { display: flex; align-items: center; gap: 1rem; margin-bottom: clamp(1.75rem, 4vw, 3rem); }
+.statement__eyebrow { color: hsl(var(--primary)); }
+.statement__rule { flex: 1 1 auto; height: 1px; background: hsl(var(--foreground) / 0.12); }
+
+.statement__thread { position: relative; display: flex; flex-direction: column; gap: 0; }
+
+.msg { position: relative; border-radius: 1.25rem; padding: 1.4rem 1.6rem; border: 1px solid hsl(var(--glass-border)); }
+.msg__meta { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; margin-bottom: 0.85rem; font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; }
+.msg__from { font-weight: 600; }
+.msg__time { opacity: 0.6; }
+.msg__text { margin: 0; font-family: var(--mono); font-size: clamp(1rem, 1.5vw, 1.3rem); line-height: 1.35; letter-spacing: 0.005em; }
+
+/* Incoming (dim) */
+.msg--in { align-self: flex-start; width: min(100%, 30rem); background: hsl(var(--foreground) / 0.035); color: hsl(var(--muted-foreground)); z-index: 1; }
+.msg--in .msg__from { color: hsl(var(--foreground) / 0.6); }
+
+/* Reply (brighter glass) */
+.msg--reply { align-self: flex-start; width: min(100%, 31rem); margin-top: 0.75rem; background: hsl(var(--foreground) / 0.06); color: hsl(var(--foreground)); z-index: 2; }
+.msg--reply .msg__from { color: hsl(var(--primary)); }
+
+/* Accent (lime punchline) */
+.msg--accent { align-self: stretch; width: 100%; margin-top: 1rem; background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); border-color: transparent; padding: clamp(1.6rem, 3vw, 2.5rem); z-index: 3; }
+.msg--accent .msg__meta { color: hsl(var(--primary-foreground)); }
+.msg--accent .msg__time { color: hsl(var(--primary-foreground) / 0.65); }
+.msg__statement { margin: 0.3rem 0 0; font-family: var(--font-display); font-weight: 400; font-size: clamp(1.6rem, 3.4vw, 3rem); line-height: 1.03; letter-spacing: -0.03em; color: hsl(var(--primary-foreground)); }
+.msg__frame { margin-top: clamp(1.4rem, 3vw, 2rem); border-radius: 0.9rem; overflow: hidden; border: 1px solid hsl(var(--primary-foreground) / 0.25); aspect-ratio: 16 / 9; background: hsl(var(--background)); }
+.msg__video { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* Desktop: staggered diagonal + two-column accent card */
+@media (min-width: 900px) {
+	.msg--in { width: 28rem; }
+	.msg--reply { width: 30rem; margin-left: clamp(3rem, 7vw, 7rem); margin-top: -0.4rem; }
+	.msg--accent { align-self: flex-end; width: min(100%, 52rem); margin-top: -2.5rem;
+		display: grid; grid-template-columns: 1.05fr 1fr; grid-template-areas: "meta meta" "stmt frame"; column-gap: 2.25rem; row-gap: 1.25rem; align-items: center; }
+	.msg--accent .msg__meta { grid-area: meta; margin-bottom: 0; }
+	.msg--accent .msg__statement { grid-area: stmt; }
+	.msg--accent .msg__frame { grid-area: frame; margin-top: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.msg__video { display: none; }
+	.msg__frame { background-image: url("../videos/typing-macbook-poster.jpg"); background-size: cover; background-position: center; }
+}

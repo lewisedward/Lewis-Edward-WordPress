@@ -27,6 +27,7 @@ get_header();
 	get_template_part( 'template-parts/home/services' );
 	get_template_part( 'template-parts/home/text-image-overlap' );
 	get_template_part( 'template-parts/home/about' );
+	get_template_part( 'template-parts/home/statement' );
 	get_template_part( 'template-parts/home/testimonials' );
 	get_template_part( 'template-parts/home/contact-cta' );
 	?>
