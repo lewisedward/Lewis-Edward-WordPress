@@ -1486,8 +1486,7 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 
 /* Hero */
 .work-hero__sphere { position: absolute; top: 2.5rem; right: 1rem; width: 15rem; height: 15rem; opacity: 0.7; pointer-events: none; display: none; }
-@media (min-width: 768px) { .work-hero__sphere { display: block; } }
-@media (min-width: 1024px) { .work-hero__sphere { top: 5rem; right: 4rem; width: 20rem; height: 20rem; } }
+@media (min-width: 1400px) { .work-hero__sphere { display: block; top: 7rem; right: 4rem; width: 20rem; height: 20rem; } }
 .work-hero__title { position: relative; z-index: 1; margin: 0 0 2rem; max-width: 52rem; font-family: var(--font-display); font-weight: 400; font-size: var(--title-2); line-height: 1; letter-spacing: -0.04em; color: hsl(var(--foreground)); }
 .work-hero__title span { display: inline; }
 .work-hero__lead { position: relative; z-index: 1; max-width: 44rem; margin: 0 0 2.5rem; font-size: 1.15rem; line-height: 1.55; font-weight: 300; color: hsl(var(--foreground) / 0.65); }

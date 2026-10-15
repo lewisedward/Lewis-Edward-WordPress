@@ -314,10 +314,20 @@
 				ctx.beginPath(); ctx.arc(px[ci], py[ci], (origin ? 2.9 : 2.1) * cdf + 0.7, 0, Math.PI * 2); ctx.fill();
 				if (cdf > 0.33) {
 					var nm = cities[k].n.toUpperCase();
-					var ox = px[ci] + 10, oy = py[ci] - 9;
 					try { ctx.letterSpacing = '1.5px'; } catch (e) {}
 					var tw = ctx.measureText(nm).width;
-					var rx = ox, ry = oy - 11, rw = tw + 8, rh = 14, clash = false;
+					// Keep the label inside the canvas: it sits to the right of the
+					// marker by default, and flips to the left when that would run
+					// past the edge (the canvas clips, which shears the word).
+					var lw = tw + 8, oy = py[ci] - 9;
+					var ox = px[ci] + 10;
+					if (ox + lw > w - 2) {
+						var alt = px[ci] - 10 - (tw + 6);
+						if (alt >= 2) { ox = alt; } else { ox = Math.max(2, w - 2 - lw); }
+					}
+					if (oy - 11 < 2) { oy = 13; }
+					var flipped = (ox < px[ci]);
+					var rx = ox, ry = oy - 11, rw = lw, rh = 14, clash = false;
 					for (var lr = 0; lr < labRects.length; lr++) {
 						var R = labRects[lr];
 						if (rx < R.x + R.w && rx + rw > R.x && ry < R.y + R.h && ry + rh > R.y) { clash = true; break; }
@@ -326,7 +336,13 @@
 						labRects.push({ x: rx, y: ry, w: rw, h: rh });
 						var la = (cdf - 0.33) / 0.5; if (la > 1) { la = 1; }
 						ctx.globalAlpha = 0.42 * la; ctx.strokeStyle = 'rgb(' + LIME + ')'; ctx.lineWidth = 1;
-						ctx.beginPath(); ctx.moveTo(px[ci] + 2.5, py[ci] - 2.5); ctx.lineTo(ox, oy); ctx.lineTo(ox + tw + 6, oy); ctx.stroke();
+						ctx.beginPath();
+						if (flipped) {
+							ctx.moveTo(px[ci] - 2.5, py[ci] - 2.5); ctx.lineTo(ox + tw + 6, oy); ctx.lineTo(ox, oy);
+						} else {
+							ctx.moveTo(px[ci] + 2.5, py[ci] - 2.5); ctx.lineTo(ox, oy); ctx.lineTo(ox + tw + 6, oy);
+						}
+						ctx.stroke();
 						ctx.globalAlpha = (origin ? 0.95 : 0.78) * la; ctx.fillStyle = 'rgb(214,255,120)';
 						ctx.fillText(nm, ox + 3, oy - 2);
 					}
