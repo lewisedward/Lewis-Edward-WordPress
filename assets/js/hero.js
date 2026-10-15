@@ -73,6 +73,8 @@
 			{ n: 'Ottawa', lat: 45.42, lon: -75.7 },
 			{ n: 'Dubai', lat: 25.2, lon: 55.27 },
 			{ n: 'Hong Kong', lat: 22.32, lon: 114.17 },
+			{ n: 'Singapore', lat: 1.35, lon: 103.82 },
+			{ n: 'Tokyo', lat: 35.68, lon: 139.65 },
 			{ n: 'Melbourne', lat: -37.81, lon: 144.96 },
 			{ n: 'Auckland', lat: -36.85, lon: 174.76 }
 		];
