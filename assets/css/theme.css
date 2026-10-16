@@ -1238,6 +1238,10 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 @media (min-width: 640px) { .about-hero__portrait { aspect-ratio: 5 / 4; } }
 @media (min-width: 1024px) { .about-hero__portrait { aspect-ratio: auto; min-height: 34rem; } }
 .about-hero__portrait img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+/* Take the portrait out of flow above 1024 so its 2:3 source image stops
+   setting the row height. The bio card then drives it and the empty space
+   under the signature goes away; min-height above is the floor. */
+@media (min-width: 1024px) { .about-hero__portrait img { position: absolute; inset: 0; } }
 .about-hero__portrait-fade { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to top, hsl(var(--background) / 0.7), hsl(var(--background) / 0.1) 40%, transparent); }
 
 .about-bio { display: flex; flex-direction: column; justify-content: space-between; padding: 1.25rem; border-radius: 1rem; }
