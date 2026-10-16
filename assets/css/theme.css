@@ -1217,9 +1217,7 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 @media (min-width: 640px) { .about-hero__loc { display: inline; } }
 
 /* Decorative dot-sphere */
-.about-hero__sphere { position: absolute; top: 2.5rem; right: 1rem; width: 15rem; height: 15rem; opacity: 0.8; pointer-events: none; display: none; }
-@media (min-width: 768px) { .about-hero__sphere { display: block; } }
-@media (min-width: 1024px) { .about-hero__sphere { top: 5rem; right: 4rem; width: 20rem; height: 20rem; } }
+
 
 /* Hero headline + lead */
 .about-hero__title { position: relative; z-index: 1; margin: 0 0 1.5rem; max-width: 55rem; font-family: var(--font-display); font-weight: 400; font-size: var(--title-2); line-height: 1; letter-spacing: -0.04em; color: hsl(var(--foreground)); }
@@ -1485,8 +1483,18 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 @media (min-width: 640px) { .work-hero__right { display: inline; } }
 
 /* Hero */
-.work-hero__sphere { position: absolute; top: 2.5rem; right: 1rem; width: 15rem; height: 15rem; opacity: 0.7; pointer-events: none; display: none; }
-@media (min-width: 1400px) { .work-hero__sphere { display: block; top: 7rem; right: 4rem; width: 20rem; height: 20rem; } }
+/* Hero split: text column + globe column (About, Journal, Work listing).
+   Gives the dot-sphere a column of its own instead of floating it over the
+   copy, matching the two-column service heroes. */
+.hero-split { display: grid; grid-template-columns: minmax(0, 1fr); margin-bottom: 2.5rem; }
+.hero-split__aside { display: none; }
+@media (min-width: 1100px) {
+	.hero-split { grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr); column-gap: 3.5rem; align-items: center; }
+	.hero-split__aside { display: flex; align-items: center; justify-content: center; align-self: stretch; padding-left: 2.5rem; border-left: 1px solid hsl(var(--foreground) / 0.07); }
+}
+.hero-split__main > :last-child { margin-bottom: 0; }
+.hero-split__sphere { position: relative; width: 100%; max-width: 20rem; aspect-ratio: 1 / 1; height: auto; opacity: 0.7; pointer-events: none; }
+.hero-split__sphere .hero-sphere__canvas { width: 100%; height: 100%; display: block; }
 .work-hero__title { position: relative; z-index: 1; margin: 0 0 2rem; max-width: 52rem; font-family: var(--font-display); font-weight: 400; font-size: var(--title-2); line-height: 1; letter-spacing: -0.04em; color: hsl(var(--foreground)); }
 .work-hero__title span { display: inline; }
 .work-hero__lead { position: relative; z-index: 1; max-width: 44rem; margin: 0 0 2.5rem; font-size: 1.15rem; line-height: 1.55; font-weight: 300; color: hsl(var(--foreground) / 0.65); }
@@ -2014,10 +2022,7 @@ a.work-tag:hover { color: hsl(var(--primary)); border-color: hsl(var(--primary) 
 .jr-dot { width: 3px; height: 3px; border-radius: 999px; background: hsl(var(--foreground) / 0.3); display: inline-block; }
 
 /* Lead / featured sphere */
-.jr-lead__sphere { position: absolute; top: 4rem; right: 1.5rem; width: 16rem; height: 16rem; opacity: 0.7; pointer-events: none; z-index: 0; }
-@media (max-width: 767px) { .jr-lead__sphere { display: none; } }
-@media (min-width: 1024px) { .jr-lead__sphere { width: 22rem; height: 22rem; right: 2.5rem; } }
-.jr-lead__sphere .hero-sphere__canvas { width: 100%; height: 100%; display: block; }
+
 .jr-lead > *:not(.jr-lead__sphere) { position: relative; z-index: 1; }
 
 .jr-lead__title { font-size: clamp(2rem, 4.2vw, 3.75rem); line-height: 1; letter-spacing: -0.04em; max-width: 56rem; margin-bottom: 2rem; }

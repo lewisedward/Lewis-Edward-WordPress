@@ -49,17 +49,23 @@ $ab_values = is_array( $ab_values ) ? $ab_values : array();
 					<span class="pulse-dot" aria-hidden="true"></span>
 				</div>
 
-				<div class="about-hero__sphere" aria-hidden="true" data-hero-sphere>
-					<canvas class="hero-sphere__canvas"></canvas>
+				<div class="hero-split">
+					<div class="hero-split__main">
+						<h1 class="about-hero__title">
+						<span><?php echo esc_html( le_field( 'about_h1_1' ) ); ?></span>
+							<span class="about-hero__title-muted"><?php echo esc_html( le_field( 'about_h1_2' ) ); ?></span>
+							<span class="text-primary"><?php echo esc_html( le_field( 'about_h1_3' ) ); ?></span>
+						</h1>
+
+						<p class="about-hero__lead"><?php echo esc_html( le_field( 'about_lead' ) ); ?></p>
+					</div>
+
+					<div class="hero-split__aside" aria-hidden="true">
+						<div class="about-hero__sphere hero-split__sphere" data-hero-sphere>
+							<canvas class="hero-sphere__canvas"></canvas>
+						</div>
+					</div>
 				</div>
-
-				<h1 class="about-hero__title">
-					<span><?php echo esc_html( le_field( 'about_h1_1' ) ); ?></span>
-					<span class="about-hero__title-muted"><?php echo esc_html( le_field( 'about_h1_2' ) ); ?></span>
-					<span class="text-primary"><?php echo esc_html( le_field( 'about_h1_3' ) ); ?></span>
-				</h1>
-
-				<p class="about-hero__lead"><?php echo esc_html( le_field( 'about_lead' ) ); ?></p>
 
 				<div class="about-hero__composition">
 					<div class="about-hero__portrait">
@@ -118,9 +124,9 @@ $ab_values = is_array( $ab_values ) ? $ab_values : array();
 			<div class="section__inner">
 				<div class="team-card glass" data-reveal>
 					<div class="team-card__head">
-						<span class="eyebrow"><?php echo esc_html( le_field( 'about_team_eyebrow' ) ); ?><sup class="team-card__count"><?php echo esc_html( str_pad( (string) count( $ab_team ), 2, '0', STR_PAD_LEFT ) ); ?></sup></span>
-						<span class="team-card__rule" aria-hidden="true"></span>
-						<span class="pulse-dot" aria-hidden="true"></span>
+							<span class="eyebrow"><?php echo esc_html( le_field( 'about_team_eyebrow' ) ); ?><sup class="team-card__count"><?php echo esc_html( str_pad( (string) count( $ab_team ), 2, '0', STR_PAD_LEFT ) ); ?></sup></span>
+							<span class="team-card__rule" aria-hidden="true"></span>
+							<span class="pulse-dot" aria-hidden="true"></span>
 					</div>
 
 					<h2 class="team-card__title"><?php echo esc_html( le_field( 'about_team_h1' ) ); ?> <span class="text-primary"><?php echo esc_html( le_field( 'about_team_h_accent' ) ); ?></span> <span class="about-muted"><?php echo esc_html( le_field( 'about_team_h_muted' ) ); ?></span></h2>
@@ -151,15 +157,15 @@ $ab_values = is_array( $ab_values ) ? $ab_values : array();
 			<div class="section__inner">
 				<div class="values-card glass" data-reveal>
 					<div class="values-card__head">
-						<span class="eyebrow"><?php echo esc_html( le_field( 'about_values_eyebrow' ) ); ?><sup class="values-card__count"><?php echo esc_html( str_pad( (string) count( $ab_values ), 2, '0', STR_PAD_LEFT ) ); ?></sup></span>
-						<span class="values-card__rule" aria-hidden="true"></span>
-						<span class="pulse-dot" aria-hidden="true"></span>
+							<span class="eyebrow"><?php echo esc_html( le_field( 'about_values_eyebrow' ) ); ?><sup class="values-card__count"><?php echo esc_html( str_pad( (string) count( $ab_values ), 2, '0', STR_PAD_LEFT ) ); ?></sup></span>
+							<span class="values-card__rule" aria-hidden="true"></span>
+							<span class="pulse-dot" aria-hidden="true"></span>
 					</div>
 
 					<h2 class="values-card__title">
 						<?php echo esc_html( le_field( 'about_values_h1' ) ); ?> 
-						<span class="text-primary"><?php echo esc_html( le_field( 'about_values_h_accent' ) ); ?></span> 
-						<span class="about-muted"><?php echo le_field( 'about_values_h_muted' ); ?></span>
+							<span class="text-primary"><?php echo esc_html( le_field( 'about_values_h_accent' ) ); ?></span> 
+							<span class="about-muted"><?php echo le_field( 'about_values_h_muted' ); ?></span>
 					</h2>
 
 					<div class="values-grid">
