@@ -42,24 +42,30 @@ if ( 1 === $paged ) {
 	<section class="section section--jr-lead" aria-label="<?php esc_attr_e( 'Journal', 'lewisedward' ); ?>">
 		<div class="section__inner">
 			<div class="jr-lead glass" data-reveal>
-				<div class="jr-lead__sphere" aria-hidden="true" data-hero-sphere>
-					<canvas class="hero-sphere__canvas"></canvas>
-				</div>
-
 				<div class="jr-lead__eyebrow-row">
-					<span class="eyebrow"><?php echo esc_html( le_field( 'journalp_eyebrow', $pp ) ); ?><?php if ( $total ) : ?><sup class="jr-lead__sup"><?php echo esc_html( str_pad( (string) $total, 2, '0', STR_PAD_LEFT ) ); ?></sup><?php endif; ?></span>
-					<span class="jr-lead__rule" aria-hidden="true"></span>
-					<span class="eyebrow jr-lead__right"><?php echo esc_html( le_field( 'journalp_right_label', $pp ) ); ?></span>
-					<span class="pulse-dot" aria-hidden="true"></span>
+						<span class="eyebrow"><?php echo esc_html( le_field( 'journalp_eyebrow', $pp ) ); ?><?php if ( $total ) : ?><sup class="jr-lead__sup"><?php echo esc_html( str_pad( (string) $total, 2, '0', STR_PAD_LEFT ) ); ?></sup><?php endif; ?></span>
+						<span class="jr-lead__rule" aria-hidden="true"></span>
+						<span class="eyebrow jr-lead__right"><?php echo esc_html( le_field( 'journalp_right_label', $pp ) ); ?></span>
+						<span class="pulse-dot" aria-hidden="true"></span>
 				</div>
 
-				<h1 class="jr-lead__title">
-					<span class="jr-lead__title-1"><?php echo esc_html( le_field( 'journalp_h1_1', $pp ) ); ?></span>
-					<span class="about-muted"><?php echo esc_html( le_field( 'journalp_h1_2', $pp ) ); ?></span>
-					<span class="text-primary"><?php echo esc_html( le_field( 'journalp_h1_3', $pp ) ); ?></span>
-				</h1>
+				<div class="hero-split">
+					<div class="hero-split__main">
+						<h1 class="jr-lead__title">
+						<span class="jr-lead__title-1"><?php echo esc_html( le_field( 'journalp_h1_1', $pp ) ); ?></span>
+						<span class="about-muted"><?php echo esc_html( le_field( 'journalp_h1_2', $pp ) ); ?></span>
+						<span class="text-primary"><?php echo esc_html( le_field( 'journalp_h1_3', $pp ) ); ?></span>
+						</h1>
 
-				<p class="jr-lead__lead"><?php echo esc_html( le_field( 'journalp_lead', $pp ) ); ?></p>
+						<p class="jr-lead__lead"><?php echo esc_html( le_field( 'journalp_lead', $pp ) ); ?></p>
+					</div>
+
+					<div class="hero-split__aside" aria-hidden="true">
+						<div class="jr-lead__sphere hero-split__sphere" data-hero-sphere>
+							<canvas class="hero-sphere__canvas"></canvas>
+						</div>
+					</div>
+				</div>
 
 				<?php if ( $fid && has_post_thumbnail( $fid ) ) : ?>
 					<a class="jr-featured" href="<?php echo esc_url( get_permalink( $fid ) ); ?>" data-cursor="Read">
