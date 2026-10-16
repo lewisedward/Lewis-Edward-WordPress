@@ -410,22 +410,18 @@
 		raf = requestAnimationFrame(draw);
 	}
 
+	// Scroll parallax only. The cursor-follow tilt that used to nudge the globe
+	// a few pixels toward the pointer has been removed - it read as drift
+	// rather than response, and fought the globe's own rotation.
 	function initParallax(tile, wrap) {
 		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { return; }
-		var tx = 0, ty = 0, cxp = 0, cyp = 0, sy = 0, running = false;
+		var sy = 0, cy = 0, running = false;
 		function apply() {
-			cxp += (tx - cxp) * 0.1; cyp += (ty - cyp) * 0.1;
-			wrap.style.transform = 'translate(' + cxp.toFixed(2) + 'px,' + (cyp + sy).toFixed(2) + 'px)';
-			if (Math.abs(tx - cxp) > 0.1 || Math.abs(ty - cyp) > 0.1) { requestAnimationFrame(apply); } else { running = false; }
+			cy += (sy - cy) * 0.1;
+			wrap.style.transform = 'translateY(' + cy.toFixed(2) + 'px)';
+			if (Math.abs(sy - cy) > 0.1) { requestAnimationFrame(apply); } else { running = false; }
 		}
 		function kick() { if (!running) { running = true; requestAnimationFrame(apply); } }
-		tile.addEventListener('mousemove', function (e) {
-			var r = tile.getBoundingClientRect();
-			tx = ((e.clientX - r.left) / r.width - 0.5) * 18;
-			ty = ((e.clientY - r.top) / r.height - 0.5) * 18;
-			kick();
-		});
-		tile.addEventListener('mouseleave', function () { tx = 0; ty = 0; kick(); });
 		window.addEventListener('scroll', function () {
 			var r = tile.getBoundingClientRect(), vh = window.innerHeight;
 			var progress = Math.max(-1, Math.min(1, (r.top + r.height / 2 - vh / 2) / vh));
