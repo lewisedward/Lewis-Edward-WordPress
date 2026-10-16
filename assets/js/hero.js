@@ -102,7 +102,8 @@
 				ang = Math.acos(dot < -1 ? -1 : dot > 1 ? 1 : dot);
 				tries++;
 			} while (ang < 0.5 && tries < 8);
-			return { to: to, ang: ang, t: 0, speed: 0.45 + Math.random() * 0.45, arrived: false };
+			// Travel speed: 1/speed seconds London -> city, so ~1.9-3.8s.
+			return { to: to, ang: ang, t: 0, speed: 0.26 + Math.random() * 0.26, arrived: false };
 		}
 		var arcs = [];
 		if (!reduced) { for (i = 0; i < ARCS; i++) { arcs.push(spawnArc()); } }
