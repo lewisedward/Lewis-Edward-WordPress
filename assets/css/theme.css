@@ -84,14 +84,18 @@
 	--card-foreground: 0 0% 100%;
 	--popover: 168 4% 9%;
 	--popover-foreground: 0 0% 100%;
-	--primary: 75 100% 50%;              /* lime accent */
+	--primary: 163 100% 45%;             /* mint accent, sampled from the brand gradient */
 	--primary-foreground: 168 4% 9%;
-	--primary-deep: 75 100% 22%;
+	--primary-deep: 168 100% 20%;
+	/* Brand gradient (blue-green). Kept to the bright half of the reference so
+	   --primary-foreground (near-black) still clears contrast on every panel
+	   that uses it; the deep navy end is decorative only. */
+	--brand-gradient: linear-gradient(135deg, hsl(182 100% 28%) 0%, hsl(174 100% 34%) 32%, hsl(164 100% 43%) 66%, hsl(156 100% 64%) 100%);
 	--secondary: 0 0% 14%;
 	--secondary-foreground: 0 0% 100%;
 	--muted: 0 0% 14%;
 	--muted-foreground: 195 4% 45%;
-	--accent: 75 100% 50%;
+	--accent: 163 100% 45%;
 	--accent-foreground: 168 4% 9%;
 	--destructive: 0 84.2% 60.2%;
 	--destructive-foreground: 0 0% 100%;
@@ -107,7 +111,7 @@
 	/* Cursor colours (RGB triplets for rgb(var(--x) / a)) */
 	--cursor-dot: 255 255 255;
 	--cursor-ring: 255 255 255;
-	--cursor-accent: 191 255 0;
+	--cursor-accent: 0 232 166;
 	--cursor-label-bg: 255 255 255;
 
 	/* Glass / surface tokens */
@@ -696,7 +700,7 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 .cap:hover .cap__arrow { opacity: 1; transform: translateY(-50%) translateX(0); }
 
 /* CTA tile ------------------------------------------------------------------ */
-.hero-tile--cta { position: relative; padding: 0; overflow: hidden; background-color: hsl(var(--primary)); min-height: 240px; transition: transform 0.5s ease; }
+.hero-tile--cta { position: relative; padding: 0; overflow: hidden; background-color: hsl(var(--primary)); background-image: var(--brand-gradient); min-height: 240px; transition: transform 0.5s ease; }
 .hero-cta__link { display: block; width: 100%; height: 100%; padding: 2rem; position: relative; overflow: hidden; }
 @media (min-width: 640px) { .hero-cta__link { padding: 2.5rem; } }
 .hero-cta__wash { position: absolute; top: 0; right: 0; width: 20rem; height: 20rem; background: hsl(var(--primary-foreground) / 0.08); border-bottom-left-radius: 999px; transform: translate(6rem, -6rem); transition: transform 0.7s ease; }
@@ -744,6 +748,7 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 	border: 1px solid hsl(var(--primary));
 	border-radius: 2rem;
 	background-color: hsl(var(--primary));
+	background-image: var(--brand-gradient);
 	color: hsl(var(--primary-foreground));
 	overflow: hidden;
 }
@@ -1028,7 +1033,7 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 .about-card__stats { display: grid; grid-template-columns: 1fr; gap: 1rem; }
 @media (min-width: 640px) { .about-card__stats { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1024px) { .about-card__stats { grid-template-columns: repeat(4, 1fr); } }
-.about-stat { display: flex; flex-direction: column; height: 100%; padding: 1.25rem; border-radius: 1rem; border: 1px solid hsl(var(--primary)); background: hsl(var(--primary)); color: hsl(var(--primary-foreground)); justify-content: center; }
+.about-stat { display: flex; flex-direction: column; height: 100%; padding: 1.25rem; border-radius: 1rem; border: 1px solid hsl(var(--primary)); background: hsl(var(--primary)); background-image: var(--brand-gradient); color: hsl(var(--primary-foreground)); justify-content: center; }
 @media (min-width: 640px) { .about-stat { padding: 1.5rem; } }
 .about-stat__num { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3em; color: hsl(var(--primary-foreground) / 0.7); font-variant-numeric: tabular-nums; margin-bottom: 1.3rem; }
 .about-stat__value { font-family: var(--font-display); font-weight: 400; font-size: clamp(2.4rem, 4vw, 3.4rem); line-height: 0.95; letter-spacing: -0.04em; color: hsl(var(--primary-foreground)); font-variant-numeric: tabular-nums; }
