@@ -33,8 +33,11 @@ $le_team         = le_field( 'home_hero_team' );         // team posts
 
 			<?php /* ---- Editorial tile ---- */ ?>
 			<div class="hero-tile hero-tile--editorial glass">
-				<div class="hero-sphere" aria-hidden="true" data-hero-sphere>
-					<canvas class="hero-sphere__canvas"></canvas>
+				<div class="hero-mock" aria-hidden="true">
+					<video class="hero-mock__video" autoplay muted loop playsinline preload="metadata"
+						poster="<?php echo esc_url( LE_URI . '/assets/videos/macbook-easyjet-poster.jpg' ); ?>">
+						<source src="<?php echo esc_url( LE_URI . '/assets/videos/macbook-easyjet.mp4' ); ?>" type="video/mp4">
+					</video>
 				</div>
 
 				<p class="eyebrow eyebrow--faint hero-editorial__eyebrow"><?php echo esc_html( le_field( 'home_hero_eyebrow' ) ); ?></p>
@@ -186,5 +189,5 @@ $le_team         = le_field( 'home_hero_team' );         // team posts
 	</div>
 </section>
 <?php
-// Load the hero canvas script only where the hero renders.
-wp_enqueue_script( 'le-hero' );
+// The home hero now shows the MacBook mockup video instead of the dot-sphere,
+// so hero.js (the canvas globe) is no longer needed on this template.

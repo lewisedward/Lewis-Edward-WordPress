@@ -2488,16 +2488,25 @@ body.admin-bar header {
 /* "Cookie settings" trigger in the footer bottom bar — reset the button */
 .footer-bottom__cookies { background: none; border: 0; padding: 0; margin: 0; font: inherit; line-height: inherit; color: inherit; cursor: pointer; }
 
-/* Hero globe integration: keep the mesh dense in the open top-right and let it
-   dissolve toward the headline/lede so the copy stays clean and the globe reads
-   as part of the hero rather than sitting on top of the text. Homepage only. */
-.hero-tile--editorial .hero-sphere {
-	top: -3rem;
-	right: -11rem;
-	width: min(72%, 760px);
-	-webkit-mask-image: radial-gradient(128% 128% at 66% 40%, #000 54%, rgba(0,0,0,0.45) 82%, transparent 100%);
-	mask-image: radial-gradient(128% 128% at 66% 40%, #000 54%, rgba(0,0,0,0.45) 82%, transparent 100%);
+/* Hero mockup: the easyJet build running on a MacBook, sitting in the open
+   top-right of the editorial tile. The clip is letterboxed on black, so a soft
+   radial mask dissolves its edges into the tile and keeps the headline clean.
+   Homepage only; hidden below 1024px where the tile has no spare room. */
+.hero-mock {
+	position: absolute;
+	top: -1rem;
+	right: -5rem;
+	width: min(74%, 820px);
+	aspect-ratio: 16 / 9;
+	z-index: 1;
+	pointer-events: none;
+	will-change: transform;
+	-webkit-mask-image: radial-gradient(118% 118% at 68% 46%, #000 48%, rgba(0,0,0,0.5) 78%, transparent 100%);
+	mask-image: radial-gradient(118% 118% at 68% 46%, #000 48%, rgba(0,0,0,0.5) 78%, transparent 100%);
 }
+.hero-mock__video { display: block; width: 100%; height: 100%; object-fit: contain; }
+@media (max-width: 1024px) { .hero-mock { display: none; } }
+@media (prefers-reduced-motion: reduce) { .hero-mock__video { display: none; } }
 
 /* ============================================================================
    Home: Statement section — mono "message thread" into a lime accent card
