@@ -54,7 +54,9 @@
 /* ---- Design tokens -------------------------------------------------------- */
 :root {
 	/* Type families */
-	--font-display: 'Chillax', 'Chillax Fallback', sans-serif;
+	/* Staging trial: Funnel Display (Google Fonts) for display type; Chillax
+	   stays as the immediate fallback and still sets body copy. */
+	--font-display: 'Funnel Display', 'Chillax', 'Chillax Fallback', sans-serif;
 	--font-body: 'Chillax', 'Chillax Fallback', sans-serif;
 
 	/* Heading scale */
