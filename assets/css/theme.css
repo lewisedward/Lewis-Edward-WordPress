@@ -57,7 +57,11 @@
 	--font-display: 'Chillax', 'Chillax Fallback', sans-serif;
 	/* Staging trial: JetBrains Mono for body copy. Chillax stays as the
 	   fallback and still backs up --font-display. */
-	--font-body: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, 'Chillax', monospace;
+	--font-body: 'Chillax', 'Chillax Fallback', sans-serif;
+	/* Mono is a signal face, not a reading face. It carries the micro-labels,
+	   nav, buttons, meta and tabular numerals; prose stays on Chillax.
+	   Applied via the mono block at the foot of this file. */
+	--font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
 	/* Heading scale */
 	--h1-size: clamp(2rem, 4.5vw, 5rem);   --h1-leading: 110%; --h1-tracking: -2px;   --h1-weight: 400;
@@ -2527,7 +2531,7 @@ body.admin-bar header {
    with a framed, muted video. Borrows the stacked-cards-on-black look and
    blends it into the lime / Chillax brand.
    ========================================================================== */
-.section--statement { --mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono', monospace; }
+.section--statement { --mono: var(--font-mono); }
 .statement { position: relative; padding-block: clamp(2rem, 5vw, 5rem); }
 
 .statement__head { display: flex; align-items: center; gap: 1rem; margin-bottom: clamp(1.75rem, 4vw, 3rem); }
@@ -2573,3 +2577,49 @@ body.admin-bar header {
 	.msg__video { display: none; }
 	.msg__frame { background-image: url("../videos/typing-macbook-poster.jpg"); background-size: cover; background-position: center; }
 }
+
+
+/* ==========================================================================
+   Mono distribution
+   JetBrains Mono is reserved for "signal" type: small uppercase labels, nav,
+   buttons, metadata and tabular micro-numerals. Reading text (body copy,
+   mega-menu items, stat captions, taglines) and all display headings stay on
+   Chillax. Mono sets wider than Chillax, so the tracking on the labels that
+   move across is trimmed to keep the same optical rhythm.
+   ========================================================================== */
+.eyebrow,
+.archive__eyebrow, .page__eyebrow,
+.arrow-link__label,
+.work-project__meta-label,
+.about-stat__num,
+.about-why__label,
+.mega-menu__count-label,
+.footer-col__title,
+.footer-top__label,
+.cap__num,
+.work-project__num,
+.overlap-svc__num,
+.value-card__num,
+.svc-card__num,
+.svc-step__num,
+.svc-sub__num,
+.nav-link,
+.btn,
+.btn-cta,
+.footer-link, .footer-menu a,
+.footer-bottom,
+.le-cursor__label,
+code, kbd, pre, samp {
+	font-family: var(--font-mono);
+}
+
+/* Tracking trim: these were spaced for Chillax, which is narrower. */
+.eyebrow { letter-spacing: 0.18em; }
+.eyebrow--faint { letter-spacing: 0.2em; }
+.eyebrow--t2, .eyebrow--strong { letter-spacing: 0.15em; }
+.arrow-link__label,
+.work-project__meta-label,
+.about-stat__num,
+.overlap-svc--column .overlap-svc__num { letter-spacing: 0.22em; }
+.nav-link, .btn-cta { letter-spacing: 1.2px; }
+.footer-link, .footer-menu a { letter-spacing: 1.2px; }

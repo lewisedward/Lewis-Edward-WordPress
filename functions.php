@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Theme constants.
  */
-define( 'LE_VERSION', '1.0.7' );
+define( 'LE_VERSION', '1.0.8' );
 define( 'LE_DIR', get_template_directory() );
 define( 'LE_URI', get_template_directory_uri() );
 
@@ -48,3 +48,4 @@ le_require( 'journal' );      // Journal (Posts) index/archive helpers.
 le_require( 'about-icons' );  // About page inline SVG icon set.
 le_require( 'svg-support' );  // Safe SVG uploads (sanitised).
 le_require( 'redirects' );    // Legacy 301 redirects (SEO preservation).
+le_require( 'gradient-trial' ); // TEMP: ?grad= palette trial, staging only. Remove after sign-off.
