@@ -105,7 +105,19 @@ add_action( 'admin_notices', 'le_acf_dependency_notice' );
 function le_field( $selector, $post_id = false, $default = '' ) {
 	if ( function_exists( 'get_field' ) ) {
 		$value = get_field( $selector, $post_id );
-		return ( null === $value || false === $value || '' === $value ) ? $default : $value;
+
+		if ( null === $value || false === $value || '' === $value ) {
+			return $default;
+		}
+
+		// Editor-pasted inline text colour is baked into the database and would
+		// survive every palette change, so map it onto .text-primary. No-ops on
+		// anything that is not markup carrying a style attribute.
+		if ( is_string( $value ) && function_exists( 'le_accentise_inline_colour' ) ) {
+			$value = le_accentise_inline_colour( $value );
+		}
+
+		return $value;
 	}
 	return $default;
 }
