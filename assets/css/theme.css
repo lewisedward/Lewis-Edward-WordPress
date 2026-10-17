@@ -57,7 +57,9 @@
 	/* Staging trial: Funnel Display (Google Fonts) for display type; Chillax
 	   stays as the immediate fallback and still sets body copy. */
 	--font-display: 'Funnel Display', 'Chillax', 'Chillax Fallback', sans-serif;
-	--font-body: 'Chillax', 'Chillax Fallback', sans-serif;
+	/* Staging trial: JetBrains Mono for body copy. Chillax stays as the
+	   fallback and still backs up --font-display. */
+	--font-body: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, 'Chillax', monospace;
 
 	/* Heading scale */
 	--h1-size: clamp(2rem, 4.5vw, 5rem);   --h1-leading: 110%; --h1-tracking: -2px;   --h1-weight: 400;

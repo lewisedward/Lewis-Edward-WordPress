@@ -44,12 +44,13 @@ function le_enqueue_assets() {
 	 * of first paint on mobile for zero bytes of actual CSS.
 	 */
 
-	// Funnel Display (Google Fonts) - display/heading face, staging trial.
+	// Funnel Display (headings) + JetBrains Mono (body) - Google Fonts,
+	// staging trial. One request covers both families.
 	// WordPress adds the fonts.gstatic.com preconnect automatically for a
 	// fonts.googleapis.com stylesheet, so no extra resource hint is needed.
 	wp_enqueue_style(
 		'le-fonts-funnel',
-		'https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&display=swap',
+		'https://fonts.googleapis.com/css2?family=Funnel+Display:wght@300..800&family=JetBrains+Mono:wght@100..800&display=swap',
 		array(),
 		null
 	);
