@@ -35,8 +35,8 @@ $le_team         = le_field( 'home_hero_team' );         // team posts
 			<div class="hero-tile hero-tile--editorial glass">
 				<div class="hero-mock" aria-hidden="true">
 					<video class="hero-mock__video" autoplay muted loop playsinline preload="metadata"
-						poster="<?php echo esc_url( LE_URI . '/assets/videos/macbook-easyjet-poster.jpg' ); ?>">
-						<source src="<?php echo esc_url( LE_URI . '/assets/videos/macbook-easyjet.mp4' ); ?>" type="video/mp4">
+						poster="<?php echo esc_url( add_query_arg( 'ver', le_asset_ver( 'assets/videos/macbook-easyjet-poster.jpg' ), LE_URI . '/assets/videos/macbook-easyjet-poster.jpg' ) ); ?>">
+						<source src="<?php echo esc_url( add_query_arg( 'ver', le_asset_ver( 'assets/videos/macbook-easyjet.mp4' ), LE_URI . '/assets/videos/macbook-easyjet.mp4' ) ); ?>" type="video/mp4">
 					</video>
 				</div>
 
