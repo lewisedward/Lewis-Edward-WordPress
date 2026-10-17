@@ -54,9 +54,7 @@
 /* ---- Design tokens -------------------------------------------------------- */
 :root {
 	/* Type families */
-	/* Staging trial: Funnel Display (Google Fonts) for display type; Chillax
-	   stays as the immediate fallback and still sets body copy. */
-	--font-display: 'Funnel Display', 'Chillax', 'Chillax Fallback', sans-serif;
+	--font-display: 'Chillax', 'Chillax Fallback', sans-serif;
 	/* Staging trial: JetBrains Mono for body copy. Chillax stays as the
 	   fallback and still backs up --font-display. */
 	--font-body: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, 'Chillax', monospace;
