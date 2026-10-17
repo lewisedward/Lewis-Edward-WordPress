@@ -58,10 +58,6 @@ asort( $jr_filters );
 	<section class="section section--jr-lead" aria-label="<?php esc_attr_e( 'Journal', 'lewisedward' ); ?>">
 		<div class="section__inner">
 			<div class="jr-lead glass" data-reveal>
-				<div class="jr-lead__sphere" aria-hidden="true" data-hero-sphere>
-					<canvas class="hero-sphere__canvas"></canvas>
-				</div>
-
 				<div class="jr-lead__eyebrow-row">
 					<span class="eyebrow"><?php echo esc_html( le_field( 'journalp_eyebrow' ) ); ?><?php if ( $jr_count ) : ?><sup class="jr-lead__sup"><?php echo esc_html( str_pad( (string) ( $jr_count + ( $jr_fid ? 1 : 0 ) ), 2, '0', STR_PAD_LEFT ) ); ?></sup><?php endif; ?></span>
 					<span class="jr-lead__rule" aria-hidden="true"></span>
@@ -69,13 +65,23 @@ asort( $jr_filters );
 					<span class="pulse-dot" aria-hidden="true"></span>
 				</div>
 
-				<h1 class="jr-lead__title">
-					<span class="jr-lead__title-1"><?php echo esc_html( le_field( 'journalp_h1_1' ) ); ?></span>
-					<span class="about-muted"><?php echo esc_html( le_field( 'journalp_h1_2' ) ); ?></span>
-					<span class="text-primary"><?php echo esc_html( le_field( 'journalp_h1_3' ) ); ?></span>
-				</h1>
+				<div class="hero-split">
+					<div class="hero-split__main">
+						<h1 class="jr-lead__title">
+							<span class="jr-lead__title-1"><?php echo esc_html( le_field( 'journalp_h1_1' ) ); ?></span>
+							<span class="about-muted"><?php echo esc_html( le_field( 'journalp_h1_2' ) ); ?></span>
+							<span class="text-primary"><?php echo esc_html( le_field( 'journalp_h1_3' ) ); ?></span>
+						</h1>
 
-				<p class="jr-lead__lead"><?php echo esc_html( le_field( 'journalp_lead' ) ); ?></p>
+						<p class="jr-lead__lead"><?php echo esc_html( le_field( 'journalp_lead' ) ); ?></p>
+					</div>
+
+					<div class="hero-split__aside" aria-hidden="true">
+						<div class="jr-lead__sphere hero-split__sphere" data-hero-sphere>
+							<canvas class="hero-sphere__canvas"></canvas>
+						</div>
+					</div>
+				</div>
 
 				<?php if ( $jr_fid && has_post_thumbnail( $jr_fid ) ) : ?>
 					<a class="jr-featured" href="<?php echo esc_url( get_permalink( $jr_fid ) ); ?>" data-cursor="Read">
@@ -112,9 +118,9 @@ asort( $jr_filters );
 			<div class="section__inner">
 				<div class="jr-archive glass" data-reveal>
 					<div class="jr-archive__head">
-						<span class="eyebrow"><?php echo esc_html( le_field( 'journalp_archive_eyebrow' ) ); ?><sup class="jr-archive__count" data-jr-count><?php echo esc_html( str_pad( (string) $jr_count, 2, '0', STR_PAD_LEFT ) ); ?></sup></span>
-						<span class="jr-archive__rule" aria-hidden="true"></span>
-						<span class="pulse-dot" aria-hidden="true"></span>
+							<span class="eyebrow"><?php echo esc_html( le_field( 'journalp_archive_eyebrow' ) ); ?><sup class="jr-archive__count" data-jr-count><?php echo esc_html( str_pad( (string) $jr_count, 2, '0', STR_PAD_LEFT ) ); ?></sup></span>
+							<span class="jr-archive__rule" aria-hidden="true"></span>
+							<span class="pulse-dot" aria-hidden="true"></span>
 					</div>
 
 					<h2 class="jr-archive__title"><?php echo esc_html( le_field( 'journalp_archive_h1' ) ); ?> <span class="about-muted"><?php echo esc_html( le_field( 'journalp_archive_accent' ) ); ?></span> <span class="text-primary"><?php echo esc_html( le_field( 'journalp_archive_h3' ) ); ?></span></h2>
@@ -124,7 +130,7 @@ asort( $jr_filters );
 						<?php foreach ( $jr_filters as $slug => $name ) : ?>
 							<button class="jr-filter" type="button" data-filter="<?php echo esc_attr( $slug ); ?>"><?php echo esc_html( $name ); ?></button>
 						<?php endforeach; ?>
-						<span class="eyebrow jr-filters__count"><span data-jr-visible><?php echo esc_html( str_pad( (string) $jr_count, 2, '0', STR_PAD_LEFT ) ); ?></span> <?php echo esc_html( le_field( 'journalp_count_label', false, __( 'entries', 'lewisedward' ) ) ); ?></span>
+							<span class="eyebrow jr-filters__count"><span data-jr-visible><?php echo esc_html( str_pad( (string) $jr_count, 2, '0', STR_PAD_LEFT ) ); ?></span> <?php echo esc_html( le_field( 'journalp_count_label', false, __( 'entries', 'lewisedward' ) ) ); ?></span>
 					</div>
 
 					<ul class="jr-list" data-jr-list>

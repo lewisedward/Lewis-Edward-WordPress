@@ -750,7 +750,7 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 .services-intro__head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.8rem; }
 .services-intro__eyebrow { color: hsl(var(--primary-foreground) / 0.75); } /* ink on lime: 7.2:1 */
 .services-intro__count { font-size: 10px; font-weight: 600; margin-left: 0.25rem; color: hsl(var(--primary-foreground)); vertical-align: super; position: relative; top: -5px; }
-.services-intro__title { margin: 0 0 2rem; font-family: var(--font-display); font-weight: 400; font-size: clamp(1.8rem, 3.4vw, 3.5rem); line-height: 0.98; letter-spacing: -0.04em; color: hsl(var(--primary-foreground)); }
+.services-intro__title { margin: 0 0 2rem; font-family: var(--font-display); font-weight: 400; font-size: var(--title-1); line-height: 0.98; letter-spacing: -0.04em; color: hsl(var(--primary-foreground)); }
 .services-intro__lede { max-width: 36rem; margin: 0 0 2.5rem; font-size: 1rem; line-height: 1.75; color: hsl(var(--primary-foreground) / 0.75); }
 @media (min-width: 640px) { .services-intro__lede { font-size: 1.08rem; } }
 .services-intro__all { display: inline-flex; align-items: center; gap: 0.75rem; }
@@ -804,7 +804,7 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 
 .clients-card__intro { display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: end; margin-bottom: 2.5rem; }
 @media (min-width: 1024px) { .clients-card__intro { grid-template-columns: 1.4fr 1fr; gap: 4rem; margin-bottom: 3.5rem; } }
-.clients-card__title { margin: 0; max-width: 36rem; font-family: var(--font-display); font-weight: 400; font-size: clamp(2rem, 4vw, 4rem); line-height: 0.92; letter-spacing: -0.04em; color: hsl(var(--foreground)); }
+.clients-card__title { margin: 0; max-width: 36rem; font-family: var(--font-display); font-weight: 400; font-size: var(--title-1); line-height: 0.92; letter-spacing: -0.04em; color: hsl(var(--foreground)); }
 .clients-card__aside { display: flex; flex-direction: column; gap: 1.5rem; }
 .clients-card__lede { margin: 0; max-width: 26rem; font-size: 1rem; line-height: 1.75; font-weight: 300; color: hsl(var(--foreground) / 0.55); }
 @media (min-width: 640px) { .clients-card__lede { font-size: 1.08rem; } }
@@ -859,7 +859,7 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 
 .work-card__intro { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 3rem; }
 @media (min-width: 1024px) { .work-card__intro { grid-template-columns: 7fr 5fr; gap: 3rem; margin-bottom: 4rem; align-items: end; } }
-.work-card__title { margin: 0; max-width: 24ch; font-family: var(--font-display); font-weight: 400; font-size: clamp(2rem, 5.5vw, 5.5rem); line-height: 0.95; letter-spacing: -0.04em; color: hsl(var(--foreground)); }
+.work-card__title { margin: 0; max-width: 24ch; font-family: var(--font-display); font-weight: 400; font-size: var(--title-1); line-height: 0.95; letter-spacing: -0.04em; color: hsl(var(--foreground)); }
 .work-card__aside { display: flex; flex-direction: column; gap: 1.5rem; }
 @media (min-width: 1024px) { .work-card__aside { align-items: flex-end; } .work-card__aside .arrow-link { align-self: end; } }
 .work-card__lede { margin: 0; max-width: 28rem; font-size: 1rem; line-height: 1.75; font-weight: 300; color: hsl(var(--foreground) / 0.55); }
@@ -1011,7 +1011,7 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 .about-card__portrait { position: relative; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 1rem; border: 1px solid hsl(var(--foreground) / 0.1); background: hsl(var(--foreground) / 0.03); width: 100%; max-width: 20rem; margin-inline: auto; }
 @media (min-width: 1024px) { .about-card__portrait { max-width: none; margin-inline: 0; } }
 .about-card__portrait img { width: 100%; height: 115%; object-fit: cover; object-position: top; filter: grayscale(1); will-change: transform; }
-.about-card__headline { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: clamp(2rem, 5.5vw, 5.5rem); line-height: 1.05; letter-spacing: -0.04em; color: hsl(var(--foreground)); }
+.about-card__headline { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: var(--title-1); line-height: 1.05; letter-spacing: -0.04em; color: hsl(var(--foreground)); }
 .about-card__muted { color: hsl(var(--foreground) / 0.4); }
 
 /* Body + CTA */
@@ -1089,7 +1089,7 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 @media (min-width: 1024px) { .cta-card__row { flex-direction: row; align-items: center; gap: 5rem; } }
 .cta-card__heading { flex: 1; }
 
-.cta-card__title { margin: 0; font-family: var(--font-display); font-weight: 300; font-size: clamp(2rem, 4.5vw, 4.5rem); line-height: 1.08; letter-spacing: -0.03em; color: hsl(var(--foreground)); }
+.cta-card__title { margin: 0; font-family: var(--font-display); font-weight: 300; font-size: var(--title-1); line-height: 1.08; letter-spacing: -0.03em; color: hsl(var(--foreground)); }
 /* No overflow:hidden — it clipped descenders (y, p, j). The clip-path below
    handles the reveal masking; padding gives glyph descenders room. */
 .cta-card__line { display: block; padding-bottom: 0.08em; }
@@ -1217,9 +1217,7 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 @media (min-width: 640px) { .about-hero__loc { display: inline; } }
 
 /* Decorative dot-sphere */
-.about-hero__sphere { position: absolute; top: 2.5rem; right: 1rem; width: 15rem; height: 15rem; opacity: 0.8; pointer-events: none; display: none; }
-@media (min-width: 768px) { .about-hero__sphere { display: block; } }
-@media (min-width: 1024px) { .about-hero__sphere { top: 5rem; right: 4rem; width: 20rem; height: 20rem; } }
+
 
 /* Hero headline + lead */
 .about-hero__title { position: relative; z-index: 1; margin: 0 0 1.5rem; max-width: 55rem; font-family: var(--font-display); font-weight: 400; font-size: var(--title-2); line-height: 1; letter-spacing: -0.04em; color: hsl(var(--foreground)); }
@@ -1240,6 +1238,10 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 @media (min-width: 640px) { .about-hero__portrait { aspect-ratio: 5 / 4; } }
 @media (min-width: 1024px) { .about-hero__portrait { aspect-ratio: auto; min-height: 34rem; } }
 .about-hero__portrait img { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+/* Take the portrait out of flow above 1024 so its 2:3 source image stops
+   setting the row height. The bio card then drives it and the empty space
+   under the signature goes away; min-height above is the floor. */
+@media (min-width: 1024px) { .about-hero__portrait img { position: absolute; inset: 0; } }
 .about-hero__portrait-fade { position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to top, hsl(var(--background) / 0.7), hsl(var(--background) / 0.1) 40%, transparent); }
 
 .about-bio { display: flex; flex-direction: column; justify-content: space-between; padding: 1.25rem; border-radius: 1rem; }
@@ -1485,9 +1487,18 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 @media (min-width: 640px) { .work-hero__right { display: inline; } }
 
 /* Hero */
-.work-hero__sphere { position: absolute; top: 2.5rem; right: 1rem; width: 15rem; height: 15rem; opacity: 0.7; pointer-events: none; display: none; }
-@media (min-width: 768px) { .work-hero__sphere { display: block; } }
-@media (min-width: 1024px) { .work-hero__sphere { top: 5rem; right: 4rem; width: 20rem; height: 20rem; } }
+/* Hero split: text column + globe column (About, Journal, Work listing).
+   Gives the dot-sphere a column of its own instead of floating it over the
+   copy, matching the two-column service heroes. */
+.hero-split { display: grid; grid-template-columns: minmax(0, 1fr); margin-bottom: 2.5rem; }
+.hero-split__aside { display: none; }
+@media (min-width: 1100px) {
+	.hero-split { grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr); column-gap: 3.5rem; align-items: center; }
+	.hero-split__aside { display: flex; align-items: center; justify-content: center; align-self: stretch; padding-left: 2.5rem; border-left: 1px solid hsl(var(--foreground) / 0.07); }
+}
+.hero-split__main > :last-child { margin-bottom: 0; }
+.hero-split__sphere { position: relative; width: 100%; max-width: 20rem; aspect-ratio: 1 / 1; height: auto; opacity: 0.7; pointer-events: none; }
+.hero-split__sphere .hero-sphere__canvas { width: 100%; height: 100%; display: block; }
 .work-hero__title { position: relative; z-index: 1; margin: 0 0 2rem; max-width: 52rem; font-family: var(--font-display); font-weight: 400; font-size: var(--title-2); line-height: 1; letter-spacing: -0.04em; color: hsl(var(--foreground)); }
 .work-hero__title span { display: inline; }
 .work-hero__lead { position: relative; z-index: 1; max-width: 44rem; margin: 0 0 2.5rem; font-size: 1.15rem; line-height: 1.55; font-weight: 300; color: hsl(var(--foreground) / 0.65); }
@@ -1860,7 +1871,7 @@ a.work-tag:hover { color: hsl(var(--primary)); border-color: hsl(var(--primary) 
 @media (min-width: 1024px) { .svc-d-hero__grid { grid-template-columns: 2fr 1fr; } }
 .svc-d-hero__headline-col { position: relative; display: flex; align-items: center; padding: 2.5rem 1.75rem; }
 @media (min-width: 1024px) { .svc-d-hero__headline-col { padding: 3.5rem; border-right: 1px solid hsl(var(--foreground) / 0.06); } }
-.svc-d-hero__sphere { position: absolute; top: 50%; right: 0; transform: translateY(-50%); width: 22rem; height: 22rem; opacity: 0.55; pointer-events: none; }
+.svc-d-hero__sphere { position: absolute; top: 50%; right: 0; transform: translateY(-50%); width: 22rem; height: 22rem; opacity: 0.38; pointer-events: none; }
 @media (max-width: 1023px) { .svc-d-hero__sphere { display: none; } }
 .svc-d-hero__sphere .hero-sphere__canvas { width: 100%; height: 100%; display: block; }
 .svc-d-hero__headline { position: relative; z-index: 1; display: flex; flex-direction: column; font-weight: 400; line-height: 1.1; letter-spacing: -0.05em; font-size: clamp(2.2rem, 5.5vw, 6.5rem); max-width: 16ch; margin-bottom: 0; }
@@ -2015,10 +2026,7 @@ a.work-tag:hover { color: hsl(var(--primary)); border-color: hsl(var(--primary) 
 .jr-dot { width: 3px; height: 3px; border-radius: 999px; background: hsl(var(--foreground) / 0.3); display: inline-block; }
 
 /* Lead / featured sphere */
-.jr-lead__sphere { position: absolute; top: 4rem; right: 1.5rem; width: 16rem; height: 16rem; opacity: 0.7; pointer-events: none; z-index: 0; }
-@media (max-width: 767px) { .jr-lead__sphere { display: none; } }
-@media (min-width: 1024px) { .jr-lead__sphere { width: 22rem; height: 22rem; right: 2.5rem; } }
-.jr-lead__sphere .hero-sphere__canvas { width: 100%; height: 100%; display: block; }
+
 .jr-lead > *:not(.jr-lead__sphere) { position: relative; z-index: 1; }
 
 .jr-lead__title { font-size: clamp(2rem, 4.2vw, 3.75rem); line-height: 1; letter-spacing: -0.04em; max-width: 56rem; margin-bottom: 2rem; }

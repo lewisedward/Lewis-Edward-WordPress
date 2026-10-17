@@ -93,10 +93,6 @@ if ( is_array( $wp_all_terms ) ) {
 	<section class="section section--work-hero" aria-label="<?php esc_attr_e( 'Selected work', 'lewisedward' ); ?>">
 		<div class="section__inner">
 			<div class="work-hero glass" data-reveal>
-				<div class="work-hero__sphere" aria-hidden="true" data-hero-sphere>
-					<canvas class="hero-sphere__canvas"></canvas>
-				</div>
-
 				<div class="work-hero__eyebrow-row">
 					<span class="eyebrow"><?php echo esc_html( le_field( 'workp_eyebrow' ) ); ?><?php if ( $wp_count ) : ?><sup class="work-hero__sup"><?php echo esc_html( str_pad( (string) $wp_count, 2, '0', STR_PAD_LEFT ) ); ?></sup><?php endif; ?></span>
 					<span class="work-hero__rule" aria-hidden="true"></span>
@@ -104,13 +100,23 @@ if ( is_array( $wp_all_terms ) ) {
 					<span class="pulse-dot" aria-hidden="true"></span>
 				</div>
 
-				<h1 class="work-hero__title">
-					<span class="work-hero__title-1"><?php echo esc_html( le_field( 'workp_h1_1' ) ); ?></span>
-					<span class="about-muted"><?php echo esc_html( le_field( 'workp_h1_2' ) ); ?></span>
-					<span class="text-primary"><?php echo esc_html( le_field( 'workp_h1_3' ) ); ?></span>
-				</h1>
+				<div class="hero-split">
+					<div class="hero-split__main">
+						<h1 class="work-hero__title">
+							<span class="work-hero__title-1"><?php echo esc_html( le_field( 'workp_h1_1' ) ); ?></span>
+							<span class="about-muted"><?php echo esc_html( le_field( 'workp_h1_2' ) ); ?></span>
+							<span class="text-primary"><?php echo esc_html( le_field( 'workp_h1_3' ) ); ?></span>
+						</h1>
 
-				<p class="work-hero__lead"><?php echo esc_html( le_field( 'workp_lead' ) ); ?></p>
+						<p class="work-hero__lead"><?php echo esc_html( le_field( 'workp_lead' ) ); ?></p>
+					</div>
+
+					<div class="hero-split__aside" aria-hidden="true">
+						<div class="work-hero__sphere hero-split__sphere" data-hero-sphere>
+							<canvas class="hero-sphere__canvas"></canvas>
+						</div>
+					</div>
+				</div>
 
 				<?php if ( $wp_fid && has_post_thumbnail( $wp_fid ) ) : ?>
 					<a class="work-featured" href="<?php echo esc_url( get_permalink( $wp_fid ) ); ?>" data-cursor="View">
@@ -144,9 +150,9 @@ if ( is_array( $wp_all_terms ) ) {
 			<div class="section__inner">
 				<div class="work-archive glass" data-reveal>
 					<div class="work-archive__head">
-						<span class="eyebrow"><?php echo esc_html( le_field( 'workp_archive_eyebrow' ) ); ?><sup class="work-archive__count" data-work-count><?php echo esc_html( str_pad( (string) $wp_count, 2, '0', STR_PAD_LEFT ) ); ?></sup></span>
-						<span class="work-archive__rule" aria-hidden="true"></span>
-						<span class="pulse-dot" aria-hidden="true"></span>
+							<span class="eyebrow"><?php echo esc_html( le_field( 'workp_archive_eyebrow' ) ); ?><sup class="work-archive__count" data-work-count><?php echo esc_html( str_pad( (string) $wp_count, 2, '0', STR_PAD_LEFT ) ); ?></sup></span>
+							<span class="work-archive__rule" aria-hidden="true"></span>
+							<span class="pulse-dot" aria-hidden="true"></span>
 					</div>
 
 					<h2 class="work-archive__title"><?php echo esc_html( le_field( 'workp_archive_h1' ) ); ?> <span class="text-primary"><?php echo esc_html( le_field( 'workp_archive_accent' ) ); ?></span> <?php echo esc_html( le_field( 'workp_archive_h3' ) ); ?></h2>

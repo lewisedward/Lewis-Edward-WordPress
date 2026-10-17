@@ -70,7 +70,6 @@
 			{ n: 'New York', lat: 40.71, lon: -74.0 },
 			{ n: 'Barcelona', lat: 41.39, lon: 2.17 },
 			{ n: 'Los Angeles', lat: 34.05, lon: -118.24 },
-			{ n: 'Ottawa', lat: 45.42, lon: -75.7 },
 			{ n: 'Dubai', lat: 25.2, lon: 55.27 },
 			{ n: 'Hong Kong', lat: 22.32, lon: 114.17 },
 			{ n: 'Singapore', lat: 1.35, lon: 103.82 },
@@ -103,7 +102,8 @@
 				ang = Math.acos(dot < -1 ? -1 : dot > 1 ? 1 : dot);
 				tries++;
 			} while (ang < 0.5 && tries < 8);
-			return { to: to, ang: ang, t: 0, speed: 0.45 + Math.random() * 0.45, arrived: false };
+			// Travel speed: 1/speed seconds London -> city, so ~1.9-3.8s.
+			return { to: to, ang: ang, t: 0, speed: 0.26 + Math.random() * 0.26, arrived: false };
 		}
 		var arcs = [];
 		if (!reduced) { for (i = 0; i < ARCS; i++) { arcs.push(spawnArc()); } }
@@ -295,10 +295,12 @@
 				}
 			}
 
-			// City markers + labels (London is the origin, slightly larger).
+			// City markers, then labels (London is the origin, slightly larger).
+			// Markers are drawn first so the label pass can test against every
+			// marker on screen, not just the ones already placed.
 			ctx.font = '600 10px Arial, sans-serif';
 			ctx.textBaseline = 'bottom'; ctx.textAlign = 'left';
-			var labRects = [];
+			var vis = [];
 			for (k = 0; k < cities.length; k++) {
 				var ci = cities[k].idx;
 				if (pz[ci] < -0.02) { continue; }
@@ -312,26 +314,93 @@
 				ctx.beginPath(); ctx.arc(px[ci], py[ci], gr, 0, Math.PI * 2); ctx.fill();
 				ctx.globalAlpha = 0.96; ctx.fillStyle = 'rgb(244,255,212)';
 				ctx.beginPath(); ctx.arc(px[ci], py[ci], (origin ? 2.9 : 2.1) * cdf + 0.7, 0, Math.PI * 2); ctx.fill();
-				if (cdf > 0.33) {
-					var nm = cities[k].n.toUpperCase();
-					var ox = px[ci] + 10, oy = py[ci] - 9;
-					try { ctx.letterSpacing = '1.5px'; } catch (e) {}
-					var tw = ctx.measureText(nm).width;
-					var rx = ox, ry = oy - 11, rw = tw + 8, rh = 14, clash = false;
-					for (var lr = 0; lr < labRects.length; lr++) {
-						var R = labRects[lr];
-						if (rx < R.x + R.w && rx + rw > R.x && ry < R.y + R.h && ry + rh > R.y) { clash = true; break; }
-					}
-					if (!clash) {
-						labRects.push({ x: rx, y: ry, w: rw, h: rh });
-						var la = (cdf - 0.33) / 0.5; if (la > 1) { la = 1; }
-						ctx.globalAlpha = 0.42 * la; ctx.strokeStyle = 'rgb(' + LIME + ')'; ctx.lineWidth = 1;
-						ctx.beginPath(); ctx.moveTo(px[ci] + 2.5, py[ci] - 2.5); ctx.lineTo(ox, oy); ctx.lineTo(ox + tw + 6, oy); ctx.stroke();
-						ctx.globalAlpha = (origin ? 0.95 : 0.78) * la; ctx.fillStyle = 'rgb(214,255,120)';
-						ctx.fillText(nm, ox + 3, oy - 2);
-					}
-					try { ctx.letterSpacing = '0px'; } catch (e) {}
+				vis.push({ n: cities[k].n, x: px[ci], y: py[ci], d: cdf, o: origin, r: gr });
+			}
+
+			// Nearest cities claim their label first; a label that cannot be
+			// placed clear of other labels, markers and leader lines is dropped
+			// for this frame rather than drawn over them.
+			vis.sort(function (a, b) { return b.d - a.d; });
+			var labRects = [], labLines = [];
+			function rectsHit(a, b) {
+				return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+			}
+			function segHitsRect(x1, y1, x2, y2, r) {
+				if (Math.max(x1, x2) < r.x || Math.min(x1, x2) > r.x + r.w ||
+					Math.max(y1, y2) < r.y || Math.min(y1, y2) > r.y + r.h) { return false; }
+				var e = [[r.x, r.y, r.x + r.w, r.y], [r.x + r.w, r.y, r.x + r.w, r.y + r.h],
+					[r.x + r.w, r.y + r.h, r.x, r.y + r.h], [r.x, r.y + r.h, r.x, r.y]];
+				for (var q = 0; q < 4; q++) {
+					if (segHitsSeg(x1, y1, x2, y2, e[q][0], e[q][1], e[q][2], e[q][3])) { return true; }
 				}
+				// Fully inside counts as a hit.
+				return x1 >= r.x && x1 <= r.x + r.w && y1 >= r.y && y1 <= r.y + r.h;
+			}
+			function segHitsSeg(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2) {
+				var d = (ax2 - ax1) * (by2 - by1) - (ay2 - ay1) * (bx2 - bx1);
+				if (Math.abs(d) < 1e-6) { return false; }
+				var t = ((bx1 - ax1) * (by2 - by1) - (by1 - ay1) * (bx2 - bx1)) / d;
+				var u = ((bx1 - ax1) * (ay2 - ay1) - (by1 - ay1) * (ax2 - ax1)) / d;
+				return t >= 0 && t <= 1 && u >= 0 && u <= 1;
+			}
+			function rectHitsMarker(r, m) {
+				var pad = Math.max(5, m.r * 0.5);
+				var nx = Math.max(r.x, Math.min(m.x, r.x + r.w));
+				var ny = Math.max(r.y, Math.min(m.y, r.y + r.h));
+				var dx = m.x - nx, dy = m.y - ny;
+				return dx * dx + dy * dy < pad * pad;
+			}
+			for (k = 0; k < vis.length; k++) {
+				var c = vis[k];
+				if (c.d <= 0.33) { continue; }
+				var nm = c.n.toUpperCase();
+				try { ctx.letterSpacing = '1.5px'; } catch (e) {}
+				var tw = ctx.measureText(nm).width, lw = tw + 8;
+				var baseY = c.y - 9; if (baseY - 11 < 2) { baseY = 13; }
+				if (baseY + 3 > h - 2) { baseY = h - 5; }
+				// Try right of the marker, then left; both must stay on canvas.
+				var cand = [c.x + 10, c.x - 10 - (tw + 6)], placed = null;
+				for (var ca = 0; ca < cand.length; ca++) {
+					var ox = cand[ca];
+					if (ox < 2 || ox + lw > w - 2) { continue; }
+					var flipped = ox < c.x;
+					var rect = { x: ox, y: baseY - 11, w: lw, h: 14 };
+					var elbowX = flipped ? ox + tw + 6 : ox;
+					var segs = [
+						[c.x + (flipped ? -2.5 : 2.5), c.y - 2.5, elbowX, baseY],
+						[ox, baseY, ox + tw + 6, baseY]
+					];
+					var bad = false, j;
+					for (j = 0; j < labRects.length && !bad; j++) { if (rectsHit(rect, labRects[j])) { bad = true; } }
+					for (j = 0; j < vis.length && !bad; j++) { if (vis[j] !== c && rectHitsMarker(rect, vis[j])) { bad = true; } }
+					for (j = 0; j < labRects.length && !bad; j++) {
+						for (var sg = 0; sg < segs.length && !bad; sg++) {
+							if (segHitsRect(segs[sg][0], segs[sg][1], segs[sg][2], segs[sg][3], labRects[j])) { bad = true; }
+						}
+					}
+					for (j = 0; j < labLines.length && !bad; j++) {
+						for (var sh = 0; sh < segs.length && !bad; sh++) {
+							var L = labLines[j];
+							if (segHitsSeg(segs[sh][0], segs[sh][1], segs[sh][2], segs[sh][3], L[0], L[1], L[2], L[3])) { bad = true; }
+						}
+					}
+					if (!bad) { placed = { ox: ox, rect: rect, segs: segs, flipped: flipped }; break; }
+				}
+				if (placed) {
+					labRects.push(placed.rect);
+					labLines.push(placed.segs[0]); labLines.push(placed.segs[1]);
+					var la = (c.d - 0.33) / 0.5; if (la > 1) { la = 1; }
+					ctx.globalAlpha = 0.42 * la; ctx.strokeStyle = 'rgb(' + LIME + ')'; ctx.lineWidth = 1;
+					ctx.beginPath();
+					ctx.moveTo(placed.segs[0][0], placed.segs[0][1]);
+					ctx.lineTo(placed.segs[0][2], placed.segs[0][3]);
+					ctx.moveTo(placed.segs[1][0], placed.segs[1][1]);
+					ctx.lineTo(placed.segs[1][2], placed.segs[1][3]);
+					ctx.stroke();
+					ctx.globalAlpha = (c.o ? 0.95 : 0.78) * la; ctx.fillStyle = 'rgb(214,255,120)';
+					ctx.fillText(nm, placed.ox + 3, baseY - 2);
+				}
+				try { ctx.letterSpacing = '0px'; } catch (e) {}
 			}
 			ctx.globalAlpha = 1;
 
@@ -342,22 +411,18 @@
 		raf = requestAnimationFrame(draw);
 	}
 
+	// Scroll parallax only. The cursor-follow tilt that used to nudge the globe
+	// a few pixels toward the pointer has been removed - it read as drift
+	// rather than response, and fought the globe's own rotation.
 	function initParallax(tile, wrap) {
 		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { return; }
-		var tx = 0, ty = 0, cxp = 0, cyp = 0, sy = 0, running = false;
+		var sy = 0, cy = 0, running = false;
 		function apply() {
-			cxp += (tx - cxp) * 0.1; cyp += (ty - cyp) * 0.1;
-			wrap.style.transform = 'translate(' + cxp.toFixed(2) + 'px,' + (cyp + sy).toFixed(2) + 'px)';
-			if (Math.abs(tx - cxp) > 0.1 || Math.abs(ty - cyp) > 0.1) { requestAnimationFrame(apply); } else { running = false; }
+			cy += (sy - cy) * 0.1;
+			wrap.style.transform = 'translateY(' + cy.toFixed(2) + 'px)';
+			if (Math.abs(sy - cy) > 0.1) { requestAnimationFrame(apply); } else { running = false; }
 		}
 		function kick() { if (!running) { running = true; requestAnimationFrame(apply); } }
-		tile.addEventListener('mousemove', function (e) {
-			var r = tile.getBoundingClientRect();
-			tx = ((e.clientX - r.left) / r.width - 0.5) * 18;
-			ty = ((e.clientY - r.top) / r.height - 0.5) * 18;
-			kick();
-		});
-		tile.addEventListener('mouseleave', function () { tx = 0; ty = 0; kick(); });
 		window.addEventListener('scroll', function () {
 			var r = tile.getBoundingClientRect(), vh = window.innerHeight;
 			var progress = Math.max(-1, Math.min(1, (r.top + r.height / 2 - vh / 2) / vh));
