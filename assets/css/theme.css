@@ -55,13 +55,12 @@
 :root {
 	/* Type families */
 	--font-display: 'Chillax', 'Chillax Fallback', sans-serif;
-	/* Staging trial: JetBrains Mono for body copy. Chillax stays as the
-	   fallback and still backs up --font-display. */
 	--font-body: 'Chillax', 'Chillax Fallback', sans-serif;
-	/* Mono is a signal face, not a reading face. It carries the micro-labels,
-	   nav, buttons, meta and tabular numerals; prose stays on Chillax.
-	   Applied via the mono block at the foot of this file. */
-	--font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+	/* Mono is a signal face, not a reading face: it carries the section
+	   eyebrows and genuine code, nothing else. Everything from nav and
+	   buttons to prose is Chillax. Applied via the mono block at the foot
+	   of this file. */
+	--font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
 	/* Heading scale */
 	--h1-size: clamp(2rem, 4.5vw, 5rem);   --h1-leading: 110%; --h1-tracking: -2px;   --h1-weight: 400;
@@ -2561,7 +2560,7 @@ body.admin-bar header {
 
 /* ==========================================================================
    Mono distribution
-   JetBrains Mono is reserved for eyebrows - the small uppercase kickers that
+   IBM Plex Mono is reserved for eyebrows - the small uppercase kickers that
    label a section - plus genuine code. Everything else, including the nav,
    buttons, footer links, micro-numerals and meta labels, stays on Chillax.
    Mono sets wider than Chillax, so the eyebrow tracking is trimmed to keep

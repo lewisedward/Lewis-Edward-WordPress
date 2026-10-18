@@ -80,8 +80,9 @@ add_action( 'wp_head', 'le_gradient_trial_css', 3 );
 /**
  * Mono typeface trial - STAGING ONLY.
  *
- * ?mono=chivo|plex|dm|space|martian swaps --font-mono, which currently drives
- * the section eyebrows and code. The stylesheet is injected here rather than
+ * ?mono=chivo|jetbrains|dm|space|martian swaps --font-mono, which currently
+ * drives the section eyebrows and code. IBM Plex Mono is the default, so it
+ * is not listed here. The stylesheet is injected here rather than
  * enqueued so it only ever loads when the parameter is present.
  *
  * Delete with the rest of this module once a face is chosen.
@@ -100,8 +101,8 @@ function le_mono_trial_css() {
 	$faces = array(
 		// The face on turionspace.com, the reference that prompted this.
 		'chivo'   => array( 'Chivo+Mono:wght@300..700', "'Chivo Mono'" ),
-		// Humanist and warm; the least "terminal" of the set.
-		'plex'    => array( 'IBM+Plex+Mono:wght@300;400;500;600', "'IBM Plex Mono'" ),
+		// The previous face, kept for an A/B against the default.
+		'jetbrains' => array( 'JetBrains+Mono:wght@100..800', "'JetBrains Mono'" ),
 		// Low contrast and slightly narrow, so it crowds less at small sizes.
 		'dm'      => array( 'DM+Mono:wght@300;400;500', "'DM Mono'" ),
 		// Characterful and a little retro; the most opinionated option.
