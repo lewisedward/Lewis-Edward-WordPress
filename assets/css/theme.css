@@ -98,12 +98,17 @@
 	   thickens, and the beat between those three different-period sinusoids is
 	   what produces a real film's colour ordering. A rainbow gradient only
 	   phase-shifts one period, which is why it reads as a gradient.
+	   The film's turbulence is strongly anisotropic, so the thickness field
+	   forms streaks rather than blobs - that is the brushed grain - and its
+	   saturation is held low so the surface reads as metal with a sheen rather
+	   than as a soap bubble. The base runs lime into silver, which is what
+	   keeps the brand present on an otherwise neutral panel.
 	   The film rides on a ::before layer (see the brand surface block near the
 	   foot of this file) rather than as a background layer, so it can be
 	   transformed on the compositor. url(../ is rewritten to an absolute path
 	   by le_inline_theme_css(). */
 	--brand-film: url(../images/iridescent-film.svg);
-	--brand-gradient: linear-gradient(135deg, hsl(75 100% 52%) 0%, hsl(108 82% 62%) 24%, hsl(158 70% 64%) 56%, hsl(198 70% 72%) 100%);
+	--brand-gradient: linear-gradient(135deg, hsl(75 100% 56%) 0%, hsl(85 35% 76%) 20%, hsl(205 12% 80%) 52%, hsl(220 14% 70%) 100%);
 	--secondary: 0 0% 14%;
 	--secondary-foreground: 0 0% 100%;
 	--muted: 0 0% 14%;
@@ -1075,7 +1080,7 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 	mix-blend-mode: overlay;
 	pointer-events: none;
 	will-change: transform, filter;
-	animation: le-film-drift 38s ease-in-out infinite alternate;
+	animation: le-film-drift 22s ease-in-out infinite alternate;
 }
 
 /* Keep panel content above the film. */
@@ -1085,9 +1090,9 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 
 /* Four stat tiles drifting in lockstep would read as a mechanism rather than
    a surface, so each is offset within the cycle. */
-.about-stat:nth-child(2)::before { animation-duration: 44s; animation-delay: -9s; }
-.about-stat:nth-child(3)::before { animation-duration: 34s; animation-delay: -19s; }
-.about-stat:nth-child(4)::before { animation-duration: 41s; animation-delay: -27s; }
+.about-stat:nth-child(2)::before { animation-duration: 26s; animation-delay: -6s; }
+.about-stat:nth-child(3)::before { animation-duration: 19s; animation-delay: -11s; }
+.about-stat:nth-child(4)::before { animation-duration: 24s; animation-delay: -16s; }
 
 @keyframes le-film-drift {
 	0%   { transform: translate3d(-5%, -4%, 0); filter: hue-rotate(-18deg) saturate(1); }
