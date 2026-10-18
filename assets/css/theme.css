@@ -131,7 +131,7 @@
 	--surface-glass-3: 0 0% 100% / 0.10;
 	--surface-panel: 168 4% 9% / 0.64;
 	--surface-panel-solid: 168 4% 9% / 0.94;
-	--glass-bg: 168 4% 11% / 0.98;
+	--glass-bg: 168 4% 11% / 0.72;
 	--glass-border: 0 0% 100% / 0.10;
 
 	/* Hairline borders */
@@ -166,7 +166,7 @@
 	--surface-glass-1: 168 4% 9% / 0.03;
 	--surface-glass-2: 168 4% 9% / 0.05;
 	--surface-panel: 0 0% 100% / 0.6;
-	--glass-bg: 0 0% 100% / 0.98;
+	--glass-bg: 0 0% 100% / 0.72;
 	--glass-border: 168 4% 9% / 0.10;
 	background-color: hsl(var(--background));
 	color: hsl(var(--foreground));
@@ -271,13 +271,17 @@ h6 { font-size: var(--h6-size); line-height: var(--h6-leading); letter-spacing: 
    Breakpoint: 1024px (matches Tailwind `lg`).
    ============================================================================= */
 
-/* Reusable glass surface (matches the React .glass) */
+/* Reusable glass surface.
+   The blur was always here; --glass-bg sat at 0.98 alpha, which made the
+   panel effectively opaque and the blur invisible. The alpha now lets the
+   backdrop through, and the brighter inset highlight gives the top edge the
+   catch of light that actually reads as glass. */
 .glass {
 	background-color: hsl(var(--glass-bg));
-	-webkit-backdrop-filter: blur(20px) saturate(1.3);
-	backdrop-filter: blur(20px) saturate(1.3);
+	-webkit-backdrop-filter: blur(26px) saturate(1.45);
+	backdrop-filter: blur(26px) saturate(1.45);
 	border: 1px solid hsl(var(--glass-border));
-	box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.06);
+	box-shadow: inset 0 1px 0 hsl(0 0% 100% / 0.10), 0 16px 40px -26px rgb(0 0 0 / 0.6);
 }
 
 /* ---- Header shell --------------------------------------------------------- */
@@ -898,7 +902,20 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 .work-project__overlay { position: absolute; inset: auto 0 0 0; display: flex; justify-content: flex-start; padding: 1rem; }
 @media (min-width: 640px) { .work-project__overlay { padding: 1.25rem; } }
 
-.work-project__info { max-width: 100%; padding: 1.25rem; border-radius: 1.25rem; }
+/* This card floats over arbitrary photography, including near-white frames,
+   so it carries more body than glass sitting on the page background, and the
+   media gets a scrim beneath it. Without both, the muted description text
+   drops under 4.5:1 whenever the shot behind it is light. */
+.work-project__media::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: 0;
+	pointer-events: none;
+	background: linear-gradient(to top, hsl(var(--background) / 0.55) 0%, hsl(var(--background) / 0.12) 38%, transparent 62%);
+}
+.work-project__overlay { z-index: 1; }
+.work-project__info { --glass-bg: 168 4% 9% / 0.85; max-width: 100%; padding: 1.25rem; border-radius: 1.25rem; }
 @media (min-width: 640px) { .work-project__info { max-width: 30rem; padding: 1.5rem; } }
 @media (min-width: 1024px) { .work-project__info { border-radius: 1.5rem; } }
 

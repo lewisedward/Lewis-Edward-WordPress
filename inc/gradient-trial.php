@@ -76,3 +76,51 @@ function le_gradient_trial_css() {
 	);
 }
 add_action( 'wp_head', 'le_gradient_trial_css', 3 );
+
+/**
+ * Mono typeface trial - STAGING ONLY.
+ *
+ * ?mono=chivo|plex|dm|space|martian swaps --font-mono, which currently drives
+ * the section eyebrows and code. The stylesheet is injected here rather than
+ * enqueued so it only ever loads when the parameter is present.
+ *
+ * Delete with the rest of this module once a face is chosen.
+ */
+function le_mono_trial_css() {
+	if ( ! le_gradient_trial_enabled() ) {
+		return;
+	}
+
+	// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only display toggle.
+	$key = isset( $_GET['mono'] ) ? sanitize_key( wp_unslash( $_GET['mono'] ) ) : '';
+	if ( '' === $key ) {
+		return;
+	}
+
+	$faces = array(
+		// The face on turionspace.com, the reference that prompted this.
+		'chivo'   => array( 'Chivo+Mono:wght@300..700', "'Chivo Mono'" ),
+		// Humanist and warm; the least "terminal" of the set.
+		'plex'    => array( 'IBM+Plex+Mono:wght@300;400;500;600', "'IBM Plex Mono'" ),
+		// Low contrast and slightly narrow, so it crowds less at small sizes.
+		'dm'      => array( 'DM+Mono:wght@300;400;500', "'DM Mono'" ),
+		// Characterful and a little retro; the most opinionated option.
+		'space'   => array( 'Space+Mono:wght@400;700', "'Space Mono'" ),
+		// Very wide and technical; strong at tiny sizes, heavy in quantity.
+		'martian' => array( 'Martian+Mono:wght@300..700', "'Martian Mono'" ),
+	);
+
+	if ( ! isset( $faces[ $key ] ) ) {
+		return;
+	}
+
+	list( $family, $stack ) = $faces[ $key ];
+
+	printf(
+		'<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=%s&display=swap">'
+			. "<style id=\"le-mono-trial\">:root{--font-mono: %s, ui-monospace, SFMono-Regular, Menlo, monospace;}</style>\n",
+		esc_attr( $family ),
+		$stack // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- hard-coded above.
+	);
+}
+add_action( 'wp_head', 'le_mono_trial_css', 4 );
