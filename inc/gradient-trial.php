@@ -2,9 +2,12 @@
 /**
  * Temporary brand-gradient trial switcher — STAGING ONLY.
  *
- * Appends ?grad=violet|teal|mint to any front-end URL so palette options can be
- * compared on the real pages (hero CTA tile, services intro card, About stats)
- * without a deploy per variant.
+ * Appends ?grad=violet|iridescent|iridescent-anim|mint to any front-end URL so
+ * palette options can be compared on the real pages (hero CTA tile, services
+ * intro card, About stats) without a deploy per variant.
+ *
+ * The staging default is now lime -> petrol teal, so ?grad=teal is a no-op and
+ * ?grad=mint restores the previous palette for comparison.
  *
  * Delete this file and its le_require() line once a palette is chosen.
  *
@@ -40,7 +43,7 @@ function le_gradient_trial_css() {
 		return;
 	}
 
-	// Lime base, shared by both lime variants.
+	// Lime base, shared by the lime variants.
 	$lime = '--primary: 75 100% 50%; --primary-foreground: 168 4% 9%; --accent: 75 100% 50%;'
 		. ' --accent-foreground: 168 4% 9%; --ring: 75 100% 50%; --cursor-accent: 191 255 0;';
 
@@ -50,9 +53,9 @@ function le_gradient_trial_css() {
 		'violet' => $lime . ' --primary-deep: 258 60% 30%; --brand-gradient: linear-gradient(135deg,'
 			. ' hsl(75 100% 50%) 0%, hsl(140 80% 62%) 26%, hsl(190 85% 58%) 56%, hsl(258 90% 66%) 100%);',
 
-		// Lime -> petrol teal. Short hue path, one family, no transition risk.
-		'teal'   => $lime . ' --primary-deep: 188 80% 18%; --brand-gradient: linear-gradient(135deg,'
-			. ' hsl(75 100% 50%) 0%, hsl(150 75% 52%) 34%, hsl(176 80% 40%) 70%, hsl(188 78% 34%) 100%);',
+		// 'teal' is the staging default now (see theme.css), so there is nothing
+		// to override. Kept as a no-op so existing links still resolve.
+		'teal'   => '',
 
 		// Oil-slick: four offset radial washes over a long linear ramp, so the
 		// surface shifts hue by region rather than along one axis. Every stop is
@@ -65,8 +68,12 @@ function le_gradient_trial_css() {
 			. ' linear-gradient(130deg, hsl(80 100% 52%) 0%, hsl(160 88% 62%) 30%, hsl(192 92% 66%) 55%,'
 			. ' hsl(248 92% 74%) 80%, hsl(300 88% 78%) 100%);',
 
-		// The current staging mint, for a like-for-like A/B.
-		'mint'   => '',
+		// The previous mint palette, for a like-for-like A/B against the default.
+		'mint'   => '--primary: 163 100% 45%; --primary-foreground: 168 4% 9%;'
+			. ' --accent: 163 100% 45%; --accent-foreground: 168 4% 9%;'
+			. ' --primary-deep: 168 100% 20%; --cursor-accent: 0 232 166;'
+			. ' --brand-gradient: linear-gradient(135deg, hsl(182 100% 28%) 0%, hsl(174 100% 34%) 32%,'
+			. ' hsl(164 100% 43%) 66%, hsl(156 100% 64%) 100%);',
 	);
 
 	if ( 'iridescent-anim' === $key ) {

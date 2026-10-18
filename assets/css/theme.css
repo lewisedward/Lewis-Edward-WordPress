@@ -88,18 +88,20 @@
 	--card-foreground: 0 0% 100%;
 	--popover: 168 4% 9%;
 	--popover-foreground: 0 0% 100%;
-	--primary: 163 100% 45%;             /* mint accent, sampled from the brand gradient */
+	--primary: 75 100% 50%;              /* lime, the lead brand colour */
 	--primary-foreground: 168 4% 9%;
-	--primary-deep: 168 100% 20%;
-	/* Brand gradient (blue-green). Kept to the bright half of the reference so
-	   --primary-foreground (near-black) still clears contrast on every panel
-	   that uses it; the deep navy end is decorative only. */
-	--brand-gradient: linear-gradient(135deg, hsl(182 100% 28%) 0%, hsl(174 100% 34%) 32%, hsl(164 100% 43%) 66%, hsl(156 100% 64%) 100%);
+	--primary-deep: 188 80% 18%;
+	/* Brand gradient: lime into petrol teal. One hue family (75 -> 188), so
+	   there is no muddy midpoint to engineer around. The darkest stop is held
+	   at 38% lightness, not lower: --primary-foreground (near-black) sits on
+	   this ramp as body text, and 38% keeps that at 5.4:1. Dropping it to 34%
+	   would look richer but falls to 4.4:1 and fails AA on the small captions. */
+	--brand-gradient: linear-gradient(135deg, hsl(75 100% 50%) 0%, hsl(150 75% 52%) 34%, hsl(176 80% 42%) 70%, hsl(188 78% 38%) 100%);
 	--secondary: 0 0% 14%;
 	--secondary-foreground: 0 0% 100%;
 	--muted: 0 0% 14%;
 	--muted-foreground: 195 4% 45%;
-	--accent: 163 100% 45%;
+	--accent: 75 100% 50%;
 	--accent-foreground: 168 4% 9%;
 	--destructive: 0 84.2% 60.2%;
 	--destructive-foreground: 0 0% 100%;
@@ -115,7 +117,7 @@
 	/* Cursor colours (RGB triplets for rgb(var(--x) / a)) */
 	--cursor-dot: 255 255 255;
 	--cursor-ring: 255 255 255;
-	--cursor-accent: 0 232 166;
+	--cursor-accent: 191 255 0;
 	--cursor-label-bg: 255 255 255;
 
 	/* Glass / surface tokens */
