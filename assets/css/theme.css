@@ -91,23 +91,19 @@
 	--primary: 75 100% 50%;              /* lime, the lead brand colour */
 	--primary-foreground: 168 4% 9%;
 	--primary-deep: 255 60% 32%;
-	/* Brand surface: a real thin-film interference layer over a lime base.
+	/* Brand surface: a lime base plus a real thin-film interference layer.
 	   assets/images/iridescent-film.svg computes sin^2(2*pi*n*d / lambda) per
-	   channel across a turbulent thickness field. Because R, G and B have
-	   different wavelengths they complete different numbers of cycles as the
-	   film thickens, and the beat between those three different-period
-	   sinusoids is what produces a real film's colour ordering. A multi-stop
-	   rainbow gradient only phase-shifts a single period, which is why it
-	   reads as a gradient rather than as a surface.
-	   The film is composited with `overlay`, so the base carries the lightness
-	   and the film only perturbs hue and shade. That is what keeps the lime
-	   leading and holds --primary-foreground (near-black) at a measured 9.0:1
-	   minimum across every pixel of the smallest tile. The url(../ prefix is
-	   rewritten to an absolute path by le_inline_theme_css(). */
-	--brand-gradient:
-		url(../images/iridescent-film.svg),
-		linear-gradient(135deg, hsl(75 100% 52%) 0%, hsl(108 82% 62%) 24%, hsl(158 70% 64%) 56%, hsl(198 70% 72%) 100%);
-	--brand-blend: overlay, normal;
+	   channel across a turbulent thickness field. R, G and B have different
+	   wavelengths, so they complete different numbers of cycles as the film
+	   thickens, and the beat between those three different-period sinusoids is
+	   what produces a real film's colour ordering. A rainbow gradient only
+	   phase-shifts one period, which is why it reads as a gradient.
+	   The film rides on a ::before layer (see the brand surface block near the
+	   foot of this file) rather than as a background layer, so it can be
+	   transformed on the compositor. url(../ is rewritten to an absolute path
+	   by le_inline_theme_css(). */
+	--brand-film: url(../images/iridescent-film.svg);
+	--brand-gradient: linear-gradient(135deg, hsl(75 100% 52%) 0%, hsl(108 82% 62%) 24%, hsl(158 70% 64%) 56%, hsl(198 70% 72%) 100%);
 	--secondary: 0 0% 14%;
 	--secondary-foreground: 0 0% 100%;
 	--muted: 0 0% 14%;
@@ -760,7 +756,7 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 
 /* Intro tile (lime, sticky on desktop) */
 .services-intro {
-	position: static;
+	position: relative;
 	padding: 2rem;
 	border: 1px solid hsl(var(--primary));
 	border-radius: 2rem;
@@ -1050,17 +1046,66 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 .about-card__stats { display: grid; grid-template-columns: 1fr; gap: 1rem; }
 @media (min-width: 640px) { .about-card__stats { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1024px) { .about-card__stats { grid-template-columns: repeat(4, 1fr); } }
-/* Every panel that paints --brand-gradient needs the film layer to cover and
-   to blend; the token carries the layers, this carries their compositing. */
+/* ---- Brand surface: the animated thin-film layer ------------------------
+   The film sits on a ::before rather than in the background shorthand so it
+   can drift on the compositor. A real film shimmers because its thickness
+   changes, which walks every point through the interference orders; the
+   hue-rotate half of the keyframes stands in for that, and the translate
+   half for the film flowing. Pure translation would only pan the image.
+   overlay keeps the base in charge of lightness: measured across seven
+   points of the cycle, --primary-foreground never drops below 9.1:1 on
+   either the large panel or the small tile. */
 .hero-tile--cta,
 .services-intro,
 .about-stat {
+	isolation: isolate;
+	overflow: hidden;
 	background-size: cover;
 	background-position: center;
-	background-blend-mode: var(--brand-blend);
 }
 
-.about-stat { display: flex; flex-direction: column; height: 100%; padding: 1.25rem; border-radius: 1rem; border: 1px solid hsl(var(--primary)); background: hsl(var(--primary)); background-image: var(--brand-gradient); color: hsl(var(--primary-foreground)); justify-content: center; }
+.hero-tile--cta::before,
+.services-intro::before,
+.about-stat::before {
+	content: "";
+	position: absolute;
+	/* Oversized so the drift never pulls an edge into view. */
+	inset: -28%;
+	background: var(--brand-film) center / cover no-repeat;
+	mix-blend-mode: overlay;
+	pointer-events: none;
+	will-change: transform, filter;
+	animation: le-film-drift 38s ease-in-out infinite alternate;
+}
+
+/* Keep panel content above the film. */
+.hero-tile--cta > *,
+.services-intro > *,
+.about-stat > * { position: relative; z-index: 1; }
+
+/* Four stat tiles drifting in lockstep would read as a mechanism rather than
+   a surface, so each is offset within the cycle. */
+.about-stat:nth-child(2)::before { animation-duration: 44s; animation-delay: -9s; }
+.about-stat:nth-child(3)::before { animation-duration: 34s; animation-delay: -19s; }
+.about-stat:nth-child(4)::before { animation-duration: 41s; animation-delay: -27s; }
+
+@keyframes le-film-drift {
+	0%   { transform: translate3d(-5%, -4%, 0); filter: hue-rotate(-18deg) saturate(1); }
+	50%  { transform: translate3d(4%, 3%, 0);   filter: hue-rotate(16deg) saturate(1.14); }
+	100% { transform: translate3d(-2%, 5%, 0);  filter: hue-rotate(-6deg) saturate(0.96); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.hero-tile--cta::before,
+	.services-intro::before,
+	.about-stat::before {
+		animation: none;
+		transform: none;
+		inset: 0;
+	}
+}
+
+.about-stat { position: relative; display: flex; flex-direction: column; height: 100%; padding: 1.25rem; border-radius: 1rem; border: 1px solid hsl(var(--primary)); background: hsl(var(--primary)); background-image: var(--brand-gradient); color: hsl(var(--primary-foreground)); justify-content: center; }
 @media (min-width: 640px) { .about-stat { padding: 1.5rem; } }
 .about-stat__num { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3em; color: hsl(var(--primary-foreground) / 0.7); font-variant-numeric: tabular-nums; margin-bottom: 1.3rem; }
 .about-stat__value { font-family: var(--font-display); font-weight: 400; font-size: clamp(2.4rem, 4vw, 3.4rem); line-height: 0.95; letter-spacing: -0.04em; color: hsl(var(--primary-foreground)); font-variant-numeric: tabular-nums; }

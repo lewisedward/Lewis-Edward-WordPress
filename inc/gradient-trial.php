@@ -6,9 +6,9 @@
  * palette options can be compared on the real pages (hero CTA tile, services
  * intro card, About stats) without a deploy per variant.
  *
- * The staging default is now the iridescent ramp, so ?grad=iridescent is a
- * no-op; ?grad=iridescent-anim adds the drift, and ?grad=teal / ?grad=mint
- * restore the earlier palettes for comparison.
+ * The staging default is the animated thin-film surface, so ?grad=iridescent
+ * is a no-op. ?grad=still freezes the drift, and ?grad=teal / ?grad=violet /
+ * ?grad=mint restore the earlier flat gradients for comparison.
  *
  * Delete this file and its le_require() line once a palette is chosen.
  *
@@ -45,12 +45,12 @@ function le_gradient_trial_css() {
 	}
 
 	// Lime base, shared by the lime variants.
-	// --brand-blend is reset to normal: the default surface composites a film
-	// layer with `overlay`, and leaving that on would re-blend a single-layer
-	// gradient against the panel's background-color.
+	// --brand-film is cleared: the default surface carries an animated thin-film
+	// ::before layer, and leaving it on would composite the film over these
+	// flat comparison gradients too.
 	$lime = '--primary: 75 100% 50%; --primary-foreground: 168 4% 9%; --accent: 75 100% 50%;'
 		. ' --accent-foreground: 168 4% 9%; --ring: 75 100% 50%; --cursor-accent: 191 255 0;'
-		. ' --brand-blend: normal;';
+		. ' --brand-film: none;';
 
 	$variants = array(
 		// Lime -> violet. Travels through spring green and cyan so the midpoint
@@ -67,33 +67,26 @@ function le_gradient_trial_css() {
 		'iridescent' => '',
 
 		// The previous mint palette, for a like-for-like A/B against the default.
-		'mint'   => '--brand-blend: normal; --primary: 163 100% 45%; --primary-foreground: 168 4% 9%;'
+		'mint'   => '--brand-film: none; --primary: 163 100% 45%; --primary-foreground: 168 4% 9%;'
 			. ' --accent: 163 100% 45%; --accent-foreground: 168 4% 9%;'
 			. ' --primary-deep: 168 100% 20%; --cursor-accent: 0 232 166;'
 			. ' --brand-gradient: linear-gradient(135deg, hsl(182 100% 28%) 0%, hsl(174 100% 34%) 32%,'
 			. ' hsl(164 100% 43%) 66%, hsl(156 100% 64%) 100%);',
 	);
 
-	// The animated variant rides the default palette, so it needs no token
-	// override — only the drift rules printed below.
-	$anim = ( 'iridescent-anim' === $key );
+	// ?grad=still freezes the default surface so the animation can be judged
+	// against a static version of exactly the same film.
+	$anim = in_array( $key, array( 'still', 'iridescent-anim' ), true );
 
 	if ( ! $anim && ( ! isset( $variants[ $key ] ) || '' === $variants[ $key ] ) ) {
 		return;
 	}
 
-	// The animated option reuses the oil-slick ramp and drifts it.
-	$panels = '.hero-tile--cta, .services-intro, .about-stat';
-	$extra  = '';
+	$extra = '';
 
-	if ( $anim ) {
-		$extra = sprintf(
-			'%1$s{background-size:230%% 230%%;animation:le-irid 26s ease-in-out infinite;}'
-			. '@keyframes le-irid{0%%,100%%{background-position:0%% 50%%;}'
-			. '33%%{background-position:100%% 0%%;}66%%{background-position:50%% 100%%;}}'
-			. '@media (prefers-reduced-motion: reduce){%1$s{animation:none;background-size:auto;}}',
-			$panels
-		);
+	if ( 'still' === $key ) {
+		$extra = '.hero-tile--cta::before,.services-intro::before,.about-stat::before'
+			. '{animation:none;transform:none;inset:0;}';
 	}
 
 	printf(
