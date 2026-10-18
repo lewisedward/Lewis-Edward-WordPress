@@ -2544,34 +2544,14 @@ body.admin-bar header {
 
 /* ==========================================================================
    Mono distribution
-   JetBrains Mono is reserved for "signal" type: small uppercase labels, nav,
-   buttons, metadata and tabular micro-numerals. Reading text (body copy,
-   mega-menu items, stat captions, taglines) and all display headings stay on
-   Chillax. Mono sets wider than Chillax, so the tracking on the labels that
-   move across is trimmed to keep the same optical rhythm.
+   JetBrains Mono is reserved for eyebrows - the small uppercase kickers that
+   label a section - plus genuine code. Everything else, including the nav,
+   buttons, footer links, micro-numerals and meta labels, stays on Chillax.
+   Mono sets wider than Chillax, so the eyebrow tracking is trimmed to keep
+   the same optical rhythm.
    ========================================================================== */
 .eyebrow,
 .archive__eyebrow, .page__eyebrow,
-.arrow-link__label,
-.work-project__meta-label,
-.about-stat__num,
-.about-why__label,
-.mega-menu__count-label,
-.footer-col__title,
-.footer-top__label,
-.cap__num,
-.work-project__num,
-.overlap-svc__num,
-.value-card__num,
-.svc-card__num,
-.svc-step__num,
-.svc-sub__num,
-.nav-link,
-.btn,
-.btn-cta,
-.footer-link, .footer-menu a,
-.footer-bottom,
-.le-cursor__label,
 code, kbd, pre, samp {
 	font-family: var(--font-mono);
 }
@@ -2580,9 +2560,3 @@ code, kbd, pre, samp {
 .eyebrow { letter-spacing: 0.18em; }
 .eyebrow--faint { letter-spacing: 0.2em; }
 .eyebrow--t2, .eyebrow--strong { letter-spacing: 0.15em; }
-.arrow-link__label,
-.work-project__meta-label,
-.about-stat__num,
-.overlap-svc--column .overlap-svc__num { letter-spacing: 0.22em; }
-.nav-link, .btn-cta { letter-spacing: 1.2px; }
-.footer-link, .footer-menu a { letter-spacing: 1.2px; }

@@ -186,11 +186,11 @@
 			ctx.beginPath(); ctx.arc(cx, cy, radius, 0, Math.PI * 2); ctx.fill();
 			// Atmosphere rim.
 			var rim = ctx.createRadialGradient(cx, cy, radius * 0.72, cx, cy, radius * 1.08);
-			rim.addColorStop(0, 'rgba(0,232,166,0)');
-			rim.addColorStop(0.8, 'rgba(0,232,166,0)');
-			rim.addColorStop(0.93, 'rgba(0,232,166,0.07)');
-			rim.addColorStop(0.985, 'rgba(0,232,166,0.03)');
-			rim.addColorStop(1, 'rgba(0,232,166,0)');
+			rim.addColorStop(0, 'rgba(191,255,0,0)');
+			rim.addColorStop(0.8, 'rgba(191,255,0,0)');
+			rim.addColorStop(0.93, 'rgba(191,255,0,0.07)');
+			rim.addColorStop(0.985, 'rgba(191,255,0,0.03)');
+			rim.addColorStop(1, 'rgba(191,255,0,0)');
 			ctx.fillStyle = rim;
 			ctx.beginPath(); ctx.arc(cx, cy, radius * 1.07, 0, Math.PI * 2); ctx.fill();
 
@@ -271,8 +271,8 @@
 				if (ga > 0.02) {
 					var gr = (9 + at * 12) * (0.6 + adf * 0.4);
 					var gg = ctx.createRadialGradient(px[ti], py[ti], 0, px[ti], py[ti], gr);
-					gg.addColorStop(0, 'rgba(0,232,166,' + ga.toFixed(3) + ')');
-					gg.addColorStop(1, 'rgba(0,232,166,0)');
+					gg.addColorStop(0, 'rgba(191,255,0,' + ga.toFixed(3) + ')');
+					gg.addColorStop(1, 'rgba(191,255,0,0)');
 					ctx.globalAlpha = 1; ctx.fillStyle = gg;
 					ctx.beginPath(); ctx.arc(px[ti], py[ti], gr, 0, Math.PI * 2); ctx.fill();
 				}
@@ -308,8 +308,8 @@
 				var origin = (ci === london);
 				var gr = (origin ? 16 : 11) * cdf + 3;
 				var cg = ctx.createRadialGradient(px[ci], py[ci], 0, px[ci], py[ci], gr);
-				cg.addColorStop(0, 'rgba(0,232,166,' + ((origin ? 0.33 : 0.22) * cdf).toFixed(3) + ')');
-				cg.addColorStop(1, 'rgba(0,232,166,0)');
+				cg.addColorStop(0, 'rgba(191,255,0,' + ((origin ? 0.33 : 0.22) * cdf).toFixed(3) + ')');
+				cg.addColorStop(1, 'rgba(191,255,0,0)');
 				ctx.globalAlpha = 1; ctx.fillStyle = cg;
 				ctx.beginPath(); ctx.arc(px[ci], py[ci], gr, 0, Math.PI * 2); ctx.fill();
 				ctx.globalAlpha = 0.96; ctx.fillStyle = 'rgb(244,255,212)';
