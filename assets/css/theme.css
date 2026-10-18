@@ -90,13 +90,22 @@
 	--popover-foreground: 0 0% 100%;
 	--primary: 75 100% 50%;              /* lime, the lead brand colour */
 	--primary-foreground: 168 4% 9%;
-	--primary-deep: 188 80% 18%;
-	/* Brand gradient: lime into petrol teal. One hue family (75 -> 188), so
-	   there is no muddy midpoint to engineer around. The darkest stop is held
-	   at 38% lightness, not lower: --primary-foreground (near-black) sits on
-	   this ramp as body text, and 38% keeps that at 5.4:1. Dropping it to 34%
-	   would look richer but falls to 4.4:1 and fails AA on the small captions. */
-	--brand-gradient: linear-gradient(135deg, hsl(75 100% 50%) 0%, hsl(150 75% 52%) 34%, hsl(176 80% 42%) 70%, hsl(188 78% 38%) 100%);
+	--primary-deep: 255 60% 32%;
+	/* Brand gradient: iridescent oil-slick. Four offset radial washes (lime
+	   top-left, magenta top-right, violet bottom-right, spring bottom-left)
+	   over a long linear ramp, so the surface shifts hue by region rather than
+	   along a single axis — that regional shift is what reads as iridescence
+	   instead of as a gradient.
+	   Every stop is held light: --primary-foreground (near-black) sits on this
+	   ramp as body text, and the darkest point (248 92% 74%) keeps it at
+	   5.8:1. Deepening any stop below roughly 70% lightness breaks AA on the
+	   small captions. */
+	--brand-gradient:
+		radial-gradient(130% 150% at 8% 0%, hsl(72 100% 56%) 0%, hsl(72 100% 56% / 0) 48%),
+		radial-gradient(120% 130% at 98% 6%, hsl(308 95% 78% / 0.7) 0%, hsl(308 95% 78% / 0) 46%),
+		radial-gradient(140% 140% at 90% 100%, hsl(255 95% 74%) 0%, hsl(255 95% 74% / 0) 58%),
+		radial-gradient(120% 120% at 18% 96%, hsl(168 95% 60%) 0%, hsl(168 95% 60% / 0) 52%),
+		linear-gradient(130deg, hsl(80 100% 52%) 0%, hsl(160 88% 62%) 30%, hsl(192 92% 66%) 55%, hsl(248 92% 74%) 80%, hsl(300 88% 78%) 100%);
 	--secondary: 0 0% 14%;
 	--secondary-foreground: 0 0% 100%;
 	--muted: 0 0% 14%;
