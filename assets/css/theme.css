@@ -2486,13 +2486,31 @@ body.admin-bar header {
 /* "Cookie settings" trigger in the footer bottom bar — reset the button */
 .footer-bottom__cookies { background: none; border: 0; padding: 0; margin: 0; font: inherit; line-height: inherit; color: inherit; cursor: pointer; }
 
-/* Hero globe integration: keep the mesh dense in the open top-right and let it
-   dissolve toward the headline/lede so the copy stays clean and the globe reads
-   as part of the hero rather than sitting on top of the text. Homepage only. */
-.hero-tile--editorial .hero-sphere {
-	top: -3rem;
-	right: -11rem;
-	width: min(72%, 760px);
-	-webkit-mask-image: radial-gradient(128% 128% at 66% 40%, #000 54%, rgba(0,0,0,0.45) 82%, transparent 100%);
-	mask-image: radial-gradient(128% 128% at 66% 40%, #000 54%, rgba(0,0,0,0.45) 82%, transparent 100%);
+/* Hero mockup: the easyJet build running on a MacBook, used as ambient texture
+   across the editorial tile rather than as a framed object - the tile is
+   text-dense, so an opaque block fought the headline. The clip is dimmed,
+   double-masked (horizontal fade off the copy, radial fade at the edges) and
+   sits under a background-coloured scrim so the h1 and lede stay crisp.
+   Homepage only; hidden below 1024px and under reduced-motion. */
+.hero-mock {
+	position: absolute;
+	inset: 0 0 0 20%;
+	z-index: 0;
+	opacity: 0.45;
+	pointer-events: none;
+	-webkit-mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.35) 16%, #000 46%), radial-gradient(120% 120% at 70% 50%, #000 55%, transparent 100%);
+	mask-image: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.35) 16%, #000 46%), radial-gradient(120% 120% at 70% 50%, #000 55%, transparent 100%);
+	-webkit-mask-composite: source-in;
+	mask-composite: intersect;
 }
+.hero-mock::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(100deg, hsl(var(--background)) 0%, hsl(var(--background) / 0.72) 30%, hsl(var(--background) / 0.25) 62%, transparent 85%);
+	pointer-events: none;
+}
+.hero-mock__video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.hero-editorial__eyebrow, .hero-editorial__body { position: relative; z-index: 2; }
+@media (max-width: 1024px) { .hero-mock { display: none; } }
+@media (prefers-reduced-motion: reduce) { .hero-mock { display: none; } }
