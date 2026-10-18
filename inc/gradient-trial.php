@@ -45,8 +45,12 @@ function le_gradient_trial_css() {
 	}
 
 	// Lime base, shared by the lime variants.
+	// --brand-blend is reset to normal: the default surface composites a film
+	// layer with `overlay`, and leaving that on would re-blend a single-layer
+	// gradient against the panel's background-color.
 	$lime = '--primary: 75 100% 50%; --primary-foreground: 168 4% 9%; --accent: 75 100% 50%;'
-		. ' --accent-foreground: 168 4% 9%; --ring: 75 100% 50%; --cursor-accent: 191 255 0;';
+		. ' --accent-foreground: 168 4% 9%; --ring: 75 100% 50%; --cursor-accent: 191 255 0;'
+		. ' --brand-blend: normal;';
 
 	$variants = array(
 		// Lime -> violet. Travels through spring green and cyan so the midpoint
@@ -63,7 +67,7 @@ function le_gradient_trial_css() {
 		'iridescent' => '',
 
 		// The previous mint palette, for a like-for-like A/B against the default.
-		'mint'   => '--primary: 163 100% 45%; --primary-foreground: 168 4% 9%;'
+		'mint'   => '--brand-blend: normal; --primary: 163 100% 45%; --primary-foreground: 168 4% 9%;'
 			. ' --accent: 163 100% 45%; --accent-foreground: 168 4% 9%;'
 			. ' --primary-deep: 168 100% 20%; --cursor-accent: 0 232 166;'
 			. ' --brand-gradient: linear-gradient(135deg, hsl(182 100% 28%) 0%, hsl(174 100% 34%) 32%,'

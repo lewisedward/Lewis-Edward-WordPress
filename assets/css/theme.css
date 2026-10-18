@@ -91,21 +91,23 @@
 	--primary: 75 100% 50%;              /* lime, the lead brand colour */
 	--primary-foreground: 168 4% 9%;
 	--primary-deep: 255 60% 32%;
-	/* Brand gradient: iridescent oil-slick. Four offset radial washes (lime
-	   top-left, magenta top-right, violet bottom-right, spring bottom-left)
-	   over a long linear ramp, so the surface shifts hue by region rather than
-	   along a single axis — that regional shift is what reads as iridescence
-	   instead of as a gradient.
-	   Every stop is held light: --primary-foreground (near-black) sits on this
-	   ramp as body text, and the darkest point (248 92% 74%) keeps it at
-	   5.8:1. Deepening any stop below roughly 70% lightness breaks AA on the
-	   small captions. */
+	/* Brand surface: a real thin-film interference layer over a lime base.
+	   assets/images/iridescent-film.svg computes sin^2(2*pi*n*d / lambda) per
+	   channel across a turbulent thickness field. Because R, G and B have
+	   different wavelengths they complete different numbers of cycles as the
+	   film thickens, and the beat between those three different-period
+	   sinusoids is what produces a real film's colour ordering. A multi-stop
+	   rainbow gradient only phase-shifts a single period, which is why it
+	   reads as a gradient rather than as a surface.
+	   The film is composited with `overlay`, so the base carries the lightness
+	   and the film only perturbs hue and shade. That is what keeps the lime
+	   leading and holds --primary-foreground (near-black) at a measured 9.0:1
+	   minimum across every pixel of the smallest tile. The url(../ prefix is
+	   rewritten to an absolute path by le_inline_theme_css(). */
 	--brand-gradient:
-		radial-gradient(130% 150% at 8% 0%, hsl(72 100% 56%) 0%, hsl(72 100% 56% / 0) 48%),
-		radial-gradient(120% 130% at 98% 6%, hsl(308 95% 78% / 0.7) 0%, hsl(308 95% 78% / 0) 46%),
-		radial-gradient(140% 140% at 90% 100%, hsl(255 95% 74%) 0%, hsl(255 95% 74% / 0) 58%),
-		radial-gradient(120% 120% at 18% 96%, hsl(168 95% 60%) 0%, hsl(168 95% 60% / 0) 52%),
-		linear-gradient(130deg, hsl(80 100% 52%) 0%, hsl(160 88% 62%) 30%, hsl(192 92% 66%) 55%, hsl(248 92% 74%) 80%, hsl(300 88% 78%) 100%);
+		url(../images/iridescent-film.svg),
+		linear-gradient(135deg, hsl(75 100% 52%) 0%, hsl(108 82% 62%) 24%, hsl(158 70% 64%) 56%, hsl(198 70% 72%) 100%);
+	--brand-blend: overlay, normal;
 	--secondary: 0 0% 14%;
 	--secondary-foreground: 0 0% 100%;
 	--muted: 0 0% 14%;
@@ -1048,6 +1050,16 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 .about-card__stats { display: grid; grid-template-columns: 1fr; gap: 1rem; }
 @media (min-width: 640px) { .about-card__stats { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1024px) { .about-card__stats { grid-template-columns: repeat(4, 1fr); } }
+/* Every panel that paints --brand-gradient needs the film layer to cover and
+   to blend; the token carries the layers, this carries their compositing. */
+.hero-tile--cta,
+.services-intro,
+.about-stat {
+	background-size: cover;
+	background-position: center;
+	background-blend-mode: var(--brand-blend);
+}
+
 .about-stat { display: flex; flex-direction: column; height: 100%; padding: 1.25rem; border-radius: 1rem; border: 1px solid hsl(var(--primary)); background: hsl(var(--primary)); background-image: var(--brand-gradient); color: hsl(var(--primary-foreground)); justify-content: center; }
 @media (min-width: 640px) { .about-stat { padding: 1.5rem; } }
 .about-stat__num { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3em; color: hsl(var(--primary-foreground) / 0.7); font-variant-numeric: tabular-nums; margin-bottom: 1.3rem; }
