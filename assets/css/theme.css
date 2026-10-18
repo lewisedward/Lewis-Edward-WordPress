@@ -99,16 +99,18 @@
 	   what produces a real film's colour ordering. A rainbow gradient only
 	   phase-shifts one period, which is why it reads as a gradient.
 	   The film's turbulence is strongly anisotropic, so the thickness field
-	   forms streaks rather than blobs - that is the brushed grain - and its
-	   saturation is held low so the surface reads as metal with a sheen rather
-	   than as a soap bubble. The base runs lime into silver, which is what
+	   forms fine streaks rather than blobs - that is the brushed grain. Its
+	   frequency is set deliberately high, because the ::before magnifies the
+	   film roughly 2.3x (background cover plus the -28% inset); at a lower
+	   frequency the grain stretches out and the surface reads as holographic
+	   rather than brushed. Saturation is held at 0.16 for the same reason. The base runs lime into silver, which is what
 	   keeps the brand present on an otherwise neutral panel.
 	   The film rides on a ::before layer (see the brand surface block near the
 	   foot of this file) rather than as a background layer, so it can be
 	   transformed on the compositor. url(../ is rewritten to an absolute path
 	   by le_inline_theme_css(). */
 	--brand-film: url(../images/iridescent-film.svg);
-	--brand-gradient: linear-gradient(135deg, hsl(75 100% 56%) 0%, hsl(85 35% 76%) 20%, hsl(205 12% 80%) 52%, hsl(220 14% 70%) 100%);
+	--brand-gradient: linear-gradient(135deg, hsl(75 100% 56%) 0%, hsl(85 30% 78%) 20%, hsl(205 10% 80%) 52%, hsl(220 12% 70%) 100%);
 	--secondary: 0 0% 14%;
 	--secondary-foreground: 0 0% 100%;
 	--muted: 0 0% 14%;
