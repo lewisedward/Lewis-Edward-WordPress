@@ -757,7 +757,7 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 .services-intro {
 	position: static;
 	padding: 2rem;
-	border: 1px solid hsl(0 0% 100% / 0.22);
+	border: 1px solid transparent;
 	border-radius: 2rem;
 	background-color: hsl(var(--primary));
 	background-image: var(--brand-gradient);
@@ -1100,7 +1100,7 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 	box-shadow: var(--brand-glow);
 }
 
-.about-stat { display: flex; flex-direction: column; height: 100%; padding: 1.25rem; border-radius: 1rem; border: 1px solid hsl(0 0% 100% / 0.22); background: hsl(var(--primary)); background-image: var(--brand-gradient); color: hsl(var(--primary-foreground)); justify-content: center; }
+.about-stat { display: flex; flex-direction: column; height: 100%; padding: 1.25rem; border-radius: 1rem; border: 1px solid transparent; background: hsl(var(--primary)); background-image: var(--brand-gradient); color: hsl(var(--primary-foreground)); justify-content: center; }
 @media (min-width: 640px) { .about-stat { padding: 1.5rem; } }
 .about-stat__num { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3em; color: hsl(var(--primary-foreground) / 0.7); font-variant-numeric: tabular-nums; margin-bottom: 1.3rem; }
 .about-stat__value { font-family: var(--font-display); font-weight: 400; font-size: clamp(2.4rem, 4vw, 3.4rem); line-height: 0.95; letter-spacing: -0.04em; color: hsl(var(--primary-foreground)); font-variant-numeric: tabular-nums; }
