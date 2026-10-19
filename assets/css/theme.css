@@ -982,7 +982,21 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 	-webkit-mask: linear-gradient(to bottom, #000 55%, transparent 92%);
 	mask: linear-gradient(to bottom, #000 55%, transparent 92%);
 }
-.overlap-card:hover::after { border-color: hsl(var(--primary) / 0.4); }
+.overlap-card:hover::after { border-color: transparent; }
+/* Gradient ring for the hover state, faded downward with the same mask as the
+   border above: the top two mask layers xor into a 1px ring, and the fade
+   layer intersects it. */
+.overlap-card::before {
+	content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+	border-radius: inherit; padding: 1px;
+	background: var(--brand-gradient);
+	-webkit-mask: linear-gradient(to bottom, #000 55%, transparent 92%), linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+	        mask: linear-gradient(to bottom, #000 55%, transparent 92%), linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+	-webkit-mask-composite: source-in, xor;
+	        mask-composite: intersect, exclude;
+	opacity: 0; transition: opacity 0.7s ease;
+}
+.overlap-card:hover::before { opacity: 0.6; }
 
 .overlap-card__head { display: flex; align-items: center; margin-bottom: 2.8rem; }
 @media (min-width: 1024px) { .overlap-card__head { margin-bottom: 3.5rem; } }
@@ -1255,7 +1269,7 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 .footer-top__label { display: none; }
 @media (min-width: 640px) { .footer-top__label { display: inline; color: hsl(var(--foreground) / var(--eyebrow-alpha)); } }
 .footer-top__icon { display: inline-flex; align-items: center; justify-content: center; width: 1.75rem; height: 1.75rem; border-radius: 999px; border: 1px solid hsl(var(--foreground) / 0.15); color: hsl(var(--foreground) / 0.6); transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease; }
-.footer-top:hover .footer-top__icon { background: hsl(var(--primary)); background-image: var(--brand-gradient); border-color: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
+.footer-top:hover .footer-top__icon { background: hsl(var(--primary)); background-image: var(--brand-gradient); border-color: transparent; color: hsl(var(--primary-foreground)); }
 
 /* =============================================================================
    ABOUT PAGE (port of AboutPage.tsx + TeamSection)
@@ -1468,7 +1482,7 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 .svc-card__num { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em; color: hsl(var(--foreground) / 0.35); font-variant-numeric: tabular-nums; transition: color 0.5s ease; }
 .svc-card:hover .svc-card__num { color: hsl(var(--primary) / 0.8); }
 .svc-card__arrow { display: inline-flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; border-radius: 999px; border: 1px solid hsl(var(--foreground) / 0.15); color: hsl(var(--foreground) / 0.4); transform: rotate(-45deg); transition: transform 0.5s ease, background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease; }
-.svc-card:hover .svc-card__arrow { transform: rotate(0); background: hsl(var(--primary)); background-image: var(--brand-gradient); border-color: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
+.svc-card:hover .svc-card__arrow { transform: rotate(0); background: hsl(var(--primary)); background-image: var(--brand-gradient); border-color: transparent; color: hsl(var(--primary-foreground)); }
 .svc-card__title { position: relative; margin: 0; font-family: var(--font-display); font-weight: 400; font-size: clamp(1.35rem, 2vw, 1.75rem); line-height: 1.1; letter-spacing: -0.03em; color: hsl(var(--foreground)); }
 .svc-card__desc { position: relative; margin: 1.25rem 0 1.5rem; font-size: 0.95rem; line-height: 1.75; font-weight: 300; color: hsl(var(--foreground) / 0.55); transition: color 0.5s ease; }
 .svc-card:hover .svc-card__desc { color: hsl(var(--foreground) / 0.75); }
@@ -1507,7 +1521,7 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 .svc-sub__num { grid-column: 1; grid-row: 1; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em; color: hsl(var(--foreground) / 0.35); font-variant-numeric: tabular-nums; transition: color 0.5s ease; }
 .svc-sub__link:hover .svc-sub__num { color: hsl(var(--primary) / 0.8); }
 .svc-sub__arrow { grid-column: 2; grid-row: 1; justify-self: end; display: inline-flex; align-items: center; justify-content: center; width: 2rem; height: 2rem; border-radius: 999px; border: 1px solid hsl(var(--foreground) / 0.15); color: hsl(var(--foreground) / 0.4); transform: rotate(-45deg); transition: transform 0.5s ease, background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease; }
-.svc-sub__link:hover .svc-sub__arrow { transform: rotate(0); background: hsl(var(--primary)); background-image: var(--brand-gradient); border-color: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
+.svc-sub__link:hover .svc-sub__arrow { transform: rotate(0); background: hsl(var(--primary)); background-image: var(--brand-gradient); border-color: transparent; color: hsl(var(--primary-foreground)); }
 .svc-sub__text { grid-column: 1 / -1; grid-row: 2; margin-top: 1.9rem; }
 .svc-sub__name { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: clamp(1.1rem, 1.4vw, 1.3rem); line-height: 1.15; letter-spacing: -0.03em; color: hsl(var(--foreground)); transition: color 0.5s ease; }
 .svc-sub__link:hover .svc-sub__name { color: hsl(var(--primary)); }
@@ -1596,7 +1610,7 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 @media (min-width: 640px) { .work-filters { gap: 0.75rem; margin-bottom: 3.3rem; } }
 .work-filter { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; border-radius: 999px; padding: 1rem 1.7rem; border: 1px solid hsl(var(--foreground) / 0.1); background: hsl(var(--foreground) / 0.03); color: hsl(var(--foreground) / 0.55); cursor: pointer; transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease; }
 .work-filter:hover { color: hsl(var(--foreground) / 0.85); border-color: hsl(var(--primary) / 0.4); }
-.work-filter.is-active { background: hsl(var(--primary)); background-image: var(--brand-gradient); border-color: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
+.work-filter.is-active { background: hsl(var(--primary)); background-image: var(--brand-gradient); border-color: transparent; color: hsl(var(--primary-foreground)); }
 .work-filters__count { margin-left: 0.5rem; color: hsl(var(--foreground) / var(--eyebrow-alpha)); font-variant-numeric: tabular-nums; }
 @media (max-width: 991px) { .work-filters__count { margin-top: 1rem;} }
 
@@ -1620,7 +1634,7 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 .work-item__tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
 .work-item__tags:empty { display: none; }
 .work-item__arrow { display: inline-flex; align-items: center; justify-content: center; width: 2.5rem; height: 2.5rem; border-radius: 999px; border: 1px solid hsl(var(--foreground) / 0.1); color: hsl(var(--foreground) / 0.6); transform: rotate(-45deg); transition: transform 0.5s ease, background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease; flex-shrink: 0; margin-top: 0.25rem; }
-.work-item:hover .work-item__arrow { transform: rotate(0); background: hsl(var(--primary)); background-image: var(--brand-gradient); border-color: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
+.work-item:hover .work-item__arrow { transform: rotate(0); background: hsl(var(--primary)); background-image: var(--brand-gradient); border-color: transparent; color: hsl(var(--primary-foreground)); }
 
 /* =============================================================================
    SINGLE WORK — case study (port of WorkDetailPage.tsx)
@@ -1943,7 +1957,7 @@ a.work-tag:hover { color: hsl(var(--primary)); border-color: hsl(var(--primary) 
 .svc-d-hero__cta { display: inline-flex; align-items: center; gap: 1rem; color: hsl(var(--foreground)); text-decoration: none; }
 .svc-d-hero__cta .eyebrow { color: hsl(var(--foreground)); font-size: 12px; }
 .svc-d-hero__cta-badge { display: grid; place-items: center; width: 3rem; height: 3rem; border-radius: 999px; border: 1px solid hsl(var(--foreground) / 0.15); transition: background-color 0.4s ease, border-color 0.4s ease, color 0.4s ease; }
-.svc-d-hero__cta:hover .svc-d-hero__cta-badge { background: hsl(var(--primary)); background-image: var(--brand-gradient); border-color: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
+.svc-d-hero__cta:hover .svc-d-hero__cta-badge { background: hsl(var(--primary)); background-image: var(--brand-gradient); border-color: transparent; color: hsl(var(--primary-foreground)); }
 
 .svc-d-hero__status { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.75rem; border-top: 1px solid hsl(var(--foreground) / 0.08); background: hsl(var(--background) / 0.5); }
 @media (min-width: 1024px) { .svc-d-hero__status { padding: 1.5rem 2.5rem; } }
@@ -2119,7 +2133,7 @@ a.work-tag:hover { color: hsl(var(--primary)); border-color: hsl(var(--primary) 
 @media (min-width: 1024px) { .jr-filters { margin-bottom: 3.5rem; } }
 .jr-filter { font-size: 11px; text-transform: uppercase; letter-spacing: 0.2em; font-weight: 500; border-radius: 999px; padding: 0.9rem 1.3rem; border: 1px solid hsl(var(--foreground) / 0.1); background: hsl(var(--foreground) / 0.03); color: hsl(var(--foreground) / 0.55); cursor: pointer; transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease; }
 .jr-filter:hover { color: hsl(var(--foreground) / 0.85); border-color: hsl(var(--primary) / 0.4); }
-.jr-filter.is-active { background: hsl(var(--primary)); background-image: var(--brand-gradient); color: hsl(var(--primary-foreground)); border-color: hsl(var(--primary)); }
+.jr-filter.is-active { background: hsl(var(--primary)); background-image: var(--brand-gradient); color: hsl(var(--primary-foreground)); border-color: transparent; }
 .jr-filters__count { margin-left: 0.5rem; color: hsl(var(--foreground) / 0.35); }
 
 /* Archive index list */
@@ -2138,7 +2152,7 @@ a.work-tag:hover { color: hsl(var(--primary)); border-color: hsl(var(--primary) 
 @media (min-width: 768px) { .jr-item__cat, .jr-item__date { display: inline-block; } }
 .jr-item__arrow { display: none; }
 @media (min-width: 768px) { .jr-item__arrow { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 999px; border: 1px solid hsl(var(--foreground) / 0.1); color: hsl(var(--foreground) / 0.5); transform: rotate(-45deg); transition: transform 0.5s ease, color 0.4s ease, background-color 0.4s ease, border-color 0.4s ease; } }
-.jr-item__link:hover .jr-item__arrow { transform: rotate(0deg); background: hsl(var(--primary)); background-image: var(--brand-gradient); color: hsl(var(--primary-foreground)); border-color: hsl(var(--primary)); }
+.jr-item__link:hover .jr-item__arrow { transform: rotate(0deg); background: hsl(var(--primary)); background-image: var(--brand-gradient); color: hsl(var(--primary-foreground)); border-color: transparent; }
 .jr-item__underline { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: hsl(var(--primary)); background-image: var(--brand-gradient); transform: scaleX(0); transform-origin: left; transition: transform 0.6s ease; }
 .jr-item__link:hover .jr-item__underline { transform: scaleX(1); }
 .jr-empty { color: hsl(var(--foreground) / 0.45); font-size: 0.95rem; font-weight: 300; text-align: center; padding: 3rem 0; }
@@ -2194,7 +2208,7 @@ a.work-tag:hover { color: hsl(var(--primary)); border-color: hsl(var(--primary) 
 .jr-next__card-title { font-size: clamp(1.15rem, 1.8vw, 1.5rem); font-weight: 400; letter-spacing: -0.03em; line-height: 1.2; color: hsl(var(--foreground)); transition: color 0.4s ease; }
 .jr-next__card:hover .jr-next__card-title { color: hsl(var(--primary)); }
 .jr-next__arrow { flex-shrink: 0; display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 999px; border: 1px solid hsl(var(--foreground) / 0.1); color: hsl(var(--foreground) / 0.5); transform: rotate(-45deg); transition: transform 0.5s ease, background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease; }
-.jr-next__card:hover .jr-next__arrow { transform: rotate(0deg); background: hsl(var(--primary)); background-image: var(--brand-gradient); color: hsl(var(--primary-foreground)); border-color: hsl(var(--primary)); }
+.jr-next__card:hover .jr-next__arrow { transform: rotate(0deg); background: hsl(var(--primary)); background-image: var(--brand-gradient); color: hsl(var(--primary-foreground)); border-color: transparent; }
 
 /* Journal pagination + standalone archive */
 .jr-archive__back { color: hsl(var(--foreground) / 0.4); text-decoration: none; transition: color 0.25s ease; }
@@ -2203,7 +2217,7 @@ a.work-tag:hover { color: hsl(var(--primary)); border-color: hsl(var(--primary) 
 .site-main--journal .jr-pagination .nav-links { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 0.5rem; }
 .site-main--journal .jr-pagination .page-numbers { display: inline-flex; align-items: center; justify-content: center; min-width: 2.75rem; height: 2.75rem; padding: 0 0.75rem; border-radius: 999px; border: 1px solid hsl(var(--foreground) / 0.1); background: hsl(var(--foreground) / 0.03); color: hsl(var(--foreground) / 0.6); font-size: 0.85rem; text-decoration: none; transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease; }
 .site-main--journal .jr-pagination a.page-numbers:hover { color: hsl(var(--foreground) / 0.9); border-color: hsl(var(--primary) / 0.4); }
-.site-main--journal .jr-pagination .page-numbers.current { background: hsl(var(--primary)); background-image: var(--brand-gradient); color: hsl(var(--primary-foreground)); border-color: hsl(var(--primary)); }
+.site-main--journal .jr-pagination .page-numbers.current { background: hsl(var(--primary)); background-image: var(--brand-gradient); color: hsl(var(--primary-foreground)); border-color: transparent; }
 .site-main--journal .jr-pagination .page-numbers.dots { border-color: transparent; background: transparent; }
 
 /* ============================================================
@@ -2974,3 +2988,32 @@ a.eyebrow:hover svg,
 .jr-archive__back:hover svg {
 	color: hsl(var(--primary));
 }
+
+/* Second pass of outlines: elements whose border is lime at rest or on hover
+   but which were not in the card list above. Same ring, same mechanism. */
+.footer-social__link, .about-bio, .wk-features__arrow, .wk-glance__live .arrow-link,
+.svc-hero__explore-arrow, .contact-quote__badge, .svc-d-rel__arrow {
+	position: relative;
+}
+.footer-social__link::after, .about-bio::after, .wk-features__arrow::after, .wk-glance__live .arrow-link::after,
+.svc-hero__explore-arrow::after, .contact-quote__badge::after, .svc-d-rel__arrow::after {
+	content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+	border-radius: inherit; padding: 1px;
+	background: var(--brand-gradient);
+	-webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+	        mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+	-webkit-mask-composite: xor;
+	        mask-composite: exclude;
+	opacity: 0; transition: opacity 0.5s ease;
+}
+/* Hover-only outlines. */
+.footer-social__link:hover, .about-bio:hover, .wk-features__arrow:hover:not(:disabled), .svc-d-rel:hover .svc-d-rel__arrow { border-color: transparent; }
+.footer-social__link:hover::after, .about-bio:hover::after, .wk-features__arrow:hover:not(:disabled)::after, .svc-d-rel:hover .svc-d-rel__arrow::after { opacity: 0.7; }
+/* Outlines that are lime at rest: ring on from the start, stronger on hover. */
+.wk-glance__live .arrow-link, .svc-hero__explore-arrow, .contact-quote__badge { border-color: transparent; }
+.wk-glance__live .arrow-link::after { opacity: 0.6; }
+.wk-glance__live .arrow-link:hover { border-color: transparent; }
+.wk-glance__live .arrow-link:hover::after { opacity: 1; }
+.svc-hero__explore-arrow::after { opacity: 0.45; }
+.svc-hero__explore:hover .svc-hero__explore-arrow::after { opacity: 0; } /* fills with the gradient instead */
+.contact-quote__badge::after { opacity: 0.3; }
