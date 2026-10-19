@@ -3017,3 +3017,35 @@ a.eyebrow:hover svg,
 .svc-hero__explore-arrow::after { opacity: 0.45; }
 .svc-hero__explore:hover .svc-hero__explore-arrow::after { opacity: 0; } /* fills with the gradient instead */
 .contact-quote__badge::after { opacity: 0.3; }
+
+/* The two large brand panels get a slow, drifting light on top of the static
+   gradient: three soft blooms (lime, petrol, a mint mid-tone) on a ::before
+   that sits between the panel background and its content, oversized so the
+   edges never show, and eased back and forth over 18s so it reads as a glow
+   moving across the surface rather than a fixed fill. The panels isolate so
+   the negative z-index lands above their own background and below content.
+   Petrol is held at 36% lightness for the same AA reason as the surface. */
+.hero-tile--cta, .services-intro { isolation: isolate; }
+.hero-tile--cta::before, .services-intro::before {
+	content: ""; position: absolute; inset: -22%; z-index: -1; pointer-events: none;
+	background:
+		radial-gradient(38% 38% at 30% 28%, hsl(68 100% 74% / 0.9) 0%, hsl(72 100% 66% / 0) 70%),
+		radial-gradient(44% 44% at 72% 74%, hsl(194 88% 36% / 0.9) 0%, hsl(192 88% 38% / 0) 70%),
+		radial-gradient(26% 26% at 62% 30%, hsl(150 90% 62% / 0.45) 0%, hsl(150 90% 62% / 0) 70%);
+	transform-origin: 50% 50%;
+	animation: le-bloom 18s ease-in-out infinite alternate;
+	will-change: transform;
+}
+@keyframes le-bloom {
+	0%   { transform: translate(-4%, -3%) rotate(0deg)  scale(1); }
+	50%  { transform: translate(3%, 4%)   rotate(7deg)  scale(1.08); }
+	100% { transform: translate(5%, -4%)  rotate(-5deg) scale(1.03); }
+}
+@media (prefers-reduced-motion: reduce) {
+	.hero-tile--cta::before, .services-intro::before { animation: none; }
+}
+
+/* The sliding wordmark reveal in the partnership section was still lime. */
+.overlap-desktop__wordmark .overlap-wordmark--clip {
+	background-image: var(--brand-gradient); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
