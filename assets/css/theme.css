@@ -98,7 +98,7 @@
 		radial-gradient(110% 100% at 100% 100%, hsl(192 88% 36% / 0.95) 0%, hsl(190 88% 38% / 0) 60%),
 		linear-gradient(135deg, hsl(75 100% 50%) 0%, hsl(140 78% 54%) 45%, hsl(170 80% 44%) 100%);
 	/* Outer bloom on the accent panels. */
-	--brand-glow: 0 0 60px -14px hsl(var(--primary) / 0.45);
+	--brand-glow: -14px -14px 60px -16px hsl(var(--primary) / 0.42), 14px 14px 60px -16px hsl(190 85% 42% / 0.5);
 	--secondary: 0 0% 14%;
 	--secondary-foreground: 0 0% 100%;
 	--muted: 0 0% 14%;
@@ -757,7 +757,7 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 .services-intro {
 	position: static;
 	padding: 2rem;
-	border: 1px solid hsl(var(--primary));
+	border: 1px solid hsl(0 0% 100% / 0.22);
 	border-radius: 2rem;
 	background-color: hsl(var(--primary));
 	background-image: var(--brand-gradient);
@@ -1086,7 +1086,7 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 	box-shadow: var(--brand-glow);
 }
 
-.about-stat { display: flex; flex-direction: column; height: 100%; padding: 1.25rem; border-radius: 1rem; border: 1px solid hsl(var(--primary)); background: hsl(var(--primary)); background-image: var(--brand-gradient); color: hsl(var(--primary-foreground)); justify-content: center; }
+.about-stat { display: flex; flex-direction: column; height: 100%; padding: 1.25rem; border-radius: 1rem; border: 1px solid hsl(0 0% 100% / 0.22); background: hsl(var(--primary)); background-image: var(--brand-gradient); color: hsl(var(--primary-foreground)); justify-content: center; }
 @media (min-width: 640px) { .about-stat { padding: 1.5rem; } }
 .about-stat__num { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3em; color: hsl(var(--primary-foreground) / 0.7); font-variant-numeric: tabular-nums; margin-bottom: 1.3rem; }
 .about-stat__value { font-family: var(--font-display); font-weight: 400; font-size: clamp(2.4rem, 4vw, 3.4rem); line-height: 0.95; letter-spacing: -0.04em; color: hsl(var(--primary-foreground)); font-variant-numeric: tabular-nums; }
@@ -2539,7 +2539,7 @@ body.admin-bar header {
 .le-consent__btn { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.14em; border-radius: 999px; padding: 0.7rem 1.4rem; cursor: pointer; transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease, filter 0.3s ease; }
 .le-consent__btn--reject { background: transparent; border: 1px solid hsl(var(--foreground) / 0.2); color: hsl(var(--foreground) / 0.7); }
 .le-consent__btn--reject:hover { border-color: hsl(var(--primary) / 0.4); color: hsl(var(--foreground)); }
-.le-consent__btn--accept { background: hsl(var(--primary)); background-image: var(--brand-gradient); border: 1px solid hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
+.le-consent__btn--accept { background: hsl(var(--primary)); background-image: var(--brand-gradient); border: 1px solid transparent; color: hsl(var(--primary-foreground)); }
 .le-consent__btn--accept:hover { filter: brightness(1.06); }
 @media (max-width: 560px) { .le-consent__inner { flex-direction: column; align-items: stretch; } .le-consent__actions { } .le-consent__btn { flex: 1; } }
 
@@ -2586,4 +2586,263 @@ body.admin-bar header {
    component colour declarations above. */
 h1 .text-primary, h2 .text-primary, h3 .text-primary, .hero-metrics__num {
 	background-image: var(--brand-gradient); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+/* Hover borders carry the gradient too. A card's hover state used to tint its
+   1px border lime at 40 percent; a solid border cannot take a gradient on a
+   rounded box, so a masked ::after draws a 1px gradient ring just inside the
+   edge and fades in on hover, while the real border goes transparent under
+   it. inset: 0 rather than -1px so cards with overflow: hidden do not clip it. */
+.status,
+.hero-tile--editorial,
+.hero-tile--metrics,
+.service-card,
+.clients-card,
+.client-logo,
+.work-card,
+.work-nav-btn,
+.overlap-svc,
+.about-card,
+.tst-card,
+.tst-btn,
+.cta-card,
+.about-hero,
+.team-card,
+.values-card,
+.about-why__card,
+.team-member,
+.value-card,
+.svc-core,
+.svc-process,
+.svc-sub,
+.svc-card,
+.svc-step,
+.svc-sub__link,
+.work-hero,
+.work-archive,
+.wk-hero,
+.wk-glance,
+.wk-brief,
+.wk-results,
+.wk-gallery,
+.wk-features,
+.wk-next,
+.work-filter,
+.work-item,
+.wk-result,
+.contact-quote,
+a.work-tag,
+.svc-d-block,
+.svc-d-step,
+.svc-d-benefit,
+.svc-d-rel,
+.svc-work__arrow,
+.jr-lead,
+.jr-archive,
+.jr-next,
+.jr-filter,
+.jr-next__card,
+.site-main--journal .jr-pagination a.page-numbers,
+.le-consent__btn--reject {
+	position: relative;
+}
+.status::after,
+.hero-tile--editorial::after,
+.hero-tile--metrics::after,
+.service-card::after,
+.clients-card::after,
+.client-logo::after,
+.work-card::after,
+.work-nav-btn::after,
+.overlap-svc::after,
+.about-card::after,
+.tst-card::after,
+.tst-btn::after,
+.cta-card::after,
+.about-hero::after,
+.team-card::after,
+.values-card::after,
+.about-why__card::after,
+.team-member::after,
+.value-card::after,
+.svc-core::after,
+.svc-process::after,
+.svc-sub::after,
+.svc-card::after,
+.svc-step::after,
+.svc-sub__link::after,
+.work-hero::after,
+.work-archive::after,
+.wk-hero::after,
+.wk-glance::after,
+.wk-brief::after,
+.wk-results::after,
+.wk-gallery::after,
+.wk-features::after,
+.wk-next::after,
+.work-filter::after,
+.work-item::after,
+.wk-result::after,
+.contact-quote::after,
+a.work-tag::after,
+.svc-d-block::after,
+.svc-d-step::after,
+.svc-d-benefit::after,
+.svc-d-rel::after,
+.svc-work__arrow::after,
+.jr-lead::after,
+.jr-archive::after,
+.jr-next::after,
+.jr-filter::after,
+.jr-next__card::after,
+.site-main--journal .jr-pagination a.page-numbers::after,
+.le-consent__btn--reject::after {
+	content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+	border-radius: inherit; padding: 1px;
+	background: var(--brand-gradient);
+	-webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+	        mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+	-webkit-mask-composite: xor;
+	        mask-composite: exclude;
+	opacity: 0; transition: opacity 0.7s ease;
+}
+.status:hover,
+.hero-tile--editorial:hover,
+.hero-tile--metrics:hover,
+.service-card:hover,
+.clients-card:hover,
+.client-logo:hover,
+.work-card:hover,
+.work-nav-btn:hover,
+.overlap-svc:hover,
+.about-card:hover,
+.tst-card:hover,
+.tst-btn:hover,
+.cta-card:hover,
+.about-hero:hover,
+.team-card:hover,
+.values-card:hover,
+.about-why__card:hover,
+.team-member:hover,
+.value-card:hover,
+.svc-core:hover,
+.svc-process:hover,
+.svc-sub:hover,
+.svc-card:hover,
+.svc-step:hover,
+.svc-sub__link:hover,
+.work-hero:hover,
+.work-archive:hover,
+.wk-hero:hover,
+.wk-glance:hover,
+.wk-brief:hover,
+.wk-results:hover,
+.wk-gallery:hover,
+.wk-features:hover,
+.wk-next:hover,
+.work-filter:hover,
+.work-item:hover,
+.wk-result:hover,
+.contact-quote:hover,
+a.work-tag:hover,
+.svc-d-block:hover,
+.svc-d-step:hover,
+.svc-d-benefit:hover,
+.svc-d-rel:hover,
+.svc-work__arrow:hover,
+.jr-lead:hover,
+.jr-archive:hover,
+.jr-next:hover,
+.jr-filter:hover,
+.jr-next__card:hover,
+.site-main--journal .jr-pagination a.page-numbers:hover,
+.le-consent__btn--reject:hover {
+	border-color: transparent;
+}
+.status:hover::after,
+.hero-tile--editorial:hover::after,
+.hero-tile--metrics:hover::after,
+.service-card:hover::after,
+.clients-card:hover::after,
+.client-logo:hover::after,
+.work-card:hover::after,
+.work-nav-btn:hover::after,
+.overlap-svc:hover::after,
+.about-card:hover::after,
+.tst-card:hover::after,
+.tst-btn:hover::after,
+.cta-card:hover::after,
+.about-hero:hover::after,
+.team-card:hover::after,
+.values-card:hover::after,
+.about-why__card:hover::after,
+.team-member:hover::after,
+.value-card:hover::after,
+.svc-core:hover::after,
+.svc-process:hover::after,
+.svc-sub:hover::after,
+.svc-card:hover::after,
+.svc-step:hover::after,
+.svc-sub__link:hover::after,
+.work-hero:hover::after,
+.work-archive:hover::after,
+.wk-hero:hover::after,
+.wk-glance:hover::after,
+.wk-brief:hover::after,
+.wk-results:hover::after,
+.wk-gallery:hover::after,
+.wk-features:hover::after,
+.wk-next:hover::after,
+.work-filter:hover::after,
+.work-item:hover::after,
+.wk-result:hover::after,
+.contact-quote:hover::after,
+a.work-tag:hover::after,
+.svc-d-block:hover::after,
+.svc-d-step:hover::after,
+.svc-d-benefit:hover::after,
+.svc-d-rel:hover::after,
+.svc-work__arrow:hover::after,
+.jr-lead:hover::after,
+.jr-archive:hover::after,
+.jr-next:hover::after,
+.jr-filter:hover::after,
+.jr-next__card:hover::after,
+.site-main--journal .jr-pagination a.page-numbers:hover::after,
+.le-consent__btn--reject:hover::after {
+	opacity: 0.6;
+}
+
+/* Hover titles: the gradient sits under the glyphs from the start, hidden by
+   the opaque text colour; hovering fades the colour to transparent, which is
+   animatable where background-clip is not, so the reveal keeps the existing
+   colour transition instead of snapping. */
+.service-card__title,
+.work-item__title,
+.overlap-svc__title,
+.value-card__title,
+.svc-d-cap__title,
+.svc-d-rel__title,
+.jr-item__title,
+.jr-next__card-title,
+.cap__name,
+.svc-sub__name,
+.svc-d-faq__q,
+.wk-glance__cell a {
+	background-image: var(--brand-gradient); -webkit-background-clip: text; background-clip: text;
+}
+.service-card:hover .service-card__title,
+.work-item:hover .work-item__title,
+.overlap-svc:hover .overlap-svc__title,
+.value-card:hover .value-card__title,
+.svc-d-cap:hover .svc-d-cap__title,
+.svc-d-rel:hover .svc-d-rel__title,
+.jr-item__link:hover .jr-item__title,
+.jr-next__card:hover .jr-next__card-title,
+.cap:hover .cap__name,
+.svc-sub__link:hover .svc-sub__name,
+.svc-d-faq__item[open] .svc-d-faq__q,
+.svc-d-faq__q:hover,
+.wk-glance__cell a:hover {
+	color: transparent;
 }
