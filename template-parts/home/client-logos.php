@@ -24,7 +24,8 @@ $le_row_2 = array_slice( $le_logos, $le_half );
 /**
  * Render one marquee row (doubled for a seamless loop).
  *
- * @param array  $logos     Repeater rows: each has 'logo' (image array) + 'name'.
+ * @param array  $logos     Repeater rows: 'logo' (image array), 'name', and
+ *                          an optional 'logo_colour' image shown on hover.
  * @param string $direction 'left' | 'right'.
  */
 function le_render_logo_row( $logos, $direction ) {
@@ -40,7 +41,18 @@ function le_render_logo_row( $logos, $direction ) {
 		}
 		$name = isset( $row['name'] ) ? $row['name'] : '';
 		$dupe = $idx >= count( $logos ) ? ' aria-hidden="true"' : '';
-		echo '<div class="client-logo"' . $dupe . '>';
+
+		// Optional full-colour version, revealed on hover. Where it is absent
+		// the CSS brightens the mono logo to white instead, so every tile has
+		// a hover state whether or not a colour file has been supplied.
+		$colour     = isset( $row['logo_colour'] ) ? $row['logo_colour'] : null;
+		$has_colour = ( $colour && ! empty( $colour['url'] ) );
+
+		printf(
+			'<div class="client-logo%1$s"%2$s>',
+			$has_colour ? ' client-logo--has-colour' : '',
+			$dupe // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- literal above.
+		);
 		// Intrinsic dimensions let the browser reserve the box before the file
 		// lands. CSS still controls the rendered size. SVGs may report none.
 		$le_w = isset( $logo['width'] ) ? (int) $logo['width'] : 0;
@@ -54,6 +66,16 @@ function le_render_logo_row( $logos, $direction ) {
 			esc_attr( $name ? $name . ' logo' : ( $logo['alt'] ?? '' ) ),
 			$le_dims // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built from ints above.
 		);
+
+		if ( $has_colour ) {
+			// Decorative: the mono logo above already carries the alt text, so
+			// this must not be announced a second time.
+			printf(
+				'<img class="client-logo__img client-logo__img--colour" src="%1$s" alt="" aria-hidden="true" loading="lazy" />',
+				esc_url( $colour['url'] )
+			);
+		}
+
 		echo '</div>';
 	}
 	echo '</div>';
