@@ -827,14 +827,33 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 @keyframes le-marquee-left { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @keyframes le-marquee-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
 
-.client-logo { flex-shrink: 0; display: flex; align-items: center; justify-content: center; height: 4rem; width: 160px; padding-inline: 1.5rem; border-radius: 1rem; background-color: hsl(var(--glass-bg)); border: 1px solid hsl(var(--glass-border)); transition: border-color 0.7s ease; }
+.client-logo { position: relative; flex-shrink: 0; display: flex; align-items: center; justify-content: center; height: 4rem; width: 160px; padding-inline: 1.5rem; border-radius: 1rem; background-color: hsl(var(--glass-bg)); border: 1px solid hsl(var(--glass-border)); transition: border-color 0.7s ease; }
 @media (min-width: 640px) { .client-logo { height: 5rem; width: 200px; padding-inline: 2rem; } }
 @media (min-width: 1024px) { .client-logo { height: 6rem; width: 240px; padding-inline: 2.5rem; } }
 .client-logo:hover { border-color: hsl(var(--primary) / 0.4); }
-.client-logo__img { height: 1.25rem; width: auto; max-width: 100%; object-fit: contain; opacity: 0.5; filter: grayscale(100%) brightness(0.6) invert(1); transition: opacity 0.5s ease; }
+
+/* Hover reveals the brand.
+   The source logos are black artwork on transparent, so the invert() is what
+   makes them visible at all - removing the filter would make them vanish into
+   the panel rather than show colour. Where a colour file has been supplied it
+   cross-fades in over the top; where one has not, the mono logo brightens to
+   white instead, so every tile has a hover state either way. */
+.client-logo__img { height: 1.25rem; width: auto; max-width: 100%; object-fit: contain; opacity: 0.5; filter: grayscale(100%) brightness(0.6) invert(1); transition: opacity 0.4s ease, filter 0.4s ease; }
+
+/* No colour file: lift to crisp white. brightness(0) flattens the artwork to
+   black and invert(1) takes it to white, leaving transparency untouched. */
+.client-logo:hover .client-logo__img { opacity: 1; filter: grayscale(100%) brightness(0) invert(1); }
+
+/* Colour file present: fade the mono one out and the colour one in. */
+.client-logo__img--colour { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0; filter: none; transition: opacity 0.4s ease; }
+.client-logo--has-colour:hover .client-logo__img { opacity: 0; filter: grayscale(100%) brightness(0.6) invert(1); }
+.client-logo--has-colour:hover .client-logo__img--colour { opacity: 1; }
+
+@media (prefers-reduced-motion: reduce) {
+	.client-logo__img, .client-logo__img--colour { transition: none; }
+}
 @media (min-width: 640px) { .client-logo__img { height: 1.75rem; } }
 @media (min-width: 1024px) { .client-logo__img { height: 2.25rem; } }
-.client-logo:hover .client-logo__img { opacity: 0.9; }
 .client-logo__img--lg { height: 1.75rem; }
 @media (min-width: 640px) { .client-logo__img--lg { height: 2.25rem; } }
 @media (min-width: 1024px) { .client-logo__img--lg { height: 2.75rem; } }

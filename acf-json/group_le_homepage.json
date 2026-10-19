@@ -670,6 +670,32 @@
                     "parent_repeater": "field_h_cl_logos"
                 },
                 {
+                    "key": "field_h_cl_logo_colour",
+                    "label": "Colour logo (hover)",
+                    "name": "logo_colour",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "Optional. The full-colour version, shown on hover. Leave empty and the mono logo simply brightens to white instead.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "return_format": "array",
+                    "preview_size": "medium",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "",
+                    "parent_repeater": "field_h_cl_logos"
+                },
+                {
                     "key": "field_h_cl_logo_name",
                     "label": "Name",
                     "name": "name",
@@ -1870,5 +1896,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1787661100
+    "modified": 1787661101
 }
