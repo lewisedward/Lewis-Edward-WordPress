@@ -2951,17 +2951,9 @@ a.work-tag:hover::after,
 	color: hsl(var(--primary));
 }
 
-/* Hover-to-lime text, same reveal as the hover titles. */
-.nav-link,
-.mega-item__label,
-.mega-menu__all,
-a.eyebrow,
-.hero-editorial__lede a,
-.service-card__explore,
-.svc-d-related__all,
-.jr-archive__back {
-	background-image: var(--brand-gradient); -webkit-background-clip: text; background-clip: text;
-}
+/* Hover-to-lime text. Unlike the titles, these rest at a translucent grey,
+   so the gradient cannot sit underneath from the start without tinting them;
+   it is applied on hover only, and the grey fades out over it. */
 .nav-link:hover,
 .mega-item:hover .mega-item__label,
 .mega-menu__all:hover,
@@ -2970,7 +2962,7 @@ a.eyebrow:hover,
 .service-card:hover .service-card__explore,
 .svc-d-related__all:hover,
 .jr-archive__back:hover {
-	color: transparent;
+	background-image: var(--brand-gradient); -webkit-background-clip: text; background-clip: text; color: transparent;
 }
 .nav-link:hover svg,
 .mega-item:hover .mega-item__label svg,
