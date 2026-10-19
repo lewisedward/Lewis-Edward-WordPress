@@ -2527,7 +2527,9 @@ body.admin-bar header {
 @media (max-width: 560px) { .le-consent__inner { flex-direction: column; align-items: stretch; } .le-consent__actions { } .le-consent__btn { flex: 1; } }
 
 /* "Cookie settings" trigger in the footer bottom bar — reset the button */
-.footer-bottom__cookies { background: none; border: 0; padding: 0; margin: 0; font: inherit; line-height: inherit; color: inherit; cursor: pointer; }
+/* `font: inherit` resets the button's UA font, but it inherits the bar's 16px
+   rather than the 10-11px its siblings use, so the size is set explicitly. */
+.footer-bottom__cookies { background: none; border: 0; padding: 0; margin: 0; font: inherit; font-family: var(--font-mono); font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.15em; line-height: inherit; color: inherit; cursor: pointer; }
 
 /* Hero mockup: the easyJet build running on a MacBook, used as ambient texture
    across the editorial tile rather than as a framed object - the tile is
@@ -2583,6 +2585,9 @@ code, kbd, pre, samp,
 .footer-link, .footer-menu a,
 .footer-col__title,
 .footer-top__label,
+.footer-bottom__copy,
+.footer-bottom__loc,
+.footer-bottom__clock,
 
 /* Meta labels: eyebrows in everything but the class name. */
 .arrow-link__label,
@@ -2611,6 +2616,8 @@ code, kbd, pre, samp,
 .nav-link { letter-spacing: 1.2px; }
 .footer-link, .footer-menu a { letter-spacing: 1.2px; }
 .footer-col__title { letter-spacing: 0.15em; }
+.footer-bottom__copy { letter-spacing: 0.15em; }
+.footer-bottom__loc { letter-spacing: 0.1em; }
 .arrow-link__label,
 .work-project__meta-label,
 .about-stat__num,

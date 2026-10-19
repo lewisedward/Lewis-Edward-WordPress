@@ -150,12 +150,14 @@ function le_mono_scope_trial_css() {
 	// Chillax tracking it had before the move.
 	echo '<style id="le-mono-scope-trial">'
 		. '.nav-link,.footer-link,.footer-menu a,.footer-col__title,.footer-top__label,'
+		. '.footer-bottom__copy,.footer-bottom__loc,.footer-bottom__clock,.footer-bottom__cookies,'
 		. '.arrow-link__label,.work-project__meta-label,.about-why__label,'
 		. '.mega-menu__count-label,.cap__num,.work-project__num,.overlap-svc__num,'
 		. '.value-card__num,.svc-card__num,.svc-step__num,.svc-sub__num,.about-stat__num'
 		. '{font-family:var(--font-body);}'
 		. '.nav-link,.footer-link,.footer-menu a{letter-spacing:2px;}'
 		. '.footer-col__title{letter-spacing:0.2em;}'
+		. '.footer-bottom__copy{letter-spacing:0.2em;}.footer-bottom__loc{letter-spacing:0.14em;}'
 		. '.arrow-link__label,.work-project__meta-label,.about-stat__num,'
 		. '.overlap-svc--column .overlap-svc__num{letter-spacing:0.3em;}'
 		. "</style>\n";
