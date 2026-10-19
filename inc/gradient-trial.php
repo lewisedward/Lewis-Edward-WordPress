@@ -125,3 +125,39 @@ function le_mono_trial_css() {
 	);
 }
 add_action( 'wp_head', 'le_mono_trial_css', 4 );
+
+/**
+ * Mono scope trial - STAGING ONLY.
+ *
+ * ?mono-scope=narrow pulls the mono face back to eyebrows and code alone,
+ * so the widened default can be compared against the previous scope without
+ * a deploy. Any other value is ignored.
+ *
+ * Delete with the rest of this module once the scope is settled.
+ */
+function le_mono_scope_trial_css() {
+	if ( ! le_gradient_trial_enabled() ) {
+		return;
+	}
+
+	// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- read-only display toggle.
+	$scope = isset( $_GET['mono-scope'] ) ? sanitize_key( wp_unslash( $_GET['mono-scope'] ) ) : '';
+	if ( 'narrow' !== $scope ) {
+		return;
+	}
+
+	// Everything the widened default added, back to the body face, with the
+	// Chillax tracking it had before the move.
+	echo '<style id="le-mono-scope-trial">'
+		. '.nav-link,.footer-link,.footer-menu a,.footer-col__title,.footer-top__label,'
+		. '.arrow-link__label,.work-project__meta-label,.about-why__label,'
+		. '.mega-menu__count-label,.cap__num,.work-project__num,.overlap-svc__num,'
+		. '.value-card__num,.svc-card__num,.svc-step__num,.svc-sub__num,.about-stat__num'
+		. '{font-family:var(--font-body);}'
+		. '.nav-link,.footer-link,.footer-menu a{letter-spacing:2px;}'
+		. '.footer-col__title{letter-spacing:0.2em;}'
+		. '.arrow-link__label,.work-project__meta-label,.about-stat__num,'
+		. '.overlap-svc--column .overlap-svc__num{letter-spacing:0.3em;}'
+		. "</style>\n";
+}
+add_action( 'wp_head', 'le_mono_scope_trial_css', 5 );

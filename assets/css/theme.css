@@ -2560,19 +2560,58 @@ body.admin-bar header {
 
 /* ==========================================================================
    Mono distribution
-   IBM Plex Mono is reserved for eyebrows - the small uppercase kickers that
-   label a section - plus genuine code. Everything else, including the nav,
-   buttons, footer links, micro-numerals and meta labels, stays on Chillax.
-   Mono sets wider than Chillax, so the eyebrow tracking is trimmed to keep
-   the same optical rhythm.
+   The rule is register, not size. IBM Plex Mono marks fixed, machine-set
+   information - section eyebrows, navigation chrome, meta labels, tabular
+   counters and genuine code. Chillax carries human voice: prose, titles, the
+   mega-menu items, stat captions and the footer tagline.
+   Buttons are deliberately left on Chillax. They sit in the same 12px
+   uppercase register and would qualify by the rule, but they are the moment
+   of conversion and a warmer face keeps them from reading as clinical.
+   Mono sets wider than Chillax, so the tracking on everything that moved
+   across is trimmed to hold the same optical rhythm.
+   ?mono-scope=narrow on staging pulls this back to eyebrows and code alone.
    ========================================================================== */
+
+/* Eyebrows and code - the original, narrow set. */
 .eyebrow,
 .archive__eyebrow, .page__eyebrow,
-code, kbd, pre, samp {
+code, kbd, pre, samp,
+
+/* Navigation and footer chrome: already 10-12px uppercase with 2px tracking,
+   so they were behaving as labels while set in the voice face. */
+.nav-link,
+.footer-link, .footer-menu a,
+.footer-col__title,
+.footer-top__label,
+
+/* Meta labels: eyebrows in everything but the class name. */
+.arrow-link__label,
+.work-project__meta-label,
+.about-why__label,
+.mega-menu__count-label,
+
+/* Tabular counters. These already ask for tabular-nums, a request Chillax can
+   only partly honour; Plex's figures are genuinely fixed-width, so the 01/02
+   columns actually align down the page. */
+.cap__num,
+.work-project__num,
+.overlap-svc__num,
+.value-card__num,
+.svc-card__num,
+.svc-step__num,
+.svc-sub__num,
+.about-stat__num {
 	font-family: var(--font-mono);
 }
 
-/* Tracking trim: these were spaced for Chillax, which is narrower. */
+/* Tracking trim: all of these were spaced for Chillax, which is narrower. */
 .eyebrow { letter-spacing: 0.18em; }
 .eyebrow--faint { letter-spacing: 0.2em; }
 .eyebrow--t2, .eyebrow--strong { letter-spacing: 0.15em; }
+.nav-link { letter-spacing: 1.2px; }
+.footer-link, .footer-menu a { letter-spacing: 1.2px; }
+.footer-col__title { letter-spacing: 0.15em; }
+.arrow-link__label,
+.work-project__meta-label,
+.about-stat__num,
+.overlap-svc--column .overlap-svc__num { letter-spacing: 0.22em; }
