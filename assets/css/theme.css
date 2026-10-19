@@ -56,11 +56,6 @@
 	/* Type families */
 	--font-display: 'Chillax', 'Chillax Fallback', sans-serif;
 	--font-body: 'Chillax', 'Chillax Fallback', sans-serif;
-	/* Mono is a signal face, not a reading face: it carries the section
-	   eyebrows and genuine code, nothing else. Everything from nav and
-	   buttons to prose is Chillax. Applied via the mono block at the foot
-	   of this file. */
-	--font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
 	/* Heading scale */
 	--h1-size: clamp(2rem, 4.5vw, 5rem);   --h1-leading: 110%; --h1-tracking: -2px;   --h1-weight: 400;
@@ -2546,9 +2541,10 @@ body.admin-bar header {
 @media (max-width: 560px) { .le-consent__inner { flex-direction: column; align-items: stretch; } .le-consent__actions { } .le-consent__btn { flex: 1; } }
 
 /* "Cookie settings" trigger in the footer bottom bar — reset the button */
-/* `font: inherit` resets the button's UA font, but it inherits the bar's 16px
-   rather than the 10-11px its siblings use, so the size is set explicitly. */
-.footer-bottom__cookies { background: none; border: 0; padding: 0; margin: 0; font: inherit; font-family: var(--font-mono); font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.15em; line-height: inherit; color: inherit; cursor: pointer; }
+/* `font: inherit` strips the UA button styling but inherits the bar's 16px,
+   not the 11px its siblings set for themselves - which is what made this read
+   as broken. The type is pinned to match .footer-link sitting next to it. */
+.footer-bottom__cookies { background: none; border: 0; padding: 0; margin: 0; font: inherit; font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 2px; line-height: inherit; color: inherit; cursor: pointer; }
 
 /* Hero mockup: the easyJet build running on a MacBook, used as ambient texture
    across the editorial tile rather than as a framed object - the tile is
@@ -2578,66 +2574,3 @@ body.admin-bar header {
 .hero-editorial__eyebrow, .hero-editorial__body { position: relative; z-index: 2; }
 @media (max-width: 1024px) { .hero-mock { display: none; } }
 @media (prefers-reduced-motion: reduce) { .hero-mock { display: none; } }
-
-/* ==========================================================================
-   Mono distribution
-   The rule is register, not size. IBM Plex Mono marks fixed, machine-set
-   information - section eyebrows, navigation chrome, meta labels, tabular
-   counters and genuine code. Chillax carries human voice: prose, titles, the
-   mega-menu items, stat captions and the footer tagline.
-   Buttons are deliberately left on Chillax. They sit in the same 12px
-   uppercase register and would qualify by the rule, but they are the moment
-   of conversion and a warmer face keeps them from reading as clinical.
-   Mono sets wider than Chillax, so the tracking on everything that moved
-   across is trimmed to hold the same optical rhythm.
-   ?mono-scope=narrow on staging pulls this back to eyebrows and code alone.
-   ========================================================================== */
-
-/* Eyebrows and code - the original, narrow set. */
-.eyebrow,
-.archive__eyebrow, .page__eyebrow,
-code, kbd, pre, samp,
-
-/* Navigation and footer chrome: already 10-12px uppercase with 2px tracking,
-   so they were behaving as labels while set in the voice face. */
-.nav-link,
-.footer-link, .footer-menu a,
-.footer-col__title,
-.footer-top__label,
-.footer-bottom__copy,
-.footer-bottom__loc,
-.footer-bottom__clock,
-
-/* Meta labels: eyebrows in everything but the class name. */
-.arrow-link__label,
-.work-project__meta-label,
-.about-why__label,
-.mega-menu__count-label,
-
-/* Tabular counters. These already ask for tabular-nums, a request Chillax can
-   only partly honour; Plex's figures are genuinely fixed-width, so the 01/02
-   columns actually align down the page. */
-.cap__num,
-.work-project__num,
-.overlap-svc__num,
-.value-card__num,
-.svc-card__num,
-.svc-step__num,
-.svc-sub__num,
-.about-stat__num {
-	font-family: var(--font-mono);
-}
-
-/* Tracking trim: all of these were spaced for Chillax, which is narrower. */
-.eyebrow { letter-spacing: 0.18em; }
-.eyebrow--faint { letter-spacing: 0.2em; }
-.eyebrow--t2, .eyebrow--strong { letter-spacing: 0.15em; }
-.nav-link { letter-spacing: 1.2px; }
-.footer-link, .footer-menu a { letter-spacing: 1.2px; }
-.footer-col__title { letter-spacing: 0.15em; }
-.footer-bottom__copy { letter-spacing: 0.15em; }
-.footer-bottom__loc { letter-spacing: 0.1em; }
-.arrow-link__label,
-.work-project__meta-label,
-.about-stat__num,
-.overlap-svc--column .overlap-svc__num { letter-spacing: 0.22em; }

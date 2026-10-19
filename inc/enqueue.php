@@ -44,18 +44,6 @@ function le_enqueue_assets() {
 	 * of first paint on mobile for zero bytes of actual CSS.
 	 */
 
-	// IBM Plex Mono (eyebrows and code) - Google Fonts. Headings and body are
-	// on self-hosted Chillax, so only the one family is requested.
-	// WordPress adds the fonts.gstatic.com preconnect automatically for a
-	// fonts.googleapis.com stylesheet, so no extra resource hint is needed.
-	// IBM Plex Mono has discrete weights rather than a variable axis, so only
-	// the three the eyebrows actually use are requested.
-	wp_enqueue_style(
-		'le-fonts-mono',
-		'https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap',
-		array(),
-		null
-	);
 
 	// Smooth scroll (lightweight vanilla replacement for Lenis wrapper).
 	wp_enqueue_script(
