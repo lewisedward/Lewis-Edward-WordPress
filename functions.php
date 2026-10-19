@@ -49,4 +49,3 @@ le_require( 'journal' );      // Journal (Posts) index/archive helpers.
 le_require( 'about-icons' );  // About page inline SVG icon set.
 le_require( 'svg-support' );  // Safe SVG uploads (sanitised).
 le_require( 'redirects' );    // Legacy 301 redirects (SEO preservation).
-le_require( 'gradient-trial' ); // TEMP: ?grad= palette trial, staging only. Remove after sign-off.

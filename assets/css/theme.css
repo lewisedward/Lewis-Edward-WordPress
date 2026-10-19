@@ -85,15 +85,18 @@
 	--primary: 75 100% 50%;              /* lime, the lead brand colour */
 	--primary-foreground: 168 4% 9%;
 	--primary-deep: 255 60% 32%;
-	/* Brand surface: lime into petrol teal, with a bloom in the top-left
-	   corner. One hue family (75 -> 188), so there is no muddy midpoint to
-	   engineer around. The darkest stop is held at 38% lightness, not lower:
-	   --primary-foreground (near-black) sits on this ramp as body text, and
-	   38% keeps that at 5.4:1 where 34% would fall to 4.4:1 and fail AA on
-	   the small captions. */
+	/* Brand surface: lime into petrol teal, lit from two corners. A lime bloom
+	   top-left and a petrol bloom bottom-right sit over a lime -> green -> teal
+	   ramp, so the midpoint reads as the hand-off between the two lights rather
+	   than a flat fill. One hue family (75 -> 192), so there is no muddy midpoint
+	   to engineer around. The petrol bloom is held at 36% lightness, not lower:
+	   --primary-foreground (near-black) sits on these panels as body text, and
+	   36% keeps that at 4.6:1 where 32% would fall to 3.8:1 and fail AA on the
+	   small captions. */
 	--brand-gradient:
 		radial-gradient(125% 115% at 10% 6%, hsl(72 100% 70% / 0.92) 0%, hsl(74 100% 60% / 0) 58%),
-		linear-gradient(135deg, hsl(75 100% 50%) 0%, hsl(150 75% 52%) 34%, hsl(176 80% 42%) 70%, hsl(188 78% 38%) 100%);
+		radial-gradient(110% 100% at 100% 100%, hsl(192 88% 36% / 0.95) 0%, hsl(190 88% 38% / 0) 60%),
+		linear-gradient(135deg, hsl(75 100% 50%) 0%, hsl(140 78% 54%) 45%, hsl(170 80% 44%) 100%);
 	/* Outer bloom on the accent panels. */
 	--brand-glow: 0 0 60px -14px hsl(var(--primary) / 0.45);
 	--secondary: 0 0% 14%;
