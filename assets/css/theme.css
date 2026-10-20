@@ -545,14 +545,14 @@ h6 { font-size: var(--h6-size); line-height: var(--h6-leading); letter-spacing: 
 
 /* ---- Mobile drawer -------------------------------------------------------- */
 .mobile-drawer {
-	margin: 0.5rem 1rem 0;
+	margin: 0.5rem 0 0; /* flush with the pill above: the header already carries the side gutter */
 	border-radius: 1rem;
 	max-height: 70vh;
 	overflow-y: auto;
 	padding: 1rem;
 	animation: le-drawer-in 0.25s ease both;
 }
-@media (min-width: 640px) { .mobile-drawer { margin-inline: 1.5rem; padding: 1.9rem 1.5rem ; } }
+@media (min-width: 640px) { .mobile-drawer { padding: 1.9rem 1.5rem; } }
 .mobile-drawer[hidden] { display: none; }
 .mobile-drawer__inner { display: flex; flex-direction: column; gap: 0.75rem; }
 @media (min-width: 640px) { .mobile-drawer__inner { gap: 1rem; } }
@@ -583,7 +583,10 @@ h6 { font-size: var(--h6-size); line-height: var(--h6-leading); letter-spacing: 
 .primary-menu--mobile .mega-item__label { font-size: 0.875rem; color: hsl(var(--foreground) / 0.6); }
 @media (min-width: 640px) { .primary-menu--mobile .mega-item__label { font-size: 1rem; } }
 .primary-menu--mobile .mega-item__desc { display: none; }
-.primary-menu--mobile .mega-menu__footer { display: none; }
+/* The drawer keeps the "View all" link under the list but not the count. */
+.primary-menu--mobile .mega-menu__footer { padding: 0.9rem 0 1.2rem 1rem; border-top: 0; border-bottom: 1px solid hsl(var(--glass-border)); }
+.primary-menu--mobile .mega-menu__count { display: none; }
+.primary-menu--mobile .mega-menu__grid { border-bottom: 0; padding-bottom: 0.4rem; }
 
 /* Push page content below the fixed header (tune per layout in Phase 2) */
 body:not(.home) .site-content { padding-top: 6rem; }
@@ -632,6 +635,7 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 
 /* Ambient roaming glows */
 .hero__glows { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+@media (max-width: 1023px) { .hero__glows { display: none; } } /* the stacked glass tiles catch the glow as a pale band */
 .hero__glow { position: absolute; border-radius: 999px; }
 .hero__glow--1 { width: 70%; height: 70vh; top: -20vh; left: -15%; opacity: 0.06; background: radial-gradient(circle, hsl(var(--primary)) 0%, transparent 60%); animation: le-glow-1 22s ease-in-out infinite; }
 .hero__glow--2 { width: 50%; height: 50%; bottom: -10%; right: -10%; opacity: 0.04; background: radial-gradient(circle, hsl(var(--primary)) 0%, transparent 70%); animation: le-glow-2 26s ease-in-out infinite; }
@@ -1249,7 +1253,8 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 @media (min-width: 640px) { .footer-pill { border-radius: 40px; padding: 3rem 2.5rem; } }
 @media (min-width: 1024px) { .footer-pill { padding: 3.5rem 3.5rem; } }
 
-.footer-grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; }
+.footer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem 1.5rem; }
+@media (max-width: 1023px) { .footer-brand { grid-column: 1 / -1; } .footer-menu { gap: 0.8rem; } }
 @media (min-width: 575px) { .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 3rem; } }
 @media (min-width: 768px) { .footer-grid { grid-template-columns: repeat(3, 1fr); gap: 3rem; } }
 @media (min-width: 1024px) { .footer-grid { grid-template-columns: repeat(4, 1fr); } }
@@ -2597,7 +2602,8 @@ body.admin-bar header {
 /* `font: inherit` strips the UA button styling but inherits the bar's 16px,
    not the 11px its siblings set for themselves - which is what made this read
    as broken. The type is pinned to match .footer-link sitting next to it. */
-.footer-bottom__cookies { background: none; border: 0; padding: 0; margin: 0; font: inherit; font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 2px; line-height: inherit; color: inherit; cursor: pointer; }
+.footer-bottom__cookies { -webkit-appearance: none; appearance: none; -webkit-text-size-adjust: 100%; background: none; border: 0; padding: 0; margin: 0; font: inherit; font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 2px; line-height: inherit; color: hsl(var(--foreground) / 0.55); cursor: pointer; transition: color 0.3s ease; }
+.footer-bottom__cookies:hover { color: hsl(var(--foreground)); }
 
 /* Hero mockup: the easyJet build running on a MacBook, used as ambient texture
    across the editorial tile rather than as a framed object - the tile is
@@ -3104,3 +3110,111 @@ a.eyebrow:hover svg,
 .status--chip-mobile { height: 26px; padding-inline: 0.6rem 0.7rem; margin-left: 0; margin-right: auto; }
 .status--chip-mobile .status__available { font-size: 9px; }
 @media (max-width: 380px) { .status--chip-mobile .status__available { display: none; } .status--chip-mobile { padding-inline: 0.55rem; } }
+
+/* Touch: a tap leaves :hover stuck, which would leave a card with its border
+   gone and the ring showing. Without a hover-capable pointer the ring stays
+   off and the border stays put. */
+@media (hover: none) {
+.status:hover,
+.hero-tile--editorial:hover,
+.hero-tile--metrics:hover,
+.service-card:hover,
+.clients-card:hover,
+.client-logo:hover,
+.work-card:hover,
+.work-nav-btn:hover,
+.overlap-svc:hover,
+.about-card:hover,
+.tst-card:hover,
+.tst-btn:hover,
+.cta-card:hover,
+.about-hero:hover,
+.team-card:hover,
+.values-card:hover,
+.about-why__card:hover,
+.team-member:hover,
+.value-card:hover,
+.svc-core:hover,
+.svc-process:hover,
+.svc-sub:hover,
+.svc-card:hover,
+.svc-step:hover,
+.svc-sub__link:hover,
+.work-hero:hover,
+.work-archive:hover,
+.wk-hero:hover,
+.wk-glance:hover,
+.wk-brief:hover,
+.wk-results:hover,
+.wk-gallery:hover,
+.wk-features:hover,
+.wk-next:hover,
+.work-filter:hover,
+.work-item:hover,
+.wk-result:hover,
+.contact-quote:hover,
+a.work-tag:hover,
+.svc-d-block:hover,
+.svc-d-step:hover,
+.svc-d-benefit:hover,
+.svc-d-rel:hover,
+.svc-work__arrow:hover,
+.jr-lead:hover,
+.jr-archive:hover,
+.jr-next:hover,
+.jr-filter:hover,
+.jr-next__card:hover,
+.site-main--journal .jr-pagination a.page-numbers:hover,
+.le-consent__btn--reject:hover { border-color: hsl(var(--glass-border)); }
+.status:hover::after,
+.hero-tile--editorial:hover::after,
+.hero-tile--metrics:hover::after,
+.service-card:hover::after,
+.clients-card:hover::after,
+.client-logo:hover::after,
+.work-card:hover::after,
+.work-nav-btn:hover::after,
+.overlap-svc:hover::after,
+.about-card:hover::after,
+.tst-card:hover::after,
+.tst-btn:hover::after,
+.cta-card:hover::after,
+.about-hero:hover::after,
+.team-card:hover::after,
+.values-card:hover::after,
+.about-why__card:hover::after,
+.team-member:hover::after,
+.value-card:hover::after,
+.svc-core:hover::after,
+.svc-process:hover::after,
+.svc-sub:hover::after,
+.svc-card:hover::after,
+.svc-step:hover::after,
+.svc-sub__link:hover::after,
+.work-hero:hover::after,
+.work-archive:hover::after,
+.wk-hero:hover::after,
+.wk-glance:hover::after,
+.wk-brief:hover::after,
+.wk-results:hover::after,
+.wk-gallery:hover::after,
+.wk-features:hover::after,
+.wk-next:hover::after,
+.work-filter:hover::after,
+.work-item:hover::after,
+.wk-result:hover::after,
+.contact-quote:hover::after,
+a.work-tag:hover::after,
+.svc-d-block:hover::after,
+.svc-d-step:hover::after,
+.svc-d-benefit:hover::after,
+.svc-d-rel:hover::after,
+.svc-work__arrow:hover::after,
+.jr-lead:hover::after,
+.jr-archive:hover::after,
+.jr-next:hover::after,
+.jr-filter:hover::after,
+.jr-next__card:hover::after,
+.site-main--journal .jr-pagination a.page-numbers:hover::after,
+.le-consent__btn--reject:hover::after { opacity: 0; }
+}
