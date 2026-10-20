@@ -3063,7 +3063,13 @@ a.eyebrow:hover svg,
 .status--chip .status__available { font-size: 10px; letter-spacing: 0.14em; }
 .navbar__time { display: inline-flex; align-items: center; gap: 0.5rem; white-space: nowrap; font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: hsl(var(--foreground) / 0.45); font-variant-numeric: tabular-nums; }
 .navbar__time .status__clock { font-size: 11px; letter-spacing: 0.14em; color: inherit; }
-.navbar--desktop .btn-cta { padding: 1.05rem 1.65rem; }
+.navbar--desktop .btn-cta { padding: 1rem 1.65rem; } /* 50px tall: keeps the pill an even height so its centre line sits on a whole pixel */
+/* Optical centring. Measured at 2x: the wordmark and the chip's caps sat half
+   a pixel above the menu, which sits on the pill's centre line. The wordmark
+   is a 28.84px image, so its centre lands on a half pixel; the chip's caps
+   ride high in their 10px box. Both nudge down by half a pixel. */
+.navbar--desktop .navbar__logo img { height: 29px; width: auto; }
+.status--chip .status__available { transform: translateY(0.5px); }
 @media (max-width: 1280px) { .navbar--desktop .status--chip, .navbar__time { display: none; } }
 .navbar--mobile { gap: 0.75rem; }
 .status--chip-mobile { height: 26px; padding-inline: 0.6rem 0.7rem; margin-left: 0; margin-right: auto; }
