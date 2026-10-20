@@ -71,7 +71,7 @@
 /* ---- Hero ------------------------------------------------------------------ */
 .skin-grid .g-hero { grid-template-columns: 1fr 1fr; grid-template-rows: minmax(420px, 46vh) minmax(380px, auto); }
 .skin-grid .g-hero__word { display: flex; align-items: flex-end; padding: 0 0 0 24px; overflow: hidden; }
-.skin-grid .g-hero__word h1 { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: clamp(110px, 17vw, 250px); line-height: 0.78; letter-spacing: -0.05em; transform: translateY(0.08em); color: hsl(var(--foreground)); }
+.skin-grid .g-hero__word > span { display: block; margin: 0; font-family: var(--font-display); font-weight: 400; font-size: clamp(110px, 17vw, 250px); line-height: 0.78; letter-spacing: -0.05em; transform: translateY(0.08em); color: hsl(var(--foreground)); }
 .skin-grid .g-hero__stmt { display: flex; flex-direction: column; gap: 18px; font-size: 24px; line-height: 1.25; letter-spacing: -0.01em; }
 .skin-grid .g-hero__stmt p { margin: 0; }
 .skin-grid .g-hero__lede p { margin: 0 0 0.6em; }
