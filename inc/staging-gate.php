@@ -102,7 +102,8 @@ add_action( 'template_redirect', function () {
 /**
  * Which typeface the grid skin renders in on staging.
  *
- * ?font=machina|aeonik|mix sets a 30-day cookie; "aeonik" is the default.
+ * ?font=machina|aeonik|mix|geist sets a 30-day cookie; "aeonik" is the default.
+ *  - geist:   Geist + Geist Mono (free, SIL OFL) — the closest free stand-in for Aeonik + Aeonik Mono.
  *  - machina: PP Neue Machina (variable) for everything, including the mono slots.
  *  - aeonik:  CoType Aeonik trial + Aeonik Mono (gated endpoint).
  *  - mix:     Neue Machina for the display slots, Aeonik for body and mono.
@@ -112,7 +113,7 @@ function le_font_choice() {
 	if ( null !== $choice ) {
 		return $choice;
 	}
-	$allowed = array( 'machina', 'aeonik', 'mix' );
+	$allowed = array( 'machina', 'aeonik', 'mix', 'geist' );
 	$choice  = 'aeonik';
 	if ( isset( $_GET['font'] ) && in_array( $_GET['font'], $allowed, true ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$choice = sanitize_key( $_GET['font'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -139,7 +140,7 @@ add_action( 'wp_head', function () {
 	}
 	$choice = le_font_choice();
 	$css    = '';
-	if ( 'machina' !== $choice ) {
+	if ( in_array( $choice, array( 'aeonik', 'mix' ), true ) ) {
 		$faces = array( 'Air' => 100, 'Thin' => 200, 'Light' => 300, 'Regular' => 400, 'Medium' => 500, 'SemiBold' => 600, 'Bold' => 700, 'Black' => 900 );
 		foreach ( $faces as $n => $w ) {
 			$css .= "@font-face{font-family:'Aeonik';src:url('" . esc_url( home_url( '/?le-font=AeonikTRIAL-' . $n . '.otf' ) ) . "') format('opentype');font-weight:$w;font-display:swap}\n";
@@ -148,15 +149,24 @@ add_action( 'wp_head', function () {
 			$css .= "@font-face{font-family:'Aeonik Mono';src:url('" . esc_url( home_url( '/?le-font=AeonikMonoTRIAL-' . $n . '.otf' ) ) . "') format('opentype');font-weight:$w;font-display:swap}\n";
 		}
 	}
-	if ( 'aeonik' !== $choice ) {
+	if ( in_array( $choice, array( 'machina', 'mix' ), true ) ) {
 		$nm   = get_template_directory_uri() . '/assets/fonts/neue-machina/PPNeueMachina-InktrapVariable.woff2?v=' . le_asset_ver( 'assets/fonts/neue-machina/PPNeueMachina-InktrapVariable.woff2' );
 		$css .= "@font-face{font-family:'Neue Machina';src:url('" . esc_url( $nm ) . "') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}\n";
 	}
 
+	if ( 'geist' === $choice ) {
+		foreach ( array( 'Geist' => 'geist', 'Geist Mono' => 'geist-mono' ) as $fam => $file ) {
+			$rel  = 'assets/fonts/geist/' . $file . '-latin-wght-normal.woff2';
+			$css .= "@font-face{font-family:'$fam';src:url('" . esc_url( get_template_directory_uri() . '/' . $rel . '?v=' . le_asset_ver( $rel ) ) . "') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}\n";
+		}
+	}
+
 	$machina = "'Neue Machina','Chillax','Chillax Fallback',sans-serif";
 	$aeonik  = "'Aeonik','Chillax','Chillax Fallback',sans-serif";
-	if ( 'aeonik' === $choice ) {
-		$css .= ".skin-grid{--font-display:$aeonik;--font-body:$aeonik;--g-mono:'Aeonik Mono',ui-monospace,Menlo,monospace;}\n";
+	if ( 'aeonik' === $choice || 'geist' === $choice ) {
+		$fam  = 'geist' === $choice ? "'Geist','Chillax','Chillax Fallback',sans-serif" : $aeonik;
+		$mono = 'geist' === $choice ? "'Geist Mono',ui-monospace,Menlo,monospace" : "'Aeonik Mono',ui-monospace,Menlo,monospace";
+		$css .= ".skin-grid{--font-display:$fam;--font-body:$fam;--g-mono:$mono;}\n";
 		$css .= ".skin-grid .g-hero__word > span{font-weight:500;letter-spacing:-0.06em}.skin-grid .g-svc__title{font-weight:600;letter-spacing:-0.05em}.skin-grid .g-footer__word{font-weight:600;letter-spacing:-0.06em}.skin-grid .g-header__logo{font-weight:600}.skin-grid .g-about__prose,.skin-grid .g-tst__quote{font-weight:300}.skin-grid .g-mono{letter-spacing:0.04em}\n";
 	} else {
 		$body = 'mix' === $choice ? $aeonik : $machina;
