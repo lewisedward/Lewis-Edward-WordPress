@@ -182,12 +182,14 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 			// Sectors, read from the client names ("Banking and Finance WordPress Website…" → "Banking and Finance").
 			$g_sectors = array();
 			foreach ( $g_logos as $row ) {
-				$n = trim( preg_replace( '/\s*(WordPress|Website|Web)\b.*$/i', '', (string) ( $row['name'] ?? '' ) ) );
+				$src = ! empty( $row['name'] ) ? $row['name'] : ( $row['logo']['alt'] ?? '' );
+				$n   = trim( preg_replace( '/\s*(WordPress|Website|Web)\b.*$/i', '', (string) $src ) );
 				if ( $n && ! in_array( $n, $g_sectors, true ) ) {
 					$g_sectors[] = $n;
 				}
 			}
 			if ( $g_sectors ) : ?>
+			<span class="g-clients__side-title"><?php esc_html_e( 'Sectors we build for', 'lewisedward' ); ?></span>
 			<ul class="g-clients__sectors">
 				<?php foreach ( $g_sectors as $i => $sec ) : ?>
 				<li><span class="g-mono"><?php echo esc_html( str_pad( (string) ( $i + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span><span><?php echo esc_html( $sec ); ?></span></li>
