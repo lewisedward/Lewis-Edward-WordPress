@@ -83,6 +83,16 @@ add_action( 'wp_head', function () {
 }, 3 );
 
 /**
+ * Grid skin behaviours (reveal, counters, in-view video).
+ */
+add_action( 'wp_enqueue_scripts', function () {
+	if ( ! le_grid_skin() ) {
+		return;
+	}
+	wp_enqueue_script( 'le-grid', LE_URI . '/assets/js/grid.js', array(), le_asset_ver( 'assets/js/grid.js' ), true );
+}, 20 );
+
+/**
  * Small helpers shared by the grid parts.
  */
 function le_grid_arrow() {

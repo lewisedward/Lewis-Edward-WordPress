@@ -99,9 +99,13 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 		<div class="g-cell g-hero__ticker" aria-label="<?php esc_attr_e( 'Clients', 'lewisedward' ); ?>">
 			<span class="g-hero__ticker-label g-mono"><?php esc_html_e( 'Trusted by', 'lewisedward' ); ?></span>
 			<div class="g-ticker"><div class="g-ticker__track">
-				<?php for ( $pass = 0; $pass < 2; $pass++ ) : foreach ( $g_ticker as $row ) : ?>
-				<img src="<?php echo esc_url( $row['logo']['url'] ); ?>" alt="<?php echo esc_attr( $pass ? '' : ( $row['name'] ?? '' ) ); ?>" loading="lazy"<?php echo $pass ? ' aria-hidden="true"' : ''; ?> />
-				<?php endforeach; endfor; ?>
+				<?php for ( $pass = 0; $pass < 2; $pass++ ) : ?>
+				<div class="g-ticker__set"<?php echo $pass ? ' aria-hidden="true"' : ''; ?>>
+					<?php foreach ( $g_ticker as $row ) : ?>
+					<img src="<?php echo esc_url( $row['logo']['url'] ); ?>" alt="<?php echo esc_attr( $pass ? '' : ( $row['name'] ?? '' ) ); ?>" width="<?php echo esc_attr( (string) ( $row['logo']['width'] ?? '' ) ); ?>" height="<?php echo esc_attr( (string) ( $row['logo']['height'] ?? '' ) ); ?>" />
+					<?php endforeach; ?>
+				</div>
+				<?php endfor; ?>
 			</div></div>
 		</div>
 		<?php endif; ?>
@@ -145,12 +149,26 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 			<p><?php echo esc_html( le_field( 'home_work_lede' ) ); ?></p>
 			<a class="g-line-link g-mono" href="<?php echo esc_url( home_url( '/work' ) ); ?>"><span><?php echo esc_html( le_field( 'home_recentwork_discover', false, __( 'Discover all work', 'lewisedward' ) ) ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 		</div>
-		<?php foreach ( array_slice( $g_work, 0, 3 ) as $w ) : $wid = $g_id( $w ); ?>
-		<a class="g-cell g-ph g-work__item" href="<?php echo esc_url( get_permalink( $wid ) ); ?>">
-			<?php echo get_the_post_thumbnail( $wid, 'large', array( 'loading' => 'lazy' ) ); ?>
-			<span class="g-cap g-mono"><?php echo esc_html( get_the_title( $wid ) ); ?></span>
+		<?php
+		// Five case studies: the chosen ones first, topped up with the latest.
+		$g_work_ids = array_values( array_filter( array_map( $g_id, $g_work ) ) );
+		if ( count( $g_work_ids ) < 5 ) {
+			$g_more = get_posts( array( 'post_type' => 'work', 'post_status' => 'publish', 'numberposts' => 5 - count( $g_work_ids ), 'post__not_in' => $g_work_ids, 'fields' => 'ids' ) );
+			$g_work_ids = array_merge( $g_work_ids, $g_more );
+		}
+		foreach ( array_slice( $g_work_ids, 0, 5 ) as $wid ) :
+			$g_wmeta = array_filter( array( le_field( 'work_platform', $wid ), le_field( 'work_year', $wid ) ) );
+		?>
+		<a class="g-cell g-work__item" href="<?php echo esc_url( get_permalink( $wid ) ); ?>">
+			<span class="g-ph g-work__media"><?php echo get_the_post_thumbnail( $wid, 'large', array( 'loading' => 'lazy' ) ); ?></span>
+			<span class="g-work__meta"><span class="g-work__name"><?php echo esc_html( get_the_title( $wid ) ); ?></span><span class="g-mono"><?php echo esc_html( implode( ' · ', $g_wmeta ) ); ?></span><?php echo le_grid_arrow_diag(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 		</a>
 		<?php endforeach; ?>
+		<a class="g-cell g-work__all" href="<?php echo esc_url( home_url( '/work' ) ); ?>">
+			<span class="g-mono"><?php echo esc_html( str_pad( (string) wp_count_posts( 'work' )->publish, 2, '0', STR_PAD_LEFT ) ); ?> <?php esc_html_e( 'projects', 'lewisedward' ); ?></span>
+			<span class="g-work__all-title"><?php esc_html_e( 'All work', 'lewisedward' ); ?></span>
+			<svg class="g-work__all-arrow" viewBox="0 0 120 120" aria-hidden="true" focusable="false"><path d="M8 8h104v104M112 8 8 112"/></svg>
+		</a>
 	</section>
 	<?php endif; ?>
 
@@ -177,7 +195,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 	<?php /* ---- Services (h2 + h3s) ---- */ ?>
 	<section class="g-row g-svc" aria-label="<?php esc_attr_e( 'Services', 'lewisedward' ); ?>">
 		<div class="g-cell g-svc__left">
-			<span class="g-label g-mono g-svc__eyebrow"><?php echo esc_html( le_field( 'home_services_eyebrow', false, __( 'Services', 'lewisedward' ) ) ); ?></span>
+			<span class="g-label g-mono g-svc__eyebrow"><span><?php echo esc_html( le_field( 'home_services_eyebrow', false, __( 'Services', 'lewisedward' ) ) ); ?></span><span>01 &mdash; <?php echo esc_html( str_pad( (string) count( $g_services ), 2, '0', STR_PAD_LEFT ) ); ?></span></span>
 			<h2 class="g-svc__title"><?php echo esc_html( le_field( 'home_services_title' ) ); ?></h2>
 			<div class="g-svc__foot">
 				<p><?php echo esc_html( le_field( 'home_services_lede' ) ); ?></p>
@@ -259,6 +277,24 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 	<?php endif; ?>
 
 	<?php /* ---- Contact (h2) ---- */ ?>
+	<?php /* ---- Journal: the three latest articles ---- */ ?>
+	<?php $g_posts = get_posts( array( 'post_type' => 'post', 'post_status' => 'publish', 'numberposts' => 3, 'no_found_rows' => true ) ); if ( $g_posts ) : $g_journal_url = get_option( 'page_for_posts' ) ? get_permalink( (int) get_option( 'page_for_posts' ) ) : home_url( '/journal/' ); ?>
+	<section class="g-row g-journal" aria-label="<?php esc_html_e( 'Journal', 'lewisedward' ); ?>">
+		<div class="g-cell g-journal__intro">
+			<span class="g-label g-mono"><?php esc_html_e( 'Journal', 'lewisedward' ); ?></span>
+			<h2><?php esc_html_e( 'Notes from the studio', 'lewisedward' ); ?></h2>
+			<a class="g-line-link g-mono" href="<?php echo esc_url( $g_journal_url ); ?>"><span><?php esc_html_e( 'All articles', 'lewisedward' ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+		</div>
+		<?php foreach ( $g_posts as $g_post ) : ?>
+		<a class="g-cell g-journal__item" href="<?php echo esc_url( get_permalink( $g_post ) ); ?>">
+			<span class="g-journal__meta g-mono"><time datetime="<?php echo esc_attr( get_the_date( 'c', $g_post ) ); ?>"><?php echo esc_html( get_the_date( 'M Y', $g_post ) ); ?></time><?php $g_cat = get_the_category( $g_post->ID ); if ( $g_cat ) : ?><span><?php echo esc_html( $g_cat[0]->name ); ?></span><?php endif; ?></span>
+			<span class="g-journal__title"><?php echo esc_html( get_the_title( $g_post ) ); ?></span>
+			<span class="g-journal__foot g-mono"><span><?php esc_html_e( 'Read', 'lewisedward' ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+		</a>
+		<?php endforeach; ?>
+	</section>
+	<?php endif; ?>
+
 	<section class="g-row g-cta" aria-label="<?php esc_attr_e( 'Contact', 'lewisedward' ); ?>">
 		<a class="g-cell g-lime g-cta__go" href="<?php echo esc_url( $g_cta_url ); ?>">
 			<h2><?php echo esc_html( le_field( 'home_cta_line1', $g_pid ) ); ?><br><?php echo esc_html( le_field( 'home_cta_line2_pre', $g_pid ) ); ?> <em><?php echo esc_html( le_field( 'home_cta_word', $g_pid ) ); ?></em></h2>
