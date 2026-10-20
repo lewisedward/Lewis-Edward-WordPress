@@ -175,9 +175,22 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 	<?php /* ---- Clients (h2) ---- */ ?>
 	<section class="g-row g-clients" aria-label="<?php esc_attr_e( 'Clients', 'lewisedward' ); ?>">
 		<div class="g-cell g-clients__side">
-			<span class="g-clients__lbl g-mono"><span><?php echo esc_html( le_field( 'home_clients_eyebrow', false, __( 'Clients', 'lewisedward' ) ) ); ?></span><span>01 — <?php echo esc_html( str_pad( (string) count( $g_logos ), 2, '0', STR_PAD_LEFT ) ); ?></span></span>
-			<?php $w4 = isset( $g_work[3] ) ? $g_id( $g_work[3] ) : 0; if ( $w4 && has_post_thumbnail( $w4 ) ) : ?>
-			<a class="g-ph g-clients__photo" href="<?php echo esc_url( get_permalink( $w4 ) ); ?>"><?php echo get_the_post_thumbnail( $w4, 'large', array( 'loading' => 'lazy' ) ); ?><span class="g-cap g-mono"><?php echo esc_html( get_the_title( $w4 ) ); ?></span></a>
+			<span class="g-clients__lbl g-mono"><span><?php echo esc_html( le_field( 'home_clients_eyebrow', false, __( 'Clients', 'lewisedward' ) ) ); ?></span><span>01 &mdash; <?php echo esc_html( str_pad( (string) count( $g_logos ), 2, '0', STR_PAD_LEFT ) ); ?></span></span>
+			<?php
+			// Sectors, read from the client names ("Banking and Finance WordPress Website…" → "Banking and Finance").
+			$g_sectors = array();
+			foreach ( $g_logos as $row ) {
+				$n = trim( preg_replace( '/\s*(WordPress|Website|Web)\b.*$/i', '', (string) ( $row['name'] ?? '' ) ) );
+				if ( $n && ! in_array( $n, $g_sectors, true ) ) {
+					$g_sectors[] = $n;
+				}
+			}
+			if ( $g_sectors ) : ?>
+			<ul class="g-clients__sectors">
+				<?php foreach ( $g_sectors as $i => $sec ) : ?>
+				<li><span class="g-mono"><?php echo esc_html( str_pad( (string) ( $i + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span><span><?php echo esc_html( $sec ); ?></span></li>
+				<?php endforeach; ?>
+			</ul>
 			<?php endif; ?>
 		</div>
 		<div class="g-cell g-clients__copy">
@@ -195,6 +208,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 	<?php /* ---- Services (h2 + h3s) ---- */ ?>
 	<section class="g-row g-svc" aria-label="<?php esc_attr_e( 'Services', 'lewisedward' ); ?>">
 		<div class="g-cell g-svc__left">
+			<span class="g-svc__bg g-ph g-ph--mono" aria-hidden="true"><video class="g-ph__video" autoplay muted loop playsinline preload="metadata" poster="<?php echo esc_url( LE_URI . '/assets/videos/typing-macbook-poster.jpg' ); ?>"><source src="<?php echo esc_url( LE_URI . '/assets/videos/typing-macbook-sm.mp4?ver=' . le_asset_ver( 'assets/videos/typing-macbook-sm.mp4' ) ); ?>" type="video/mp4"></video></span>
 			<span class="g-label g-mono g-svc__eyebrow"><span><?php echo esc_html( le_field( 'home_services_eyebrow', false, __( 'Services', 'lewisedward' ) ) ); ?></span><span>01 &mdash; <?php echo esc_html( str_pad( (string) count( $g_services ), 2, '0', STR_PAD_LEFT ) ); ?></span></span>
 			<h2 class="g-svc__title"><?php echo esc_html( le_field( 'home_services_title' ) ); ?></h2>
 			<div class="g-svc__foot">
@@ -274,9 +288,23 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 		</div>
 		<div class="g-cell g-tst__stage" data-tst>
 			<?php foreach ( $g_tsts as $i => $t ) : $tid = $g_id( $t ); $role = le_field( 'testimonial_role', $tid ); $co = le_field( 'testimonial_company', $tid ); ?>
+			<?php
+			// Company logo: the testimonial's own, else a client logo whose file/alt/name mentions the company.
+			$g_tlogo = le_field( 'testimonial_logo', $tid );
+			$g_tlogo = ( is_array( $g_tlogo ) && ! empty( $g_tlogo['url'] ) ) ? $g_tlogo['url'] : '';
+			if ( ! $g_tlogo && $co ) {
+				$needle = sanitize_title( $co );
+				foreach ( $g_logos as $row ) {
+					$img = $row['logo'] ?? null;
+					if ( ! $img || empty( $img['url'] ) ) { continue; }
+					$hay = sanitize_title( implode( ' ', array( $row['name'] ?? '', $img['alt'] ?? '', $img['title'] ?? '', $img['filename'] ?? '' ) ) );
+					if ( false !== strpos( $hay, $needle ) ) { $g_tlogo = $img['url']; break; }
+				}
+			}
+			?>
 			<figure class="g-tst__item<?php echo 0 === $i ? ' is-active' : ''; ?>">
 				<blockquote class="g-tst__quote"><span class="g-tst__mark" aria-hidden="true">&ldquo;</span><p><?php echo esc_html( le_field( 'testimonial_quote', $tid ) ); ?></p></blockquote>
-				<figcaption class="g-tst__meta"><?php if ( has_post_thumbnail( $tid ) ) { echo get_the_post_thumbnail( $tid, 'le_avatar', array( 'class' => 'g-tst__avatar', 'loading' => 'lazy' ) ); } ?><span><?php echo esc_html( le_field( 'testimonial_author', $tid ) ); ?></span><span class="g-mono"><?php echo esc_html( trim( $role . ( $co ? ' — ' . $co : '' ) ) ); ?></span></figcaption>
+				<figcaption class="g-tst__meta"><?php if ( $g_tlogo ) : ?><img class="g-tst__logo" src="<?php echo esc_url( $g_tlogo ); ?>" alt="<?php echo esc_attr( $co ); ?>" loading="lazy" /><?php endif; ?><?php if ( has_post_thumbnail( $tid ) ) { echo get_the_post_thumbnail( $tid, 'le_avatar', array( 'class' => 'g-tst__avatar', 'loading' => 'lazy' ) ); } ?><span><?php echo esc_html( le_field( 'testimonial_author', $tid ) ); ?></span><span class="g-mono"><?php echo esc_html( trim( $role . ( $co ? ' — ' . $co : '' ) ) ); ?></span></figcaption>
 			</figure>
 			<?php endforeach; ?>
 		</div>

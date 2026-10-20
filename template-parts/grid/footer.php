@@ -17,9 +17,22 @@ $le_linkedin  = le_option( 'social_linkedin', 'https://www.linkedin.com/in/lewis
 $le_cta_pid   = (int) get_option( 'page_on_front' );
 $le_cta_url   = le_field( 'home_cta_url', $le_cta_pid ? $le_cta_pid : false, '/quotes' );
 $le_cta_url   = ( 0 === strpos( (string) $le_cta_url, 'http' ) ) ? $le_cta_url : home_url( $le_cta_url );
-$le_menu      = function ( $location, $fallback ) {
+$le_menu      = function ( $location, $fallback, $ensure = null ) {
 	if ( has_nav_menu( $location ) ) {
-		wp_nav_menu( array( 'theme_location' => $location, 'container' => false, 'items_wrap' => '<ul class="g-footer__menu">%3$s</ul>', 'depth' => 1, 'fallback_cb' => false ) );
+		$lead = '';
+		if ( $ensure ) {
+			// Make sure the list carries this link even if the menu in wp-admin doesn't (e.g. Services in Explore).
+			$locs  = get_nav_menu_locations();
+			$items = ! empty( $locs[ $location ] ) ? wp_get_nav_menu_items( $locs[ $location ] ) : array();
+			$has   = false;
+			foreach ( (array) $items as $it ) {
+				if ( false !== strpos( (string) $it->url, $ensure[1] ) ) { $has = true; break; }
+			}
+			if ( ! $has ) {
+				$lead = '<li class="menu-item"><a href="' . esc_url( home_url( $ensure[1] ) ) . '">' . esc_html( $ensure[0] ) . '</a></li>';
+			}
+		}
+		wp_nav_menu( array( 'theme_location' => $location, 'container' => false, 'items_wrap' => '<ul class="g-footer__menu">' . $lead . '%3$s</ul>', 'depth' => 1, 'fallback_cb' => false ) );
 		return;
 	}
 	echo '<ul class="g-footer__menu">';
@@ -35,7 +48,7 @@ $le_menu      = function ( $location, $fallback ) {
 			<span class="g-label g-mono"><?php esc_html_e( 'Est. 2011', 'lewisedward' ); ?> &mdash; <?php echo esc_html( le_option( 'footer_location', __( 'London', 'lewisedward' ) ) ); ?></span>
 			<span class="g-footer__line-text"><?php echo esc_html( le_option( 'grid_footer_line', __( 'Raise your game online', 'lewisedward' ) ) ); ?></span>
 		</div>
-		<div class="g-cell g-footer__nav"><span class="g-footer__heading g-mono"><?php esc_html_e( 'Explore', 'lewisedward' ); ?></span><?php $le_menu( 'footer_discover', array( array( 'Services', '/services' ), array( 'Work', '/work' ), array( 'About', '/about' ), array( 'Journal', '/journal' ) ) ); ?></div>
+		<div class="g-cell g-footer__nav"><span class="g-footer__heading g-mono"><?php esc_html_e( 'Explore', 'lewisedward' ); ?></span><?php $le_menu( 'footer_discover', array( array( 'Services', '/services' ), array( 'Work', '/work' ), array( 'About', '/about' ), array( 'Journal', '/journal' ) ), array( __( 'Services', 'lewisedward' ), '/services' ) ); ?></div>
 		<div class="g-cell g-footer__nav"><span class="g-footer__heading g-mono"><?php esc_html_e( 'Services', 'lewisedward' ); ?></span><?php $le_menu( 'footer_services', array( array( 'Web Design', '/services/web-design' ), array( 'Web Development', '/services/web-development' ), array( 'Website Support', '/services/website-support' ) ) ); ?></div>
 		<div class="g-cell g-footer__clock">
 			<div class="g-footer__time"><span class="g-footer__clockface" data-london-clockface aria-hidden="true"><span></span></span><span><?php echo esc_html( le_option( 'footer_location', __( 'London', 'lewisedward' ) ) ); ?><span class="g-mono" data-london-clock>--:--</span></span></div>
