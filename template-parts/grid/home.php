@@ -134,7 +134,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 			<span class="g-mono"><?php echo esc_html( le_field( 'home_hero_team_label' ) ); ?></span>
 		</div>
 		<div class="g-cell g-fact">
-			<span class="g-fact__num">5%</span>
+			<span class="g-fact__num"><?php echo esc_html( le_field( 'grid_hero_ai_value', false, '5%' ) ); ?></span>
 			<span class="g-mono"><?php echo esc_html( le_field( 'home_hero_ai_label' ) ); ?></span>
 		</div>
 		<div class="g-cell g-caps">
@@ -172,7 +172,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 		</a>
 		<?php endforeach; ?>
 		<a class="g-cell g-work__all" href="<?php echo esc_url( home_url( '/work' ) ); ?>">
-			<span class="g-mono"><?php echo esc_html( str_pad( (string) wp_count_posts( 'work' )->publish, 2, '0', STR_PAD_LEFT ) ); ?> <?php esc_html_e( 'projects', 'lewisedward' ); ?></span>
+			<span class="g-mono"><?php echo esc_html( str_pad( (string) wp_count_posts( 'work' )->publish, 2, '0', STR_PAD_LEFT ) ); ?> <?php echo esc_html( le_field( 'grid_work_count_label', false, __( 'projects', 'lewisedward' ) ) ); ?></span>
 			<span class="g-work__all-title"><?php echo esc_html( le_field( 'grid_work_all_label', false, __( 'All work', 'lewisedward' ) ) ); ?></span>
 			<svg class="g-work__all-arrow" viewBox="0 0 120 120" aria-hidden="true" focusable="false"><path d="M8 8h104v104M112 8 8 112"/></svg>
 		</a>
@@ -184,9 +184,17 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 		<div class="g-cell g-clients__side">
 			<span class="g-clients__lbl g-mono"><span><?php echo esc_html( le_field( 'home_clients_eyebrow', false, __( 'Clients', 'lewisedward' ) ) ); ?></span><span>01 &mdash; <?php echo esc_html( str_pad( (string) count( $g_logos ), 2, '0', STR_PAD_LEFT ) ); ?></span></span>
 			<?php
-			// Sectors, read from the client names ("Banking and Finance WordPress Website…" → "Banking and Finance").
+			// Industries: the grid_clients_sectors repeater, or failing that one entry per client
+			// logo read from its name ("Banking and Finance WordPress Website…" → "Banking and Finance").
 			$g_sectors = array();
-			foreach ( $g_logos as $row ) {
+			$g_sec_set = le_field( 'grid_clients_sectors' );
+			foreach ( is_array( $g_sec_set ) ? $g_sec_set : array() as $row ) {
+				$n = trim( (string) ( $row['name'] ?? '' ) );
+				if ( $n && ! in_array( $n, $g_sectors, true ) ) {
+					$g_sectors[] = $n;
+				}
+			}
+			foreach ( $g_sectors ? array() : $g_logos as $row ) {
 				$src = ! empty( $row['name'] ) ? $row['name'] : ( $row['logo']['alt'] ?? '' );
 				$n   = trim( preg_replace( '/\s*(WordPress|Website|Web)\b.*$/i', '', (string) $src ) );
 				if ( $n && ! in_array( $n, $g_sectors, true ) ) {
@@ -324,7 +332,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 
 	<?php /* ---- Contact (h2) ---- */ ?>
 	<?php /* ---- Journal: the three latest articles ---- */ ?>
-	<?php $g_posts = get_posts( array( 'post_type' => 'post', 'post_status' => 'publish', 'numberposts' => 3, 'no_found_rows' => true ) ); if ( $g_posts ) : $g_journal_url = get_option( 'page_for_posts' ) ? get_permalink( (int) get_option( 'page_for_posts' ) ) : home_url( '/journal/' ); ?>
+	<?php $g_pick = le_field( 'grid_journal_posts' ); $g_pick = is_array( $g_pick ) ? array_values( array_filter( array_map( $g_id, $g_pick ) ) ) : array(); $g_posts = $g_pick ? get_posts( array( 'post_type' => 'post', 'post_status' => 'publish', 'post__in' => $g_pick, 'orderby' => 'post__in', 'numberposts' => 3, 'no_found_rows' => true ) ) : get_posts( array( 'post_type' => 'post', 'post_status' => 'publish', 'numberposts' => 3, 'no_found_rows' => true ) ); if ( $g_posts ) : $g_journal_url = get_option( 'page_for_posts' ) ? get_permalink( (int) get_option( 'page_for_posts' ) ) : home_url( '/journal/' ); ?>
 	<section class="g-row g-journal" aria-label="<?php esc_html_e( 'Journal', 'lewisedward' ); ?>">
 		<div class="g-cell g-journal__intro">
 			<span class="g-label g-mono"><?php echo esc_html( le_field( 'grid_journal_eyebrow', false, __( 'Journal', 'lewisedward' ) ) ); ?></span>

@@ -171,6 +171,26 @@
             "append": ""
         },
         {
+            "key": "field_grid_hero_ai_value",
+            "label": "AI metric figure",
+            "name": "grid_hero_ai_value",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The big figure in the fourth metric tile (its label is the classic field \"AI label\" above).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "5%",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
             "key": "field_grid_tab_sections",
             "label": "Grid: sections",
             "name": "",
@@ -228,6 +248,51 @@
             "append": ""
         },
         {
+            "key": "field_grid_clients_sectors",
+            "label": "Clients: industries list",
+            "name": "grid_clients_sectors",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "The numbered \"Industries we've built for\" list beside the client logos. Leave empty to derive one entry per client logo from its Name / alt text (\"Banking and Finance WordPress Website\" → \"Banking and Finance\").",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "table",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "",
+            "button_label": "Add industry",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_grid_clients_sector_name",
+                    "label": "Industry",
+                    "name": "name",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_grid_clients_sectors"
+                }
+            ]
+        },
+        {
             "key": "field_grid_work_all_label",
             "label": "Work: \"all work\" cell label",
             "name": "grid_work_all_label",
@@ -244,6 +309,26 @@
             "default_value": "",
             "maxlength": "",
             "placeholder": "All work",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_grid_work_count_label",
+            "label": "Work: count label",
+            "name": "grid_work_count_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Word after the project count in the \"all work\" cell (e.g. \"12 projects\").",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "projects",
+            "maxlength": "",
+            "placeholder": "",
             "prepend": "",
             "append": ""
         },
@@ -387,6 +472,37 @@
             "placeholder": "Read",
             "prepend": "",
             "append": ""
+        },
+        {
+            "key": "field_grid_journal_posts",
+            "label": "Journal: articles",
+            "name": "grid_journal_posts",
+            "aria-label": "",
+            "type": "relationship",
+            "instructions": "Hand-pick up to three articles. Leave empty to show the three latest.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "post"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "filters": [
+                "search"
+            ],
+            "return_format": "id",
+            "min": 0,
+            "max": 3,
+            "elements": "",
+            "bidirectional": 0,
+            "bidirectional_target": []
         }
     ],
     "location": [
@@ -407,5 +523,5 @@
     "active": true,
     "description": "Extra copy and media used by the grid layout. Every field is optional: empty fields fall back to the built-in wording.",
     "show_in_rest": 0,
-    "modified": 1792526971
+    "modified": 1792529525
 }
