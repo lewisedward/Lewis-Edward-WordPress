@@ -23,6 +23,17 @@ $g_id = static function ( $item ) {
 	return is_object( $item ) ? (int) $item->ID : (int) $item;
 };
 
+// A work post's homepage image: its "Homepage tile image" if set, else the featured image.
+$g_work_img = static function ( $wid, $size, $attrs = array() ) {
+	$img = le_field( 'work_home_image', $wid );
+	$img = is_array( $img ) ? (int) ( $img['ID'] ?? $img['id'] ?? 0 ) : (int) $img;
+	if ( $img && wp_attachment_is_image( $img ) ) {
+		$attrs['alt'] = $attrs['alt'] ?? get_the_title( $wid );
+		return wp_get_attachment_image( $img, $size, false, $attrs );
+	}
+	return get_the_post_thumbnail( $wid, $size, $attrs );
+};
+
 // Hero.
 $g_word       = le_field( 'grid_hero_word', false, le_option( 'grid_hero_word', 'Lewis' ) );
 $g_eyebrow    = le_field( 'home_hero_eyebrow' );
@@ -176,7 +187,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 			$g_wmeta = array_filter( array( le_field( 'work_platform', $wid ), le_field( 'work_year', $wid ) ) );
 		?>
 		<a class="g-cell g-work__item" href="<?php echo esc_url( get_permalink( $wid ) ); ?>">
-			<span class="g-ph g-work__media"><?php echo get_the_post_thumbnail( $wid, 'large', array( 'loading' => 'lazy' ) ); ?></span>
+			<span class="g-ph g-work__media"><?php echo $g_work_img( $wid, 'large', array( 'loading' => 'lazy' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 			<div class="g-work__meta"><h3 class="g-work__name"><?php echo esc_html( get_the_title( $wid ) ); ?></h3><span class="g-mono"><?php echo esc_html( implode( ' · ', $g_wmeta ) ); ?></span><?php echo le_grid_arrow_diag(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 		</a>
 		<?php endforeach; ?>
@@ -366,8 +377,8 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 			<svg class="g-cta__arrow" viewBox="0 0 120 120" aria-hidden="true" focusable="false"><path d="M8 8h104v104M112 8 8 112"/></svg>
 		</a>
 		<div class="g-cell g-cta__previews">
-			<?php $g_prev = le_field( 'home_cta_previews', $g_pid ); $g_prev = is_array( $g_prev ) ? $g_prev : array(); foreach ( array_slice( $g_prev, 0, 4 ) as $pv ) : $pvid = $g_id( $pv ); if ( ! has_post_thumbnail( $pvid ) ) { continue; } ?>
-			<a class="g-ph g-cta__preview" href="<?php echo esc_url( get_permalink( $pvid ) ); ?>"><?php echo get_the_post_thumbnail( $pvid, 'medium_large', array( 'loading' => 'lazy' ) ); ?><span class="g-cap g-mono"><?php echo esc_html( get_the_title( $pvid ) ); ?></span></a>
+			<?php $g_prev = le_field( 'home_cta_previews', $g_pid ); $g_prev = is_array( $g_prev ) ? $g_prev : array(); foreach ( array_slice( $g_prev, 0, 4 ) as $pv ) : $pvid = $g_id( $pv ); $pvimg = $g_work_img( $pvid, 'medium_large', array( 'loading' => 'lazy' ) ); if ( ! $pvimg ) { continue; } ?>
+			<a class="g-ph g-cta__preview" href="<?php echo esc_url( get_permalink( $pvid ) ); ?>"><?php echo $pvimg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span class="g-cap g-mono"><?php echo esc_html( get_the_title( $pvid ) ); ?></span></a>
 			<?php endforeach; ?>
 		</div>
 	</section>

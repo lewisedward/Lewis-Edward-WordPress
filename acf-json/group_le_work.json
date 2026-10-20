@@ -60,6 +60,31 @@
             "new_lines": ""
         },
         {
+            "key": "field_wk_home_image",
+            "label": "Homepage tile image",
+            "name": "work_home_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Square-ish crop used for this project's tile on the homepage work grid (and its small preview beside the contact CTA). Leave empty to use the Featured Image, which stays the banner on the case study and the Work page.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
             "key": "field_wk_year",
             "label": "Year",
             "name": "work_year",
@@ -960,5 +985,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1790070031
+    "modified": 1792531639
 }
