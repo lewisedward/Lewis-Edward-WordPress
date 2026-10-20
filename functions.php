@@ -50,3 +50,4 @@ le_require( 'about-icons' );  // About page inline SVG icon set.
 le_require( 'svg-support' );  // Safe SVG uploads (sanitised).
 le_require( 'redirects' );    // Legacy 301 redirects (SEO preservation).
 le_require( 'grid-skin' );    // Trial hairline-grid homepage skin (staging default, ?skin=grid elsewhere).
+le_require( 'staging-gate' ); // Staging passphrase gate + gated delivery of the trial fonts.
