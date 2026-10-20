@@ -362,7 +362,7 @@
 .skin-grid .g-tst__quote p { margin: 0; }
 .skin-grid .g-tst__meta { display: flex; flex-direction: column; gap: 6px; padding: 36px 32px; background: var(--g-dark); font-size: 14px; }
 .skin-grid .g-tst__meta .g-mono { color: hsl(var(--foreground) / 0.6); }
-.skin-grid .g-tst__logo { height: 28px; width: auto; max-width: 140px; object-fit: contain; object-position: left; margin-top: auto; order: 9; padding-top: 24px; filter: grayscale(1) brightness(0) invert(1); opacity: 0.7; }
+.skin-grid .g-tst__logo { height: 44px; width: auto; max-width: 170px; object-fit: contain; object-position: left; margin-top: auto; order: 9; padding-top: 28px; filter: grayscale(1) brightness(0) invert(1); opacity: 0.8; }
 .skin-grid .g-tst__avatar { width: 56px; height: 56px; border-radius: 999px; object-fit: cover; filter: grayscale(1); margin-bottom: 16px; }
 
 /* ---- Contact --------------------------------------------------------------- */
@@ -409,9 +409,9 @@
 .skin-grid .g-hero__word > span { font-weight: 500; letter-spacing: -0.06em; }
 .skin-grid .g-svc__title { font-weight: 600; letter-spacing: -0.05em; }
 .skin-grid .g-header__logo { font-weight: 600; }
-.skin-grid .g-header__mark { display: inline-flex; align-items: flex-end; gap: 3px; font-size: 27px; line-height: 1; letter-spacing: -0.04em; transform: translateY(-1px); transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1); }
-.skin-grid .g-header__mark i { display: block; width: 6px; height: 6px; margin-bottom: 2px; background: currentColor; transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1); }
-.skin-grid .g-header__logo:hover .g-header__mark i { transform: translateY(-14px); }
+.skin-grid .g-header__mark { display: block; width: 34px; height: 34px; }
+.skin-grid .g-header__mark-ring { transform-box: fill-box; transform-origin: center; transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.skin-grid .g-header__logo:hover .g-header__mark-ring { transform: rotate(90deg); }
 .skin-grid .g-about__prose, .skin-grid .g-tst__quote { font-weight: 300; }
 .skin-grid .g-mono { letter-spacing: 0.04em; }
 
