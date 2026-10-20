@@ -102,7 +102,7 @@ add_action( 'template_redirect', function () {
 /**
  * Which typeface the grid skin renders in on staging.
  *
- * ?font=machina|aeonik|mix sets a 30-day cookie; "machina" is the default.
+ * ?font=machina|aeonik|mix sets a 30-day cookie; "aeonik" is the default.
  *  - machina: PP Neue Machina (variable) for everything, including the mono slots.
  *  - aeonik:  CoType Aeonik trial + Aeonik Mono (gated endpoint).
  *  - mix:     Neue Machina for the display slots, Aeonik for body and mono.
@@ -113,7 +113,7 @@ function le_font_choice() {
 		return $choice;
 	}
 	$allowed = array( 'machina', 'aeonik', 'mix' );
-	$choice  = 'machina';
+	$choice  = 'aeonik';
 	if ( isset( $_GET['font'] ) && in_array( $_GET['font'], $allowed, true ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		$choice = sanitize_key( $_GET['font'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	} elseif ( isset( $_COOKIE['le_font'] ) && in_array( $_COOKIE['le_font'], $allowed, true ) ) {
