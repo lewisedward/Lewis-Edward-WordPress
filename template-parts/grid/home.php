@@ -34,9 +34,18 @@ $g_ov_file    = le_field( 'grid_hero_media_video' );
 $g_ov_img     = le_field( 'grid_hero_media_poster' );
 if ( is_array( $g_ov_file ) && ! empty( $g_ov_file['url'] ) ) { $g_video = $g_ov_file['url']; }
 if ( is_array( $g_ov_img ) && ! empty( $g_ov_img['url'] ) ) { $g_poster = $g_ov_img['url']; }
-$g_portrait   = le_field( 'home_about_portrait' );
-$g_portrait_alt = ( is_array( $g_portrait ) && ! empty( $g_portrait['alt'] ) ) ? $g_portrait['alt'] : __( 'Lewis Edward, London WordPress web designer and developer', 'lewisedward' );
-$g_portrait   = ( is_array( $g_portrait ) && ! empty( $g_portrait['url'] ) ) ? $g_portrait['url'] : LE_URI . '/assets/images/lewis-wordpress-developer.jpg';
+// Portraits: the hero and About photos have their own fields, each falling back to the classic About portrait.
+$g_photo = static function ( $field ) {
+	$img = le_field( $field );
+	if ( ! is_array( $img ) || empty( $img['url'] ) ) {
+		$img = le_field( 'home_about_portrait' );
+	}
+	$url = ( is_array( $img ) && ! empty( $img['url'] ) ) ? $img['url'] : LE_URI . '/assets/images/lewis-wordpress-developer.jpg';
+	$alt = ( is_array( $img ) && ! empty( $img['alt'] ) ) ? $img['alt'] : __( 'Lewis Edward, London WordPress web designer and developer', 'lewisedward' );
+	return array( $url, $alt );
+};
+list( $g_portrait, $g_portrait_alt )       = $g_photo( 'grid_hero_portrait' );
+list( $g_about_photo, $g_about_photo_alt ) = $g_photo( 'grid_about_photo' );
 $g_caps       = le_field( 'home_hero_capabilities' );
 $g_caps       = is_array( $g_caps ) ? $g_caps : array();
 $g_hero_logos = le_field( 'home_hero_clients' );
@@ -276,7 +285,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 	<section class="g-row g-about" aria-label="<?php esc_attr_e( 'About Lewis Edward', 'lewisedward' ); ?>">
 		<div class="g-cell g-about__side">
 			<span class="g-label g-mono"><?php echo esc_html( le_field( 'home_about_eyebrow', false, __( 'About', 'lewisedward' ) ) ); ?> <?php echo esc_html( le_field( 'home_about_year' ) ); ?></span>
-			<div class="g-ph g-about__photo"><img src="<?php echo esc_url( $g_portrait ); ?>" alt="<?php echo esc_attr( $g_portrait_alt ); ?>" loading="lazy" /></div>
+			<div class="g-ph g-about__photo"><img src="<?php echo esc_url( $g_about_photo ); ?>" alt="<?php echo esc_attr( $g_about_photo_alt ); ?>" loading="lazy" /></div>
 		</div>
 		<div class="g-cell g-about__prose">
 			<div class="g-about__text">

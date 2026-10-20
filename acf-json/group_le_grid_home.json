@@ -131,6 +131,31 @@
             "preview_size": "medium"
         },
         {
+            "key": "field_grid_hero_portrait",
+            "label": "Hero portrait",
+            "name": "grid_hero_portrait",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "The mono-treated photo in the hero. Leave empty to reuse the About portrait (classic \"Portrait\" field below).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
             "key": "field_grid_hero_portrait_caption",
             "label": "Portrait caption",
             "name": "grid_hero_portrait_caption",
@@ -333,6 +358,31 @@
             "append": ""
         },
         {
+            "key": "field_grid_about_photo",
+            "label": "About photo",
+            "name": "grid_about_photo",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Full-colour photo in the About section. Leave empty to reuse the About portrait (classic \"Portrait\" field).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
             "key": "field_grid_about_more",
             "label": "About: link",
             "name": "grid_about_more",
@@ -523,5 +573,5 @@
     "active": true,
     "description": "Extra copy and media used by the grid layout. Every field is optional: empty fields fall back to the built-in wording.",
     "show_in_rest": 0,
-    "modified": 1792529525
+    "modified": 1792531547
 }
