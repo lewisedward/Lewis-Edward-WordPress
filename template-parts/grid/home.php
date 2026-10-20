@@ -182,7 +182,6 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 	<?php /* ---- Clients (h2) ---- */ ?>
 	<section class="g-row g-clients" aria-label="<?php esc_attr_e( 'Clients', 'lewisedward' ); ?>">
 		<div class="g-cell g-clients__side">
-			<span class="g-clients__lbl g-mono"><span><?php echo esc_html( le_field( 'home_clients_eyebrow', false, __( 'Clients', 'lewisedward' ) ) ); ?></span><span>01 &mdash; <?php echo esc_html( str_pad( (string) count( $g_logos ), 2, '0', STR_PAD_LEFT ) ); ?></span></span>
 			<?php
 			// Industries: the grid_clients_sectors repeater, or failing that one entry per client
 			// logo read from its name ("Banking and Finance WordPress Website…" → "Banking and Finance").
@@ -201,7 +200,9 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 					$g_sectors[] = $n;
 				}
 			}
-			if ( $g_sectors ) : ?>
+			?>
+			<span class="g-clients__lbl g-mono"><span><?php echo esc_html( le_field( 'home_clients_eyebrow', false, __( 'Clients', 'lewisedward' ) ) ); ?></span><span>01 &mdash; <?php echo esc_html( str_pad( (string) count( $g_sectors ), 2, '0', STR_PAD_LEFT ) ); ?></span></span>
+			<?php if ( $g_sectors ) : ?>
 			<span class="g-clients__side-title"><?php echo esc_html( le_field( 'grid_clients_side_title', false, __( 'Sectors we build for', 'lewisedward' ) ) ); ?></span>
 			<ul class="g-clients__sectors">
 				<?php foreach ( $g_sectors as $i => $sec ) : ?>
