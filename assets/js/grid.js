@@ -91,5 +91,41 @@
 		}, { threshold: 0.3 });
 		to.observe(tst);
 	}
+	/* Parallax: media inside .g-ph frames drifts a few percent as the frame
+	   crosses the viewport (the frame is overflow-hidden and the media is
+	   scaled up 12% in CSS, so nothing shows through). Only in-view frames
+	   are measured. Off under reduced motion and on coarse pointers. */
+	var coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+	var media = Array.prototype.slice.call(document.querySelectorAll('.skin-grid .g-ph:not(.g-svc__bg) > img, .skin-grid .g-ph:not(.g-svc__bg) > video'));
+	if (!reduce && !coarse && media.length) {
+		body.classList.add('g-parallax');
+		var live = [];
+		var pending = false;
+		function paint() {
+			pending = false;
+			var vh = window.innerHeight || root.clientHeight;
+			for (var i = 0; i < live.length; i++) {
+				var el = live[i];
+				var r = el.parentNode.getBoundingClientRect();
+				var p = (vh - r.top) / (vh + r.height);
+				p = p < 0 ? 0 : (p > 1 ? 1 : p);
+				var shift = (p - 0.5) * 0.1 * r.height; // -5% .. +5% of the frame height
+				el.style.setProperty('--py', shift.toFixed(1) + 'px');
+			}
+		}
+		function queue() { if (!pending) { pending = true; window.requestAnimationFrame(paint); } }
+		var po = new IntersectionObserver(function (entries) {
+			entries.forEach(function (e) {
+				var idx = live.indexOf(e.target);
+				if (e.isIntersecting && idx === -1) { live.push(e.target); }
+				else if (!e.isIntersecting && idx > -1) { live.splice(idx, 1); }
+			});
+			queue();
+		}, { rootMargin: '10% 0px' });
+		media.forEach(function (m) { po.observe(m); });
+		window.addEventListener('scroll', queue, { passive: true });
+		window.addEventListener('resize', queue);
+		queue();
+	}
 	void root;
 })();
