@@ -137,7 +137,20 @@ function le_do_legacy_redirects() {
 	}
 
 	if ( isset( $normalised[ $path ] ) ) {
-		wp_safe_redirect( home_url( $normalised[ $path ] ), 301 );
+		$to = $normalised[ $path ];
+
+		// The agency service's new address only exists once the post has been
+		// renamed in wp-admin. Until then, keep sending the older paths to the
+		// current address rather than to a page that is not there yet, and
+		// leave the current address itself alone.
+		if ( '/services/wordpress-agency-partnership' === $to && ! get_page_by_path( 'wordpress-agency-partnership', OBJECT, 'service' ) ) {
+			if ( '/services/creative-agency-partner' === $path ) {
+				return;
+			}
+			$to = '/services/creative-agency-partner';
+		}
+
+		wp_safe_redirect( home_url( $to ), 301 );
 		exit;
 	}
 }
