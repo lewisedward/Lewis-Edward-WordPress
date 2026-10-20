@@ -100,21 +100,77 @@ add_action( 'template_redirect', function () {
 }, 1 );
 
 /**
- * Font faces for the grid skin, pointing at the gated endpoint.
+ * Which typeface the grid skin renders in on staging.
+ *
+ * ?font=machina|aeonik|mix sets a 30-day cookie; "machina" is the default.
+ *  - machina: PP Neue Machina (variable) for everything, including the mono slots.
+ *  - aeonik:  CoType Aeonik trial + Aeonik Mono (gated endpoint).
+ *  - mix:     Neue Machina for the display slots, Aeonik for body and mono.
+ */
+function le_font_choice() {
+	static $choice = null;
+	if ( null !== $choice ) {
+		return $choice;
+	}
+	$allowed = array( 'machina', 'aeonik', 'mix' );
+	$choice  = 'machina';
+	if ( isset( $_GET['font'] ) && in_array( $_GET['font'], $allowed, true ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$choice = sanitize_key( $_GET['font'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	} elseif ( isset( $_COOKIE['le_font'] ) && in_array( $_COOKIE['le_font'], $allowed, true ) ) {
+		$choice = sanitize_key( $_COOKIE['le_font'] );
+	}
+	return $choice;
+}
+
+add_action( 'template_redirect', function () {
+	if ( ! le_is_staging_host() || ! isset( $_GET['font'] ) || headers_sent() ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		return;
+	}
+	setcookie( 'le_font', le_font_choice(), time() + 30 * DAY_IN_SECONDS, '/', '', true, true );
+}, 6 );
+
+/**
+ * Font faces for the grid skin. Aeonik streams from the gated endpoint;
+ * Neue Machina is licensed for the web and is served from the theme.
  */
 add_action( 'wp_head', function () {
 	if ( ! le_is_staging_host() || ! function_exists( 'le_grid_skin' ) || ! le_grid_skin() ) {
 		return;
 	}
-	$faces = array( 'Air' => 100, 'Thin' => 200, 'Light' => 300, 'Regular' => 400, 'Medium' => 500, 'SemiBold' => 600, 'Bold' => 700, 'Black' => 900 );
-	$css   = '';
-	foreach ( $faces as $n => $w ) {
-		$css .= "@font-face{font-family:'Aeonik';src:url('" . esc_url( home_url( '/?le-font=AeonikTRIAL-' . $n . '.otf' ) ) . "') format('opentype');font-weight:$w;font-display:swap}\n";
+	$choice = le_font_choice();
+	$css    = '';
+	if ( 'machina' !== $choice ) {
+		$faces = array( 'Air' => 100, 'Thin' => 200, 'Light' => 300, 'Regular' => 400, 'Medium' => 500, 'SemiBold' => 600, 'Bold' => 700, 'Black' => 900 );
+		foreach ( $faces as $n => $w ) {
+			$css .= "@font-face{font-family:'Aeonik';src:url('" . esc_url( home_url( '/?le-font=AeonikTRIAL-' . $n . '.otf' ) ) . "') format('opentype');font-weight:$w;font-display:swap}\n";
+		}
+		foreach ( array( 'Regular' => 400, 'Medium' => 500 ) as $n => $w ) {
+			$css .= "@font-face{font-family:'Aeonik Mono';src:url('" . esc_url( home_url( '/?le-font=AeonikMonoTRIAL-' . $n . '.otf' ) ) . "') format('opentype');font-weight:$w;font-display:swap}\n";
+		}
 	}
-	foreach ( array( 'Regular' => 400, 'Medium' => 500 ) as $n => $w ) {
-		$css .= "@font-face{font-family:'Aeonik Mono';src:url('" . esc_url( home_url( '/?le-font=AeonikMonoTRIAL-' . $n . '.otf' ) ) . "') format('opentype');font-weight:$w;font-display:swap}\n";
+	if ( 'aeonik' !== $choice ) {
+		$nm   = get_template_directory_uri() . '/assets/fonts/neue-machina/PPNeueMachina-InktrapVariable.woff2?v=' . le_asset_ver( 'assets/fonts/neue-machina/PPNeueMachina-InktrapVariable.woff2' );
+		$css .= "@font-face{font-family:'Neue Machina';src:url('" . esc_url( $nm ) . "') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}\n";
 	}
-	$css .= ".skin-grid{--font-display:'Aeonik','Chillax','Chillax Fallback',sans-serif;--font-body:'Aeonik','Chillax','Chillax Fallback',sans-serif;--g-mono:'Aeonik Mono',ui-monospace,Menlo,monospace;}\n";
-	$css .= ".skin-grid .g-hero__word > span{font-weight:500;letter-spacing:-0.06em}.skin-grid .g-svc__title{font-weight:600;letter-spacing:-0.05em}.skin-grid .g-footer__word{font-weight:600;letter-spacing:-0.06em}.skin-grid .g-header__logo{font-weight:600}.skin-grid .g-about__prose,.skin-grid .g-tst__quote{font-weight:300}.skin-grid .g-mono{letter-spacing:0.04em}\n";
+
+	$machina = "'Neue Machina','Chillax','Chillax Fallback',sans-serif";
+	$aeonik  = "'Aeonik','Chillax','Chillax Fallback',sans-serif";
+	if ( 'aeonik' === $choice ) {
+		$css .= ".skin-grid{--font-display:$aeonik;--font-body:$aeonik;--g-mono:'Aeonik Mono',ui-monospace,Menlo,monospace;}\n";
+		$css .= ".skin-grid .g-hero__word > span{font-weight:500;letter-spacing:-0.06em}.skin-grid .g-svc__title{font-weight:600;letter-spacing:-0.05em}.skin-grid .g-footer__word{font-weight:600;letter-spacing:-0.06em}.skin-grid .g-header__logo{font-weight:600}.skin-grid .g-about__prose,.skin-grid .g-tst__quote{font-weight:300}.skin-grid .g-mono{letter-spacing:0.04em}\n";
+	} else {
+		$body = 'mix' === $choice ? $aeonik : $machina;
+		$mono = 'mix' === $choice ? "'Aeonik Mono',ui-monospace,Menlo,monospace" : $machina;
+		$css .= ".skin-grid{--font-display:$machina;--font-body:$body;--g-mono:$mono;}\n";
+		// Neue Machina sits wider than Aeonik, so the display slots go bolder (ink traps) and the hero word drops a size.
+		$css .= ".skin-grid .g-hero__word > span{font-weight:700;letter-spacing:-0.04em;font-size:clamp(96px,14vw,215px)}"
+			. ".skin-grid .g-svc__title{font-weight:700;letter-spacing:-0.03em}"
+			. ".skin-grid .g-footer__word{font-weight:700;letter-spacing:-0.04em}"
+			. ".skin-grid .g-header__logo{font-weight:700}"
+			. ".skin-grid .g-work__intro h2,.skin-grid .g-clients__copy h2,.skin-grid .g-ov__intro h2,.skin-grid .g-about__prose h2,.skin-grid .g-cta__go h2,.skin-grid .g-footer__go-title,.skin-grid .g-srv__title,.skin-grid .g-ov__title{font-weight:500}"
+			. ".skin-grid .g-cta__go h2 em{font-weight:700}"
+			. ".skin-grid .g-about__prose p,.skin-grid .g-tst__quote{font-weight:300}"
+			. ( 'mix' === $choice ? ".skin-grid .g-mono{letter-spacing:0.04em}" : ".skin-grid .g-mono{letter-spacing:0.06em;font-weight:500}" ) . "\n";
+	}
 	echo "<style id=\"le-trial-fonts\">\n" . $css . "</style>\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }, 4 );
