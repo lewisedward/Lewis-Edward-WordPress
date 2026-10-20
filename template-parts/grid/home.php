@@ -79,7 +79,13 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 
 	<?php /* ---- Hero: h1 is the real title; the giant word is decoration ---- */ ?>
 	<section class="g-row g-hero" aria-label="<?php esc_attr_e( 'Homepage hero', 'lewisedward' ); ?>">
-		<div class="g-cell g-hero__word" aria-hidden="true"><span><?php echo esc_html( $g_word ); ?></span></div>
+		<div class="g-cell g-hero__word">
+			<div class="g-hero__intro">
+			<div class="g-hero__lede"><?php echo wp_kses_post( $g_lede ); ?></div>
+			<a class="g-line-link g-mono" href="<?php echo esc_url( $g_quote_url ); ?>"><span><?php echo esc_html( le_field( 'home_hero_cta_headline', false, __( 'Start a project', 'lewisedward' ) ) ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+			</div>
+			<span aria-hidden="true"><?php echo esc_html( $g_word ); ?></span>
+		</div>
 		<?php $g_ejt = get_page_by_path( 'easyjet-traveller', OBJECT, 'work' ); $g_ejt_url = $g_ejt ? get_permalink( $g_ejt ) : home_url( '/work/' ); ?>
 		<a class="g-cell g-ph g-ph--mono g-hero__media" href="<?php echo esc_url( $g_ejt_url ); ?>" aria-label="<?php esc_attr_e( 'easyJet Traveller case study', 'lewisedward' ); ?>">
 			<video class="g-ph__video" autoplay muted loop playsinline preload="metadata" poster="<?php echo esc_url( $g_poster ); ?>"><source src="<?php echo esc_url( $g_video ); ?>" type="video/mp4"></video>
@@ -90,10 +96,6 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 			<?php if ( $g_eyebrow ) : ?><span class="g-mono g-hero__eyebrow"><?php echo esc_html( $g_eyebrow ); ?></span><?php endif; ?>
 			<h1><?php echo esc_html( le_field( 'home_hero_title_1' ) ); ?> <?php echo esc_html( le_field( 'home_hero_title_1_accent' ) ); ?> <?php echo esc_html( le_field( 'home_hero_title_2_pre' ) ); ?> &amp; <?php echo esc_html( le_field( 'home_hero_title_2_post' ) ); ?></h1>
 			<a class="g-line-link g-mono" href="<?php echo esc_url( $g_hero_cta['url'] ); ?>"<?php le_link_target_attr( $g_hero_cta ); ?>><span><?php echo esc_html( $g_hero_cta['title'] ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
-		</div>
-		<div class="g-cell g-dark g-hero__stmt">
-			<div class="g-hero__lede"><?php echo wp_kses_post( $g_lede ); ?></div>
-			<a class="g-line-link g-mono" href="<?php echo esc_url( $g_quote_url ); ?>"><span><?php echo esc_html( le_field( 'home_hero_cta_headline', false, __( 'Start a project', 'lewisedward' ) ) ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 		</div>
 			<?php $g_ticker = array_filter( $g_logos, function ( $r ) { return ! empty( $r['logo']['url'] ); } ); if ( $g_ticker ) : ?>
 		<div class="g-cell g-hero__ticker" aria-label="<?php esc_attr_e( 'Clients', 'lewisedward' ); ?>">
