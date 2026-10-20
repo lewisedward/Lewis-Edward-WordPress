@@ -113,10 +113,60 @@ function le_front_page_schema() {
 }
 
 /**
- * Print the graph in the head of the front page.
+ * With Yoast active, fold the studio into Yoast's own Organization node (so
+ * there is one business entity, not two) and add the Person node to its graph.
+ *
+ * @param array<int,array<string,mixed>> $graph Yoast graph pieces.
+ * @return array<int,array<string,mixed>>
+ */
+function le_merge_schema_into_yoast( $graph ) {
+	if ( ! is_front_page() || ! is_array( $graph ) ) {
+		return $graph;
+	}
+	$ours   = le_front_page_schema();
+	$studio = $ours['@graph'][0];
+	$person = $ours['@graph'][1];
+	$org_id = null;
+
+	foreach ( $graph as $i => $node ) {
+		$types = (array) ( $node['@type'] ?? array() );
+		if ( in_array( 'Organization', $types, true ) ) {
+			$org_id = $node['@id'] ?? $studio['@id'];
+			$merged = $node;
+			foreach ( $studio as $k => $v ) {
+				if ( in_array( $k, array( '@type', '@id', 'name', 'url', 'logo', 'image' ), true ) ) {
+					continue; // Yoast owns identity and the logo ImageObject.
+				}
+				if ( 'sameAs' === $k ) {
+					$merged['sameAs'] = array_values( array_unique( array_merge( (array) ( $node['sameAs'] ?? array() ), (array) $v ) ) );
+					continue;
+				}
+				if ( ! isset( $merged[ $k ] ) ) {
+					$merged[ $k ] = $v;
+				}
+			}
+			$merged['@type'] = array_values( array_unique( array_merge( $types, array( 'ProfessionalService', 'LocalBusiness' ) ) ) );
+			$merged['founder'] = array( '@id' => $person['@id'] );
+			$merged['employee'] = array( '@id' => $person['@id'] );
+			$graph[ $i ] = $merged;
+			break;
+		}
+	}
+	if ( ! $org_id ) {
+		$graph[] = $studio;
+		$org_id  = $studio['@id'];
+	}
+	$person['worksFor'] = array( '@id' => $org_id );
+	$graph[]            = $person;
+	return $graph;
+}
+
+/**
+ * Print the graph in the head of the front page (standalone fallback when
+ * Yoast is not there to carry it).
  */
 function le_print_front_page_schema() {
-	if ( ! is_front_page() || is_admin() ) {
+	if ( ! is_front_page() || is_admin() || defined( 'WPSEO_VERSION' ) ) {
 		return;
 	}
 	$graph = apply_filters( 'le_front_page_schema', le_front_page_schema() );
@@ -126,3 +176,4 @@ function le_print_front_page_schema() {
 	echo '<script type="application/ld+json" id="le-schema-studio">' . wp_json_encode( $graph, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . '</script>' . "\n";
 }
 add_action( 'wp_head', 'le_print_front_page_schema', 5 );
+add_filter( 'wpseo_schema_graph', 'le_merge_schema_into_yoast', 20 );
