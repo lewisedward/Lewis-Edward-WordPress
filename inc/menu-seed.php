@@ -31,7 +31,7 @@ function le_default_menu_blueprint() {
 			array( 'Web Development', '/services/web-development', 'Custom WordPress websites built from scratch.' ),
 			array( 'Website Support', '/services/website-support', 'Proactive and reliable ongoing website maintenance.' ),
 			array( 'E-commerce', '/services/ecommerce', 'WordPress shops, bookings and payment gateways.' ),
-			array( 'Agency Partnership', '/services/agency-web-developer', 'Development partner for agencies and designers.' ),
+			array( 'Agency Partnership', '/services/wordpress-agency-partnership', 'Development partner for agencies and designers.' ),
 			array( 'AI Development', '/services/ai-development', 'AI-powered websites, web apps and tools by top 5% AI developers.' ),
 		),
 		'top_level' => array(
@@ -154,7 +154,7 @@ function le_footer_menu_blueprints() {
 				array( 'title' => 'Web Development',         'url' => home_url( '/services/web-development' ) ),
 				array( 'title' => 'Website Support',         'url' => home_url( '/services/website-support' ) ),
 				array( 'title' => 'E-commerce',              'url' => home_url( '/services/ecommerce' ) ),
-				array( 'title' => 'Agency Partnership', 'url' => home_url( '/services/agency-web-developer' ) ),
+				array( 'title' => 'Agency Partnership', 'url' => home_url( '/services/wordpress-agency-partnership' ) ),
 				array( 'title' => 'AI Development',          'url' => home_url( '/services/ai-development' ) ),
 			),
 		),

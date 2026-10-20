@@ -21,8 +21,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function le_legacy_redirects() {
 	return array(
+		// 2026-10: the agency service was renamed Agency Partnership and moved.
+		'/services/creative-agency-partner' => '/services/wordpress-agency-partnership',
+		'/services/agency-web-developer' => '/services/wordpress-agency-partnership',
 		'/services/saas-applications' => '/services/ai-development',
-		'/services/agency-partner' => '/services/agency-web-developer',
+		'/services/agency-partner' => '/services/wordpress-agency-partnership',
 		'/london-wordpress-developer' => '/london-wordpress-and-ai-developers',
 		'/charity-donations-for-wordpress' => '/services/ecommerce',
 		'/upgrade-to-https' => '/services/website-security',
@@ -71,7 +74,7 @@ function le_legacy_redirects() {
 		'/service/web-design' => '/services/web-design',
 		'/service/web-development' => '/services/web-development',
 		'/service/website-support' => '/services/website-support',
-		'/service/agency-web-developer' => '/services/agency-web-developer',
+		'/service/agency-web-developer' => '/services/wordpress-agency-partnership',
 		'/service/ecommerce' => '/services/ecommerce',
 		'/sub-services/api-third-party-integrations' => '/services/api-integrations',
 		'/sub-services/content-entry' => '/services/website-support',
