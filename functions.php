@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Theme constants.
  */
-define( 'LE_VERSION', '1.0.7' );
+define( 'LE_VERSION', '1.0.8' );
 define( 'LE_DIR', get_template_directory() );
 define( 'LE_URI', get_template_directory_uri() );
 
@@ -43,6 +43,7 @@ le_require( 'taxonomies' );   // Custom taxonomies.
 le_require( 'nav-walker' );   // Mega-menu walker for the primary nav.
 le_require( 'menu-seed' );    // One-time default Primary menu seeding.
 le_require( 'acf' );          // ACF JSON sync, options page, helpers.
+le_require( 'content-colour' ); // Map editor inline colour onto the palette.
 le_require( 'template-tags' );// Presentation helpers used across templates.
 le_require( 'journal' );      // Journal (Posts) index/archive helpers.
 le_require( 'about-icons' );  // About page inline SVG icon set.

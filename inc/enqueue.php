@@ -44,6 +44,7 @@ function le_enqueue_assets() {
 	 * of first paint on mobile for zero bytes of actual CSS.
 	 */
 
+
 	// Smooth scroll (lightweight vanilla replacement for Lenis wrapper).
 	wp_enqueue_script(
 		'le-smooth-scroll',
@@ -215,9 +216,25 @@ function le_inline_theme_css() {
 	if ( false === $le_css ) {
 		return;
 	}
-	$le_css = str_replace(
-		array( "url('../", 'url("../', 'url(../' ),
-		array( "url('" . LE_URI . '/assets/', 'url("' . LE_URI . '/assets/', 'url(' . LE_URI . '/assets/' ),
+	/*
+	 * Rewrite url(../x) to an absolute URL AND stamp it with the asset's
+	 * filemtime.
+	 *
+	 * The absolute part is required because the file is inlined: relative URLs
+	 * would resolve against the page, not the stylesheet. The version stamp is
+	 * required because these assets are otherwise referenced by a bare, stable
+	 * path, so replacing one on disk leaves browsers and the CDN serving the
+	 * old bytes indefinitely - theme.css itself is inlined and so always fresh,
+	 * which makes the staleness hard to spot: the rules update while the asset
+	 * they point at does not.
+	 */
+	$le_css = preg_replace_callback(
+		'#url\((\'|"|)\.\./([^\'")]+)\1\)#',
+		static function ( $m ) {
+			$rel = 'assets/' . $m[2];
+			return 'url(' . $m[1] . LE_URI . '/' . $rel
+				. '?ver=' . le_asset_ver( $rel ) . $m[1] . ')';
+		},
 		$le_css
 	);
 	echo "<style id=\"le-theme-inline\">\n" . $le_css . "\n</style>\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- first-party stylesheet, never user input.
