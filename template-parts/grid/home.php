@@ -123,7 +123,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 			<span class="g-mono"><?php echo esc_html( le_field( 'home_hero_projects_label' ) ); ?></span>
 		</div>
 		<div class="g-cell g-fact">
-			<div class="g-stack"><span class="g-stack__item g-stack__item--zap"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M2.5 12h19M12 2.5c3 3 3 16 0 19M12 2.5c-3 3-3 16 0 19"/></svg></span></div>
+			<span class="g-fact__num">5%</span>
 			<span class="g-mono"><?php echo esc_html( le_field( 'home_hero_ai_label' ) ); ?></span>
 		</div>
 		<div class="g-cell g-fact">
