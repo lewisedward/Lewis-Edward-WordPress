@@ -386,7 +386,7 @@ h6 { font-size: var(--h6-size); line-height: var(--h6-leading); letter-spacing: 
 }
 /* Glass, but near-opaque: the hero's headline read straight through the
    old 72% tint and sat behind the menu text. */
-.mega-menu.glass { background-color: hsl(168 4% 9% / 0.96); }
+.mega-menu.glass { background-color: hsl(168 4% 9% / 0.985); }
 /* Hover bridge so the 2rem gap doesn't drop the hover */
 .nav-item--mega::after {
 	content: "";
