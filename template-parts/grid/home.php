@@ -56,7 +56,7 @@ $g_tst_id     = $g_tst ? ( is_object( $g_tst ) ? $g_tst->ID : (int) $g_tst ) : 0
 		</div>
 		<div class="g-cell g-ph g-ph--mono g-hero__portrait"><img src="<?php echo esc_url( $g_portrait ); ?>" alt="" loading="lazy" /><span class="g-cap g-mono"><?php esc_html_e( 'Lewis — London', 'lewisedward' ); ?></span></div>
 		<div class="g-cell g-dark g-hero__stmt">
-			<p><?php echo esc_html( $g_lede ); ?></p>
+			<div class="g-hero__lede"><?php echo wp_kses_post( $g_lede ); ?></div>
 			<a class="g-line-link g-mono" href="<?php echo esc_url( $g_hero_cta['url'] ); ?>"<?php le_link_target_attr( $g_hero_cta ); ?>><span><?php echo esc_html( $g_hero_cta['title'] ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 		</div>
 		<div class="g-cell g-lime g-hero__stmt">
@@ -134,7 +134,7 @@ $g_tst_id     = $g_tst ? ( is_object( $g_tst ) ? $g_tst->ID : (int) $g_tst ) : 0
 			<a class="g-btn g-mono" href="<?php echo esc_url( home_url( '/work' ) ); ?>"><span><?php esc_html_e( 'Work with Lewis', 'lewisedward' ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 		</div>
 		<div class="g-cell g-clients__list">
-			<?php foreach ( $g_logos as $i => $row ) : $img = isset( $row['logo'] ) ? $row['logo'] : null; if ( ! $img || empty( $img['url'] ) ) { continue; } $name = ! empty( $img['alt'] ) ? $img['alt'] : ( $img['title'] ?? '' ); ?>
+			<?php foreach ( $g_logos as $i => $row ) : $img = isset( $row['logo'] ) ? $row['logo'] : null; if ( ! $img || empty( $img['url'] ) ) { continue; } $name = ! empty( $row['name'] ) ? $row['name'] : ( ! empty( $img['alt'] ) ? $img['alt'] : ( $img['title'] ?? '' ) ); ?>
 			<div class="g-crow"><span class="g-crow__name"><?php echo esc_html( $name ); ?></span><img src="<?php echo esc_url( $img['url'] ); ?>" alt="" loading="lazy" /></div>
 			<?php endforeach; ?>
 		</div>

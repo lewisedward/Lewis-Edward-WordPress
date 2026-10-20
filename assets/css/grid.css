@@ -71,9 +71,11 @@
 /* ---- Hero ------------------------------------------------------------------ */
 .skin-grid .g-hero { grid-template-columns: 1fr 1fr; grid-template-rows: minmax(420px, 46vh) minmax(380px, auto); }
 .skin-grid .g-hero__word { display: flex; align-items: flex-end; padding: 0 0 0 24px; overflow: hidden; }
-.skin-grid .g-hero__word h1 { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: clamp(120px, 20vw, 300px); line-height: 0.78; letter-spacing: -0.05em; transform: translateY(0.08em); color: hsl(var(--foreground)); }
+.skin-grid .g-hero__word h1 { margin: 0; font-family: var(--font-display); font-weight: 400; font-size: clamp(110px, 17vw, 250px); line-height: 0.78; letter-spacing: -0.05em; transform: translateY(0.08em); color: hsl(var(--foreground)); }
 .skin-grid .g-hero__stmt { display: flex; flex-direction: column; gap: 18px; font-size: 24px; line-height: 1.25; letter-spacing: -0.01em; }
 .skin-grid .g-hero__stmt p { margin: 0; }
+.skin-grid .g-hero__lede p { margin: 0 0 0.6em; }
+.skin-grid .g-hero__lede a { color: inherit; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: hsl(var(--primary) / 0.6); }
 .skin-grid .g-hero__stmt .g-line-link { margin-top: auto; }
 .skin-grid .g-hero__for { margin-top: auto; font-size: 15px; }
 .skin-grid .g-hero__logos { display: flex; flex-wrap: wrap; gap: 20px 28px; align-items: center; }
@@ -99,7 +101,7 @@
 /* ---- Services -------------------------------------------------------------- */
 .skin-grid .g-svc { grid-template-columns: 1fr 1fr; }
 .skin-grid .g-svc__left { display: flex; flex-direction: column; justify-content: space-between; padding: 16px 0 40px; background: hsl(0 0% 100% / 0.05); }
-.skin-grid .g-svc__title { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: clamp(64px, 9vw, 132px); line-height: 0.9; letter-spacing: -0.04em; text-transform: uppercase; padding: 0 16px; }
+.skin-grid .g-svc__title { margin: 0; font-family: var(--font-display); font-weight: 500; font-size: clamp(48px, 6.6vw, 100px); line-height: 0.9; letter-spacing: -0.04em; text-transform: uppercase; padding: 0 16px; }
 .skin-grid .g-svc__foot { padding: 60px 0 0 clamp(32px, 22vw, 300px); max-width: 720px; }
 .skin-grid .g-svc__foot p { margin: 0 0 32px; font-size: 15px; line-height: 1.55; color: hsl(var(--foreground) / 0.8); max-width: 420px; }
 .skin-grid .g-svc__list { padding: 0; display: flex; flex-direction: column; }
