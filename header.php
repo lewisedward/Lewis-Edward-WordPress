@@ -29,6 +29,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <div class="site-wrapper" data-lenis-wrapper>
 
-	<?php get_template_part( 'template-parts/header/navbar' ); ?>
+	<?php get_template_part( le_grid_skin() ? 'template-parts/grid/header' : 'template-parts/header/navbar' ); ?>
 
 	<div id="content" class="site-content">
