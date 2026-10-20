@@ -68,7 +68,7 @@
 		// it to near black. [data-surface="light"] already exists in the theme;
 		// [data-cursor-invert] marks lime tiles that aren't full light surfaces.
 		function onLight(el) {
-			return el && el.closest ? el.closest('[data-surface="light"], [data-cursor-invert], .work-filter.is-active, .jr-filter.is-active, .arrow-link__badge, .btn--primary, .btn-cta, .contact-quote__cta, .gform_button, .page-numbers.current') : null;
+			return el && el.closest ? el.closest('[data-surface="light"], [data-cursor-invert], .work-filter.is-active, .jr-filter.is-active, .arrow-link__badge, .btn--primary, .btn-cta, .contact-quote__cta, .gform_button, .page-numbers.current, .g-lime, .g-header__cta, .g-header__logo') : null;
 		}
 
 		document.addEventListener('mouseover', function (e) {

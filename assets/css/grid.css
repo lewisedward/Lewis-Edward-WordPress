@@ -462,6 +462,9 @@
 .skin-grid.is-cursor-label .le-cursor-dot { width: auto; height: 22px; margin: 14px 0 0 16px; padding: 0 8px; border-radius: 0; background: rgb(var(--cursor-accent)); border: 0; -webkit-backdrop-filter: none; backdrop-filter: none; }
 .skin-grid.is-cursor-label .le-cursor__label { font-family: var(--g-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.08em; color: hsl(var(--primary-foreground)); opacity: 1; transform: none; }
 .skin-grid.is-cursor-onlight .le-cursor-dot { background: hsl(var(--primary-foreground)); }
+.skin-grid.is-cursor-onlight .le-cursor-ring { border-color: hsl(var(--primary-foreground) / 0.7); }
+.skin-grid.is-cursor-onlight .le-cursor-ring::before, .skin-grid.is-cursor-onlight .le-cursor-ring::after { background: hsl(var(--primary-foreground) / 0.7); }
+.skin-grid.is-cursor-onlight.is-cursor-hover .le-cursor-ring, .skin-grid.is-cursor-onlight.is-cursor-label .le-cursor-ring { border-color: transparent; background-image: linear-gradient(#121413, #121413), linear-gradient(#121413, #121413), linear-gradient(#121413, #121413), linear-gradient(#121413, #121413), linear-gradient(#121413, #121413), linear-gradient(#121413, #121413), linear-gradient(#121413, #121413), linear-gradient(#121413, #121413); }
 .skin-grid.is-cursor-onlight.is-cursor-label .le-cursor-dot { background: hsl(var(--primary-foreground)); }
 .skin-grid.is-cursor-onlight.is-cursor-label .le-cursor__label { color: var(--g-lime); }
 
