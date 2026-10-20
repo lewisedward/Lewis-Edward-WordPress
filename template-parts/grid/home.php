@@ -152,7 +152,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 			<?php endif; ?>
 		</div>
 		<div class="g-cell g-clients__copy">
-			<h2><?php echo esc_html( le_field( 'home_clients_title_pre' ) ); ?> <?php echo esc_html( le_field( 'home_clients_counter' ) ); ?> <?php echo esc_html( le_field( 'home_clients_title_post' ) ); ?></h2>
+			<h2><?php echo esc_html( le_field( 'home_clients_title_pre' ) ); ?> <span class="g-accent"><?php echo esc_html( (string) (int) le_field( 'home_clients_counter' ) ); ?>+</span> <?php echo esc_html( le_field( 'home_clients_title_post' ) ); ?></h2>
 			<p><?php echo esc_html( le_field( 'home_clients_lede' ) ); ?></p>
 			<a class="g-btn g-mono" href="<?php echo esc_url( home_url( '/work' ) ); ?>"><span><?php esc_html_e( 'Selected work', 'lewisedward' ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 		</div>

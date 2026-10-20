@@ -332,3 +332,4 @@
 	.skin-grid .g-tst__quote { border-right: 0; border-bottom: 1px solid var(--g-line); padding: 28px 20px; }
 	.skin-grid .g-cta__go { min-height: 320px; }
 }
+.skin-grid .g-accent { background-image: var(--brand-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
