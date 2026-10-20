@@ -44,6 +44,22 @@ add_filter( 'body_class', function ( $classes ) {
 } );
 
 /**
+ * Geist + Geist Mono (SIL Open Font License, variable 100–900), served from
+ * the theme. Printed just before grid.css, which sets the families.
+ */
+add_action( 'wp_head', function () {
+	if ( ! le_grid_skin() ) {
+		return;
+	}
+	$css = '';
+	foreach ( array( 'Geist' => 'geist', 'Geist Mono' => 'geist-mono' ) as $fam => $file ) {
+		$rel  = 'assets/fonts/geist/' . $file . '-latin-wght-normal.woff2';
+		$css .= "@font-face{font-family:'$fam';src:url('" . esc_url( LE_URI . '/' . $rel . '?ver=' . le_asset_ver( $rel ) ) . "') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}\n";
+	}
+	echo "<style id=\"le-grid-fonts\">\n" . $css . "</style>\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+}, 3 );
+
+/**
  * Inline the skin stylesheet straight after theme.css (which prints at priority 2).
  */
 add_action( 'wp_head', function () {

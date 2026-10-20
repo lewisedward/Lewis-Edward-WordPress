@@ -1,9 +1,0 @@
-# Trial fonts are served only through the theme (see inc/staging-gate.php),
-# never as static files, so they are not reachable from the public network.
-<IfModule mod_authz_core.c>
-	Require all denied
-</IfModule>
-<IfModule !mod_authz_core.c>
-	Order deny,allow
-	Deny from all
-</IfModule>

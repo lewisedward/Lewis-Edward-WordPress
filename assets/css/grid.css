@@ -333,3 +333,12 @@
 	.skin-grid .g-cta__go { min-height: 320px; }
 }
 .skin-grid .g-accent { background-image: var(--brand-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* Typeface: Geist, with Geist Mono for the small labels. */
+.skin-grid { --font-display: 'Geist', 'Chillax', 'Chillax Fallback', sans-serif; --font-body: 'Geist', 'Chillax', 'Chillax Fallback', sans-serif; --g-mono: 'Geist Mono', ui-monospace, Menlo, monospace; }
+.skin-grid .g-hero__word > span { font-weight: 500; letter-spacing: -0.06em; }
+.skin-grid .g-svc__title { font-weight: 600; letter-spacing: -0.05em; }
+.skin-grid .g-footer__word { font-weight: 600; letter-spacing: -0.06em; }
+.skin-grid .g-header__logo { font-weight: 600; }
+.skin-grid .g-about__prose, .skin-grid .g-tst__quote { font-weight: 300; }
+.skin-grid .g-mono { letter-spacing: 0.04em; }
