@@ -143,7 +143,7 @@ function le_grid_wire( $hint, $i = 0 ) {
 	if ( ! $kind ) {
 		$kind = $order[ (int) $i % count( $order ) ];
 	}
-	$open = '<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">';
+	$open = '<svg class="g-wire g-wire--' . $kind . '" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">';
 	switch ( $kind ) {
 		case 'compose': // layout grid with a circle and a diagonal: composition.
 			$body = '<rect x="10.5" y="10.5" width="99" height="99"/><path d="M43.5 10.5v99M76.5 10.5v99M10.5 43.5h99M10.5 76.5h99"/><circle cx="60" cy="60" r="33"/><path d="M10.5 109.5 109.5 10.5"/><circle class="g-wire__dot" cx="76.5" cy="43.5" r="2.5"/>';
@@ -158,7 +158,7 @@ function le_grid_wire( $hint, $i = 0 ) {
 				$r1 = ( 0 === $t % 9 ) ? 44 : 47.5;
 				$ticks .= sprintf( 'M%.1f %.1fL%.1f %.1f', 60 + $r1 * cos( deg2rad( $a ) ), 60 + $r1 * sin( deg2rad( $a ) ), 60 + 50 * cos( deg2rad( $a ) ), 60 + 50 * sin( deg2rad( $a ) ) );
 			}
-			$body = '<circle cx="60" cy="60" r="50"/><path d="' . $ticks . '" stroke-opacity="0.7"/><path d="M14 60h22" stroke-dasharray="1 3"/><path d="M84 60h22" stroke-dasharray="1 3"/><path class="g-wire__lime g-wire--pulse" d="M36 60h8l6-18 8 36 6-18h20"/><circle class="g-wire__dot" cx="84" cy="60" r="2.5"/>';
+			$body = '<circle cx="60" cy="60" r="50"/><path d="' . $ticks . '" stroke-opacity="0.7"/><path d="M14 60h22" stroke-dasharray="1 3"/><path d="M84 60h22" stroke-dasharray="1 3"/><path class="g-wire--pulse" d="M36 60h8l6-18 8 36 6-18h20"/><circle class="g-wire__dot" cx="84" cy="60" r="2.5"/>';
 			break;
 		case 'overlap': // two rings sharing a hatched lens: partnership.
 			$hatch = '';

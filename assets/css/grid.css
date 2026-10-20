@@ -141,6 +141,7 @@
 .skin-grid .g-srv__wire .g-wire__dot { fill: hsl(0 0% 100% / 0.8); stroke: none; }
 .skin-grid .g-srv__wire .g-wire__lime { stroke: var(--g-lime); }
 .skin-grid .g-srv:hover .g-srv__wire { transform: rotate(90deg); }
+.skin-grid .g-srv:hover .g-srv__wire:has(.g-wire--monitor) { transform: none; }
 .skin-grid .g-srv__body { display: flex; flex-direction: column; font-size: 14px; line-height: 1.55; color: hsl(var(--foreground) / 0.85); }
 .skin-grid .g-srv__tag { display: inline-flex; align-items: center; gap: 8px; margin-top: 28px; }
 .skin-grid .g-srv__tag i { width: 6px; height: 6px; background: var(--g-lime); }
@@ -471,7 +472,7 @@
 .skin-grid.g-js .g-row.is-in::after { transform: scaleX(1); opacity: 0; }
 .skin-grid .g-row { position: relative; }
 .skin-grid .g-ticker:hover .g-ticker__track { animation-play-state: paused; }
-.skin-grid .g-wire--pulse { stroke-dasharray: 110; stroke-dashoffset: 0; }
+.skin-grid .g-wire--pulse { stroke: hsl(0 0% 100% / 0.9); stroke-dasharray: 110; stroke-dashoffset: 0; }
 .skin-grid .g-srv:hover .g-wire--pulse { animation: g-pulse-draw 1.6s linear infinite; }
 @keyframes g-pulse-draw { from { stroke-dashoffset: 110; } to { stroke-dashoffset: -110; } }
 @media (prefers-reduced-motion: reduce) {
