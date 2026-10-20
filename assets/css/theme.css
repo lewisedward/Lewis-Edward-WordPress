@@ -667,12 +667,18 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 /* Metrics tile -------------------------------------------------------------- */
 .hero-tile--metrics { display: flex; flex-direction: column; justify-content: space-between; min-height: 260px; transition: border-color 0.5s ease; }
 .hero-tile--metrics:hover { border-color: hsl(var(--primary) / 0.4); }
-.hero-metrics__head { display: flex; justify-content: space-between; align-items: flex-start; }
+.hero-metrics__head { display: flex; justify-content: space-between; align-items: center; }
 .hero-metrics__figure { margin: 2.5rem 0; }
 .hero-metrics__num { display: block; font-family: var(--font-display); font-size: 3.5rem; font-weight: 300; letter-spacing: -0.02em; line-height: 1; color: hsl(var(--primary)); }
 @media (min-width: 640px) { .hero-metrics__num { font-size: 4.5rem; } }
 .hero-metrics__num-label { margin-top: 1rem; }
-.hero-metrics__row { display: flex; align-items: center; gap: 1rem; padding-top: 1rem; margin-top: 1rem; border-top: 1px solid hsl(var(--foreground) / 0.08); }
+/* Each row is a two-column grid with a fixed icon column sized to the widest
+   stack (six 2rem avatars overlapping by 0.5rem = 9.5rem), so the three labels
+   start on the same vertical line whatever sits to their left. Rows share one
+   height and one rhythm: 1.125rem above and below the hairline. */
+.hero-metrics__row { display: grid; grid-template-columns: 9.5rem 1fr; align-items: center; column-gap: 1.25rem; min-height: 2rem; padding-top: 1.125rem; margin-top: 1.125rem; border-top: 1px solid hsl(var(--foreground) / 0.08); }
+.hero-metrics__row .avatar-stack { justify-self: start; }
+.hero-metrics__row .eyebrow { margin: 0; }
 
 .avatar-stack { display: flex; }
 .avatar-stack > * + * { margin-left: -0.5rem; }
