@@ -19,7 +19,7 @@
 		entries.forEach(function (e) {
 			if (e.isIntersecting) { e.target.classList.add('is-in'); rev.unobserve(e.target); }
 		});
-	}, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+	}, { rootMargin: '0px', threshold: 0.05 });
 	rows.forEach(function (r) { if (!r.classList.contains('is-in')) { rev.observe(r); } });
 
 	/* Counters: "15+", "100+", "1.5" count up from zero, keeping any prefix/suffix. */
@@ -61,6 +61,35 @@
 			});
 		}, { threshold: 0.2 });
 		vids.forEach(function (v) { vo.observe(v); });
+	}
+	/* Testimonials: one at a time, auto-advancing, with prev/next and a progress hairline. */
+	var tst = document.querySelector('.skin-grid .g-tst');
+	var stage = tst && tst.querySelector('[data-tst]');
+	var items = stage ? Array.prototype.slice.call(stage.querySelectorAll('.g-tst__item')) : [];
+	if (items.length > 1) {
+		var cur = 0, timer = null, dur = 7000;
+		var counter = tst.querySelector('[data-tst-current]');
+		var bar = tst.querySelector('.g-tst__bar i');
+		function show(n) {
+			cur = (n + items.length) % items.length;
+			items.forEach(function (it, i) { it.classList.toggle('is-active', i === cur); });
+			if (counter) { counter.textContent = (cur < 9 ? '0' : '') + (cur + 1); }
+			if (bar) { bar.style.animation = 'none'; void bar.offsetWidth; bar.style.animation = ''; }
+		}
+		function start() {
+			if (reduce) { return; }
+			stop(); tst.classList.add('is-running');
+			timer = setInterval(function () { show(cur + 1); }, dur);
+		}
+		function stop() { if (timer) { clearInterval(timer); timer = null; } tst.classList.remove('is-running'); }
+		tst.querySelector('[data-tst-prev]').addEventListener('click', function () { show(cur - 1); start(); });
+		tst.querySelector('[data-tst-next]').addEventListener('click', function () { show(cur + 1); start(); });
+		tst.addEventListener('mouseenter', stop);
+		tst.addEventListener('mouseleave', start);
+		var to = new IntersectionObserver(function (entries) {
+			entries.forEach(function (e) { if (e.isIntersecting) { start(); } else { stop(); } });
+		}, { threshold: 0.3 });
+		to.observe(tst);
 	}
 	void root;
 })();

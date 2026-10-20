@@ -264,10 +264,17 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 	<?php /* ---- Testimonials ---- */ ?>
 	<?php if ( $g_tsts ) : ?>
 	<section class="g-row g-tst" aria-label="<?php esc_attr_e( 'Testimonials', 'lewisedward' ); ?>">
-		<div class="g-cell g-tst__side"><span class="g-label g-mono"><?php echo esc_html( le_field( 'home_tst_eyebrow', $g_pid, __( 'Testimonials', 'lewisedward' ) ) ); ?> <?php echo esc_html( str_pad( (string) count( $g_tsts ), 2, '0', STR_PAD_LEFT ) ); ?></span></div>
-		<div class="g-cell g-tst__stage">
+		<div class="g-cell g-tst__side">
+			<span class="g-label g-mono"><?php echo esc_html( le_field( 'home_tst_eyebrow', $g_pid, __( 'Testimonials', 'lewisedward' ) ) ); ?></span>
+			<div class="g-tst__nav">
+				<span class="g-tst__count g-mono"><span data-tst-current>01</span> / <?php echo esc_html( str_pad( (string) count( $g_tsts ), 2, '0', STR_PAD_LEFT ) ); ?></span>
+				<span class="g-tst__btns"><button type="button" class="g-tst__btn" data-tst-prev aria-label="<?php esc_attr_e( 'Previous testimonial', 'lewisedward' ); ?>"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><button type="button" class="g-tst__btn" data-tst-next aria-label="<?php esc_attr_e( 'Next testimonial', 'lewisedward' ); ?>"><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></button></span>
+				<span class="g-tst__bar" aria-hidden="true"><i></i></span>
+			</div>
+		</div>
+		<div class="g-cell g-tst__stage" data-tst>
 			<?php foreach ( $g_tsts as $i => $t ) : $tid = $g_id( $t ); $role = le_field( 'testimonial_role', $tid ); $co = le_field( 'testimonial_company', $tid ); ?>
-			<figure class="g-tst__item">
+			<figure class="g-tst__item<?php echo 0 === $i ? ' is-active' : ''; ?>">
 				<blockquote class="g-tst__quote"><span class="g-tst__mark" aria-hidden="true">&ldquo;</span><p><?php echo esc_html( le_field( 'testimonial_quote', $tid ) ); ?></p></blockquote>
 				<figcaption class="g-tst__meta"><?php if ( has_post_thumbnail( $tid ) ) { echo get_the_post_thumbnail( $tid, 'le_avatar', array( 'class' => 'g-tst__avatar', 'loading' => 'lazy' ) ); } ?><span><?php echo esc_html( le_field( 'testimonial_author', $tid ) ); ?></span><span class="g-mono"><?php echo esc_html( trim( $role . ( $co ? ' — ' . $co : '' ) ) ); ?></span></figcaption>
 			</figure>
