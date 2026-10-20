@@ -32,5 +32,5 @@ $le_available = le_option( 'header_available', true );
 		) );
 		?>
 	</nav>
-	<a class="g-header__cta" href="<?php echo esc_url( $le_cta['url'] ); ?>"<?php le_link_target_attr( $le_cta ); ?>><span><?php echo esc_html( $le_cta['title'] ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+	<a class="g-header__cta" href="<?php echo esc_url( $le_cta['url'] ); ?>"<?php le_link_target_attr( $le_cta ); ?>><span class="g-header__cta-text" data-short="<?php echo esc_attr( trim( (string) strrchr( ' ' . $le_cta['title'], ' ' ) ) ); ?>"><?php echo esc_html( $le_cta['title'] ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 </header>

@@ -93,6 +93,25 @@ add_action( 'wp_enqueue_scripts', function () {
 }, 20 );
 
 /**
+ * Favicon set for the grid skin (the L mark on lime). Replaces the Customizer
+ * site icon while the skin is active.
+ */
+add_action( 'wp_head', function () {
+	if ( ! le_grid_skin() ) {
+		return;
+	}
+	remove_action( 'wp_head', 'wp_site_icon', 99 );
+	$u = static function ( $f ) {
+		return esc_url( LE_URI . '/assets/images/favicon/' . $f . '?ver=' . le_asset_ver( 'assets/images/favicon/' . $f ) );
+	};
+	echo '<link rel="icon" href="' . $u( 'favicon.ico' ) . '" sizes="any">' . "\n";
+	echo '<link rel="icon" type="image/svg+xml" href="' . $u( 'favicon.svg' ) . '">' . "\n";
+	echo '<link rel="icon" type="image/png" sizes="32x32" href="' . $u( 'favicon-32.png' ) . '">' . "\n";
+	echo '<link rel="apple-touch-icon" sizes="180x180" href="' . $u( 'apple-touch-icon.png' ) . '">' . "\n";
+	echo '<meta name="theme-color" content="#121413">' . "\n";
+}, 1 );
+
+/**
  * Small helpers shared by the grid parts.
  */
 function le_grid_arrow() {
