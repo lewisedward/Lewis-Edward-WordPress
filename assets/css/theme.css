@@ -85,20 +85,18 @@
 	--primary: 75 100% 50%;              /* lime, the lead brand colour */
 	--primary-foreground: 168 4% 9%;
 	--primary-deep: 255 60% 32%;
-	/* Brand surface: lime into petrol teal, lit from two corners. A lime bloom
-	   top-left and a petrol bloom bottom-right sit over a lime -> green -> teal
-	   ramp, so the midpoint reads as the hand-off between the two lights rather
-	   than a flat fill. One hue family (75 -> 192), so there is no muddy midpoint
-	   to engineer around. The petrol bloom is held at 36% lightness, not lower:
-	   --primary-foreground (near-black) sits on these panels as body text, and
-	   36% keeps that at 4.6:1 where 32% would fall to 3.8:1 and fail AA on the
-	   small captions. */
+	/* Brand surface: two colours only, lime into mint, lit from two corners. A
+	   lime bloom top-left and a mint bloom bottom-right sit over a straight
+	   lime -> mint ramp, so the midpoint reads as the hand-off between the two
+	   lights rather than a flat fill. One hue family (75 -> 165), no muddy
+	   midpoint. Mint at 46% lightness keeps --primary-foreground (near-black)
+	   at 8.5:1 as body text, well clear of AA on the small captions. */
 	--brand-gradient:
 		radial-gradient(125% 115% at 10% 6%, hsl(72 100% 70% / 0.92) 0%, hsl(74 100% 60% / 0) 58%),
-		radial-gradient(110% 100% at 100% 100%, hsl(192 88% 36% / 0.95) 0%, hsl(190 88% 38% / 0) 60%),
-		linear-gradient(135deg, hsl(75 100% 50%) 0%, hsl(140 78% 54%) 45%, hsl(170 80% 44%) 100%);
+		radial-gradient(110% 100% at 100% 100%, hsl(165 85% 46% / 0.95) 0%, hsl(165 85% 46% / 0) 60%),
+		linear-gradient(135deg, hsl(75 100% 50%) 0%, hsl(165 85% 46%) 100%);
 	/* Outer bloom on the accent panels. */
-	--brand-glow: -14px -14px 60px -16px hsl(var(--primary) / 0.42), 14px 14px 60px -16px hsl(190 85% 42% / 0.5);
+	--brand-glow: -14px -14px 60px -16px hsl(var(--primary) / 0.42), 14px 14px 60px -16px hsl(165 85% 46% / 0.5);
 	--secondary: 0 0% 14%;
 	--secondary-foreground: 0 0% 100%;
 	--muted: 0 0% 14%;
@@ -2596,7 +2594,7 @@ body.admin-bar header {
 /* Display-size accents carry the brand surface as gradient text: the headline
    accent words and the big metric figures. Small accents (eyebrows, links,
    counters, dots) stay solid lime so they still read at size. The gradient's
-   petrol corner is 4.8:1 on the page background, which clears AA for large
+   mint corner is 9.9:1 on the page background, well clear of AA for large
    text. Kept at the end of the file so it outranks the
    component colour declarations above. */
 h1 .text-primary, h2 .text-primary, h3 .text-primary, .hero-metrics__num {
@@ -3018,19 +3016,18 @@ a.eyebrow:hover svg,
 .contact-quote__badge::after { opacity: 0.3; }
 
 /* The two large brand panels get a slow, drifting light on top of the static
-   gradient: three soft blooms (lime, petrol, a mint mid-tone) on a ::before
+   gradient: two soft blooms (lime and mint) on a ::before
    that sits between the panel background and its content, oversized so the
    edges never show, and eased back and forth over 14s so it reads as a glow
    moving across the surface rather than a fixed fill. The panels isolate so
    the negative z-index lands above their own background and below content.
-   Petrol is held at 36% lightness for the same AA reason as the surface. */
+   Only the two surface colours are used, so the light stays in the family. */
 .hero-tile--cta, .services-intro { isolation: isolate; }
 .hero-tile--cta::before, .services-intro::before {
 	content: ""; position: absolute; inset: -22%; z-index: -1; pointer-events: none;
 	background:
 		radial-gradient(42% 42% at 30% 28%, hsl(68 100% 76% / 0.95) 0%, hsl(72 100% 66% / 0) 70%),
-		radial-gradient(48% 48% at 72% 74%, hsl(194 88% 36% / 0.95) 0%, hsl(192 88% 38% / 0) 70%),
-		radial-gradient(30% 30% at 62% 30%, hsl(150 90% 64% / 0.55) 0%, hsl(150 90% 64% / 0) 70%);
+		radial-gradient(48% 48% at 72% 74%, hsl(165 85% 46% / 0.95) 0%, hsl(165 85% 46% / 0) 70%);
 	transform-origin: 50% 50%;
 	animation: le-bloom 14s ease-in-out infinite alternate;
 	will-change: transform;
