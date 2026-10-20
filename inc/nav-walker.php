@@ -82,10 +82,18 @@ class LE_Mega_Walker extends Walker_Nav_Menu {
 	protected $mega = array();
 
 	/**
+	 * Running index of the children inside the current mega panel (for the 01, 02 numbering).
+	 *
+	 * @var int
+	 */
+	protected $mega_index = 0;
+
+	/**
 	 * Open the children container. depth 0 => mega panel; deeper => plain list.
 	 */
 	public function start_lvl( &$output, $depth = 0, $args = null ) {
 		if ( 0 === $depth ) {
+			$this->mega_index = 0;
 			$output .= '<div class="mega-menu glass" role="menu">';
 			$output .= '<div class="mega-menu__grid">';
 		} else {
@@ -100,8 +108,8 @@ class LE_Mega_Walker extends Walker_Nav_Menu {
 		if ( 0 === $depth ) {
 			$output .= '</div>'; // .mega-menu__grid
 			
-			$services_count = wp_count_posts( 'service' );
-			$count = isset( $services_count->publish ) ? (int) $services_count->publish : 0;
+			// Count the items actually in this panel, not every published service.
+			$count = isset( $this->mega['count'] ) ? (int) $this->mega['count'] : $this->mega_index;
 
 			$url   = isset( $this->mega['url'] ) ? $this->mega['url'] : '#';
 			$label = isset( $this->mega['label'] ) ? $this->mega['label'] : __( 'Services', 'lewisedward' );
@@ -159,11 +167,16 @@ class LE_Mega_Walker extends Walker_Nav_Menu {
 			}
 		} else {
 			// Child inside the mega grid.
+			// Child inside the mega grid: a card with a running number, the title,
+			// the menu item's description and a corner arrow.
+			$this->mega_index++;
 			$output .= '<a class="mega-item' . ( $active ? ' is-active' : '' ) . '" href="' . esc_url( $url ) . '" role="menuitem">';
-			$output .= '<span class="mega-item__head"><span class="mega-item__dot" aria-hidden="true"></span><span class="mega-item__label">' . esc_html( $title ) . '</span></span>';
+			$output .= '<span class="mega-item__num" aria-hidden="true">' . esc_html( str_pad( (string) $this->mega_index, 2, '0', STR_PAD_LEFT ) ) . '</span>';
+			$output .= '<span class="mega-item__label">' . esc_html( $title ) . '</span>';
 			if ( $desc ) {
 				$output .= '<span class="mega-item__desc">' . esc_html( $desc ) . '</span>';
 			}
+			$output .= '<span class="mega-item__arrow" aria-hidden="true">' . le_arrow_diagonal_svg( 14 ) . '</span>';
 			$output .= '</a>';
 		}
 	}
