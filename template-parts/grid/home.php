@@ -60,7 +60,7 @@ $g_ov_items   = le_field( 'home_overlap_items' );
 $g_ov_items   = is_array( $g_ov_items ) ? $g_ov_items : array();
 $g_ov_video   = le_field( 'home_overlap_video' );
 $g_ov_poster  = le_field( 'home_overlap_poster' );
-$g_ov_video   = ( is_array( $g_ov_video ) && ! empty( $g_ov_video['url'] ) ) ? $g_ov_video['url'] : '';
+$g_ov_video   = is_array( $g_ov_video ) ? ( $g_ov_video['url'] ?? '' ) : (string) $g_ov_video; // the field returns a URL on this site
 $g_ov_poster  = ( is_array( $g_ov_poster ) && ! empty( $g_ov_poster['url'] ) ) ? $g_ov_poster['url'] : '';
 
 // About.
@@ -158,7 +158,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 		</div>
 		<div class="g-cell g-clients__list">
 			<?php foreach ( $g_logos as $row ) : $img = isset( $row['logo'] ) ? $row['logo'] : null; if ( ! $img || empty( $img['url'] ) ) { continue; } $name = ! empty( $row['name'] ) ? $row['name'] : ( $img['alt'] ?? '' ); ?>
-			<div class="g-crow"><span class="g-crow__name"><?php echo esc_html( $name ); ?></span><img src="<?php echo esc_url( $img['url'] ); ?>" alt="" loading="lazy" /></div>
+			<div class="g-crow"><img src="<?php echo esc_url( $img['url'] ); ?>" alt="<?php echo esc_attr( $name ); ?>" loading="lazy" /></div>
 			<?php endforeach; ?>
 		</div>
 	</section>
@@ -177,7 +177,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 			<?php foreach ( $g_services as $i => $svc ) : $sid = $g_id( $svc ); $sub = le_field( 'service_subtitle', $sid ); $desc = le_field( 'service_short_description', $sid ); if ( ! $desc ) { $desc = get_the_excerpt( $sid ); } ?>
 			<a class="g-srv" href="<?php echo esc_url( get_permalink( $sid ) ); ?>">
 				<span class="g-srv__num g-mono"><?php echo esc_html( str_pad( (string) ( $i + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
-				<span class="g-srv__main"><span class="g-srv__title" role="heading" aria-level="3"><?php echo esc_html( get_the_title( $sid ) ); ?></span><span class="g-srv__wire" aria-hidden="true"></span></span>
+				<span class="g-srv__main"><span class="g-srv__title" role="heading" aria-level="3"><?php echo esc_html( get_the_title( $sid ) ); ?></span><span class="g-srv__wire" aria-hidden="true"><?php echo le_grid_wire( get_post_field( 'post_name', $sid ) . ' ' . get_the_title( $sid ), $i ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span></span>
 				<span class="g-srv__body"><span class="g-srv__desc"><?php echo esc_html( wp_strip_all_tags( $desc ) ); ?></span><?php if ( $sub ) : ?><span class="g-srv__tag g-mono"><i></i><?php echo esc_html( $sub ); ?></span><?php endif; ?><span class="g-srv__go"><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span></span>
 			</a>
 			<?php endforeach; ?>
@@ -217,8 +217,11 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 			<div class="g-ph g-about__photo"><img src="<?php echo esc_url( $g_portrait ); ?>" alt="" loading="lazy" /></div>
 		</div>
 		<div class="g-cell g-about__prose">
+			<div class="g-about__text">
 			<h2><?php echo esc_html( le_field( 'home_about_headline_1' ) ); ?> <?php echo esc_html( le_field( 'home_about_headline_muted' ) ); ?> <?php echo esc_html( le_field( 'home_about_headline_since' ) ); ?> <?php echo esc_html( le_field( 'home_about_headline_year' ) ); ?></h2>
 			<p><?php echo esc_html( le_field( 'home_about_lede' ) ); ?></p>
+			<a class="g-line-link g-mono g-about__more" href="<?php echo esc_url( home_url( '/about/' ) ); ?>"><span><?php esc_html_e( 'More about Lewis', 'lewisedward' ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+			</div>
 			<?php if ( $g_stats ) : ?>
 			<div class="g-stats">
 				<?php foreach ( $g_stats as $st ) : ?>
@@ -249,7 +252,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 		<a class="g-cell g-lime g-cta__go" href="<?php echo esc_url( $g_cta_url ); ?>">
 			<h2><?php echo esc_html( le_field( 'home_cta_line1', $g_pid ) ); ?><br><?php echo esc_html( le_field( 'home_cta_line2_pre', $g_pid ) ); ?> <em><?php echo esc_html( le_field( 'home_cta_word', $g_pid ) ); ?></em></h2>
 			<span class="g-mono"><?php echo esc_html( le_field( 'home_cta_ring', $g_pid, __( 'Request a quote', 'lewisedward' ) ) ); ?></span>
-			<span class="g-cta__arrow" aria-hidden="true"></span>
+			<svg class="g-cta__arrow" viewBox="0 0 120 120" aria-hidden="true" focusable="false"><path d="M8 8h104v104M112 8 8 112"/></svg>
 		</a>
 		<div class="g-cell g-cta__previews">
 			<?php $g_prev = le_field( 'home_cta_previews', $g_pid ); $g_prev = is_array( $g_prev ) ? $g_prev : array(); foreach ( array_slice( $g_prev, 0, 4 ) as $pv ) : $pvid = $g_id( $pv ); if ( ! has_post_thumbnail( $pvid ) ) { continue; } ?>

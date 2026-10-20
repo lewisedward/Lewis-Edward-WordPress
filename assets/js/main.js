@@ -141,15 +141,27 @@
 		});
 	}
 
-	/* Live London time in the status widget, updated every 30s. */
+	/* Live London time in the status widget (and the footer clock face), updated every 30s. */
 	function initLondonClock() {
 		var els = document.querySelectorAll('[data-london-clock]');
-		if (!els.length) return;
+		var faces = document.querySelectorAll('[data-london-clockface]');
+		if (!els.length && !faces.length) return;
 		function render() {
-			var t = new Date().toLocaleTimeString('en-GB', {
+			var now = new Date();
+			var t = now.toLocaleTimeString('en-GB', {
 				timeZone: 'Europe/London', hour: '2-digit', minute: '2-digit'
 			});
 			els.forEach(function (el) { el.textContent = t; });
+			if (faces.length) {
+				var hm = t.split(':');
+				var h = parseInt(hm[0], 10) % 12, m = parseInt(hm[1], 10);
+				if (!isNaN(h) && !isNaN(m)) {
+					faces.forEach(function (f) {
+						f.style.setProperty('--h', (h * 30 + m * 0.5) + 'deg');
+						f.style.setProperty('--m', (m * 6) + 'deg');
+					});
+				}
+			}
 		}
 		render();
 		setInterval(render, 30000);

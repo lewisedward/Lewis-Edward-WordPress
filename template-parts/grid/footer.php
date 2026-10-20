@@ -31,10 +31,16 @@ $le_menu      = function ( $location, $fallback ) {
 ?>
 <footer class="g-footer">
 	<div class="g-row g-footer__top">
-		<div class="g-cell g-footer__line"><?php echo esc_html( le_option( 'grid_footer_line', __( 'Raise your game online', 'lewisedward' ) ) ); ?></div>
-		<div class="g-cell"><?php $le_menu( 'footer_discover', array( array( 'Services', '/services' ), array( 'Work', '/work' ), array( 'About', '/about' ), array( 'Journal', '/journal' ) ) ); ?></div>
-		<div class="g-cell"><?php $le_menu( 'footer_services', array( array( 'Web Design', '/services/web-design' ), array( 'Web Development', '/services/web-development' ), array( 'Website Support', '/services/website-support' ) ) ); ?></div>
-		<div class="g-cell g-footer__clock"><span class="g-footer__clockface" aria-hidden="true"></span><span><?php echo esc_html( le_option( 'footer_location', __( 'London', 'lewisedward' ) ) ); ?><span class="g-mono" data-london-clock>--:--</span></span></div>
+		<div class="g-cell g-footer__line">
+			<span class="g-label g-mono"><?php esc_html_e( 'Est. 2011', 'lewisedward' ); ?> &mdash; <?php echo esc_html( le_option( 'footer_location', __( 'London', 'lewisedward' ) ) ); ?></span>
+			<span class="g-footer__line-text"><?php echo esc_html( le_option( 'grid_footer_line', __( 'Raise your game online', 'lewisedward' ) ) ); ?></span>
+		</div>
+		<div class="g-cell g-footer__nav"><span class="g-footer__heading g-mono"><?php esc_html_e( 'Explore', 'lewisedward' ); ?></span><?php $le_menu( 'footer_discover', array( array( 'Services', '/services' ), array( 'Work', '/work' ), array( 'About', '/about' ), array( 'Journal', '/journal' ) ) ); ?></div>
+		<div class="g-cell g-footer__nav"><span class="g-footer__heading g-mono"><?php esc_html_e( 'Services', 'lewisedward' ); ?></span><?php $le_menu( 'footer_services', array( array( 'Web Design', '/services/web-design' ), array( 'Web Development', '/services/web-development' ), array( 'Website Support', '/services/website-support' ) ) ); ?></div>
+		<div class="g-cell g-footer__clock">
+			<div class="g-footer__time"><span class="g-footer__clockface" data-london-clockface aria-hidden="true"><span></span></span><span><?php echo esc_html( le_option( 'footer_location', __( 'London', 'lewisedward' ) ) ); ?><span class="g-mono" data-london-clock>--:--</span></span></div>
+			<div class="g-footer__status g-mono"><i class="g-footer__pulse" aria-hidden="true"></i><?php esc_html_e( 'Available for new projects', 'lewisedward' ); ?></div>
+		</div>
 	</div>
 	<div class="g-row g-footer__mid">
 		<div class="g-cell g-cell--blank" aria-hidden="true"></div>
@@ -48,9 +54,10 @@ $le_menu      = function ( $location, $fallback ) {
 			<span class="g-footer__legal g-mono"><span>&copy; <?php echo esc_html( date_i18n( 'Y' ) ); ?> <?php echo esc_html( le_option( 'footer_copyright_name', __( 'Lewis Edward Ltd', 'lewisedward' ) ) ); ?></span><span><?php echo esc_html( le_option( 'footer_location', __( 'London', 'lewisedward' ) ) ); ?>, UK</span></span>
 		</div>
 		<a class="g-cell g-footer__go" href="<?php echo esc_url( $le_cta_url ); ?>">
+			<span class="g-footer__go-eyebrow g-mono"><?php esc_html_e( 'Get in touch', 'lewisedward' ); ?></span>
 			<span class="g-footer__go-title"><?php echo esc_html( le_option( 'grid_footer_go', __( "Let's start a conversation", 'lewisedward' ) ) ); ?></span>
-			<span class="g-footer__go-label"><?php esc_html_e( 'Start a project', 'lewisedward' ); ?></span>
-			<span class="g-footer__go-arrow" aria-hidden="true"></span>
+			<span class="g-footer__go-label g-mono"><span><?php esc_html_e( 'Start a project', 'lewisedward' ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+			<svg class="g-footer__go-arrow" viewBox="0 0 120 120" aria-hidden="true" focusable="false"><path d="M8 8h104v104M112 8 8 112"/></svg>
 		</a>
 	</div>
 </footer>

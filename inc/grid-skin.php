@@ -91,3 +91,76 @@ function le_grid_arrow() {
 function le_grid_arrow_diag() {
 	return '<svg class="g-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>';
 }
+
+/**
+ * A line-drawn graphic for a service card, picked from the service's slug and
+ * title (falling back to the card's position). Hairline strokes, no fills,
+ * 120 x 120 — the same vocabulary as the hero blooms and halftone.
+ *
+ * @param string $hint Slug + title to match on.
+ * @param int    $i    Card index, used when nothing matches.
+ * @return string SVG markup.
+ */
+function le_grid_wire( $hint, $i = 0 ) {
+	$hint = strtolower( (string) $hint );
+	$keys = array( 'ai-' => 'lattice', ' ai' => 'lattice', 'intelligen' => 'lattice', 'partner' => 'overlap', 'agency' => 'overlap', 'commerce' => 'stack', 'shop' => 'stack', 'support' => 'monitor', 'maint' => 'monitor', 'design' => 'compose', 'develop' => 'build' ); // first match wins, so the specific ones go first
+	$kind = '';
+	foreach ( $keys as $needle => $k ) {
+		if ( false !== strpos( ' ' . $hint, $needle ) ) {
+			$kind = $k;
+			break;
+		}
+	}
+	$order = array( 'compose', 'build', 'monitor', 'overlap', 'stack', 'lattice' );
+	if ( ! $kind ) {
+		$kind = $order[ (int) $i % count( $order ) ];
+	}
+	$open = '<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">';
+	switch ( $kind ) {
+		case 'compose': // layout grid with a circle and a diagonal: composition.
+			$body = '<rect x="10.5" y="10.5" width="99" height="99"/><path d="M43.5 10.5v99M76.5 10.5v99M10.5 43.5h99M10.5 76.5h99"/><circle cx="60" cy="60" r="33"/><path d="M10.5 109.5 109.5 10.5"/><circle class="g-wire__dot" cx="76.5" cy="43.5" r="2.5"/>';
+			break;
+		case 'build': // isometric wireframe cube with an inset cube: built from scratch.
+			$body = '<path d="M60 12 102 36v48L60 108 18 84V36z"/><path d="M60 60 18 36M60 60l42-24M60 60v48"/><path d="M60 36 81 48v24L60 84 39 72V48z"/><path d="M60 60 39 48M60 60l21-12M60 60v24"/><circle class="g-wire__dot" cx="60" cy="12" r="2.5"/>';
+			break;
+		case 'monitor': // dial with ticks and a sweep: proactive support.
+			$ticks = '';
+			for ( $t = 0; $t < 24; $t++ ) {
+				$a  = $t * 15;
+				$r1 = ( 0 === $t % 6 ) ? 42 : 46;
+				$x1 = 60 + $r1 * cos( deg2rad( $a ) );
+				$y1 = 60 + $r1 * sin( deg2rad( $a ) );
+				$x2 = 60 + 50 * cos( deg2rad( $a ) );
+				$y2 = 60 + 50 * sin( deg2rad( $a ) );
+				$ticks .= sprintf( 'M%.1f %.1fL%.1f %.1f', $x1, $y1, $x2, $y2 );
+			}
+			$body = '<circle cx="60" cy="60" r="50"/><circle cx="60" cy="60" r="32" stroke-dasharray="2 4"/><circle cx="60" cy="60" r="14"/><path d="' . $ticks . '"/><path class="g-wire__lime" d="M60 60 92 28"/><path d="M60 60A32 32 0 0 1 92 60" stroke-dasharray="1 3"/><circle class="g-wire__dot" cx="60" cy="60" r="2.5"/>';
+			break;
+		case 'overlap': // two rings sharing a hatched lens: partnership.
+			$hatch = '';
+			for ( $x = 44; $x <= 76; $x += 4 ) {
+				$hatch .= sprintf( 'M%d 20v80', $x );
+			}
+			$body = '<defs><clipPath id="g-lens"><circle cx="42" cy="60" r="36"/></clipPath></defs><circle cx="42" cy="60" r="36"/><circle cx="78" cy="60" r="36"/><g clip-path="url(#g-lens)"><circle cx="78" cy="60" r="36"/><path d="' . $hatch . '" clip-path="url(#g-lens)"/></g><path d="M6 60h108"/><circle class="g-wire__dot" cx="60" cy="60" r="2.5"/>';
+			break;
+		case 'stack': // nested rotated squares with a tag: e-commerce.
+			$body = '<path d="M60 8 112 60 60 112 8 60z"/><path d="M60 24 96 60 60 96 24 60z"/><path d="M60 40 80 60 60 80 40 60z"/><path d="M8 60h104M60 8v104"/><circle class="g-wire__dot" cx="60" cy="60" r="2.5"/>';
+			break;
+		default: // lattice of nodes inside a ring: AI.
+			$pts   = array( array( 60, 22 ), array( 94, 42 ), array( 94, 78 ), array( 60, 98 ), array( 26, 78 ), array( 26, 42 ), array( 60, 60 ) );
+			$lines = '';
+			foreach ( $pts as $a => $pa ) {
+				foreach ( $pts as $b => $pb ) {
+					if ( $b > $a && ( 6 === $b || 1 === ( $b - $a ) || ( 0 === $a && 5 === $b ) ) ) {
+						$lines .= sprintf( 'M%d %dL%d %d', $pa[0], $pa[1], $pb[0], $pb[1] );
+					}
+				}
+			}
+			$dots = '';
+			foreach ( $pts as $p ) {
+				$dots .= sprintf( '<circle cx="%d" cy="%d" r="3"/>', $p[0], $p[1] );
+			}
+			$body = '<circle cx="60" cy="60" r="50"/><path d="' . $lines . '"/>' . $dots . '<circle class="g-wire__dot" cx="60" cy="60" r="2.5"/>';
+	}
+	return $open . $body . '</svg>';
+}
