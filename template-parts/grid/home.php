@@ -95,6 +95,16 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 			<div class="g-hero__lede"><?php echo wp_kses_post( $g_lede ); ?></div>
 			<a class="g-line-link g-mono" href="<?php echo esc_url( $g_quote_url ); ?>"><span><?php echo esc_html( le_field( 'home_hero_cta_headline', false, __( 'Start a project', 'lewisedward' ) ) ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 		</div>
+			<?php $g_ticker = array_filter( $g_logos, function ( $r ) { return ! empty( $r['logo']['url'] ); } ); if ( $g_ticker ) : ?>
+		<div class="g-cell g-hero__ticker" aria-label="<?php esc_attr_e( 'Clients', 'lewisedward' ); ?>">
+			<span class="g-hero__ticker-label g-mono"><?php esc_html_e( 'Trusted by', 'lewisedward' ); ?></span>
+			<div class="g-ticker"><div class="g-ticker__track">
+				<?php for ( $pass = 0; $pass < 2; $pass++ ) : foreach ( $g_ticker as $row ) : ?>
+				<img src="<?php echo esc_url( $row['logo']['url'] ); ?>" alt="<?php echo esc_attr( $pass ? '' : ( $row['name'] ?? '' ) ); ?>" loading="lazy"<?php echo $pass ? ' aria-hidden="true"' : ''; ?> />
+				<?php endforeach; endfor; ?>
+			</div></div>
+		</div>
+		<?php endif; ?>
 	</section>
 
 	<?php /* ---- Metrics + capabilities (the hero's second and third tiles) ---- */ ?>
