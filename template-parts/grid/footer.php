@@ -43,21 +43,9 @@ $le_menu      = function ( $location, $fallback ) {
 		</div>
 	</div>
 	<div class="g-row g-footer__mid">
-		<div class="g-cell g-cell--blank" aria-hidden="true"></div>
+		<div class="g-cell g-footer__legalcell"><span class="g-footer__legal g-mono"><span>&copy; <?php echo esc_html( date_i18n( 'Y' ) ); ?> <?php echo esc_html( le_option( 'footer_copyright_name', __( 'Lewis Edward Ltd', 'lewisedward' ) ) ); ?></span><span><?php echo esc_html( le_option( 'footer_location', __( 'London', 'lewisedward' ) ) ); ?>, UK</span></span></div>
 		<a class="g-cell" href="mailto:hello@lewisedward.com">hello@lewisedward.com</a>
 		<a class="g-cell" href="<?php echo esc_url( $le_linkedin ); ?>" target="_blank" rel="noopener noreferrer"><span>LinkedIn</span><?php echo le_grid_arrow_diag(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 		<div class="g-cell g-cell--split"><a href="<?php echo esc_url( home_url( '/privacy' ) ); ?>"><?php esc_html_e( 'Privacy policy', 'lewisedward' ); ?></a><button class="g-footer__cookies" type="button" data-consent-open><?php esc_html_e( 'Cookie settings', 'lewisedward' ); ?></button></div>
-	</div>
-	<div class="g-row g-footer__bottom">
-		<div class="g-cell g-footer__wordmark">
-			<span class="g-footer__word">Lewis.</span>
-			<span class="g-footer__legal g-mono"><span>&copy; <?php echo esc_html( date_i18n( 'Y' ) ); ?> <?php echo esc_html( le_option( 'footer_copyright_name', __( 'Lewis Edward Ltd', 'lewisedward' ) ) ); ?></span><span><?php echo esc_html( le_option( 'footer_location', __( 'London', 'lewisedward' ) ) ); ?>, UK</span></span>
-		</div>
-		<a class="g-cell g-footer__go" href="<?php echo esc_url( $le_cta_url ); ?>">
-			<span class="g-footer__go-eyebrow g-mono"><?php esc_html_e( 'Get in touch', 'lewisedward' ); ?></span>
-			<span class="g-footer__go-title"><?php echo esc_html( le_option( 'grid_footer_go', __( "Let's start a conversation", 'lewisedward' ) ) ); ?></span>
-			<span class="g-footer__go-label g-mono"><span><?php esc_html_e( 'Start a project', 'lewisedward' ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-			<svg class="g-footer__go-arrow" viewBox="0 0 120 120" aria-hidden="true" focusable="false"><path d="M8 8h104v104M112 8 8 112"/></svg>
-		</a>
 	</div>
 </footer>
