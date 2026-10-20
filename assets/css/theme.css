@@ -90,7 +90,7 @@
 	   panels read as a single colour with light across it rather than a blend
 	   of two. The drifting glow (further down) adds movement in the same two
 	   shades. The deep end is held at 40% lightness: --primary-foreground
-	   (near-black) is 6.3:1 on it, clear of AA for the small captions, and
+	   (near-black) is 9:1 on it, well clear of AA for the small captions, and
 	   anything brighter tips the surface into highlighter. */
 	--brand-gradient: linear-gradient(135deg, hsl(72 100% 60%) 0%, hsl(80 100% 40%) 100%);
 	/* Outer bloom on the accent panels. */
@@ -2601,7 +2601,7 @@ body.admin-bar header {
 /* Display-size accents carry the brand surface as gradient text: the headline
    accent words and the big metric figures. Small accents (eyebrows, links,
    counters, dots) stay solid lime so they still read at size. The gradient's
-   deep end is 7.9:1 on the page background, well clear of AA for large
+   deep end is 9.5:1 on the page background, well clear of AA for large
    text. Kept at the end of the file so it outranks the
    component colour declarations above. */
 h1 .text-primary, h2 .text-primary, h3 .text-primary, .hero-metrics__num {
