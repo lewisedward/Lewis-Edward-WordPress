@@ -146,6 +146,14 @@ function le_merge_schema_into_yoast( $graph ) {
 				}
 			}
 			$merged['@type'] = array_values( array_unique( array_merge( $types, array( 'ProfessionalService', 'LocalBusiness' ) ) ) );
+			if ( ! empty( $merged['hasOfferCatalog']['itemListElement'] ) ) {
+				foreach ( $merged['hasOfferCatalog']['itemListElement'] as &$offer ) {
+					if ( isset( $offer['itemOffered']['provider'] ) ) {
+						$offer['itemOffered']['provider'] = array( '@id' => $org_id );
+					}
+				}
+				unset( $offer );
+			}
 			$merged['founder'] = array( '@id' => $person['@id'] );
 			$merged['employee'] = array( '@id' => $person['@id'] );
 			$graph[ $i ] = $merged;
