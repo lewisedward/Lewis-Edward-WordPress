@@ -103,6 +103,33 @@ function le_grid_arrow_diag() {
 }
 
 /**
+ * Version attachment image URLs by the attachment's modified time.
+ *
+ * Several work images were re-uploaded under the same filenames, and the image
+ * CDN still served its old WebP conversions for those paths. A query string per
+ * revision gives the CDN a fresh cache key.
+ */
+add_filter( 'wp_get_attachment_image_attributes', function ( $attr, $attachment ) {
+	if ( ! le_grid_skin() || ! $attachment instanceof WP_Post ) {
+		return $attr;
+	}
+	$v = strtotime( $attachment->post_modified_gmt ) ?: $attachment->ID;
+	$bump = static function ( $url ) use ( $v ) {
+		return add_query_arg( 'v', $v, $url );
+	};
+	if ( ! empty( $attr['src'] ) ) {
+		$attr['src'] = $bump( $attr['src'] );
+	}
+	if ( ! empty( $attr['srcset'] ) ) {
+		$attr['srcset'] = implode( ', ', array_map( static function ( $c ) use ( $bump ) {
+			$parts = preg_split( '/\s+/', trim( $c ), 2 );
+			return $bump( $parts[0] ) . ( isset( $parts[1] ) ? ' ' . $parts[1] : '' );
+		}, explode( ',', $attr['srcset'] ) ) );
+	}
+	return $attr;
+}, 20, 2 );
+
+/**
  * A client logo URL for the grid skin: when the theme carries a hand-made mono
  * version (assets/images/clients/<file>-mono.svg), use that instead of the
  * uploaded original, which may not survive the one-colour filter.
