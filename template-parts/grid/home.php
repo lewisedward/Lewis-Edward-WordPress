@@ -123,12 +123,12 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 			<span class="g-mono"><?php echo esc_html( le_field( 'home_hero_projects_label' ) ); ?></span>
 		</div>
 		<div class="g-cell g-fact">
-			<span class="g-fact__num">5%</span>
-			<span class="g-mono"><?php echo esc_html( le_field( 'home_hero_ai_label' ) ); ?></span>
-		</div>
-		<div class="g-cell g-fact">
 			<div class="g-stack"><?php foreach ( $g_team as $m ) { $mid = $g_id( $m ); if ( has_post_thumbnail( $mid ) ) { echo '<span class="g-stack__item g-stack__item--team">' . get_the_post_thumbnail( $mid, 'le_avatar', array( 'alt' => esc_attr( get_the_title( $mid ) ), 'loading' => 'lazy' ) ) . '</span>'; } } ?></div>
 			<span class="g-mono"><?php echo esc_html( le_field( 'home_hero_team_label' ) ); ?></span>
+		</div>
+		<div class="g-cell g-fact">
+			<span class="g-fact__num">5%</span>
+			<span class="g-mono"><?php echo esc_html( le_field( 'home_hero_ai_label' ) ); ?></span>
 		</div>
 		<div class="g-cell g-caps">
 			<span class="g-label g-mono"><?php echo esc_html( le_field( 'home_hero_caps_label', false, __( 'Capabilities', 'lewisedward' ) ) ); ?></span>
