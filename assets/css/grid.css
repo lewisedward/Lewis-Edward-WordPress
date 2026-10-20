@@ -70,9 +70,9 @@
 .skin-grid .g-header__cta:hover .g-arrow { transform: translateX(4px); }
 
 /* ---- Hero ------------------------------------------------------------------ */
-.skin-grid .g-hero { grid-template-columns: 1fr 1fr; grid-template-rows: minmax(calc(var(--g-mod) * 2), auto) minmax(calc(var(--g-mod) * 2), 1fr) 88px; min-height: calc(100vh - 64px); min-height: calc(100svh - 64px); }
-.skin-grid .g-hero__word { display: flex; flex-direction: column; justify-content: space-between; align-items: stretch; padding: 28px 32px 0 24px; overflow: hidden; gap: 24px; }
-.skin-grid .g-hero__intro { display: flex; flex-direction: column; gap: 22px; max-width: 34ch; font-size: clamp(17px, 1.35vw, 21px); line-height: 1.4; letter-spacing: -0.005em; color: hsl(var(--foreground) / 0.9); }
+.skin-grid .g-hero { grid-template-columns: 1fr 1fr; grid-template-rows: minmax(calc(var(--g-mod) * 2.5), auto) minmax(calc(var(--g-mod) * 2), 1fr) 88px; min-height: calc(100vh - 64px); min-height: calc(100svh - 64px); }
+.skin-grid .g-hero__word { display: flex; flex-direction: column; justify-content: space-between; align-items: stretch; padding: 36px 32px 0 24px; overflow: hidden; gap: 56px; }
+.skin-grid .g-hero__intro { display: flex; flex-direction: column; gap: 22px; max-width: 30ch; font-size: clamp(16px, 1.2vw, 19px); line-height: 1.45; letter-spacing: -0.005em; color: hsl(var(--foreground) / 0.85); }
 .skin-grid .g-hero__intro .g-hero__lede p { margin: 0 0 0.5em; }
 .skin-grid .g-hero__intro .g-line-link { justify-content: flex-start; gap: 14px; margin: 0; }
 .skin-grid .g-hero__word > span { align-self: flex-start; }
