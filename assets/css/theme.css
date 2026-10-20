@@ -93,7 +93,9 @@
 	   (near-black) is 9:1 on it, well clear of AA for the small captions, and
 	   anything brighter tips the surface into highlighter. */
 	--brand-gradient: linear-gradient(135deg, hsl(72 100% 60%) 0%, hsl(80 100% 40%) 100%);
-	/* Outer bloom on the accent panels. */
+	/* Outer bloom on the accent panels. Not applied by default: the light stays
+	   inside the panels, which keep a hard edge against the page. Kept as a
+	   token in case a single surface ever wants it. */
 	--brand-glow: -14px -14px 60px -16px hsl(72 100% 60% / 0.42), 14px 14px 60px -16px hsl(80 100% 40% / 0.5);
 	--secondary: 0 0% 14%;
 	--secondary-foreground: 0 0% 100%;
@@ -1103,7 +1105,6 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 .about-stat {
 	background-size: cover;
 	background-position: center;
-	box-shadow: var(--brand-glow);
 }
 
 .about-stat { display: flex; flex-direction: column; height: 100%; padding: 1.25rem; border-radius: 1rem; border: 1px solid transparent; background: hsl(var(--primary)); background-image: var(--brand-gradient); color: hsl(var(--primary-foreground)); justify-content: center; }
