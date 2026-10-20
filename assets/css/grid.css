@@ -56,7 +56,8 @@
 
 /* ---- Header ---------------------------------------------------------------- */
 .skin-grid .g-header { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: grid; grid-template-columns: 64px 1fr 1fr auto; height: 64px; border-bottom: 1px solid var(--g-line); background: hsl(var(--background) / 0.7); -webkit-backdrop-filter: blur(26px) saturate(1.4); backdrop-filter: blur(26px) saturate(1.4); transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1); }
-.skin-grid .g-header.is-hidden { transform: translateY(-100%); }
+/* The grid header stays put while scrolling (the sticky services intro pins beneath it). */
+.skin-grid .g-header.is-hidden { transform: none; }
 .skin-grid .g-header > * { display: flex; align-items: center; padding: 0 24px; border-right: 1px solid var(--g-line); min-width: 0; }
 .skin-grid .g-header > *:last-child { border-right: 0; }
 .skin-grid .g-header__logo { justify-content: center; padding: 0; background: var(--g-lime); background-image: var(--brand-gradient); color: hsl(var(--primary-foreground)); font-family: var(--font-display); font-weight: 500; font-size: 22px; text-decoration: none; }
@@ -119,7 +120,7 @@
 /* ---- Services -------------------------------------------------------------- */
 .skin-grid .g-svc { grid-template-columns: 1fr 1fr; }
 .skin-grid .g-svc { align-items: start; }
-.skin-grid .g-svc__left { display: flex; flex-direction: column; justify-content: space-between; gap: 32px; padding: 16px 0 36px; background: hsl(0 0% 100% / 0.05); position: sticky; top: 0; min-height: 100vh; min-height: 100svh; padding-top: 80px; }
+.skin-grid .g-svc__left { display: flex; flex-direction: column; justify-content: space-between; gap: 32px; padding: 16px 0 36px; background: hsl(0 0% 100% / 0.05); position: sticky; top: 64px; min-height: calc(100vh - 64px); min-height: calc(100svh - 64px); }
 .skin-grid .g-svc__left > * { position: relative; z-index: 1; }
 .skin-grid .g-svc__bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 .skin-grid .g-svc__bg video { opacity: 0.55; }
