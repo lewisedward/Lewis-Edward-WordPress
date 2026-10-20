@@ -67,8 +67,36 @@
 		// Lime / light surfaces where the white cursor would be invisible; flip
 		// it to near black. [data-surface="light"] already exists in the theme;
 		// [data-cursor-invert] marks lime tiles that aren't full light surfaces.
+		// Two checks: a selector fast-path for surfaces that only turn light on
+		// hover (their computed background is still mid-transition when the
+		// mouseover fires), then a luminance read of the first painted
+		// background colour under the pointer, so any white / pale cell, card
+		// or button is caught without having to be listed here.
+		var LIGHT_SELECTOR = '[data-surface="light"], [data-cursor-invert], .work-filter.is-active, .jr-filter.is-active, .arrow-link__badge, .btn--primary, .btn-cta, .contact-quote__cta, .gform_button, .page-numbers.current, .g-lime, .g-header__cta, .g-header__logo, .g-btn';
+		function lightByBackground(el) {
+			var node = el, depth = 0, cs, m, p, a, l;
+			while (node && node.nodeType === 1 && depth < 14) {
+				cs = window.getComputedStyle(node);
+				m = /rgba?\(([^)]+)\)/.exec(cs.backgroundColor || '');
+				if (m) {
+					p = m[1].split(/[\s,\/]+/).map(parseFloat);
+					a = p.length > 3 ? p[3] : 1;
+					if (a >= 0.5) {
+						l = (0.2126 * p[0] + 0.7152 * p[1] + 0.0722 * p[2]) / 255;
+						return l > 0.55;
+					}
+				}
+				// Photo / video backgrounds: assume dark (the site's default).
+				if (cs.backgroundImage && cs.backgroundImage !== 'none' && cs.backgroundImage.indexOf('gradient') === -1) return false;
+				node = node.parentNode;
+				depth++;
+			}
+			return false;
+		}
 		function onLight(el) {
-			return el && el.closest ? el.closest('[data-surface="light"], [data-cursor-invert], .work-filter.is-active, .jr-filter.is-active, .arrow-link__badge, .btn--primary, .btn-cta, .contact-quote__cta, .gform_button, .page-numbers.current, .g-lime, .g-header__cta, .g-header__logo') : null;
+			if (!el || !el.closest) return false;
+			if (el.closest(LIGHT_SELECTOR)) return true;
+			return lightByBackground(el);
 		}
 
 		document.addEventListener('mouseover', function (e) {
