@@ -2,6 +2,10 @@
 /**
  * Navbar — floating glass pill (desktop) + compact pill & drawer (mobile).
  *
+ * Desktop order: wordmark, availability chip, centred menu, city code + clock,
+ * CTA. The old status widget (available | flag city | clock) is split into the
+ * chip and the clock so the bar has one pill and one button, not two pills.
+ *
  * Faithful port of the React Navbar. The nav links come from the standard WP
  * menu (location "Primary") rendered with LE_Mega_Walker, which turns any
  * parent-with-children into the mega dropdown (as with Services). Logo, status
@@ -28,6 +32,10 @@ $le_cta_label = $le_cta['title'];
 // Availability flag for the status widget.
 $le_available = le_option( 'header_available', true );
 
+// The city shows as a three-letter code beside the clock ("LDN 12:05").
+$le_city      = (string) le_option( 'header_status_city', __( 'London', 'lewisedward' ) );
+$le_city_code = ( 0 === strcasecmp( $le_city, 'London' ) ) ? 'LDN' : strtoupper( substr( $le_city, 0, 3 ) );
+
 $le_menu_args = array(
 	'theme_location' => 'primary',
 	'container'      => false,
@@ -48,29 +56,23 @@ $le_menu_args = array(
 				<img src="<?php echo esc_url( $le_logo_url ); ?>" alt="<?php echo esc_attr( $le_logo_alt ); ?>" width="95" height="29" />
 			</a>
 
-			<span class="navbar__divider" aria-hidden="true"></span>
+			<?php if ( $le_available ) : ?>
+			<span class="status status--chip">
+				<span class="status__group">
+					<span class="status__pulse" aria-hidden="true"><span class="status__ping"></span><span class="status__dot"></span></span>
+					<span class="status__available"><?php echo esc_html( le_option( 'header_available_label', __( 'Available', 'lewisedward' ) ) ); ?></span>
+				</span>
+			</span>
+			<?php endif; ?>
 
 			<div class="navbar__links">
 				<?php wp_nav_menu( $le_menu_args ); ?>
 			</div>
 
-			<span class="navbar__divider navbar__divider--push" aria-hidden="true"></span>
-
-			<?php if ( $le_available ) : ?>
-			<div class="status">
-				<span class="status__group">
-					<span class="status__pulse" aria-hidden="true"><span class="status__ping"></span><span class="status__dot"></span></span>
-					<span class="status__available"><?php echo esc_html( le_option( 'header_available_label', __( 'Available', 'lewisedward' ) ) ); ?></span>
-				</span>
-				<span class="status__sep" aria-hidden="true"></span>
-				<span class="status__group status__group--loc">
-					<img class="status__flag" src="<?php echo esc_url( LE_URI . '/assets/images/united-kingdom.svg' ); ?>" alt="UK" width="14" height="10" />
-					<span class="status__city"><?php echo esc_html( le_option( 'header_status_city', __( 'London', 'lewisedward' ) ) ); ?></span>
-					<span class="status__sep" aria-hidden="true"></span>
-					<time class="status__clock" data-london-clock aria-label="<?php esc_attr_e( 'Current time in London', 'lewisedward' ); ?>">--:--</time>
-				</span>
-			</div>
-			<?php endif; ?>
+			<span class="navbar__time">
+				<span class="navbar__time-city"><?php echo esc_html( $le_city_code ); ?></span>
+				<time class="status__clock" data-london-clock aria-label="<?php esc_attr_e( 'Current time in London', 'lewisedward' ); ?>">--:--</time>
+			</span>
 
 			<a class="btn-cta" href="<?php echo esc_url( $le_cta_url ); ?>"<?php le_link_target_attr( $le_cta ); ?>>
 				<?php echo esc_html( $le_cta_label ); ?><?php echo le_arrow_diagonal_svg( 14 ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
@@ -82,6 +84,14 @@ $le_menu_args = array(
 			<a class="navbar__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php esc_attr_e( 'Lewis Edward — home', 'lewisedward' ); ?>">
 				<img src="<?php echo esc_url( $le_logo_url ); ?>" alt="<?php echo esc_attr( $le_logo_alt ); ?>" width="95" height="29" />
 			</a>
+			<?php if ( $le_available ) : ?>
+			<span class="status status--chip status--chip-mobile">
+				<span class="status__group">
+					<span class="status__pulse" aria-hidden="true"><span class="status__ping"></span><span class="status__dot"></span></span>
+					<span class="status__available"><?php echo esc_html( le_option( 'header_available_label', __( 'Available', 'lewisedward' ) ) ); ?></span>
+				</span>
+			</span>
+			<?php endif; ?>
 			<button class="nav-burger" type="button" data-nav-toggle aria-expanded="false" aria-controls="mobile-drawer" aria-label="<?php esc_attr_e( 'Toggle menu', 'lewisedward' ); ?>">
 				<span class="nav-burger__lines"><span></span><span></span><span></span></span>
 			</button>
