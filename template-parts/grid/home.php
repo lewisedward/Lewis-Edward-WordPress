@@ -24,12 +24,16 @@ $g_id = static function ( $item ) {
 };
 
 // Hero.
-$g_word       = le_option( 'grid_hero_word', 'Lewis' );
+$g_word       = le_field( 'grid_hero_word', false, le_option( 'grid_hero_word', 'Lewis' ) );
 $g_eyebrow    = le_field( 'home_hero_eyebrow' );
 $g_lede       = le_field( 'home_hero_lede' );
 $g_hero_cta   = le_link( 'home_hero_editorial_cta', '/contact', __( 'Get in touch', 'lewisedward' ) );
 $g_poster     = LE_URI . '/assets/videos/macbook-easyjet-poster.jpg?ver=' . le_asset_ver( 'assets/videos/macbook-easyjet-poster.jpg' );
 $g_video      = LE_URI . '/assets/videos/macbook-easyjet.mp4?ver=' . le_asset_ver( 'assets/videos/macbook-easyjet.mp4' );
+$g_ov_file    = le_field( 'grid_hero_media_video' );
+$g_ov_img     = le_field( 'grid_hero_media_poster' );
+if ( is_array( $g_ov_file ) && ! empty( $g_ov_file['url'] ) ) { $g_video = $g_ov_file['url']; }
+if ( is_array( $g_ov_img ) && ! empty( $g_ov_img['url'] ) ) { $g_poster = $g_ov_img['url']; }
 $g_portrait   = le_field( 'home_about_portrait' );
 $g_portrait   = ( is_array( $g_portrait ) && ! empty( $g_portrait['url'] ) ) ? $g_portrait['url'] : LE_URI . '/assets/images/lewis-wordpress-developer.jpg';
 $g_caps       = le_field( 'home_hero_capabilities' );
@@ -86,12 +90,12 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 			</div>
 			<span aria-hidden="true"><?php echo esc_html( $g_word ); ?></span>
 		</div>
-		<?php $g_ejt = get_page_by_path( 'easyjet-traveller', OBJECT, 'work' ); $g_ejt_url = $g_ejt ? get_permalink( $g_ejt ) : home_url( '/work/' ); ?>
-		<a class="g-cell g-ph g-ph--mono g-hero__media" href="<?php echo esc_url( $g_ejt_url ); ?>" aria-label="<?php esc_attr_e( 'easyJet Traveller case study', 'lewisedward' ); ?>">
+		<?php $g_ejt_id = (int) le_field( 'grid_hero_media_link' ); $g_ejt = $g_ejt_id ? get_post( $g_ejt_id ) : get_page_by_path( 'easyjet-traveller', OBJECT, 'work' ); $g_ejt_url = $g_ejt ? get_permalink( $g_ejt ) : home_url( '/work/' ); $g_ejt_cap = le_field( 'grid_hero_media_caption', false, $g_ejt ? get_the_title( $g_ejt ) : __( 'easyJet Traveller', 'lewisedward' ) ); ?>
+		<a class="g-cell g-ph g-ph--mono g-hero__media" href="<?php echo esc_url( $g_ejt_url ); ?>" aria-label="<?php echo esc_attr( $g_ejt_cap ); ?>">
 			<video class="g-ph__video" autoplay muted loop playsinline preload="metadata" poster="<?php echo esc_url( $g_poster ); ?>"><source src="<?php echo esc_url( $g_video ); ?>" type="video/mp4"></video>
-			<span class="g-cap g-mono"><?php esc_html_e( 'easyJet Traveller', 'lewisedward' ); ?><?php echo le_grid_arrow_diag(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+			<span class="g-cap g-mono"><?php echo esc_html( $g_ejt_cap ); ?><?php echo le_grid_arrow_diag(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 		</a>
-		<div class="g-cell g-ph g-ph--mono g-hero__portrait"><img src="<?php echo esc_url( $g_portrait ); ?>" alt="" loading="lazy" /><span class="g-cap g-mono"><?php esc_html_e( 'Lewis — London', 'lewisedward' ); ?></span></div>
+		<div class="g-cell g-ph g-ph--mono g-hero__portrait"><img src="<?php echo esc_url( $g_portrait ); ?>" alt="" loading="lazy" /><span class="g-cap g-mono"><?php echo esc_html( le_field( 'grid_hero_portrait_caption', false, __( 'Lewis — London', 'lewisedward' ) ) ); ?></span></div>
 		<div class="g-cell g-lime g-hero__title">
 			<?php if ( $g_eyebrow ) : ?><span class="g-mono g-hero__eyebrow"><?php echo esc_html( $g_eyebrow ); ?></span><?php endif; ?>
 			<h1><?php echo esc_html( le_field( 'home_hero_title_1' ) ); ?> <?php echo esc_html( le_field( 'home_hero_title_1_accent' ) ); ?> <?php echo esc_html( le_field( 'home_hero_title_2_pre' ) ); ?> &amp; <?php echo esc_html( le_field( 'home_hero_title_2_post' ) ); ?></h1>
@@ -99,7 +103,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 		</div>
 			<?php $g_ticker = array_filter( $g_logos, function ( $r ) { return ! empty( $r['logo']['url'] ); } ); if ( $g_ticker ) : ?>
 		<div class="g-cell g-hero__ticker" aria-label="<?php esc_attr_e( 'Clients', 'lewisedward' ); ?>">
-			<span class="g-hero__ticker-label g-mono"><?php esc_html_e( 'Trusted by', 'lewisedward' ); ?></span>
+			<span class="g-hero__ticker-label g-mono"><?php echo esc_html( le_field( 'grid_ticker_label', false, __( 'Trusted by', 'lewisedward' ) ) ); ?></span>
 			<div class="g-ticker"><div class="g-ticker__track">
 				<?php for ( $pass = 0; $pass < 2; $pass++ ) : ?>
 				<div class="g-ticker__set"<?php echo $pass ? ' aria-hidden="true"' : ''; ?>>
@@ -168,7 +172,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 		<?php endforeach; ?>
 		<a class="g-cell g-work__all" href="<?php echo esc_url( home_url( '/work' ) ); ?>">
 			<span class="g-mono"><?php echo esc_html( str_pad( (string) wp_count_posts( 'work' )->publish, 2, '0', STR_PAD_LEFT ) ); ?> <?php esc_html_e( 'projects', 'lewisedward' ); ?></span>
-			<span class="g-work__all-title"><?php esc_html_e( 'All work', 'lewisedward' ); ?></span>
+			<span class="g-work__all-title"><?php echo esc_html( le_field( 'grid_work_all_label', false, __( 'All work', 'lewisedward' ) ) ); ?></span>
 			<svg class="g-work__all-arrow" viewBox="0 0 120 120" aria-hidden="true" focusable="false"><path d="M8 8h104v104M112 8 8 112"/></svg>
 		</a>
 	</section>
@@ -189,7 +193,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 				}
 			}
 			if ( $g_sectors ) : ?>
-			<span class="g-clients__side-title"><?php esc_html_e( 'Sectors we build for', 'lewisedward' ); ?></span>
+			<span class="g-clients__side-title"><?php echo esc_html( le_field( 'grid_clients_side_title', false, __( 'Sectors we build for', 'lewisedward' ) ) ); ?></span>
 			<ul class="g-clients__sectors">
 				<?php foreach ( $g_sectors as $i => $sec ) : ?>
 				<li><span class="g-mono"><?php echo esc_html( str_pad( (string) ( $i + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span><span><?php echo esc_html( $sec ); ?></span></li>
@@ -200,7 +204,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 		<div class="g-cell g-clients__copy">
 			<h2><?php echo esc_html( le_field( 'home_clients_title_pre' ) ); ?> <span class="g-accent"><?php echo esc_html( (string) (int) le_field( 'home_clients_counter' ) ); ?>+</span> <?php echo esc_html( le_field( 'home_clients_title_post' ) ); ?></h2>
 			<p><?php echo esc_html( le_field( 'home_clients_lede' ) ); ?></p>
-			<a class="g-btn g-mono" href="<?php echo esc_url( home_url( '/work' ) ); ?>"><span><?php esc_html_e( 'Selected work', 'lewisedward' ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+			<a class="g-btn g-mono" href="<?php echo esc_url( home_url( '/work' ) ); ?>"><span><?php echo esc_html( le_field( 'grid_clients_button', false, __( 'Selected work', 'lewisedward' ) ) ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 		</div>
 		<div class="g-cell g-clients__list">
 			<?php foreach ( $g_logos as $row ) : $img = isset( $row['logo'] ) ? $row['logo'] : null; if ( ! $img || empty( $img['url'] ) ) { continue; } $name = ! empty( $row['name'] ) ? $row['name'] : ( $img['alt'] ?? '' ); ?>
@@ -212,7 +216,8 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 	<?php /* ---- Services (h2 + h3s) ---- */ ?>
 	<section class="g-row g-svc" aria-label="<?php esc_attr_e( 'Services', 'lewisedward' ); ?>">
 		<div class="g-cell g-svc__left">
-			<span class="g-svc__bg g-ph g-ph--mono" aria-hidden="true"><video class="g-ph__video" autoplay muted loop playsinline preload="metadata" poster="<?php echo esc_url( LE_URI . '/assets/videos/typing-macbook-poster.jpg' ); ?>"><source src="<?php echo esc_url( LE_URI . '/assets/videos/typing-macbook-sm.mp4?ver=' . le_asset_ver( 'assets/videos/typing-macbook-sm.mp4' ) ); ?>" type="video/mp4"></video></span>
+			<?php $g_sv = le_field( 'grid_services_video' ); $g_sp = le_field( 'grid_services_poster' ); $g_sv = ( is_array( $g_sv ) && ! empty( $g_sv['url'] ) ) ? $g_sv['url'] : LE_URI . '/assets/videos/typing-macbook-sm.mp4?ver=' . le_asset_ver( 'assets/videos/typing-macbook-sm.mp4' ); $g_sp = ( is_array( $g_sp ) && ! empty( $g_sp['url'] ) ) ? $g_sp['url'] : LE_URI . '/assets/videos/typing-macbook-poster.jpg'; ?>
+			<span class="g-svc__bg g-ph g-ph--mono" aria-hidden="true"><video class="g-ph__video" autoplay muted loop playsinline preload="metadata" poster="<?php echo esc_url( $g_sp ); ?>"><source src="<?php echo esc_url( $g_sv ); ?>" type="video/mp4"></video></span>
 			<span class="g-label g-mono g-svc__eyebrow"><span><?php echo esc_html( le_field( 'home_services_eyebrow', false, __( 'Services', 'lewisedward' ) ) ); ?></span><span>01 &mdash; <?php echo esc_html( str_pad( (string) count( $g_services ), 2, '0', STR_PAD_LEFT ) ); ?></span></span>
 			<h2 class="g-svc__title"><?php echo esc_html( le_field( 'home_services_title' ) ); ?></h2>
 			<div class="g-svc__foot">
@@ -267,7 +272,8 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 			<div class="g-about__text">
 			<h2><?php echo esc_html( le_field( 'home_about_headline_1' ) ); ?> <?php echo esc_html( le_field( 'home_about_headline_muted' ) ); ?> <?php echo esc_html( le_field( 'home_about_headline_since' ) ); ?> <?php echo esc_html( le_field( 'home_about_headline_year' ) ); ?></h2>
 			<p><?php echo esc_html( le_field( 'home_about_lede' ) ); ?></p>
-			<a class="g-line-link g-mono g-about__more" href="<?php echo esc_url( home_url( '/about/' ) ); ?>"><span><?php esc_html_e( 'More about Lewis', 'lewisedward' ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+			<?php $g_more = le_link( 'grid_about_more', '/about/', __( 'More about Lewis', 'lewisedward' ), false ); ?>
+			<a class="g-line-link g-mono g-about__more" href="<?php echo esc_url( $g_more['url'] ); ?>"<?php le_link_target_attr( $g_more ); ?>><span><?php echo esc_html( $g_more['title'] ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 			</div>
 			<?php if ( $g_stats ) : ?>
 			<div class="g-stats">
@@ -320,15 +326,15 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 	<?php $g_posts = get_posts( array( 'post_type' => 'post', 'post_status' => 'publish', 'numberposts' => 3, 'no_found_rows' => true ) ); if ( $g_posts ) : $g_journal_url = get_option( 'page_for_posts' ) ? get_permalink( (int) get_option( 'page_for_posts' ) ) : home_url( '/journal/' ); ?>
 	<section class="g-row g-journal" aria-label="<?php esc_html_e( 'Journal', 'lewisedward' ); ?>">
 		<div class="g-cell g-journal__intro">
-			<span class="g-label g-mono"><?php esc_html_e( 'Journal', 'lewisedward' ); ?></span>
-			<h2><?php esc_html_e( 'Notes from the studio', 'lewisedward' ); ?></h2>
-			<a class="g-line-link g-mono" href="<?php echo esc_url( $g_journal_url ); ?>"><span><?php esc_html_e( 'All articles', 'lewisedward' ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+			<span class="g-label g-mono"><?php echo esc_html( le_field( 'grid_journal_eyebrow', false, __( 'Journal', 'lewisedward' ) ) ); ?></span>
+			<h2><?php echo esc_html( le_field( 'grid_journal_title', false, __( 'Notes from the studio', 'lewisedward' ) ) ); ?></h2>
+			<a class="g-line-link g-mono" href="<?php echo esc_url( $g_journal_url ); ?>"><span><?php echo esc_html( le_field( 'grid_journal_all', false, __( 'All articles', 'lewisedward' ) ) ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 		</div>
 		<?php foreach ( $g_posts as $g_post ) : ?>
 		<a class="g-cell g-journal__item" href="<?php echo esc_url( get_permalink( $g_post ) ); ?>">
 			<span class="g-journal__meta g-mono"><time datetime="<?php echo esc_attr( get_the_date( 'c', $g_post ) ); ?>"><?php echo esc_html( get_the_date( 'M Y', $g_post ) ); ?></time><?php $g_cat = get_the_category( $g_post->ID ); if ( $g_cat ) : ?><span><?php echo esc_html( $g_cat[0]->name ); ?></span><?php endif; ?></span>
 			<span class="g-journal__title"><?php echo esc_html( get_the_title( $g_post ) ); ?></span>
-			<span class="g-journal__foot g-mono"><span><?php esc_html_e( 'Read', 'lewisedward' ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+			<span class="g-journal__foot g-mono"><span><?php echo esc_html( le_field( 'grid_journal_read', false, __( 'Read', 'lewisedward' ) ) ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 		</a>
 		<?php endforeach; ?>
 	</section>

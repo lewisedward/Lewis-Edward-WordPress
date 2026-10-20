@@ -45,14 +45,14 @@ $le_menu      = function ( $location, $fallback, $ensure = null ) {
 <footer class="g-footer">
 	<div class="g-row g-footer__top">
 		<div class="g-cell g-footer__line">
-			<span class="g-label g-mono"><?php esc_html_e( 'Est. 2011', 'lewisedward' ); ?> &mdash; <?php echo esc_html( le_option( 'footer_location', __( 'London', 'lewisedward' ) ) ); ?></span>
+			<span class="g-label g-mono"><?php echo esc_html( le_option( 'grid_footer_est', sprintf( '%s — %s', __( 'Est. 2011', 'lewisedward' ), le_option( 'footer_location', __( 'London', 'lewisedward' ) ) ) ) ); ?></span>
 			<span class="g-footer__line-text"><?php echo esc_html( le_option( 'grid_footer_line', __( 'Raise your game online', 'lewisedward' ) ) ); ?></span>
 		</div>
-		<div class="g-cell g-footer__nav"><span class="g-footer__heading g-mono"><?php esc_html_e( 'Explore', 'lewisedward' ); ?></span><?php $le_menu( 'footer_discover', array( array( 'Services', '/services' ), array( 'Work', '/work' ), array( 'About', '/about' ), array( 'Journal', '/journal' ) ), array( __( 'Services', 'lewisedward' ), '/services' ) ); ?></div>
-		<div class="g-cell g-footer__nav"><span class="g-footer__heading g-mono"><?php esc_html_e( 'Services', 'lewisedward' ); ?></span><?php $le_menu( 'footer_services', array( array( 'Web Design', '/services/web-design' ), array( 'Web Development', '/services/web-development' ), array( 'Website Support', '/services/website-support' ) ) ); ?></div>
+		<div class="g-cell g-footer__nav"><span class="g-footer__heading g-mono"><?php echo esc_html( le_option( 'grid_footer_explore_heading', __( 'Explore', 'lewisedward' ) ) ); ?></span><?php $le_menu( 'footer_discover', array( array( 'Services', '/services' ), array( 'Work', '/work' ), array( 'About', '/about' ), array( 'Journal', '/journal' ) ), array( __( 'Services', 'lewisedward' ), '/services' ) ); ?></div>
+		<div class="g-cell g-footer__nav"><span class="g-footer__heading g-mono"><?php echo esc_html( le_option( 'grid_footer_services_heading', __( 'Services', 'lewisedward' ) ) ); ?></span><?php $le_menu( 'footer_services', array( array( 'Web Design', '/services/web-design' ), array( 'Web Development', '/services/web-development' ), array( 'Website Support', '/services/website-support' ) ) ); ?></div>
 		<div class="g-cell g-footer__clock">
 			<div class="g-footer__time"><span class="g-footer__clockface" data-london-clockface aria-hidden="true"><span></span></span><span><?php echo esc_html( le_option( 'footer_location', __( 'London', 'lewisedward' ) ) ); ?><span class="g-mono" data-london-clock>--:--</span></span></div>
-			<div class="g-footer__status g-mono"><i class="g-footer__pulse" aria-hidden="true"></i><?php esc_html_e( 'Available for new projects', 'lewisedward' ); ?></div>
+			<?php $le_status = le_option( 'grid_footer_status', __( 'Available for new projects', 'lewisedward' ) ); if ( $le_status ) : ?><div class="g-footer__status g-mono"><i class="g-footer__pulse" aria-hidden="true"></i><?php echo esc_html( $le_status ); ?></div><?php endif; ?>
 		</div>
 	</div>
 	<div class="g-row g-footer__mid">

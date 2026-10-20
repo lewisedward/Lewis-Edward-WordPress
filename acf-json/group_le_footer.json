@@ -137,6 +137,123 @@
                 "id": ""
             },
             "return_format": "array"
+        },
+        {
+            "key": "field_grid_tab_footer",
+            "label": "Grid layout",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_grid_footer_est",
+            "label": "Est. label",
+            "name": "grid_footer_est",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Small label at the top of the footer statement cell.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Est. 2011 — London",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_grid_footer_line",
+            "label": "Footer statement",
+            "name": "grid_footer_line",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Raise your game online",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_grid_footer_explore_heading",
+            "label": "Explore menu heading",
+            "name": "grid_footer_explore_heading",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Explore",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_grid_footer_services_heading",
+            "label": "Services menu heading",
+            "name": "grid_footer_services_heading",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Services",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_grid_footer_status",
+            "label": "Availability line",
+            "name": "grid_footer_status",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Empty hides the pulse line.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "34",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Available for new projects",
+            "prepend": "",
+            "append": ""
         }
     ],
     "location": [
@@ -157,5 +274,5 @@
     "active": true,
     "description": "Footer labels & links. Blank = default shown in grey.",
     "show_in_rest": 0,
-    "modified": 1787661000
+    "modified": 1792526971
 }
