@@ -80,10 +80,11 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 	<?php /* ---- Hero: h1 is the real title; the giant word is decoration ---- */ ?>
 	<section class="g-row g-hero" aria-label="<?php esc_attr_e( 'Homepage hero', 'lewisedward' ); ?>">
 		<div class="g-cell g-hero__word" aria-hidden="true"><span><?php echo esc_html( $g_word ); ?></span></div>
-		<div class="g-cell g-ph g-ph--mono g-hero__media">
+		<?php $g_ejt = get_page_by_path( 'easyjet-traveller', OBJECT, 'work' ); $g_ejt_url = $g_ejt ? get_permalink( $g_ejt ) : home_url( '/work/' ); ?>
+		<a class="g-cell g-ph g-ph--mono g-hero__media" href="<?php echo esc_url( $g_ejt_url ); ?>" aria-label="<?php esc_attr_e( 'easyJet Traveller case study', 'lewisedward' ); ?>">
 			<video class="g-ph__video" autoplay muted loop playsinline preload="metadata" poster="<?php echo esc_url( $g_poster ); ?>"><source src="<?php echo esc_url( $g_video ); ?>" type="video/mp4"></video>
-			<span class="g-cap g-mono"><?php esc_html_e( 'easyJet Traveller — WordPress', 'lewisedward' ); ?></span>
-		</div>
+			<span class="g-cap g-mono"><?php esc_html_e( 'easyJet Traveller', 'lewisedward' ); ?><?php echo le_grid_arrow_diag(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+		</a>
 		<div class="g-cell g-ph g-ph--mono g-hero__portrait"><img src="<?php echo esc_url( $g_portrait ); ?>" alt="" loading="lazy" /><span class="g-cap g-mono"><?php esc_html_e( 'Lewis — London', 'lewisedward' ); ?></span></div>
 		<div class="g-cell g-lime g-hero__title">
 			<?php if ( $g_eyebrow ) : ?><span class="g-mono g-hero__eyebrow"><?php echo esc_html( $g_eyebrow ); ?></span><?php endif; ?>
@@ -104,7 +105,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 			<span class="g-mono"><?php echo esc_html( le_field( 'home_hero_metric_label' ) ); ?></span>
 		</div>
 		<div class="g-cell g-fact">
-			<div class="g-stack"><?php foreach ( array_slice( $g_hero_logos, 0, 4 ) as $c ) { $l = isset( $c['logo'] ) ? $c['logo'] : null; if ( $l && ! empty( $l['url'] ) ) { $bg = ! empty( $c['bg_color'] ) ? ' style="background-color:' . esc_attr( trim( (string) $c['bg_color'] ) ) . '"' : ''; echo '<span class="g-stack__item"' . $bg . '><img src="' . esc_url( $l['url'] ) . '" alt="" loading="lazy" /></span>'; } } ?><span class="g-stack__item g-stack__item--count"><?php echo esc_html( le_field( 'home_hero_projects_count' ) ); ?></span></div>
+			<div class="g-stack"><?php foreach ( array_slice( $g_hero_logos, 0, 4 ) as $c ) { $l = isset( $c['logo'] ) ? $c['logo'] : null; if ( $l && ! empty( $l['url'] ) ) { echo '<span class="g-stack__item g-stack__item--logo"><img src="' . esc_url( $l['url'] ) . '" alt="" loading="lazy" /></span>'; } } ?><span class="g-stack__item g-stack__item--count"><?php echo esc_html( le_field( 'home_hero_projects_count' ) ); ?></span></div>
 			<span class="g-mono"><?php echo esc_html( le_field( 'home_hero_projects_label' ) ); ?></span>
 		</div>
 		<div class="g-cell g-fact">
