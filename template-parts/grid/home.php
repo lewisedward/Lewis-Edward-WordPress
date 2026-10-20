@@ -104,7 +104,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 				<?php for ( $pass = 0; $pass < 2; $pass++ ) : ?>
 				<div class="g-ticker__set"<?php echo $pass ? ' aria-hidden="true"' : ''; ?>>
 					<?php foreach ( $g_ticker as $row ) : ?>
-					<img src="<?php echo esc_url( $row['logo']['url'] ); ?>" alt="<?php echo esc_attr( $pass ? '' : ( $row['name'] ?? '' ) ); ?>" width="<?php echo esc_attr( (string) ( $row['logo']['width'] ?? '' ) ); ?>" height="<?php echo esc_attr( (string) ( $row['logo']['height'] ?? '' ) ); ?>" />
+					<img src="<?php echo esc_url( le_grid_logo( $row['logo']['url'] ) ); ?>" alt="<?php echo esc_attr( $pass ? '' : ( $row['name'] ?? '' ) ); ?>" width="<?php echo esc_attr( (string) ( $row['logo']['width'] ?? '' ) ); ?>" height="<?php echo esc_attr( (string) ( $row['logo']['height'] ?? '' ) ); ?>" />
 					<?php endforeach; ?>
 				</div>
 				<?php endfor; ?>
@@ -121,7 +121,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 			<span class="g-mono"><?php echo esc_html( le_field( 'home_hero_metric_label' ) ); ?></span>
 		</div>
 		<div class="g-cell g-fact">
-			<div class="g-stack"><?php foreach ( array_slice( $g_hero_logos, 0, 4 ) as $c ) { $l = isset( $c['logo'] ) ? $c['logo'] : null; if ( $l && ! empty( $l['url'] ) ) { echo '<span class="g-stack__item g-stack__item--logo"><img src="' . esc_url( $l['url'] ) . '" alt="" loading="lazy" /></span>'; } } ?><span class="g-stack__item g-stack__item--count"><?php echo esc_html( le_field( 'home_hero_projects_count' ) ); ?></span></div>
+			<div class="g-stack"><?php foreach ( array_slice( $g_hero_logos, 0, 4 ) as $c ) { $l = isset( $c['logo'] ) ? $c['logo'] : null; if ( $l && ! empty( $l['url'] ) ) { echo '<span class="g-stack__item g-stack__item--logo"><img src="' . esc_url( le_grid_logo( $l['url'] ) ) . '" alt="" loading="lazy" /></span>'; } } ?><span class="g-stack__item g-stack__item--count"><?php echo esc_html( le_field( 'home_hero_projects_count' ) ); ?></span></div>
 			<span class="g-mono"><?php echo esc_html( le_field( 'home_hero_projects_label' ) ); ?></span>
 		</div>
 		<div class="g-cell g-fact">
@@ -202,7 +202,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 		</div>
 		<div class="g-cell g-clients__list">
 			<?php foreach ( $g_logos as $row ) : $img = isset( $row['logo'] ) ? $row['logo'] : null; if ( ! $img || empty( $img['url'] ) ) { continue; } $name = ! empty( $row['name'] ) ? $row['name'] : ( $img['alt'] ?? '' ); ?>
-			<div class="g-crow"><img src="<?php echo esc_url( $img['url'] ); ?>" alt="<?php echo esc_attr( $name ); ?>" loading="lazy" /></div>
+			<div class="g-crow"><img src="<?php echo esc_url( le_grid_logo( $img['url'] ) ); ?>" alt="<?php echo esc_attr( $name ); ?>" loading="lazy" /></div>
 			<?php endforeach; ?>
 		</div>
 	</section>
@@ -306,7 +306,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 			?>
 			<figure class="g-tst__item<?php echo 0 === $i ? ' is-active' : ''; ?>">
 				<blockquote class="g-tst__quote"><span class="g-tst__mark" aria-hidden="true">&ldquo;</span><p><?php echo esc_html( le_field( 'testimonial_quote', $tid ) ); ?></p></blockquote>
-				<figcaption class="g-tst__meta"><?php if ( $g_tlogo ) : ?><img class="g-tst__logo" src="<?php echo esc_url( $g_tlogo ); ?>" alt="<?php echo esc_attr( $co ); ?>" loading="lazy" /><?php endif; ?><?php if ( has_post_thumbnail( $tid ) ) { echo get_the_post_thumbnail( $tid, 'le_avatar', array( 'class' => 'g-tst__avatar', 'loading' => 'lazy' ) ); } ?><span><?php echo esc_html( le_field( 'testimonial_author', $tid ) ); ?></span><span class="g-mono"><?php echo esc_html( trim( $role . ( $co ? ' — ' . $co : '' ) ) ); ?></span></figcaption>
+				<figcaption class="g-tst__meta"><?php if ( $g_tlogo ) : ?><img class="g-tst__logo" src="<?php echo esc_url( le_grid_logo( $g_tlogo ) ); ?>" alt="<?php echo esc_attr( $co ); ?>" loading="lazy" /><?php endif; ?><?php if ( has_post_thumbnail( $tid ) ) { echo get_the_post_thumbnail( $tid, 'le_avatar', array( 'class' => 'g-tst__avatar', 'loading' => 'lazy' ) ); } ?><span><?php echo esc_html( le_field( 'testimonial_author', $tid ) ); ?></span><span class="g-mono"><?php echo esc_html( trim( $role . ( $co ? ' — ' . $co : '' ) ) ); ?></span></figcaption>
 			</figure>
 			<?php endforeach; ?>
 		</div>

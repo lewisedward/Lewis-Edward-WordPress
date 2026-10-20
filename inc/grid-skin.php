@@ -103,6 +103,24 @@ function le_grid_arrow_diag() {
 }
 
 /**
+ * A client logo URL for the grid skin: when the theme carries a hand-made mono
+ * version (assets/images/clients/<file>-mono.svg), use that instead of the
+ * uploaded original, which may not survive the one-colour filter.
+ *
+ * @param string $url Uploaded logo URL.
+ * @return string
+ */
+function le_grid_logo( $url ) {
+	$base = pathinfo( (string) wp_parse_url( $url, PHP_URL_PATH ), PATHINFO_FILENAME );
+	$base = preg_replace( '/-(scaled|\d+x\d+)$/', '', strtolower( $base ) );
+	$rel  = 'assets/images/clients/' . $base . '-mono.svg';
+	if ( $base && file_exists( LE_DIR . '/' . $rel ) ) {
+		return LE_URI . '/' . $rel . '?ver=' . le_asset_ver( $rel );
+	}
+	return $url;
+}
+
+/**
  * A line-drawn graphic for a service card, picked from the service's slug and
  * title (falling back to the card's position). Hairline strokes, no fills,
  * 120 x 120 — the same vocabulary as the hero blooms and halftone.
