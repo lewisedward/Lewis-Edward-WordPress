@@ -16,7 +16,7 @@ $le_cta       = le_link( 'header_cta', '/quotes', __( 'Get a Quote', 'lewisedwar
 $le_available = le_option( 'header_available', true );
 ?>
 <header class="g-header" data-header role="banner">
-	<a class="g-header__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php esc_attr_e( 'Lewis Edward — home', 'lewisedward' ); ?>">L.</a>
+	<a class="g-header__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php esc_attr_e( 'Lewis Edward — home', 'lewisedward' ); ?>"><span class="g-header__mark" aria-hidden="true">L<i></i></span></a>
 	<div class="g-header__meta g-mono">
 		<?php if ( $le_available ) : ?><span class="g-header__dot" aria-hidden="true"></span><span><?php echo esc_html( le_option( 'header_available_label', __( 'Available', 'lewisedward' ) ) ); ?></span><span class="g-header__sep" aria-hidden="true">/</span><?php endif; ?>
 		<time data-london-clock aria-label="<?php esc_attr_e( 'Current time in London', 'lewisedward' ); ?>">--:--</time> <span>LDN</span>

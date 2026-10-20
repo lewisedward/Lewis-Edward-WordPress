@@ -408,6 +408,9 @@
 .skin-grid .g-hero__word > span { font-weight: 500; letter-spacing: -0.06em; }
 .skin-grid .g-svc__title { font-weight: 600; letter-spacing: -0.05em; }
 .skin-grid .g-header__logo { font-weight: 600; }
+.skin-grid .g-header__mark { display: inline-flex; align-items: flex-end; gap: 3px; font-size: 27px; line-height: 1; letter-spacing: -0.04em; transform: translateY(-1px); transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.skin-grid .g-header__mark i { display: block; width: 6px; height: 6px; margin-bottom: 2px; background: currentColor; transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.skin-grid .g-header__logo:hover .g-header__mark i { transform: translateY(-14px); }
 .skin-grid .g-about__prose, .skin-grid .g-tst__quote { font-weight: 300; }
 .skin-grid .g-mono { letter-spacing: 0.04em; }
 
@@ -468,12 +471,12 @@
 .skin-grid.g-js .g-row.is-in::after { transform: scaleX(1); opacity: 0; }
 .skin-grid .g-row { position: relative; }
 .skin-grid .g-ticker:hover .g-ticker__track { animation-play-state: paused; }
-.skin-grid .g-srv__wire .g-wire__lime { transform-box: view-box; transform-origin: 60px 60px; }
-.skin-grid .g-srv:hover .g-wire__lime { animation: g-sweep 1.8s linear infinite; }
-@keyframes g-sweep { to { transform: rotate(360deg); } }
+.skin-grid .g-wire--pulse { stroke-dasharray: 110; stroke-dashoffset: 0; }
+.skin-grid .g-srv:hover .g-wire--pulse { animation: g-pulse-draw 1.6s linear infinite; }
+@keyframes g-pulse-draw { from { stroke-dashoffset: 110; } to { stroke-dashoffset: -110; } }
 @media (prefers-reduced-motion: reduce) {
 	.skin-grid.g-js .g-row > .g-cell, .skin-grid.g-js .g-row > a.g-cell { opacity: 1; transform: none; transition: none; }
 	.skin-grid.g-js .g-row::after { display: none; }
-	.skin-grid .g-srv:hover .g-wire__lime { animation: none; }
+	.skin-grid .g-srv:hover .g-wire--pulse { animation: none; }
 	.skin-grid .g-srv:hover .g-srv__wire { transform: none; }
 }

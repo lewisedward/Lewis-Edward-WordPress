@@ -133,18 +133,14 @@ function le_grid_wire( $hint, $i = 0 ) {
 		case 'build': // isometric wireframe cube with an inset cube: built from scratch.
 			$body = '<path d="M60 12 102 36v48L60 108 18 84V36z"/><path d="M60 60 18 36M60 60l42-24M60 60v48"/><path d="M60 36 81 48v24L60 84 39 72V48z"/><path d="M60 60 39 48M60 60l21-12M60 60v24"/><circle class="g-wire__dot" cx="60" cy="12" r="2.5"/>';
 			break;
-		case 'monitor': // dial with ticks and a sweep: proactive support.
+		case 'monitor': // uptime pulse inside a ring: proactive support.
 			$ticks = '';
-			for ( $t = 0; $t < 24; $t++ ) {
-				$a  = $t * 15;
-				$r1 = ( 0 === $t % 6 ) ? 42 : 46;
-				$x1 = 60 + $r1 * cos( deg2rad( $a ) );
-				$y1 = 60 + $r1 * sin( deg2rad( $a ) );
-				$x2 = 60 + 50 * cos( deg2rad( $a ) );
-				$y2 = 60 + 50 * sin( deg2rad( $a ) );
-				$ticks .= sprintf( 'M%.1f %.1fL%.1f %.1f', $x1, $y1, $x2, $y2 );
+			for ( $t = 0; $t < 36; $t++ ) {
+				$a  = $t * 10;
+				$r1 = ( 0 === $t % 9 ) ? 44 : 47.5;
+				$ticks .= sprintf( 'M%.1f %.1fL%.1f %.1f', 60 + $r1 * cos( deg2rad( $a ) ), 60 + $r1 * sin( deg2rad( $a ) ), 60 + 50 * cos( deg2rad( $a ) ), 60 + 50 * sin( deg2rad( $a ) ) );
 			}
-			$body = '<circle cx="60" cy="60" r="50"/><circle cx="60" cy="60" r="32" stroke-dasharray="2 4"/><circle cx="60" cy="60" r="14"/><path d="' . $ticks . '"/><path class="g-wire__lime" d="M60 60 92 28"/><path d="M60 60A32 32 0 0 1 92 60" stroke-dasharray="1 3"/><circle class="g-wire__dot" cx="60" cy="60" r="2.5"/>';
+			$body = '<circle cx="60" cy="60" r="50"/><path d="' . $ticks . '" stroke-opacity="0.7"/><path d="M14 60h22" stroke-dasharray="1 3"/><path d="M84 60h22" stroke-dasharray="1 3"/><path class="g-wire__lime g-wire--pulse" d="M36 60h8l6-18 8 36 6-18h20"/><circle class="g-wire__dot" cx="84" cy="60" r="2.5"/>';
 			break;
 		case 'overlap': // two rings sharing a hatched lens: partnership.
 			$hatch = '';
