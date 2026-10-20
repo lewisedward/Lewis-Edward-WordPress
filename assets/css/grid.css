@@ -260,10 +260,10 @@
 .skin-grid .g-fact__num { font-family: var(--font-display); font-weight: 300; font-size: clamp(56px, 5.5vw, 84px); line-height: 1; letter-spacing: -0.03em; background-image: var(--brand-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .skin-grid .g-fact > .g-mono { color: hsl(var(--foreground) / 0.6); }
 .skin-grid .g-stack { display: flex; }
-.skin-grid .g-stack__item { width: 2.5rem; height: 2.5rem; border-radius: 999px; border: 1px solid hsl(var(--foreground) / 0.35); background: hsl(var(--foreground) / 0.1); display: inline-flex; align-items: center; justify-content: center; overflow: hidden; margin-right: -0.5rem; flex-shrink: 0; }
+.skin-grid .g-stack__item { width: 2.5rem; height: 2.5rem; border-radius: 999px; border: 1px solid hsl(var(--foreground) / 0.35); background-color: hsl(var(--background)); background-image: linear-gradient(hsl(var(--foreground) / 0.1), hsl(var(--foreground) / 0.1)); position: relative; display: inline-flex; align-items: center; justify-content: center; overflow: hidden; margin-right: -0.5rem; flex-shrink: 0; }
 .skin-grid .g-stack__item img { width: 100%; height: 100%; object-fit: cover; }
 .skin-grid .g-stack__item--team img { filter: grayscale(1); }
-.skin-grid .g-stack__item--logo { background: hsl(var(--foreground) / 0.1); padding: 0.45rem; }
+.skin-grid .g-stack__item--logo { padding: 0.45rem; }
 .skin-grid .g-stack__item--logo img { object-fit: contain; filter: grayscale(1) brightness(0) invert(1); opacity: 0.8; }
 .skin-grid .g-stack__item--count, .skin-grid .g-stack__item--zap { background: hsl(var(--primary)); background-image: var(--brand-gradient); color: hsl(var(--background)); font-size: 9px; font-weight: 600; }
 .skin-grid .g-caps { padding: 28px 32px; }
