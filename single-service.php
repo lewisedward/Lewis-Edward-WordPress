@@ -58,6 +58,15 @@ function le_service_headline( $headline ) {
 
 get_header();
 
+if ( le_grid_skin() ) {
+	while ( have_posts() ) {
+		the_post();
+		get_template_part( 'template-parts/grid/service' );
+	}
+	get_footer();
+	return;
+}
+
 while ( have_posts() ) :
 	the_post();
 	$sv_id       = get_the_ID();

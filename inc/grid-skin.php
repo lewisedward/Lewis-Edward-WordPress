@@ -79,6 +79,13 @@ add_action( 'wp_head', function () {
 		},
 		$css
 	);
+	// Inner pages carry a second sheet (page heroes, lists, accordions, prose, forms).
+	if ( ! is_front_page() ) {
+		$pages = LE_DIR . '/assets/css/grid-pages.css';
+		if ( file_exists( $pages ) ) {
+			$css .= "\n" . (string) file_get_contents( $pages ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		}
+	}
 	echo "<style id=\"le-grid-css\">\n" . $css . "\n</style>\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }, 3 );
 
@@ -233,4 +240,95 @@ function le_grid_wire( $hint, $i = 0 ) {
 			$body = '<circle cx="60" cy="60" r="50"/><path d="' . $lines . '"/>' . $dots . '<circle class="g-wire__dot" cx="60" cy="60" r="2.5"/>';
 	}
 	return $open . $body . '</svg>';
+}
+
+/**
+ * A work post's homepage/tile image: its "Homepage tile image" if set, else
+ * the featured image. Returns the <img> markup or ''.
+ *
+ * @param int    $wid   Work post ID.
+ * @param string $size  Image size.
+ * @param array  $attrs Extra attributes.
+ * @return string
+ */
+function le_grid_work_img( $wid, $size = 'large', $attrs = array() ) {
+	$img = le_field( 'work_home_image', $wid );
+	$img = is_array( $img ) ? (int) ( $img['ID'] ?? $img['id'] ?? 0 ) : (int) $img;
+	if ( $img && wp_attachment_is_image( $img ) ) {
+		$attrs['alt'] = $attrs['alt'] ?? get_the_title( $wid );
+		return (string) wp_get_attachment_image( $img, $size, false, $attrs );
+	}
+	return (string) get_the_post_thumbnail( $wid, $size, $attrs );
+}
+
+/**
+ * One work tile (image over a name / platform · year strip) — the homepage
+ * work-grid cell, reused by the Work page, case studies and service pages.
+ *
+ * @param int   $wid  Work post ID.
+ * @param array $args 'size' (image size), 'class' (extra classes), 'eager' (bool), 'data' (raw attribute string).
+ */
+function le_grid_work_tile( $wid, $args = array() ) {
+	$size  = $args['size'] ?? 'large';
+	$meta  = array_filter( array( le_field( 'work_platform', $wid ), le_field( 'work_year', $wid ) ) );
+	$attrs = array( 'loading' => empty( $args['eager'] ) ? 'lazy' : 'eager' );
+	$img   = le_grid_work_img( $wid, $size, $attrs );
+	echo '<a class="g-cell g-work__item ' . esc_attr( $args['class'] ?? '' ) . '" href="' . esc_url( get_permalink( $wid ) ) . '"' . ( empty( $args['data'] ) ? '' : ' ' . $args['data'] ) . '>';
+	echo '<span class="g-ph g-work__media">' . $img . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo '<div class="g-work__meta"><h3 class="g-work__name">' . esc_html( get_the_title( $wid ) ) . '</h3><span class="g-mono">' . esc_html( implode( ' · ', $meta ) ) . '</span>' . le_grid_arrow_diag() . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo '</a>';
+}
+
+/**
+ * Compose a heading from the classic three-part fields (plain / muted / accent).
+ *
+ * @param array $parts Each item: array( text, 'plain'|'muted'|'accent' ).
+ * @return string Escaped HTML.
+ */
+function le_grid_heading( $parts ) {
+	$out = array();
+	foreach ( $parts as $p ) {
+		$t = trim( (string) ( $p[0] ?? '' ) );
+		if ( '' === $t ) {
+			continue;
+		}
+		$k = $p[1] ?? 'plain';
+		if ( 'accent' === $k ) {
+			$out[] = '<span class="g-accent">' . esc_html( $t ) . '</span>';
+		} elseif ( 'muted' === $k ) {
+			$out[] = '<span class="g-muted">' . esc_html( $t ) . '</span>';
+		} else {
+			$out[] = esc_html( $t );
+		}
+	}
+	return implode( ' ', $out );
+}
+
+/**
+ * Section intro cell: label (+ count), heading, optional text and link.
+ *
+ * @param array $a label, count, title (HTML, already escaped), text, link (array url/title), tag (h2|h1), class.
+ */
+function le_grid_intro( $a ) {
+	$tag = ( ! empty( $a['tag'] ) && 'h1' === $a['tag'] ) ? 'h1' : 'h2';
+	echo '<div class="g-cell g-sec__intro ' . esc_attr( $a['class'] ?? '' ) . '"><div class="g-sec__in">';
+	echo '<div class="g-sec__top">';
+	if ( ! empty( $a['label'] ) ) {
+		echo '<span class="g-label g-mono">' . esc_html( $a['label'] ) . '</span>';
+	}
+	if ( ! empty( $a['count'] ) ) {
+		echo '<span class="g-mono g-sec__count">' . esc_html( $a['count'] ) . '</span>';
+	}
+	echo '</div>';
+	if ( ! empty( $a['title'] ) ) {
+		echo '<' . $tag . ' class="g-sec__title">' . $a['title'] . '</' . $tag . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+	if ( ! empty( $a['text'] ) ) {
+		echo '<div class="g-sec__text">' . wp_kses_post( wpautop( $a['text'] ) ) . '</div>';
+	}
+	if ( ! empty( $a['link'] ) && ! empty( $a['link']['url'] ) ) {
+		$tgt = ! empty( $a['link']['target'] ) ? ' target="' . esc_attr( $a['link']['target'] ) . '" rel="noopener"' : '';
+		echo '<a class="g-line-link g-mono g-sec__link" href="' . esc_url( $a['link']['url'] ) . '"' . $tgt . '><span>' . esc_html( $a['link']['title'] ) . '</span>' . le_grid_arrow() . '</a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	}
+	echo '</div></div>';
 }

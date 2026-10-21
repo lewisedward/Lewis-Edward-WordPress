@@ -23,16 +23,6 @@ $g_id = static function ( $item ) {
 	return is_object( $item ) ? (int) $item->ID : (int) $item;
 };
 
-// A work post's homepage image: its "Homepage tile image" if set, else the featured image.
-$g_work_img = static function ( $wid, $size, $attrs = array() ) {
-	$img = le_field( 'work_home_image', $wid );
-	$img = is_array( $img ) ? (int) ( $img['ID'] ?? $img['id'] ?? 0 ) : (int) $img;
-	if ( $img && wp_attachment_is_image( $img ) ) {
-		$attrs['alt'] = $attrs['alt'] ?? get_the_title( $wid );
-		return wp_get_attachment_image( $img, $size, false, $attrs );
-	}
-	return get_the_post_thumbnail( $wid, $size, $attrs );
-};
 
 // Hero.
 $g_word       = le_field( 'grid_hero_word', false, le_option( 'grid_hero_word', 'Lewis' ) );
@@ -187,7 +177,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 			$g_wmeta = array_filter( array( le_field( 'work_platform', $wid ), le_field( 'work_year', $wid ) ) );
 		?>
 		<a class="g-cell g-work__item" href="<?php echo esc_url( get_permalink( $wid ) ); ?>">
-			<span class="g-ph g-work__media"><?php echo $g_work_img( $wid, 'large', array( 'loading' => 'lazy' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+			<span class="g-ph g-work__media"><?php echo le_grid_work_img( $wid, 'large', array( 'loading' => 'lazy' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 			<div class="g-work__meta"><h3 class="g-work__name"><?php echo esc_html( get_the_title( $wid ) ); ?></h3><span class="g-mono"><?php echo esc_html( implode( ' · ', $g_wmeta ) ); ?></span><?php echo le_grid_arrow_diag(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 		</a>
 		<?php endforeach; ?>
@@ -315,41 +305,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 		</div>
 	</section>
 
-	<?php /* ---- Testimonials ---- */ ?>
-	<?php if ( $g_tsts ) : ?>
-	<section class="g-row g-tst" aria-label="<?php esc_attr_e( 'Testimonials', 'lewisedward' ); ?>">
-		<div class="g-cell g-tst__side">
-			<span class="g-label g-mono"><?php echo esc_html( le_field( 'home_tst_eyebrow', $g_pid, __( 'Testimonials', 'lewisedward' ) ) ); ?></span>
-			<div class="g-tst__nav">
-				<span class="g-tst__count g-mono"><span data-tst-current>01</span> / <?php echo esc_html( str_pad( (string) count( $g_tsts ), 2, '0', STR_PAD_LEFT ) ); ?></span>
-				<span class="g-tst__btns"><button type="button" class="g-tst__btn" data-tst-prev aria-label="<?php esc_attr_e( 'Previous testimonial', 'lewisedward' ); ?>"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><button type="button" class="g-tst__btn" data-tst-next aria-label="<?php esc_attr_e( 'Next testimonial', 'lewisedward' ); ?>"><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></button></span>
-				<span class="g-tst__bar" aria-hidden="true"><i></i></span>
-			</div>
-		</div>
-		<div class="g-cell g-tst__stage" data-tst>
-			<?php foreach ( $g_tsts as $i => $t ) : $tid = $g_id( $t ); $role = le_field( 'testimonial_role', $tid ); $co = le_field( 'testimonial_company', $tid ); ?>
-			<?php
-			// Company logo: the testimonial's own, else a client logo whose file/alt/name mentions the company.
-			$g_tlogo = le_field( 'testimonial_logo', $tid );
-			$g_tlogo = ( is_array( $g_tlogo ) && ! empty( $g_tlogo['url'] ) ) ? $g_tlogo['url'] : '';
-			if ( ! $g_tlogo && $co ) {
-				$needle = sanitize_title( $co );
-				foreach ( $g_logos as $row ) {
-					$img = $row['logo'] ?? null;
-					if ( ! $img || empty( $img['url'] ) ) { continue; }
-					$hay = sanitize_title( implode( ' ', array( $row['name'] ?? '', $img['alt'] ?? '', $img['title'] ?? '', $img['filename'] ?? '' ) ) );
-					if ( false !== strpos( $hay, $needle ) ) { $g_tlogo = $img['url']; break; }
-				}
-			}
-			?>
-			<figure class="g-tst__item<?php echo 0 === $i ? ' is-active' : ''; ?>">
-				<blockquote class="g-tst__quote"><span class="g-tst__mark" aria-hidden="true">&ldquo;</span><p><?php echo esc_html( le_field( 'testimonial_quote', $tid ) ); ?></p></blockquote>
-				<figcaption class="g-tst__meta"><?php if ( $g_tlogo ) : ?><img class="g-tst__logo" src="<?php echo esc_url( le_grid_logo( $g_tlogo ) ); ?>" alt="<?php echo esc_attr( $co ); ?>" loading="lazy" /><?php endif; ?><?php if ( has_post_thumbnail( $tid ) ) { echo get_the_post_thumbnail( $tid, 'le_avatar', array( 'class' => 'g-tst__avatar', 'loading' => 'lazy' ) ); } ?><span><?php echo esc_html( le_field( 'testimonial_author', $tid ) ); ?></span><span class="g-mono"><?php echo esc_html( trim( $role . ( $co ? ' — ' . $co : '' ) ) ); ?></span></figcaption>
-			</figure>
-			<?php endforeach; ?>
-		</div>
-	</section>
-	<?php endif; ?>
+	<?php get_template_part( 'template-parts/grid/testimonials' ); ?>
 
 	<?php /* ---- Contact (h2) ---- */ ?>
 	<?php /* ---- Journal: the three latest articles ---- */ ?>
@@ -370,17 +326,6 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 	</section>
 	<?php endif; ?>
 
-	<section class="g-row g-cta" aria-label="<?php esc_attr_e( 'Contact', 'lewisedward' ); ?>">
-		<a class="g-cell g-lime g-cta__go" href="<?php echo esc_url( $g_cta_url ); ?>">
-			<h2><?php echo esc_html( le_field( 'home_cta_line1', $g_pid ) ); ?> <br><?php echo esc_html( le_field( 'home_cta_line2_pre', $g_pid ) ); ?> <em><?php echo esc_html( le_field( 'home_cta_word', $g_pid ) ); ?></em></h2>
-			<span class="g-mono"><?php echo esc_html( le_field( 'home_cta_ring', $g_pid, __( 'Request a quote', 'lewisedward' ) ) ); ?></span>
-			<svg class="g-cta__arrow" viewBox="0 0 120 120" aria-hidden="true" focusable="false"><path d="M8 8h104v104M112 8 8 112"/></svg>
-		</a>
-		<div class="g-cell g-cta__previews">
-			<?php $g_prev = le_field( 'home_cta_previews', $g_pid ); $g_prev = is_array( $g_prev ) ? $g_prev : array(); foreach ( array_slice( $g_prev, 0, 4 ) as $pv ) : $pvid = $g_id( $pv ); $pvimg = $g_work_img( $pvid, 'medium_large', array( 'loading' => 'lazy' ) ); if ( ! $pvimg ) { continue; } ?>
-			<a class="g-ph g-cta__preview" href="<?php echo esc_url( get_permalink( $pvid ) ); ?>"><?php echo $pvimg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span class="g-cap g-mono"><?php echo esc_html( get_the_title( $pvid ) ); ?></span></a>
-			<?php endforeach; ?>
-		</div>
-	</section>
+	<?php get_template_part( 'template-parts/grid/cta' ); ?>
 
 </main>

@@ -19,6 +19,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 
+if ( le_grid_skin() ) {
+	while ( have_posts() ) {
+		the_post();
+		get_template_part( 'template-parts/grid/work-single' );
+	}
+	get_footer();
+	return;
+}
+
 while ( have_posts() ) :
 	the_post();
 	$wk_id       = get_the_ID();

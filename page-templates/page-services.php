@@ -20,6 +20,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 
+if ( le_grid_skin() ) {
+	get_template_part( 'template-parts/grid/services' );
+	get_footer();
+	return;
+}
+
 $sp_hero  = le_field( 'services_hero_items' );      // hero rail
 $sp_hero  = is_array( $sp_hero ) ? $sp_hero : array();
 

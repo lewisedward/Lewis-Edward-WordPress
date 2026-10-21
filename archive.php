@@ -12,6 +12,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 
+if ( le_grid_skin() ) {
+	get_template_part( 'template-parts/grid/journal', null, array( 'archive' => true ) );
+	get_footer();
+	return;
+}
+
 global $wp_query;
 $pp     = le_journal_page_id();
 $paged  = max( 1, (int) get_query_var( 'paged' ) );

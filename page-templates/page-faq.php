@@ -43,6 +43,13 @@ if ( ! empty( $faq_items ) ) {
 	}
 }
 ?>
+<?php
+if ( le_grid_skin() ) {
+	get_template_part( 'template-parts/grid/faq' );
+	get_footer();
+	return;
+}
+?>
 
 <main id="main" class="site-main site-main--faq">
 

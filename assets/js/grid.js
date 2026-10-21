@@ -127,5 +127,25 @@
 		window.addEventListener('resize', queue);
 		queue();
 	}
+
+	/* Filters (work page): buttons toggle tiles by their data-categories within the same row. */
+	document.querySelectorAll('.skin-grid [data-g-filterable]').forEach(function (rootEl) {
+		var btns = rootEl.querySelectorAll('[data-g-filter]');
+		var items = rootEl.querySelectorAll('[data-categories]');
+		var out = rootEl.querySelector('[data-g-visible]');
+		btns.forEach(function (b) {
+			b.addEventListener('click', function () {
+				var f = b.getAttribute('data-g-filter');
+				btns.forEach(function (x) { x.classList.toggle('is-active', x === b); });
+				var n = 0;
+				items.forEach(function (it) {
+					var show = f === 'all' || (' ' + it.getAttribute('data-categories') + ' ').indexOf(' ' + f + ' ') > -1;
+					it.classList.toggle('is-hidden', !show);
+					if (show) { n++; }
+				});
+				if (out) { out.textContent = (n < 10 ? '0' : '') + n; }
+			});
+		});
+	});
 	void root;
 })();
