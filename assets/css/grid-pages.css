@@ -502,3 +502,6 @@
 	.skin-grid .g-phero__title--wide { font-size: clamp(30px, 8.6vw, 40px); }
 	.skin-grid .g-people:has(> .g-cell:last-child:nth-child(even)) > .g-person:nth-child(2) .g-ph img { object-position: 50% 22%; }
 }
+@media (max-width: 720px) {
+	.skin-grid .g-form .gform_wrapper.gform-theme .gform_footer input[type="submit"], .skin-grid .g-form .gform_wrapper.gform-theme .gform_footer button[type="submit"] { width: 100% !important; flex: 1 1 auto; }
+}

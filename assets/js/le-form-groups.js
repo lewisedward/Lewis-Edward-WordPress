@@ -36,7 +36,7 @@
 	}
 
 	function run() {
-		document.querySelectorAll('.le-form-page .gform_fields').forEach(wrapFields);
+		document.querySelectorAll('.le-form-page .gform_fields, .g-form .gform_fields').forEach(wrapFields);
 	}
 
 	document.addEventListener('DOMContentLoaded', run);
