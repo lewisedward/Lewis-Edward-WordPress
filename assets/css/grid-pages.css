@@ -449,3 +449,5 @@
 .skin-grid .g-lime .g-label::before { background: hsl(var(--primary-foreground)); }
 /* Consent line: the privacy link matches the label it sits in. */
 .skin-grid .g-form .gform_wrapper.gform-theme .gfield_consent_label a, .skin-grid .g-form .ginput_container_consent a { font: inherit !important; letter-spacing: inherit !important; text-transform: inherit !important; color: var(--g-lime); text-decoration: underline; text-underline-offset: 3px; }
+/* In-page anchors land below the fixed header. */
+.skin-grid .g-main [id] { scroll-margin-top: 64px; }

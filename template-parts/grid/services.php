@@ -24,6 +24,16 @@ $sp_steps   = is_array( $sp_steps ) ? $sp_steps : array();
 $sp_sub     = le_field( 'services_sub_items' );
 $sp_sub     = is_array( $sp_sub ) ? $sp_sub : array();
 $sp_explore = le_field( 'services_explore_label' );
+
+// The specialised list repeats the core services in ACF; show only the ones
+// not already listed above it.
+$sp_core_ids = array_map( $sp_id, $sp_items );
+$sp_sub      = array_values( array_filter( $sp_sub, static function ( $item ) use ( $sp_id, $sp_core_ids ) {
+	return ! in_array( $sp_id( $item ), $sp_core_ids, true );
+} ) );
+$sp_pad = static function ( $n ) {
+	return str_pad( (string) $n, 2, '0', STR_PAD_LEFT );
+};
 ?>
 <main id="main" class="site-main site-main--services g-main">
 
@@ -46,13 +56,11 @@ $sp_explore = le_field( 'services_explore_label' );
 		</div>
 		<div class="g-cell g-lime g-phero__aside">
 			<div class="g-rail__head"><span class="g-mono"><?php echo esc_html( le_field( 'services_coords' ) ); ?></span><span class="g-mono"><?php echo esc_html( le_field( 'services_scroll_label' ) ); ?></span></div>
-			<?php if ( $sp_hero ) : ?>
-			<nav class="g-rail" aria-label="<?php esc_attr_e( 'Quick links', 'lewisedward' ); ?>">
-				<?php foreach ( $sp_hero as $r => $item ) : $rid = $sp_id( $item ); ?>
-				<a href="<?php echo esc_url( get_permalink( $rid ) ); ?>"><span class="g-mono"><?php echo esc_html( str_pad( (string) ( $r + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span><span><?php echo esc_html( get_the_title( $rid ) ); ?></span><?php echo le_grid_arrow_diag(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
-				<?php endforeach; ?>
+			<nav class="g-rail" aria-label="<?php esc_attr_e( 'On this page', 'lewisedward' ); ?>">
+				<?php if ( $sp_count ) : ?><a href="#services"><span class="g-mono"><?php echo esc_html( $sp_pad( $sp_count ) ); ?></span><span><?php echo esc_html( le_field( 'services_core_eyebrow', false, __( 'Core services', 'lewisedward' ) ) ); ?></span><?php echo le_grid_arrow_diag(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a><?php endif; ?>
+				<?php if ( $sp_steps ) : ?><a href="#process"><span class="g-mono"><?php echo esc_html( $sp_pad( count( $sp_steps ) ) ); ?></span><span><?php echo esc_html( le_field( 'services_process_eyebrow', false, __( 'How we work', 'lewisedward' ) ) ); ?></span><?php echo le_grid_arrow_diag(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a><?php endif; ?>
+				<?php if ( $sp_sub ) : ?><a href="#specialised"><span class="g-mono"><?php echo esc_html( $sp_pad( count( $sp_sub ) ) ); ?></span><span><?php echo esc_html( le_field( 'services_sub_eyebrow', false, __( 'Specialised services', 'lewisedward' ) ) ); ?></span><?php echo le_grid_arrow_diag(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a><?php endif; ?>
 			</nav>
-			<?php endif; ?>
 		</div>
 	</section>
 
@@ -72,7 +80,7 @@ $sp_explore = le_field( 'services_explore_label' );
 	<?php endif; ?>
 
 	<?php if ( $sp_steps ) : ?>
-	<section class="g-row g-sec" aria-label="<?php esc_attr_e( 'Our process', 'lewisedward' ); ?>">
+	<section id="process" class="g-row g-sec" aria-label="<?php esc_attr_e( 'Our process', 'lewisedward' ); ?>">
 		<?php le_grid_intro( array( 'label' => le_field( 'services_process_eyebrow' ), 'count' => str_pad( (string) count( $sp_steps ), 2, '0', STR_PAD_LEFT ) . ' · ' . le_field( 'services_process_note' ), 'title' => le_grid_heading( array( array( le_field( 'services_process_h1' ) ), array( le_field( 'services_process_h_muted' ), 'muted' ), array( le_field( 'services_process_h_accent' ), 'accent' ) ) ), 'text' => le_field( 'services_process_intro' ), 'link' => le_link( 'services_process_cta', '/contact', __( 'Get in touch', 'lewisedward' ), false ), 'class' => 'g-sec__sticky' ) ); ?>
 		<div class="g-cell <?php echo esc_attr( le_grid_cells_class( count( $sp_steps ) ) ); ?>">
 			<?php foreach ( $sp_steps as $s => $step ) : ?>
@@ -83,7 +91,7 @@ $sp_explore = le_field( 'services_explore_label' );
 	<?php endif; ?>
 
 	<?php if ( $sp_sub ) : ?>
-	<section class="g-row g-sec" aria-label="<?php esc_attr_e( 'Specialised services', 'lewisedward' ); ?>">
+	<section id="specialised" class="g-row g-sec" aria-label="<?php esc_attr_e( 'Specialised services', 'lewisedward' ); ?>">
 		<?php le_grid_intro( array( 'label' => le_field( 'services_sub_eyebrow' ), 'count' => str_pad( (string) count( $sp_sub ), 2, '0', STR_PAD_LEFT ) . ' · ' . le_field( 'services_sub_note' ), 'title' => le_grid_heading( array( array( le_field( 'services_sub_h1' ) ), array( le_field( 'services_sub_h_muted' ), 'muted' ), array( le_field( 'services_sub_h_accent' ), 'accent' ) ) ), 'class' => 'g-sec__sticky' ) ); ?>
 		<div class="g-cell g-dark g-sec__body">
 			<?php foreach ( $sp_sub as $i => $item ) : $id = $sp_id( $item ); $sub = le_field( 'service_subtitle', $id ); ?>
