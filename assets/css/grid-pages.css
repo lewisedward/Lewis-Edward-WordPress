@@ -524,3 +524,7 @@
    edge (and the aside's footer line) instead of floating mid-cell. */
 .skin-grid .g-main .g-phero__main > .g-phero__title { margin-top: 0; }
 .skin-grid .g-main .g-phero__main > .g-phero__foot { margin-top: auto; }
+/* Same 28px inset top and bottom, so the hero button's bottom edge lines up with the aside's footer line. */
+@media (min-width: 1101px) {
+	.skin-grid .g-main .g-phero__main { padding-bottom: 28px; }
+}
