@@ -518,3 +518,9 @@
 	.skin-grid .g-check { grid-auto-rows: auto; }
 	.skin-grid .g-check > li:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid var(--g-line); }
 }
+
+/* Page heroes: label and title sit at the top, and the lede + button row is
+   pinned to the bottom of the cell, so the button lines up with the bottom
+   edge (and the aside's footer line) instead of floating mid-cell. */
+.skin-grid .g-main .g-phero__main > .g-phero__title { margin-top: 0; }
+.skin-grid .g-main .g-phero__main > .g-phero__foot { margin-top: auto; }
