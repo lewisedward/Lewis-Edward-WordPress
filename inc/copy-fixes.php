@@ -18,6 +18,7 @@ const LE_COPY_FIXES_VERSION = '1';
 /** Substring rules, applied in order. */
 function le_copy_fix_subs() {
 	return array(
+		array( '--- ', '– ' ),
 		array( 'Refacoring', 'Refactoring' ),
 		array( 'proejcts', 'projects' ),
 		array( 'treatements', 'treatments' ),
@@ -316,8 +317,25 @@ function le_copy_fix_exact() {
 		'Embedded Video Hero Background' => 'Embedded video hero background',
 		'Clean & Creative' => 'Clean & creative',
 		'Business Improvement Districts' => 'Business improvement districts',
+		'About You' => 'About you',
+		'Quote Request' => 'Quote request',
 	);
 }
+
+/** Heading fragments that sit mid-heading, keyed by ACF field name (whole value, trimmed). */
+function le_copy_fix_keyed() {
+	return array(
+		'home_hero_title_2_pre' => array( 'Web Designer, Developer' => 'web designer, developer' ),
+		'home_hero_title_2_post' => array( 'Website Support' => 'website support', 'Developer & Website Support' => 'developer & website support' ),
+		'services_h1_2' => array( 'Design & Development' => 'design & development', 'Design & Development services' => 'design & development services' ),
+		'services_sub_h_muted' => array( 'Web Design & Development' => 'web design & development', 'WordPress Web Design & Development' => 'WordPress web design & development' ),
+		'journalp_h1_2' => array( 'Build notes' => 'build notes' ),
+		'journalp_h1_3' => array( '& Reads' => '& reads' ),
+		'home_work_title_post' => array( 'Websites' => 'websites', 'Design & Development Projects' => 'design & development projects', 'Design & Development' => 'design & development' ),
+		'workp_archive_eyebrow' => array( 'Websites' => 'websites' ),
+	);
+}
+
 /**
  * Applies every rule to one string. $hits collects rule => count.
  *
@@ -339,8 +357,28 @@ function le_copy_fix_text( $s, &$hits ) {
 			$hits[ $k ] = ( $hits[ $k ] ?? 0 ) + $n;
 		}
 	};
-	$t = trim( $s );
-	if ( isset( $exact[ $t ] ) ) {
+	$t     = trim( $s );
+	$plain = str_replace( array( '[[', ']]', '{{', '}}' ), '', $t );
+	if ( $plain !== $t && isset( $exact[ $plain ] ) ) {
+		// Tone markers ([[lime]], {{grey}}): re-case the text and keep the markers where they were.
+		$np = $exact[ $plain ];
+		if ( strlen( $np ) === strlen( $plain ) ) {
+			$out = '';
+			$j   = 0;
+			for ( $i = 0, $n = strlen( $t ); $i < $n; $i++ ) {
+				$two = substr( $t, $i, 2 );
+				if ( in_array( $two, array( '[[', ']]', '{{', '}}' ), true ) ) {
+					$out .= $two;
+					$i++;
+					continue;
+				}
+				$out .= $np[ $j++ ];
+			}
+			$np = $out;
+		}
+		$s = str_replace( $t, $np, $s );
+		$bump( '= ' . $plain, 1 );
+	} elseif ( isset( $exact[ $t ] ) ) {
 		$s = str_replace( $t, $exact[ $t ], $s );
 		$bump( '= ' . $t, 1 );
 	} elseif ( false !== strpos( $s, '<' ) ) {
@@ -441,8 +479,15 @@ function le_copy_fix_run( $dry = true ) {
 	}
 
 	$rows = $wpdb->get_results( "SELECT m.meta_id, m.post_id, m.meta_key, m.meta_value FROM {$wpdb->postmeta} m JOIN {$wpdb->posts} p ON p.ID = m.post_id WHERE $types AND m.meta_key NOT LIKE '\\_%'" ); // phpcs:ignore
+	$keyed = le_copy_fix_keyed();
 	foreach ( $rows as $r ) {
-		$n = le_copy_fix_raw( $r->meta_value, $hits );
+		$val = $r->meta_value;
+		if ( isset( $keyed[ $r->meta_key ][ trim( (string) $val ) ] ) ) {
+			$val = str_replace( trim( $val ), $keyed[ $r->meta_key ][ trim( $val ) ], $val );
+			$hits[ 'key ' . $r->meta_key ] = ( $hits[ 'key ' . $r->meta_key ] ?? 0 ) + 1;
+		}
+		$n = le_copy_fix_raw( $val, $hits );
+		$n = ( null === $n && $val !== $r->meta_value ) ? $val : $n;
 		if ( null !== $n ) {
 			$changed[] = 'meta ' . $r->post_id . ' ' . $r->meta_key;
 			if ( ! $dry ) {
@@ -492,13 +537,46 @@ function le_copy_fix_run( $dry = true ) {
 		}
 	}
 
+	$gf     = $wpdb->prefix . 'gf_form_meta';
+	$labels = array();
+	if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $gf ) ) === $gf ) {
+		foreach ( $wpdb->get_results( "SELECT form_id, display_meta FROM $gf" ) as $r ) { // phpcs:ignore
+			$meta = json_decode( (string) $r->display_meta, true );
+			if ( ! is_array( $meta ) || empty( $meta['fields'] ) ) {
+				continue;
+			}
+			$dirty = false;
+			foreach ( $meta['fields'] as $fi => $f ) {
+				foreach ( array( 'label', 'description' ) as $prop ) {
+					if ( empty( $f[ $prop ] ) || ! is_string( $f[ $prop ] ) ) {
+						continue;
+					}
+					if ( 'label' === $prop ) {
+						$labels[] = $r->form_id . ': ' . $f[ $prop ];
+					}
+					$nv = le_copy_fix_text( $f[ $prop ], $hits );
+					if ( $nv !== $f[ $prop ] ) {
+						$meta['fields'][ $fi ][ $prop ] = $nv;
+						$dirty                          = true;
+					}
+				}
+			}
+			if ( $dirty ) {
+				$changed[] = 'gform ' . $r->form_id;
+				if ( ! $dry ) {
+					$wpdb->update( $gf, array( 'display_meta' => wp_json_encode( $meta ) ), array( 'form_id' => $r->form_id ) );
+				}
+			}
+		}
+	}
+
 	if ( ! $dry ) {
 		wp_cache_flush();
 		update_option( 'le_copy_fixes_v', LE_COPY_FIXES_VERSION, false );
 	}
 	$all  = array_merge( array_map( static function ( $r ) { return $r[0]; }, le_copy_fix_subs() ), array_map( static function ( $k ) { return '= ' . $k; }, array_keys( le_copy_fix_exact() ) ) );
 	$miss = array_values( array_diff( $all, array_keys( $hits ) ) );
-	return array( 'dry' => $dry, 'changed' => count( $changed ), 'rows' => $changed, 'hits' => $hits, 'unmatched' => $miss );
+	return array( 'dry' => $dry, 'changed' => count( $changed ), 'rows' => $changed, 'hits' => $hits, 'unmatched' => $miss, 'gf_labels' => $labels );
 }
 
 /**
