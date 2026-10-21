@@ -537,7 +537,10 @@ body.skin-grid.admin-bar .g-svc__left { top: calc(64px + var(--wp-admin--admin-b
 	.skin-grid .g-journal__item:nth-of-type(2n+1) { border-right: 0; }
 	/* Footer: statement and clock full width, the two menus side by side. */
 	.skin-grid .g-footer__line, .skin-grid .g-footer__clock { grid-column: 1 / -1; }
-	.skin-grid .g-footer__line { min-height: 0; }
+	.skin-grid .g-footer__top { grid-auto-rows: auto; }
+	.skin-grid .g-footer__line, .skin-grid .g-footer__clock { min-height: 0; }
+	.skin-grid .g-footer__line { gap: 40px; }
+	.skin-grid .g-footer__clock { gap: 32px; }
 	.skin-grid .g-footer__nav:nth-of-type(2) { border-right: 0; }
 }
 
