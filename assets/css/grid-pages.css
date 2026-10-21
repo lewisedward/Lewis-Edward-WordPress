@@ -422,3 +422,12 @@
 @media (max-width: 720px) {
 	.skin-grid .g-phero__title--wide { font-size: clamp(30px, 9vw, 40px); }
 }
+
+/* Prose spacing: `.g-main p { margin: 0 }` out-ranked `.g-prose > * + *`, so
+   paragraphs in bios, articles and the privacy policy ran together. */
+.skin-grid .g-main .g-prose > * + * { margin-top: 1.1em; }
+.skin-grid .g-main .g-prose > h2 { margin-top: 2em; }
+.skin-grid .g-main .g-prose > h3 { margin-top: 1.8em; }
+.skin-grid .g-main .g-prose > h4 { margin-top: 1.6em; }
+/* Signature: only the role label is a block; the "Get in touch" link keeps its inline arrow. */
+.skin-grid .g-sig .g-line-link { display: inline-flex; align-items: center; gap: 16px; }
