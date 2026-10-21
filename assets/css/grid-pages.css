@@ -550,3 +550,5 @@
 /* Sticky section intros clear the WP admin bar for logged-in editors (it was
    pinning the label right under the header). */
 body.admin-bar.skin-grid .g-sec__sticky .g-sec__in { top: calc(92px + var(--wp-admin--admin-bar-height, 32px)); }
+/* Service hero aside: "Scroll to explore" sits bottom right. */
+.skin-grid .g-phero__aside .g-rail__head--foot { justify-content: flex-end; }
