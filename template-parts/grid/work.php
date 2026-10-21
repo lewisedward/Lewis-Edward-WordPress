@@ -63,10 +63,10 @@ if ( is_array( $wp_all ) ) {
 	</section>
 
 	<?php if ( $wp_count ) : ?>
-	<section id="archive" class="g-row g-tiles g-tiles--intro" aria-label="<?php esc_attr_e( 'Project archive', 'lewisedward' ); ?>" data-g-filterable>
-		<div class="g-cell g-sec__intro"><div class="g-sec__in">
+	<section id="archive" class="g-row g-tiles g-tiles--side" style="--span: <?php echo (int) ceil( $wp_count / 2 ); ?>" aria-label="<?php esc_attr_e( 'Project archive', 'lewisedward' ); ?>" data-g-filterable>
+		<div class="g-cell g-sec__intro g-sec__sticky"><div class="g-sec__in">
 			<div class="g-sec__top"><span class="g-label g-mono"><?php echo esc_html( le_field( 'workp_archive_eyebrow' ) ); ?></span><span class="g-mono g-sec__count"><span data-g-visible><?php echo esc_html( str_pad( (string) $wp_count, 2, '0', STR_PAD_LEFT ) ); ?></span> <?php echo esc_html( le_field( 'workp_count_label', false, __( 'projects', 'lewisedward' ) ) ); ?></span></div>
-			<h2 class="g-sec__title"><?php echo le_grid_heading( array( array( le_field( 'workp_archive_h1' ) ), array( le_field( 'workp_archive_accent' ), 'accent' ), array( le_field( 'workp_archive_h3' ) ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h2>
+			<h2 class="g-sec__title"><?php $wp_h = le_grid_heading( array( array( le_field( 'workp_archive_h1' ) ), array( le_field( 'workp_archive_accent' ), 'accent' ), array( le_field( 'workp_archive_h3' ) ) ) ); echo $wp_h ? $wp_h : esc_html( le_field( 'workp_archive_eyebrow', false, __( 'All projects', 'lewisedward' ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h2>
 			<?php if ( $wp_filters ) : ?>
 			<div class="g-filters g-filters--stack" role="group" aria-label="<?php esc_attr_e( 'Filter projects', 'lewisedward' ); ?>">
 				<button class="g-filter is-active" type="button" data-g-filter="all"><?php echo esc_html( le_field( 'workp_filter_all', false, __( 'All', 'lewisedward' ) ) ); ?></button>

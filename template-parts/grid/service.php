@@ -94,7 +94,7 @@ $svc_hero_cta = le_link( 'svc_hero_cta', '/contact', __( 'Start a project', 'lew
 	<?php if ( $sv_proc ) : ?>
 	<section class="g-row g-sec" aria-label="<?php esc_attr_e( 'Our approach', 'lewisedward' ); ?>">
 		<?php le_grid_intro( array( 'label' => le_field( 'svc_process_eyebrow', $sv_id, __( 'Our approach', 'lewisedward' ) ), 'count' => str_pad( (string) count( $sv_proc ), 2, '0', STR_PAD_LEFT ) . ' · ' . le_field( 'svc_process_note', $sv_id, __( 'Step by step', 'lewisedward' ) ), 'title' => esc_html( le_field( 'svc_process_title', $sv_id, __( 'How we deliver.', 'lewisedward' ) ) ), 'class' => 'g-sec__sticky' ) ); ?>
-		<div class="g-cell g-cells g-cells--2">
+		<div class="g-cell <?php echo esc_attr( le_grid_cells_class( count( $sv_proc ) ) ); ?>">
 			<?php foreach ( $sv_proc as $i => $row ) : $st = trim( (string) ( $row['title'] ?? '' ) ); if ( '' === $st ) { continue; } ?>
 			<div class="g-step"><span class="g-step__num"><?php echo esc_html( ! empty( $row['step'] ) ? $row['step'] : str_pad( (string) ( $i + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span><h3 class="g-step__title"><?php echo esc_html( $st ); ?></h3><?php if ( ! empty( $row['description'] ) ) : ?><p class="g-step__desc"><?php echo esc_html( $row['description'] ); ?></p><?php endif; ?></div>
 			<?php endforeach; ?>
@@ -135,7 +135,7 @@ $svc_hero_cta = le_link( 'svc_hero_cta', '/contact', __( 'Start a project', 'lew
 		$svc_work_viewall = le_link( 'svc_work_viewall', '/work', __( 'View all', 'lewisedward' ), $sv_id );
 		?>
 	<section class="g-row g-tiles g-tiles--intro" aria-label="<?php esc_attr_e( 'Featured work', 'lewisedward' ); ?>">
-		<?php le_grid_intro( array( 'label' => le_field( 'svc_work_eyebrow', $sv_id, __( 'Case studies', 'lewisedward' ) ), 'count' => str_pad( (string) count( $sv_relwk ), 2, '0', STR_PAD_LEFT ), 'title' => esc_html( le_field( 'svc_work_title', $sv_id, __( 'Featured work', 'lewisedward' ) ) ), 'link' => $svc_work_viewall ) ); ?>
+		<?php le_grid_intro( array( 'label' => le_field( 'svc_work_eyebrow', $sv_id, __( 'Case studies', 'lewisedward' ) ), 'count' => str_pad( (string) min( 5, count( $sv_relwk ) ), 2, '0', STR_PAD_LEFT ), 'title' => esc_html( le_field( 'svc_work_title', $sv_id, __( 'Featured work', 'lewisedward' ) ) ), 'link' => $svc_work_viewall ) ); ?>
 		<?php foreach ( array_slice( $sv_relwk, 0, 5 ) as $wid ) { le_grid_work_tile( $wid ); } ?>
 	</section>
 	<?php endif; ?>

@@ -58,7 +58,7 @@ $sp_explore = le_field( 'services_explore_label' );
 
 	<?php if ( $sp_count ) : ?>
 	<section id="services" class="g-row g-sec" aria-label="<?php esc_attr_e( 'Core services', 'lewisedward' ); ?>">
-		<?php le_grid_intro( array( 'label' => le_field( 'services_core_eyebrow' ), 'count' => '01 — ' . str_pad( (string) $sp_count, 2, '0', STR_PAD_LEFT ), 'text' => le_field( 'services_core_note' ), 'class' => 'g-sec__sticky' ) ); ?>
+		<?php le_grid_intro( array( 'label' => le_field( 'services_core_eyebrow' ), 'count' => '01 — ' . str_pad( (string) $sp_count, 2, '0', STR_PAD_LEFT ), 'big' => str_pad( (string) $sp_count, 2, '0', STR_PAD_LEFT ), 'text' => le_field( 'services_core_note' ), 'link' => le_link( 'services_process_cta', '/contact', __( 'Get in touch', 'lewisedward' ), false ), 'class' => 'g-sec__sticky' ) ); ?>
 		<div class="g-cell g-dark g-sec__body">
 			<?php foreach ( $sp_items as $i => $item ) : $id = $sp_id( $item ); $excerpt = le_field( 'service_excerpt', $id ); $desc = ( '' !== $excerpt ) ? $excerpt : le_field( 'service_short_description', $id ); $tags = le_field( 'service_features', $id ); $tags = is_array( $tags ) ? $tags : array(); ?>
 			<a class="g-srv" href="<?php echo esc_url( get_permalink( $id ) ); ?>">
@@ -74,7 +74,7 @@ $sp_explore = le_field( 'services_explore_label' );
 	<?php if ( $sp_steps ) : ?>
 	<section class="g-row g-sec" aria-label="<?php esc_attr_e( 'Our process', 'lewisedward' ); ?>">
 		<?php le_grid_intro( array( 'label' => le_field( 'services_process_eyebrow' ), 'count' => str_pad( (string) count( $sp_steps ), 2, '0', STR_PAD_LEFT ) . ' · ' . le_field( 'services_process_note' ), 'title' => le_grid_heading( array( array( le_field( 'services_process_h1' ) ), array( le_field( 'services_process_h_muted' ), 'muted' ), array( le_field( 'services_process_h_accent' ), 'accent' ) ) ), 'text' => le_field( 'services_process_intro' ), 'link' => le_link( 'services_process_cta', '/contact', __( 'Get in touch', 'lewisedward' ), false ), 'class' => 'g-sec__sticky' ) ); ?>
-		<div class="g-cell g-cells g-cells--2">
+		<div class="g-cell <?php echo esc_attr( le_grid_cells_class( count( $sp_steps ) ) ); ?>">
 			<?php foreach ( $sp_steps as $s => $step ) : ?>
 			<div class="g-step"><span class="g-step__num"><?php echo esc_html( str_pad( (string) ( $s + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span><h3 class="g-step__title"><?php echo esc_html( $step['title'] ?? '' ); ?></h3><p class="g-step__desc"><?php echo esc_html( $step['description'] ?? '' ); ?></p></div>
 			<?php endforeach; ?>

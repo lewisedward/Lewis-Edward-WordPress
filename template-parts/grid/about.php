@@ -33,7 +33,7 @@ $about_bio_cta = le_link( 'about_bio_cta', '/contact', __( 'Get in touch', 'lewi
 			<h1 class="g-phero__title"><?php echo le_grid_heading( array( array( le_field( 'about_h1_1' ) ), array( le_field( 'about_h1_2' ), 'muted' ), array( le_field( 'about_h1_3' ), 'accent' ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h1>
 			<div class="g-phero__foot">
 				<p class="g-phero__lede"><?php echo esc_html( le_field( 'about_lead' ) ); ?></p>
-				<a class="g-line-link g-mono" href="#bio"><span><?php echo esc_html( le_field( 'about_bio_heading' ) ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+				<a class="g-line-link g-mono" href="#bio"><span><?php esc_html_e( 'Meet Lewis', 'lewisedward' ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 			</div>
 		</div>
 		<?php if ( $ab_portrait_u ) : ?>
@@ -61,7 +61,8 @@ $about_bio_cta = le_link( 'about_bio_cta', '/contact', __( 'Get in touch', 'lewi
 	</section>
 
 	<?php if ( $ab_team ) : ?>
-	<section class="g-row g-people" aria-label="<?php esc_attr_e( 'Team', 'lewisedward' ); ?>">
+	<?php $ab_cols = ( 0 === ( count( $ab_team ) + 1 ) % 3 ) ? 3 : 4; ?>
+	<section class="g-row g-people g-people--<?php echo (int) $ab_cols; ?>" aria-label="<?php esc_attr_e( 'Team', 'lewisedward' ); ?>">
 		<?php le_grid_intro( array( 'label' => le_field( 'about_team_eyebrow' ), 'count' => str_pad( (string) count( $ab_team ), 2, '0', STR_PAD_LEFT ), 'title' => le_grid_heading( array( array( le_field( 'about_team_h1' ) ), array( le_field( 'about_team_h_accent' ), 'accent' ), array( le_field( 'about_team_h_muted' ), 'muted' ) ) ) ) ); ?>
 		<?php foreach ( $ab_team as $member ) : $mid = is_object( $member ) ? (int) $member->ID : (int) $member; ?>
 		<div class="g-cell g-person">
@@ -75,7 +76,7 @@ $about_bio_cta = le_link( 'about_bio_cta', '/contact', __( 'Get in touch', 'lewi
 	<?php if ( $ab_values ) : ?>
 	<section class="g-row g-sec" aria-label="<?php esc_attr_e( 'Core Values', 'lewisedward' ); ?>">
 		<?php le_grid_intro( array( 'label' => le_field( 'about_values_eyebrow' ), 'count' => str_pad( (string) count( $ab_values ), 2, '0', STR_PAD_LEFT ), 'title' => le_grid_heading( array( array( le_field( 'about_values_h1' ) ), array( le_field( 'about_values_h_accent' ), 'accent' ), array( wp_strip_all_tags( (string) le_field( 'about_values_h_muted' ) ), 'muted' ) ) ), 'class' => 'g-sec__sticky' ) ); ?>
-		<div class="g-cell g-cells g-cells--2">
+		<div class="g-cell <?php echo esc_attr( le_grid_cells_class( count( $ab_values ) ) ); ?>">
 			<?php foreach ( $ab_values as $i => $value ) : ?>
 			<div class="g-step"><span class="g-step__num"><?php echo esc_html( str_pad( (string) ( $i + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span><h3 class="g-step__title"><?php echo esc_html( $value['title'] ?? '' ); ?></h3><p class="g-step__desc"><?php echo esc_html( $value['description'] ?? '' ); ?></p></div>
 			<?php endforeach; ?>

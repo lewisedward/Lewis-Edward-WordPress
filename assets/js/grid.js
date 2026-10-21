@@ -13,7 +13,7 @@
 		var cells = row.querySelectorAll(':scope > .g-cell');
 		cells.forEach(function (c, i) { c.style.setProperty('--i', String(Math.min(i, 8))); });
 	});
-	var top = document.querySelector('.skin-grid .g-hero');
+	var top = document.querySelector('.skin-grid .g-hero') || document.querySelector('.skin-grid .g-main > .g-row');
 	if (top) { top.classList.add('is-in'); }
 	var rev = new IntersectionObserver(function (entries) {
 		entries.forEach(function (e) {

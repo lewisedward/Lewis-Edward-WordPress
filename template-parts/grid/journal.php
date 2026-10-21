@@ -90,11 +90,11 @@ $terms     = is_array( $terms ) ? array_filter( $terms, 'le_is_real_category' ) 
 				$num = $base;
 				while ( have_posts() ) :
 					the_post();
-					$num++;
 					$eid = get_the_ID();
 					if ( $fid && $eid === $fid ) {
 						continue;
 					}
+					$num++;
 					$ec = $jr_cats( $eid );
 					?>
 			<a class="g-li" href="<?php the_permalink(); ?>">

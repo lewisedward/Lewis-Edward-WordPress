@@ -21,7 +21,7 @@ $cf_badge  = le_field( $cf_quotes ? 'quotes_card_badge' : 'contact_quote_badge' 
 $cf_desc   = le_field( $cf_quotes ? 'quotes_card_desc' : 'contact_quote_desc' );
 $cf_btn    = le_field( $cf_quotes ? 'quotes_card_btn' : 'contact_quote_btn' );
 ?>
-<main id="main" class="site-main site-main--contact le-form-page g-main">
+<main id="main" class="site-main site-main--contact g-main">
 
 	<section class="g-row g-sec g-sec--form" aria-label="<?php echo esc_attr( $cf_quotes ? __( 'Request a quote', 'lewisedward' ) : __( 'Contact', 'lewisedward' ) ); ?>">
 		<div class="g-cell g-sec__intro g-sec__sticky"><div class="g-sec__in">
@@ -37,7 +37,7 @@ $cf_btn    = le_field( $cf_quotes ? 'quotes_card_btn' : 'contact_quote_btn' );
 			</a>
 			<?php endif; ?>
 		</div></div>
-		<div class="g-cell g-dark g-form contact-form">
+		<div class="g-cell g-dark g-form">
 			<?php if ( $cf_form ) { echo do_shortcode( $cf_form ); } // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		</div>
 	</section>

@@ -326,6 +326,9 @@ function le_grid_intro( $a ) {
 		echo '<span class="g-mono g-sec__count">' . esc_html( $a['count'] ) . '</span>';
 	}
 	echo '</div>';
+	if ( ! empty( $a['big'] ) ) {
+		echo '<span class="g-sec__big" aria-hidden="true">' . esc_html( $a['big'] ) . '</span>';
+	}
 	if ( ! empty( $a['title'] ) ) {
 		echo '<' . $tag . ' class="g-sec__title">' . $a['title'] . '</' . $tag . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
@@ -337,4 +340,19 @@ function le_grid_intro( $a ) {
 		echo '<a class="g-line-link g-mono g-sec__link" href="' . esc_url( $a['link']['url'] ) . '"' . $tgt . '><span>' . esc_html( $a['link']['title'] ) . '</span>' . le_grid_arrow() . '</a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	}
 	echo '</div></div>';
+}
+
+/**
+ * Column class for a sub-grid of N cards: three across when that divides
+ * evenly (or there are many), otherwise two.
+ *
+ * @param int $n Number of cards.
+ * @return string
+ */
+function le_grid_cells_class( $n ) {
+	$n = (int) $n;
+	if ( $n >= 3 && ( 0 === $n % 3 || $n > 6 ) ) {
+		return 'g-cells g-cells--3';
+	}
+	return 'g-cells g-cells--2';
 }
