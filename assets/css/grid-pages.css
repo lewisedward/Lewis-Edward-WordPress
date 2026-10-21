@@ -586,30 +586,28 @@ body.admin-bar.skin-grid .g-sec__sticky .g-sec__in { top: calc(92px + var(--wp-a
 .skin-grid .g-media .g-ph > img,
 .skin-grid .g-journey__item .g-ph > img { aspect-ratio: auto 16 / 10; }
 
-/* Visual journey: alternating rows (2026-10-21). Screenshot takes two thirds, the number and
-   caption the other third, swapping sides each row, so any count fills the grid. */
-.skin-grid .g-journey { grid-template-columns: 1fr; }
-.skin-grid .g-journey__item { display: grid; grid-template-columns: 2fr 1fr; border-right: 0; border-bottom: 1px solid var(--g-line); }
-.skin-grid .g-journey__item:last-child { border-bottom: 0; }
-.skin-grid .g-journey__item > .g-ph { border-right: 1px solid var(--g-line); }
-.skin-grid .g-journey__item:nth-child(even) { grid-template-columns: 1fr 2fr; }
-.skin-grid .g-journey__item:nth-child(even) > .g-ph { order: 2; border-right: 0; border-left: 1px solid var(--g-line); }
-.skin-grid .g-journey__item:not(:has(.g-journey__cap)) { grid-template-columns: 1fr; }
-.skin-grid .g-journey__item:not(:has(.g-journey__cap)) > .g-ph { border: 0; }
-.skin-grid .g-journey__cap { margin-top: 0; border-top: 0; display: flex; flex-direction: column; justify-content: space-between; gap: 32px; padding: 32px; }
-.skin-grid .g-journey__cap .g-mono { padding-top: 0; font-family: var(--font-display); font-size: clamp(44px, 4.4vw, 72px); line-height: 1; letter-spacing: -0.04em; color: hsl(var(--foreground) / 0.22); }
-.skin-grid .g-journey__cap p { font-size: clamp(18px, 1.5vw, 24px); line-height: 1.3; letter-spacing: -0.01em; color: hsl(var(--foreground) / 0.9); max-width: 22ch; }
-@media (max-width: 1100px) {
-	.skin-grid .g-journey__item { grid-template-columns: 3fr 2fr; }
-	.skin-grid .g-journey__item:nth-child(even) { grid-template-columns: 2fr 3fr; }
-	.skin-grid .g-journey__cap { padding: 24px; }
-}
+/* Visual journey: horizontal strip (2026-10-21). All screenshots share one height and keep their
+   own width (never cropped); the strip scrolls/drags sideways with snap, the next image peeking in. */
+.skin-grid .g-journey { display: block; --jh: clamp(260px, 34vw, 540px); }
+.skin-grid .g-journey__track { display: flex; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none; cursor: grab; outline-offset: -2px; }
+.skin-grid .g-journey__track::-webkit-scrollbar { display: none; }
+.skin-grid .g-journey__track.is-dragging { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+.skin-grid .g-journey__track.is-dragging img { pointer-events: none; }
+.skin-grid .g-journey__item,
+.skin-grid .g-journey__item:nth-child(2n) { flex: 0 0 auto; display: flex; flex-direction: column; border-right: 1px solid var(--g-line); border-bottom: 0; scroll-snap-align: start; }
+.skin-grid .g-journey__item > .g-ph { display: block; height: var(--jh); border: 0; }
+.skin-grid .g-journey__item .g-ph > img { position: static; display: block; height: 100%; width: auto; max-width: none; object-fit: contain; -webkit-user-drag: none; }
+.skin-grid .g-journey__cap { width: 0; min-width: 100%; box-sizing: border-box; margin-top: 0; }
+.skin-grid .g-journey__bar { display: flex; align-items: center; gap: 24px; padding: 18px 32px; border-top: 1px solid var(--g-line); }
+.skin-grid .g-journey__count { color: hsl(var(--foreground) / 0.5); min-width: 64px; }
+.skin-grid .g-journey__progress { position: relative; flex: 1; height: 1px; background: var(--g-line); }
+.skin-grid .g-journey__progress > span { position: absolute; left: 0; top: 0; height: 1px; width: 0; background: var(--g-lime); transition: width 0.2s linear; }
+.skin-grid .g-journey__bar .g-tst__btns { display: flex; gap: 8px; }
+.skin-grid .g-journey__bar .g-tst__btn[disabled] { opacity: 0.35; cursor: default; }
 @media (max-width: 720px) {
 	.skin-grid .g-journey__item,
-	.skin-grid .g-journey__item:nth-child(even) { grid-template-columns: 1fr; }
-	.skin-grid .g-journey__item > .g-ph,
-	.skin-grid .g-journey__item:nth-child(even) > .g-ph { order: 0; border: 0; }
-	.skin-grid .g-journey__cap { display: grid; grid-template-columns: 28px 1fr; gap: 16px; padding: 16px 20px 22px; border-top: 1px solid var(--g-line); }
-	.skin-grid .g-journey__cap .g-mono { font-family: var(--g-mono); font-size: 11px; letter-spacing: 0.06em; color: hsl(var(--foreground) / 0.45); padding-top: 3px; }
-	.skin-grid .g-journey__cap p { font-size: 15px; line-height: 1.5; max-width: none; }
+	.skin-grid .g-journey__item:nth-child(2n) { width: 86vw; }
+	.skin-grid .g-journey__item > .g-ph { height: auto; }
+	.skin-grid .g-journey__item .g-ph > img { width: 100%; height: auto; }
+	.skin-grid .g-journey__bar { padding: 14px 20px; gap: 16px; }
 }

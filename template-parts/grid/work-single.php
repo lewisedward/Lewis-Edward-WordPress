@@ -97,7 +97,8 @@ $wk_has_glance = ( $wk_year || $wk_dur || $wk_plat || $wk_services || $wk_tech )
 	<section class="g-row" aria-label="<?php esc_attr_e( 'Visual journey', 'lewisedward' ); ?>">
 		<?php le_grid_intro( array( 'label' => le_field( 'wk_features_eyebrow', $wk_id, __( 'Visual journey', 'lewisedward' ) ), 'count' => str_pad( (string) count( $wk_feats ), 2, '0', STR_PAD_LEFT ), 'title' => le_grid_heading( array( array( le_field( 'wk_features_title_pre', $wk_id, __( 'Explore', 'lewisedward' ) ) ), array( le_field( 'wk_features_title_mid', $wk_id, __( 'some', 'lewisedward' ) ), 'muted' ), array( le_field( 'wk_features_title_end', $wk_id, __( 'features.', 'lewisedward' ) ), 'accent' ) ) ), 'class' => 'g-sec__intro--bar' ) ); ?>
 	</section>
-	<section class="g-row g-journey" aria-label="<?php esc_attr_e( 'Feature images', 'lewisedward' ); ?>">
+	<section class="g-row g-journey" data-g-rail aria-label="<?php esc_attr_e( 'Feature images', 'lewisedward' ); ?>">
+		<div class="g-journey__track" data-g-rail-track tabindex="0">
 		<?php foreach ( $wk_feats as $i => $row ) : $img = $row['image']; ?>
 		<div class="g-cell g-journey__item">
 			<?php $img_w = (int) ( isset( $img['sizes']['large'] ) ? ( $img['sizes']['large-width'] ?? 0 ) : ( $img['width'] ?? 0 ) ); $img_h = (int) ( isset( $img['sizes']['large'] ) ? ( $img['sizes']['large-height'] ?? 0 ) : ( $img['height'] ?? 0 ) ); ?>
@@ -105,6 +106,14 @@ $wk_has_glance = ( $wk_year || $wk_dur || $wk_plat || $wk_services || $wk_tech )
 			<?php if ( ! empty( $row['description'] ) ) : ?><div class="g-journey__cap"><span class="g-mono"><?php echo esc_html( str_pad( (string) ( $i + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span><p><?php echo esc_html( $row['description'] ); ?></p></div><?php endif; ?>
 		</div>
 		<?php endforeach; ?>
+		</div>
+		<?php if ( count( $wk_feats ) > 1 ) : ?>
+		<div class="g-journey__bar">
+			<span class="g-journey__count g-mono" data-g-rail-count aria-live="polite">01 / <?php echo esc_html( str_pad( (string) count( $wk_feats ), 2, '0', STR_PAD_LEFT ) ); ?></span>
+			<span class="g-journey__progress" aria-hidden="true"><span data-g-rail-progress></span></span>
+			<span class="g-tst__btns"><button type="button" class="g-tst__btn" data-g-rail-prev aria-label="<?php esc_attr_e( 'Previous image', 'lewisedward' ); ?>"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><button type="button" class="g-tst__btn" data-g-rail-next aria-label="<?php esc_attr_e( 'Next image', 'lewisedward' ); ?>"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></span>
+		</div>
+		<?php endif; ?>
 	</section>
 	<?php endif; ?>
 

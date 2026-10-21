@@ -91,6 +91,68 @@
 		}, { threshold: 0.3 });
 		to.observe(tst);
 	}
+	/* Visual journey strip: prev/next, counter, progress, mouse drag. */
+	Array.prototype.forEach.call(document.querySelectorAll('[data-g-rail]'), function (rail) {
+		var track = rail.querySelector('[data-g-rail-track]');
+		if (!track) { return; }
+		var items = Array.prototype.slice.call(track.children);
+		var prev = rail.querySelector('[data-g-rail-prev]');
+		var next = rail.querySelector('[data-g-rail-next]');
+		var count = rail.querySelector('[data-g-rail-count]');
+		var bar = rail.querySelector('[data-g-rail-progress]');
+		var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+		var current = function () {
+			var x = track.scrollLeft, best = 0;
+			items.forEach(function (it, i) { if (it.offsetLeft - track.offsetLeft <= x + 4) { best = i; } });
+			if (track.scrollLeft + track.clientWidth >= track.scrollWidth - 4) { best = items.length - 1; }
+			return best;
+		};
+		var ticking = false;
+		var update = function () {
+			ticking = false;
+			var i = current(), max = track.scrollWidth - track.clientWidth;
+			if (count) { count.textContent = pad(i + 1) + ' / ' + pad(items.length); }
+			if (bar) { bar.style.width = (max > 0 ? Math.min(100, Math.max(0, (track.scrollLeft / max) * 100)) : 100) + '%'; }
+			if (prev) { prev.disabled = track.scrollLeft <= 2; }
+			if (next) { next.disabled = track.scrollLeft >= max - 2; }
+		};
+		var go = function (dir) {
+			var i = Math.max(0, Math.min(items.length - 1, current() + dir));
+			track.scrollTo({ left: items[i].offsetLeft - track.offsetLeft, behavior: reduce ? 'auto' : 'smooth' });
+		};
+		if (prev) { prev.addEventListener('click', function () { go(-1); }); }
+		if (next) { next.addEventListener('click', function () { go(1); }); }
+		track.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+		track.addEventListener('keydown', function (e) {
+			if (e.key === 'ArrowRight') { e.preventDefault(); go(1); }
+			if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
+		});
+		var down = false, startX = 0, startLeft = 0, moved = 0;
+		track.addEventListener('pointerdown', function (e) {
+			if (e.pointerType !== 'mouse' || e.button !== 0) { return; }
+			down = true; moved = 0; startX = e.clientX; startLeft = track.scrollLeft;
+		});
+		window.addEventListener('pointermove', function (e) {
+			if (!down) { return; }
+			var dx = e.clientX - startX;
+			if (!moved && Math.abs(dx) > 4) { track.classList.add('is-dragging'); }
+			moved = Math.abs(dx);
+			if (moved > 4) { track.scrollLeft = startLeft - dx; }
+		});
+		window.addEventListener('pointerup', function () {
+			if (!down) { return; }
+			down = false;
+			if (track.classList.contains('is-dragging')) {
+				track.classList.remove('is-dragging');
+				var i = current(), it = items[i], next2 = items[i + 1];
+				if (next2 && track.scrollLeft - (it.offsetLeft - track.offsetLeft) > it.offsetWidth / 2) { it = next2; }
+				track.scrollTo({ left: it.offsetLeft - track.offsetLeft, behavior: reduce ? 'auto' : 'smooth' });
+			}
+		});
+		window.addEventListener('resize', update);
+		update();
+	});
+
 	/* Parallax: media inside .g-ph frames drifts a few percent as the frame
 	   crosses the viewport (the frame is overflow-hidden and the media is
 	   scaled up 12% in CSS, so nothing shows through). Only in-view frames
