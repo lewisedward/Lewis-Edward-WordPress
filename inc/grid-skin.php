@@ -190,7 +190,7 @@ function le_grid_logo( $url ) {
  */
 function le_grid_wire( $hint, $i = 0 ) {
 	$hint = strtolower( (string) $hint );
-	$keys = array( 'ai-' => 'lattice', ' ai' => 'lattice', 'intelligen' => 'lattice', 'partner' => 'overlap', 'agency' => 'overlap', 'commerce' => 'stack', 'shop' => 'stack', 'support' => 'monitor', 'maint' => 'monitor', 'design' => 'compose', 'develop' => 'build' ); // first match wins, so the specific ones go first
+	$keys = array( 'audit' => 'audit', 'train' => 'training', 'optimi' => 'gauge', 'speed' => 'gauge', 'secur' => 'shield', 'webflow' => 'flow', 'migrat' => 'migrate', 'consult' => 'consult', 'api' => 'hub', 'integrat' => 'hub', 'seo' => 'rise', 'hosting' => 'server', 'ai-' => 'lattice', ' ai' => 'lattice', 'intelligen' => 'lattice', 'partner' => 'overlap', 'agency' => 'overlap', 'commerce' => 'stack', 'shop' => 'stack', 'support' => 'monitor', 'maint' => 'monitor', 'design' => 'compose', 'develop' => 'build' ); // first match wins, so the specific ones go first
 	$kind = '';
 	foreach ( $keys as $needle => $k ) {
 		if ( false !== strpos( ' ' . $hint, $needle ) ) {
@@ -198,7 +198,7 @@ function le_grid_wire( $hint, $i = 0 ) {
 			break;
 		}
 	}
-	$order = array( 'compose', 'build', 'monitor', 'overlap', 'stack', 'lattice' );
+	$order = array( 'compose', 'build', 'monitor', 'overlap', 'stack', 'lattice', 'audit', 'training', 'gauge', 'shield', 'flow', 'migrate', 'consult', 'hub', 'rise', 'server' );
 	if ( ! $kind ) {
 		$kind = $order[ (int) $i % count( $order ) ];
 	}
@@ -228,6 +228,41 @@ function le_grid_wire( $hint, $i = 0 ) {
 			break;
 		case 'stack': // nested rotated squares with a tag: e-commerce.
 			$body = '<path d="M60 8 112 60 60 112 8 60z"/><path d="M60 24 96 60 60 96 24 60z"/><path d="M60 40 80 60 60 80 40 60z"/><path d="M8 60h104M60 8v104"/><circle class="g-wire__dot" cx="60" cy="60" r="2.5"/>';
+			break;
+		case 'audit': // a page of lines under a magnifier: audits.
+			$body = '<rect x="22.5" y="12.5" width="60" height="80"/><path d="M32 28h40M32 38h40M32 48h28M32 58h34M32 68h22"/><circle cx="78" cy="78" r="20"/><path d="M92.5 92.5 108 108"/><path d="M68 78h20M78 68v20" stroke-opacity="0.5"/><circle class="g-wire__dot" cx="78" cy="78" r="2.5"/>';
+			break;
+		case 'training': // steps climbing inside a ring: training.
+			$body = '<circle cx="60" cy="60" r="50"/><path d="M22 90h19V73h19V56h19V39h19"/><path d="M22 90h76" stroke-opacity="0.5"/><path d="M41 90V73M60 90V56M79 90V39" stroke-opacity="0.35"/><circle class="g-wire__dot" cx="98" cy="39" r="2.5"/>';
+			break;
+		case 'gauge': // speed gauge with ticks and a needle: optimisation.
+			$ticks = '';
+			for ( $t = 0; $t <= 12; $t++ ) {
+				$a      = deg2rad( 210 - $t * 20 );
+				$ticks .= sprintf( 'M%.1f %.1fL%.1f %.1f', 60 + 40 * cos( $a ), 66 - 40 * sin( $a ), 60 + 46 * cos( $a ), 66 - 46 * sin( $a ) );
+			}
+			$body = '<path d="M20.2 89A46 46 0 1 1 99.8 89"/><path d="' . $ticks . '" stroke-opacity="0.7"/><path d="M60 66 84 42"/><circle cx="60" cy="66" r="6"/><path d="M34 104h52"/><circle class="g-wire__dot" cx="60" cy="66" r="2.5"/>';
+			break;
+		case 'shield': // nested shields with a keyhole: security.
+			$body = '<path d="M60 10 98 24v32c0 26-16 44-38 54-22-10-38-28-38-54V24z"/><path d="M60 24 86 34v22c0 18-11 31-26 38-15-7-26-20-26-38V34z"/><circle cx="60" cy="54" r="7"/><path d="M60 61v14"/><circle class="g-wire__dot" cx="60" cy="10" r="2.5"/>';
+			break;
+		case 'flow': // three waves in a frame: Webflow.
+			$body = '<rect x="10.5" y="20.5" width="99" height="79"/><path d="M10.5 44c16-14 33-14 49.5 0s33.5 14 49 0"/><path d="M10.5 60c16-14 33-14 49.5 0s33.5 14 49 0"/><path d="M10.5 76c16-14 33-14 49.5 0s33.5 14 49 0"/><circle class="g-wire__dot" cx="60" cy="60" r="2.5"/>';
+			break;
+		case 'migrate': // one block arcing across to another: migration.
+			$body = '<rect x="8.5" y="62.5" width="38" height="38"/><rect x="73.5" y="19.5" width="38" height="38"/><path d="M73.5 32.5h38M86.5 19.5v38" stroke-opacity="0.5"/><path d="M27.5 62.5C27.5 30 48 38.5 73.5 38.5" stroke-dasharray="3 3"/><path d="M66 32l7.5 6.5L66 45"/><circle class="g-wire__dot" cx="27.5" cy="81.5" r="2.5"/>';
+			break;
+		case 'consult': // two speech bubbles in conversation: consultancy.
+			$body = '<path d="M12.5 18.5h62v40h-36l-12 12v-12h-14z"/><path d="M45.5 52.5h62v40h-14v12l-12-12h-36z"/><path d="M56 66h40M56 76h28" stroke-opacity="0.6"/><circle cx="32" cy="38.5" r="2"/><circle cx="55" cy="38.5" r="2"/><circle class="g-wire__dot" cx="43.5" cy="38.5" r="2.5"/>';
+			break;
+		case 'hub': // a chip wired out to four endpoints: API & integrations.
+			$body = '<rect x="44.5" y="44.5" width="31" height="31"/><path d="M60 44.5V22M60 75.5V98M44.5 60H22M75.5 60H98"/><circle cx="60" cy="16" r="6"/><circle cx="60" cy="104" r="6"/><circle cx="16" cy="60" r="6"/><circle cx="104" cy="60" r="6"/><path d="M52 44.5v-5M68 44.5v-5M52 75.5v5M68 75.5v5M44.5 52h-5M44.5 68h-5M75.5 52h5M75.5 68h5" stroke-opacity="0.6"/><circle class="g-wire__dot" cx="60" cy="60" r="2.5"/>';
+			break;
+		case 'rise': // bars and a rising trend line: SEO.
+			$body = '<path d="M12.5 12.5v95h95"/><path d="M30 107.5v-20M48 107.5v-34M66 107.5v-28M84 107.5v-52M100 107.5v-70" stroke-opacity="0.45"/><path d="M30 80 48 64 66 70 84 44 100 26"/><circle cx="100" cy="26" r="8"/><circle class="g-wire__dot" cx="100" cy="26" r="2.5"/>';
+			break;
+		case 'server': // a rack of three units: hosting.
+			$body = '<rect x="20.5" y="16.5" width="79" height="24"/><rect x="20.5" y="48.5" width="79" height="24"/><rect x="20.5" y="80.5" width="79" height="24"/><path d="M54 28.5h36M54 60.5h36M54 92.5h36" stroke-opacity="0.6"/><circle cx="32" cy="28.5" r="3"/><circle cx="32" cy="92.5" r="3"/><path d="M60 104.5v8M40 112.5h40"/><circle class="g-wire__dot" cx="32" cy="60.5" r="2.5"/>';
 			break;
 		default: // lattice of nodes inside a ring: AI.
 			$pts   = array( array( 60, 22 ), array( 94, 42 ), array( 94, 78 ), array( 60, 98 ), array( 26, 78 ), array( 26, 42 ), array( 60, 60 ) );
