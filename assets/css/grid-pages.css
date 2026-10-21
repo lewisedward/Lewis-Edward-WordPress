@@ -641,3 +641,17 @@ body.admin-bar.skin-grid .g-sec__sticky .g-sec__in { top: calc(92px + var(--wp-a
 	.skin-grid .g-journey--rows .g-journey__cap .g-mono { font-family: var(--g-mono); font-size: 11px; letter-spacing: 0.06em; color: hsl(var(--foreground) / 0.45); padding-top: 3px; }
 	.skin-grid .g-journey--rows .g-journey__cap p { font-size: 15px; line-height: 1.5; max-width: none; }
 }
+/* Tablets and below: journey rows stack (screenshot full width, caption beneath). */
+@media (max-width: 900px) {
+	.skin-grid .g-journey--rows .g-journey__item,
+	.skin-grid .g-journey--rows .g-journey__item:nth-child(2n) { grid-template-columns: 1fr; }
+	.skin-grid .g-journey--rows .g-journey__item > .g-ph,
+	.skin-grid .g-journey--rows .g-journey__item:nth-child(2n) > .g-ph { order: 0; border: 0; }
+	.skin-grid .g-journey--rows .g-journey__cap { display: grid; grid-template-columns: 40px 1fr; gap: 20px; padding: 20px 32px 26px; border-top: 1px solid var(--g-line); }
+	.skin-grid .g-journey--rows .g-journey__cap .g-mono { font-family: var(--g-mono); font-size: 11px; letter-spacing: 0.06em; color: hsl(var(--foreground) / 0.45); padding-top: 4px; }
+	.skin-grid .g-journey--rows .g-journey__cap p { font-size: 16px; line-height: 1.5; max-width: none; }
+}
+@media (max-width: 720px) {
+	.skin-grid .g-journey--rows .g-journey__cap { grid-template-columns: 28px 1fr; gap: 16px; padding: 16px 20px 22px; }
+	.skin-grid .g-journey--rows .g-journey__cap p { font-size: 15px; }
+}

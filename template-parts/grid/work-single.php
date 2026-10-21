@@ -102,8 +102,14 @@ $wk_has_glance = ( $wk_year || $wk_dur || $wk_plat || $wk_services || $wk_tech )
 		<?php if ( $wk_rail ) : ?><div class="g-journey__track" data-g-rail-track data-cursor="<?php esc_attr_e( 'Drag', 'lewisedward' ); ?>" tabindex="0"><?php endif; ?>
 		<?php foreach ( $wk_feats as $i => $row ) : $img = $row['image']; ?>
 		<div class="g-cell g-journey__item">
-			<?php $img_w = (int) ( isset( $img['sizes']['large'] ) ? ( $img['sizes']['large-width'] ?? 0 ) : ( $img['width'] ?? 0 ) ); $img_h = (int) ( isset( $img['sizes']['large'] ) ? ( $img['sizes']['large-height'] ?? 0 ) : ( $img['height'] ?? 0 ) ); ?>
-			<span class="g-ph"><img src="<?php echo esc_url( $img['sizes']['large'] ?? $img['url'] ); ?>"<?php echo ( $img_w && $img_h ) ? ' width="' . esc_attr( $img_w ) . '" height="' . esc_attr( $img_h ) . '"' : ''; ?> alt="<?php echo esc_attr( ! empty( $img['alt'] ) ? $img['alt'] : ( $row['description'] ?? get_the_title() ) ); ?>" loading="lazy" decoding="async" /></span>
+			<?php
+			$img_alt = ! empty( $img['alt'] ) ? $img['alt'] : ( $row['description'] ?? get_the_title() );
+			$img_tag = ! empty( $img['ID'] ) ? wp_get_attachment_image( (int) $img['ID'], 'full', false, array( 'alt' => $img_alt, 'loading' => 'lazy', 'decoding' => 'async', 'sizes' => '(max-width: 900px) 100vw, 50vw' ) ) : '';
+			if ( ! $img_tag ) {
+				$img_tag = '<img src="' . esc_url( $img['url'] ?? '' ) . '" alt="' . esc_attr( $img_alt ) . '" loading="lazy" decoding="async" />';
+			}
+			?>
+			<span class="g-ph"><?php echo $img_tag; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 			<?php if ( ! empty( $row['description'] ) ) : ?><div class="g-journey__cap"><span class="g-mono"><?php echo esc_html( str_pad( (string) ( $i + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span><p><?php echo esc_html( $row['description'] ); ?></p></div><?php endif; ?>
 		</div>
 		<?php endforeach; ?>
