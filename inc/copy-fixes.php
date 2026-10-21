@@ -344,7 +344,7 @@ function le_copy_fix_keyed() {
 		'journalp_h1_2' => array( 'Build notes' => 'build notes' ),
 		'journalp_h1_3' => array( '& Reads' => '& reads' ),
 		'home_work_title_post' => array( 'Websites' => 'websites', 'Design & Development Projects' => 'design & development projects', 'Design & Development' => 'design & development' ),
-		'workp_archive_eyebrow' => array( 'Websites' => 'websites' ),
+		'workp_archive_eyebrow' => array( 'websites' => 'Websites' ), // Standalone label: reverts an earlier over-eager rule.
 	);
 }
 

@@ -655,3 +655,25 @@ body.admin-bar.skin-grid .g-sec__sticky .g-sec__in { top: calc(92px + var(--wp-a
 	.skin-grid .g-journey--rows .g-journey__cap { grid-template-columns: 28px 1fr; gap: 16px; padding: 16px 20px 22px; }
 	.skin-grid .g-journey--rows .g-journey__cap p { font-size: 15px; }
 }
+
+/* Work page: the featured project gets its own full-width row under a compact hero (2026-10-21). */
+.skin-grid .g-phero--solo { grid-template-columns: 1fr; min-height: 0; }
+.skin-grid .g-main .g-phero--solo .g-phero__title { max-width: 26ch; }
+.skin-grid .g-phero--solo .g-phero__main { gap: 32px; }
+.skin-grid .g-featrow { grid-template-columns: 1fr; }
+.skin-grid .g-featrow .g-feature { min-height: clamp(440px, 74vh, 860px); }
+.skin-grid .g-featrow .g-feature__foot { padding: 160px 40px 40px; }
+.skin-grid .g-featrow .g-feature__title { font-size: clamp(32px, 3.6vw, 56px); line-height: 1.05; letter-spacing: -0.03em; }
+.skin-grid .g-featrow .g-feature__desc { font-size: 17px; max-width: 56ch; margin-top: 14px; }
+.skin-grid .g-featrow .g-feature__label { top: 32px; left: 40px; }
+.skin-grid .g-featrow .g-feature .g-arrow { width: 22px; height: 22px; }
+@media (max-width: 1100px) {
+	.skin-grid .g-featrow .g-feature { min-height: clamp(360px, 60vw, 600px); }
+	.skin-grid .g-featrow .g-feature__foot { padding: 120px 32px 32px; }
+}
+@media (max-width: 720px) {
+	.skin-grid .g-featrow .g-feature { min-height: 380px; }
+	.skin-grid .g-featrow .g-feature__foot { padding: 96px 20px 24px; }
+	.skin-grid .g-featrow .g-feature__label { top: 16px; left: 20px; }
+	.skin-grid .g-featrow .g-feature__desc { font-size: 15px; }
+}
