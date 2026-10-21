@@ -55,7 +55,7 @@ if ( is_array( $wp_all ) ) {
 	<?php if ( $wp_has_feat ) : ?>
 	<section class="g-row g-featrow" aria-label="<?php esc_attr_e( 'Featured project', 'lewisedward' ); ?>">
 		<a class="g-cell g-ph g-feature"<?php echo le_grid_work_href( $wp_fid ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
-			<?php echo ( has_post_thumbnail( $wp_fid ) ? get_the_post_thumbnail( $wp_fid, 'full', array( 'loading' => 'eager', 'fetchpriority' => 'high', 'sizes' => '100vw' ) ) : le_grid_work_img( $wp_fid, 'full', array( 'loading' => 'eager', 'fetchpriority' => 'high', 'sizes' => '100vw' ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+			<?php echo le_grid_work_img( $wp_fid, 'full', array( 'loading' => 'eager', 'fetchpriority' => 'high', 'sizes' => '100vw' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			<span class="g-feature__label g-mono"><?php echo esc_html( le_field( 'workp_featured_label' ) ); ?></span>
 			<span class="g-feature__foot">
 				<span><h2 class="g-feature__title"><?php echo esc_html( get_the_title( $wp_fid ) ); ?></h2><p class="g-feature__desc"><?php echo esc_html( le_field( 'work_card_description', $wp_fid ) ); ?></p><?php $ft = $wp_terms( $wp_fid ); if ( $ft ) : ?><span class="g-li__tags"><?php foreach ( $ft as $t ) { echo '<span class="g-tag">' . esc_html( $t->name ) . '</span>'; } ?></span><?php endif; ?></span>
