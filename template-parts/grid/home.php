@@ -207,7 +207,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 				}
 			}
 			?>
-			<span class="g-clients__lbl g-mono"><span><?php echo esc_html( le_field( 'home_clients_eyebrow', false, __( 'Clients', 'lewisedward' ) ) ); ?></span><span>01 &mdash; <?php echo esc_html( str_pad( (string) count( $g_sectors ), 2, '0', STR_PAD_LEFT ) ); ?></span></span>
+			<span class="g-clients__lbl g-mono"><span><?php echo esc_html( le_field( 'home_clients_eyebrow', false, __( 'Clients', 'lewisedward' ) ) ); ?></span><span>01 &ndash; <?php echo esc_html( str_pad( (string) count( $g_sectors ), 2, '0', STR_PAD_LEFT ) ); ?></span></span>
 			<?php if ( $g_sectors ) : ?>
 			<span class="g-clients__side-title"><?php echo esc_html( le_field( 'grid_clients_side_title', false, __( 'Sectors we build for', 'lewisedward' ) ) ); ?></span>
 			<ul class="g-clients__sectors">
@@ -234,7 +234,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 		<div class="g-cell g-svc__left">
 			<?php $g_sv = le_field( 'grid_services_video' ); $g_sp = le_field( 'grid_services_poster' ); $g_sv = ( is_array( $g_sv ) && ! empty( $g_sv['url'] ) ) ? $g_sv['url'] : LE_URI . '/assets/videos/typing-macbook-sm.mp4?ver=' . le_asset_ver( 'assets/videos/typing-macbook-sm.mp4' ); $g_sp = ( is_array( $g_sp ) && ! empty( $g_sp['url'] ) ) ? $g_sp['url'] : LE_URI . '/assets/videos/typing-macbook-poster.jpg'; ?>
 			<span class="g-svc__bg g-ph g-ph--mono" aria-hidden="true"><video class="g-ph__video" autoplay muted loop playsinline preload="metadata" poster="<?php echo esc_url( $g_sp ); ?>"><source src="<?php echo esc_url( $g_sv ); ?>" type="video/mp4"></video></span>
-			<span class="g-label g-mono g-svc__eyebrow"><span><?php echo esc_html( le_field( 'home_services_eyebrow', false, __( 'Services', 'lewisedward' ) ) ); ?></span><span>01 &mdash; <?php echo esc_html( str_pad( (string) count( $g_services ), 2, '0', STR_PAD_LEFT ) ); ?></span></span>
+			<span class="g-label g-mono g-svc__eyebrow"><span><?php echo esc_html( le_field( 'home_services_eyebrow', false, __( 'Services', 'lewisedward' ) ) ); ?></span><span>01 &ndash; <?php echo esc_html( str_pad( (string) count( $g_services ), 2, '0', STR_PAD_LEFT ) ); ?></span></span>
 			<h2 class="g-svc__title"><?php echo esc_html( le_field( 'home_services_title' ) ); ?></h2>
 			<div class="g-svc__foot">
 				<p><?php echo esc_html( le_field( 'home_services_lede' ) ); ?></p>

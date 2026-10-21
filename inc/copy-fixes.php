@@ -63,6 +63,7 @@ function le_copy_fix_subs() {
 		array( 'Web Designers, Developers and let’s face it... Geeks', 'web designers, developers and, let’s face it… geeks' ),
 		array( 'Web Designers, Developers and let&#039;s face it... Geeks', 'web designers, developers and, let&#039;s face it… geeks' ),
 		array( 'AI built sites', 'AI-built sites' ),
+		array( 'built for Creative Agencies', 'built for creative agencies' ),
 		array( 'support Creative Agencies who', 'support creative agencies who' ),
 		array( 'all the built in CMS', 'all the built-in CMS' ),
 		array( 'Fully-managed', 'Fully managed' ),
