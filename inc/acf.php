@@ -177,3 +177,27 @@ function le_link_target_attr( $link ) {
 		echo ' target="' . esc_attr( $link['target'] ) . '" rel="noopener noreferrer"';
 	}
 }
+
+/**
+ * Front end: relationship / post-object fields only return published posts, so a case study
+ * set to Draft drops out of every curated list (Work page, homepage, service "featured work",
+ * CTA previews) without editing each list. wp-admin still shows the full selection.
+ *
+ * @param mixed $value Formatted value.
+ * @return mixed
+ */
+function le_acf_published_only( $value ) {
+	if ( is_admin() || empty( $value ) ) {
+		return $value;
+	}
+	$live = static function ( $item ) {
+		$id = is_object( $item ) ? (int) $item->ID : (int) $item;
+		return $id && 'publish' === get_post_status( $id );
+	};
+	if ( is_array( $value ) ) {
+		return array_values( array_filter( $value, $live ) );
+	}
+	return $live( $value ) ? $value : null;
+}
+add_filter( 'acf/format_value/type=relationship', 'le_acf_published_only', 20 );
+add_filter( 'acf/format_value/type=post_object', 'le_acf_published_only', 20 );
