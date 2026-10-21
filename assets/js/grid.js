@@ -144,6 +144,7 @@
 					if (show) { n++; }
 				});
 				if (out) { out.textContent = (n < 10 ? '0' : '') + n; }
+				if (rootEl.style.getPropertyValue('--span')) { rootEl.style.setProperty('--span', String(Math.max(1, Math.ceil(n / 2)))); }
 			});
 		});
 	});
