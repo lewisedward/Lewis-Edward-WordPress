@@ -578,3 +578,8 @@ body.skin-grid.admin-bar .g-svc__left { top: calc(64px + var(--wp-admin--admin-b
 	.skin-grid .g-srv { grid-template-columns: 32px minmax(0, 1fr); }
 	.skin-grid .g-srv__body { grid-column: 2; }
 }
+
+/* Lime cells: no hairline. The 14% white line read as a seam against the
+   photo beside the contact CTA (and the hero / services rail cells). The
+   transparent border lets the lime fill run edge to edge. */
+.skin-grid .g-cell.g-lime { border-color: transparent; }
