@@ -568,7 +568,8 @@ body.skin-grid.admin-bar .g-svc__left { top: calc(64px + var(--wp-admin--admin-b
 	.skin-grid .g-hero__word > span { font-size: clamp(96px, min(14vw, 18vh), 200px); }
 }
 @media (max-width: 782px) {
-	body.skin-grid.admin-bar .g-header { top: 46px; }
+	/* WP's phone admin bar is absolutely positioned and scrolls away, so the header goes back to the top. */
+	body.skin-grid.admin-bar .g-header { top: 0; }
 }
 @media (max-width: 720px) {
 	.skin-grid .g-srv { grid-template-columns: 32px minmax(0, 1fr); }
