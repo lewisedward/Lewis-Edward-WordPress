@@ -505,3 +505,16 @@
 @media (max-width: 720px) {
 	.skin-grid .g-form .gform_wrapper.gform-theme .gform_footer input[type="submit"], .skin-grid .g-form .gform_wrapper.gform-theme .gform_footer button[type="submit"] { width: 100% !important; flex: 1 1 auto; }
 }
+
+/* Fill the row: when the intro cell is taller than the content beside it, the
+   content's rows stretch to meet the bottom instead of leaving an empty band. */
+.skin-grid .g-check { align-content: stretch; grid-auto-rows: 1fr; }
+.skin-grid .g-check > li { align-items: center; }
+.skin-grid .g-check > li::before { margin-top: 0; }
+.skin-grid .g-check > li:last-child, .skin-grid .g-check > li:nth-last-child(2):nth-child(odd) { border-bottom: 0; }
+.skin-grid .g-cells { align-content: stretch; }
+.skin-grid .g-sec__body > .g-li { flex: 1 1 auto; }
+@media (max-width: 720px) {
+	.skin-grid .g-check { grid-auto-rows: auto; }
+	.skin-grid .g-check > li:nth-last-child(2):nth-child(odd) { border-bottom: 1px solid var(--g-line); }
+}
