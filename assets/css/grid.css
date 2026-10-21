@@ -567,3 +567,10 @@ body.skin-grid.admin-bar .g-svc__left { top: calc(64px + var(--wp-admin--admin-b
 	.skin-grid .g-hero__word { gap: 16px; padding-top: 24px; }
 	.skin-grid .g-hero__word > span { font-size: clamp(96px, min(14vw, 18vh), 200px); }
 }
+@media (max-width: 782px) {
+	body.skin-grid.admin-bar .g-header { top: 46px; }
+}
+@media (max-width: 720px) {
+	.skin-grid .g-srv { grid-template-columns: 32px minmax(0, 1fr); }
+	.skin-grid .g-srv__body { grid-column: 2; }
+}
