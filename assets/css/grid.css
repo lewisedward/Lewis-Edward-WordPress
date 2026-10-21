@@ -594,3 +594,27 @@ body.skin-grid:not(.home) .site-content, body.skin-grid.single .site-content { p
 @media (max-width: 720px) {
 	body.skin-grid:not(.home) .site-content, body.skin-grid.single .site-content { padding-top: 56px; }
 }
+
+/* Cookie consent — grid skin (2026-10-21): a hairline panel bottom-left with a mono "Cookies"
+   label, plain text and two square buttons (Reject | Accept in lime). Markup and behaviour
+   (template-parts/consent-banner.php, assets/js/consent.js) are unchanged. */
+.skin-grid .le-consent { left: 24px; right: auto; bottom: 24px; justify-content: flex-start; width: min(420px, calc(100vw - 48px)); }
+.skin-grid .le-consent__inner { display: block; width: 100%; max-width: none; padding: 0; gap: 0; border: 1px solid var(--g-line); border-radius: 0; background: hsl(var(--background) / 0.94); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); box-shadow: 0 24px 60px hsl(0 0% 0% / 0.45); }
+.skin-grid .le-consent__inner::before { content: "Cookies"; display: block; padding: 14px 20px 14px 36px; border-bottom: 1px solid var(--g-line); background: linear-gradient(var(--g-lime), var(--g-lime)) 20px 50% / 6px 6px no-repeat; font-family: var(--g-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: hsl(var(--foreground) / 0.75); }
+.skin-grid .le-consent__inner::after { display: none; }
+.skin-grid .le-consent__text { padding: 18px 20px 20px; font-size: 14px; line-height: 1.55; font-weight: 400; color: hsl(var(--foreground) / 0.8); }
+.skin-grid .le-consent__text a { background: none; -webkit-background-clip: border-box; background-clip: border-box; color: hsl(var(--foreground)); text-decoration: underline; text-decoration-color: var(--g-lime); text-underline-offset: 3px; }
+.skin-grid .le-consent__text a:hover { color: var(--g-lime); }
+.skin-grid .le-consent__actions { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-top: 1px solid var(--g-line); }
+.skin-grid .le-consent__btn { position: relative; display: flex; align-items: center; justify-content: center; min-height: 52px; padding: 0 20px; border: 0; border-radius: 0; font-family: var(--g-mono); font-size: 11px; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase; transition: background-color 0.2s ease, color 0.2s ease, filter 0.2s ease; }
+.skin-grid .le-consent__btn::before, .skin-grid .le-consent__btn::after { display: none !important; }
+.skin-grid .le-consent__btn--reject { background: transparent; color: hsl(var(--foreground) / 0.8); border-right: 1px solid var(--g-line); }
+.skin-grid .le-consent__btn--reject:hover { background: hsl(var(--foreground) / 0.06); color: hsl(var(--foreground)); border-color: var(--g-line); }
+.skin-grid .le-consent__btn--accept { background: var(--g-lime); background-image: var(--brand-gradient); color: hsl(var(--primary-foreground)); border: 0; }
+.skin-grid .le-consent__btn--accept:hover { filter: brightness(1.06); }
+.skin-grid .le-consent__btn:focus-visible { outline: 1px solid var(--g-lime); outline-offset: -4px; }
+@media (max-width: 560px) {
+	.skin-grid .le-consent { left: 12px; right: 12px; bottom: 12px; width: auto; }
+	.skin-grid .le-consent__inner { display: block; }
+	.skin-grid .le-consent__btn { flex: none; }
+}

@@ -38,7 +38,18 @@ function le_gate_open() {
 /**
  * Hold staging behind the passphrase (front end only).
  */
+// Staging stays out of search engines whether or not the gate is on.
+add_action( 'send_headers', function () {
+	if ( le_is_staging_host() ) {
+		header( 'X-Robots-Tag: noindex, nofollow', true );
+	}
+} );
+
 add_action( 'template_redirect', function () {
+	// Gate switched off 2026-10-21 (staging opened up). Re-enable with define( 'LE_STAGING_GATE', true ) in wp-config.php.
+	if ( ! defined( 'LE_STAGING_GATE' ) || ! LE_STAGING_GATE ) {
+		return;
+	}
 	if ( ! le_is_staging_host() || is_admin() || is_user_logged_in() ) {
 		return;
 	}

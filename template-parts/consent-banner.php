@@ -13,13 +13,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$le_privacy_url = home_url( '/privacy' );
+$le_privacy_url = home_url( '/privacy-policy/' );
 ?>
 <div class="le-consent" data-consent role="dialog" aria-live="polite" aria-label="<?php esc_attr_e( 'Cookie consent', 'lewisedward' ); ?>" hidden>
 	<div class="le-consent__inner glass">
 		<p class="le-consent__text">
 			<?php esc_html_e( 'We use cookies to analyse traffic and measure our advertising. You can accept or reject these.', 'lewisedward' ); ?>
-			<a href="<?php echo esc_url( $le_privacy_url ); ?>"><?php esc_html_e( 'Privacy Policy', 'lewisedward' ); ?></a>
+			<a href="<?php echo esc_url( $le_privacy_url ); ?>"><?php esc_html_e( 'Privacy policy', 'lewisedward' ); ?></a>
 		</p>
 		<div class="le-consent__actions">
 			<button type="button" class="le-consent__btn le-consent__btn--reject" data-consent-reject><?php esc_html_e( 'Reject', 'lewisedward' ); ?></button>
