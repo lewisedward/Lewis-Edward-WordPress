@@ -562,3 +562,8 @@ body.skin-grid.admin-bar .g-svc__left { top: calc(64px + var(--wp-admin--admin-b
 	.skin-grid .g-svc__title { padding: 0; }
 	.skin-grid .g-svc__foot { padding-left: 0; }
 }
+/* Short desktop viewports (e.g. 1200×800 laptops): the hero word cell is ~350px tall, so tighten it and let the word follow the height. */
+@media (min-width: 1101px) and (max-height: 860px) {
+	.skin-grid .g-hero__word { gap: 16px; padding-top: 24px; }
+	.skin-grid .g-hero__word > span { font-size: clamp(96px, min(14vw, 18vh), 200px); }
+}
