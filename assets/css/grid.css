@@ -583,3 +583,9 @@ body.skin-grid.admin-bar .g-svc__left { top: calc(64px + var(--wp-admin--admin-b
    photo beside the contact CTA (and the hero / services rail cells). The
    transparent border lets the lime fill run edge to edge. */
 .skin-grid .g-cell.g-lime { border-color: transparent; }
+/* Inner pages: the classic theme pads .site-content by 6–8rem on every page but
+   the home page; the grid header is 64px, so pages start flush under it. */
+body.skin-grid:not(.home) .site-content, body.skin-grid.single .site-content { padding-top: 64px; }
+@media (max-width: 720px) {
+	body.skin-grid:not(.home) .site-content, body.skin-grid.single .site-content { padding-top: 56px; }
+}

@@ -34,7 +34,6 @@ $about_bio_cta = le_link( 'about_bio_cta', '/contact', __( 'Get in touch', 'lewi
 			<h1 class="g-phero__title<?php echo $ab_h1_len > 40 ? ' g-phero__title--wide' : ''; ?>"><?php echo le_grid_heading( array( array( le_field( 'about_h1_1' ) ), array( le_field( 'about_h1_2' ), 'muted' ), array( le_field( 'about_h1_3' ), 'accent' ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h1>
 			<div class="g-phero__foot">
 				<p class="g-phero__lede"><?php echo esc_html( le_field( 'about_lead' ) ); ?></p>
-				<a class="g-line-link g-mono" href="#bio"><span><?php esc_html_e( 'Meet Lewis', 'lewisedward' ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 			</div>
 		</div>
 		<?php if ( $ab_portrait_u ) : ?>
