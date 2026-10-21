@@ -451,3 +451,47 @@
 .skin-grid .g-form .gform_wrapper.gform-theme .gfield_consent_label a, .skin-grid .g-form .ginput_container_consent a { font: inherit !important; letter-spacing: inherit !important; text-transform: inherit !important; color: var(--g-lime); text-decoration: underline; text-underline-offset: 3px; }
 /* In-page anchors land below the fixed header. */
 .skin-grid .g-main [id] { scroll-margin-top: 64px; }
+
+/* ---- About + Contact: tablet / phone pass (2026-10-21) ------------------------- */
+/* Gravity Forms: a single-input "name" field spans the full row. */
+.skin-grid .g-form .ginput_complex > span:only-child { grid-column: 1 / -1; }
+@media (max-width: 1100px) {
+	/* Hero titles get more room once the hero is one column. */
+	.skin-grid .g-phero__title { font-size: clamp(40px, 7vw, 72px); }
+	.skin-grid .g-phero__title--wide { font-size: clamp(34px, 6vw, 60px); }
+	.skin-grid .g-phero__portrait { min-height: 440px; }
+	/* About strip: keep its three cells in one row on tablet. */
+	.skin-grid .g-strip { grid-template-columns: repeat(var(--n, 3), 1fr); }
+	.skin-grid .g-strip__item { padding: 20px 24px; gap: 12px; }
+	/* Contact / quotes: intro, then the form, then the cross-link card. */
+	.skin-grid .g-sec--form { display: flex; flex-direction: column; }
+	.skin-grid .g-sec--form > .g-sec__intro, .skin-grid .g-sec--form > .g-sec__intro > .g-sec__in { display: contents; }
+	.skin-grid .g-sec--form .g-sec__top { order: 1; padding: 28px 32px 0; }
+	.skin-grid .g-sec--form .g-phero__title { order: 2; padding: 24px 32px 0; }
+	.skin-grid .g-sec--form .g-phero__lede { order: 3; padding: 20px 32px 36px; max-width: none; }
+	.skin-grid .g-sec--form .g-form { order: 4; border-top: 1px solid var(--g-line); }
+	.skin-grid .g-sec--form .g-side--card { order: 5; margin: 0; }
+}
+@media (max-width: 720px) {
+	.skin-grid .g-phero__title { font-size: clamp(34px, 10vw, 46px); }
+	.skin-grid .g-phero__title--wide { font-size: clamp(30px, 8.6vw, 40px); }
+	.skin-grid .g-phero__portrait { min-height: 360px; }
+	.skin-grid .g-strip { grid-template-columns: 1fr; }
+	.skin-grid .g-sec--form .g-sec__top { padding: 24px 20px 0; }
+	.skin-grid .g-sec--form .g-phero__title { padding: 20px 20px 0; }
+	.skin-grid .g-sec--form .g-phero__lede { padding: 16px 20px 28px; }
+	.skin-grid .g-form .gform_wrapper.gform-theme input[type="submit"], .skin-grid .g-form .gform_wrapper.gform-theme button[type="submit"] { width: 100%; }
+	.skin-grid .g-step__num { font-size: 32px; }
+	/* Team on phones: the intro takes the full row, people go two-up, and when
+	   that leaves an odd one out the first person (the founder) runs full width. */
+	.skin-grid .g-people.g-people--3, .skin-grid .g-people.g-people--4 { grid-template-columns: 1fr 1fr; }
+	.skin-grid .g-people > .g-sec__intro { grid-column: 1 / -1; border-right: 0 !important; }
+	.skin-grid .g-people.g-people--3 > .g-person, .skin-grid .g-people.g-people--4 > .g-person { border-right: 1px solid var(--g-line) !important; }
+	.skin-grid .g-people > .g-person:nth-child(odd), .skin-grid .g-people > .g-person:last-child { border-right: 0 !important; }
+	.skin-grid .g-people:has(> .g-cell:last-child:nth-child(even)) > .g-person:nth-child(2) { grid-column: 1 / -1; border-right: 0 !important; }
+	.skin-grid .g-people:has(> .g-cell:last-child:nth-child(even)) > .g-person:nth-child(2) .g-ph { aspect-ratio: 4 / 3; }
+	.skin-grid .g-people:has(> .g-cell:last-child:nth-child(even)) > .g-person:nth-child(odd):not(:last-child) { border-right: 1px solid var(--g-line) !important; }
+	.skin-grid .g-people:has(> .g-cell:last-child:nth-child(even)) > .g-person:nth-child(even) { border-right: 0 !important; }
+	.skin-grid .g-person__meta { padding: 14px 16px 18px; }
+	.skin-grid .g-person__meta h3 { font-size: 16px; }
+}
