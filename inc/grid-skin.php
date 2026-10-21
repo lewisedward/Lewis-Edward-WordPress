@@ -139,7 +139,13 @@ add_filter( 'wp_get_attachment_image_attributes', function ( $attr, $attachment 
 	if ( ! le_grid_skin() || ! $attachment instanceof WP_Post ) {
 		return $attr;
 	}
-	$v = strtotime( $attachment->post_modified_gmt ) ?: $attachment->ID;
+	// Key on the file itself: a re-upload that overwrites the same filename may
+	// leave the attachment's post_modified untouched, but the file's mtime moves.
+	$file = get_attached_file( $attachment->ID );
+	$v    = ( $file && file_exists( $file ) ) ? (int) filemtime( $file ) : 0;
+	if ( ! $v ) {
+		$v = strtotime( $attachment->post_modified_gmt ) ?: $attachment->ID;
+	}
 	$bump = static function ( $url ) use ( $v ) {
 		return add_query_arg( 'v', $v, $url );
 	};
