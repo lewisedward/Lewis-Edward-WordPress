@@ -517,3 +517,48 @@
 	.skin-grid .g-srv:hover .g-wire--pulse { animation: none; }
 	.skin-grid .g-srv:hover .g-srv__wire { transform: none; }
 }
+
+/* ---- Responsive follow-ups (phone / tablet pass, 2026-10-21) ---------------- */
+/* Logged-in admins: keep the fixed header and the sticky services intro below the WP admin bar. */
+body.skin-grid.admin-bar .g-header { top: var(--wp-admin--admin-bar-height, 32px); }
+body.skin-grid.admin-bar .g-svc__left { top: calc(64px + var(--wp-admin--admin-bar-height, 32px)); }
+
+@media (max-width: 1100px) {
+	/* Services: a 50/50 split leaves 384px per column on a tablet; stack instead. */
+	.skin-grid .g-svc { grid-template-columns: 1fr; }
+	.skin-grid .g-svc__left { position: static; min-height: 420px; }
+	.skin-grid .g-srv { grid-template-columns: 48px minmax(0, 1fr) minmax(0, 1.1fr); }
+	/* Rows that were sized to the desktop module shrink to their content. */
+	.skin-grid .g-tst { grid-auto-rows: auto; }
+	.skin-grid .g-tst__side { min-height: 0; }
+	/* Journal: intro + three posts fill a 2×2 instead of leaving an orphan cell. */
+	.skin-grid .g-journal__intro { grid-column: auto; }
+	.skin-grid .g-journal__item:nth-of-type(2n) { border-right: 1px solid var(--g-line); }
+	.skin-grid .g-journal__item:nth-of-type(2n+1) { border-right: 0; }
+	/* Footer: statement and clock full width, the two menus side by side. */
+	.skin-grid .g-footer__line, .skin-grid .g-footer__clock { grid-column: 1 / -1; }
+	.skin-grid .g-footer__line { min-height: 0; }
+	.skin-grid .g-footer__nav:nth-of-type(2) { border-right: 0; }
+}
+
+@media (max-width: 720px) {
+	.skin-grid .g-work__item { padding: 0; }
+	.skin-grid .g-work__meta { grid-template-columns: 1fr 14px; row-gap: 6px; }
+	.skin-grid .g-work__meta > .g-mono { grid-column: 1 / -1; grid-row: 2; }
+	.skin-grid .g-work__meta > .g-arrow { grid-column: 2; grid-row: 1; }
+	.skin-grid .g-caps__list a { grid-template-columns: 28px 1fr; }
+	.skin-grid .g-caps__tag { display: none; }
+	.skin-grid .g-clients, .skin-grid .g-ov, .skin-grid .g-journal, .skin-grid .g-footer__top, .skin-grid .g-cta { grid-auto-rows: auto; }
+	.skin-grid .g-clients__copy { min-height: 0; }
+	.skin-grid .g-ov { grid-template-columns: 1fr; }
+	.skin-grid .g-ov__media { min-height: 260px; }
+	.skin-grid .g-journal__intro, .skin-grid .g-journal__item { min-height: 0; }
+	.skin-grid .g-journal__intro { gap: 28px; }
+	.skin-grid .g-journal__item { gap: 24px; }
+	.skin-grid .g-cta__go { min-height: 280px; }
+	.skin-grid .g-cta__preview { min-height: 150px; }
+	.skin-grid .g-footer__line { gap: 40px; }
+	.skin-grid .g-svc__left { min-height: 0; }
+	.skin-grid .g-svc__title { padding: 0; }
+	.skin-grid .g-svc__foot { padding-left: 0; }
+}
