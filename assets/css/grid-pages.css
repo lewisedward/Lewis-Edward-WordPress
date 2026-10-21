@@ -574,3 +574,12 @@ body.admin-bar.skin-grid .g-sec__sticky .g-sec__in { top: calc(92px + var(--wp-a
 .skin-grid .g-phero__aside .g-kv--stack { align-content: stretch; }
 .skin-grid .g-phero__aside .g-kv--stack > div:last-child,
 .skin-grid .g-phero__aside .g-kv--stack > div:nth-last-child(2):nth-child(odd):not(.g-kv__wide) { border-bottom: 0; }
+
+/* Case-study screenshots (hero media + visual journey) show the whole image: natural aspect
+   ratio, no cover-crop and no parallax zoom. Journey captions align along the row bottom. */
+.skin-grid .g-media .g-ph,
+.skin-grid .g-journey__item .g-ph { min-height: 0; aspect-ratio: auto; }
+.skin-grid .g-media .g-ph > img,
+.skin-grid .g-journey__item .g-ph > img { position: relative; inset: auto; width: 100%; height: auto; object-fit: contain; --pz: 1 !important; --py: 0px !important; transform: none; will-change: auto; }
+.skin-grid .g-journey__cap { margin-top: auto; }
+@media (max-width: 720px) { .skin-grid .g-media .g-ph { min-height: 0; } }
