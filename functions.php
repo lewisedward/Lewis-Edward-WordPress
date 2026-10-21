@@ -53,3 +53,4 @@ le_require( 'schema' );       // Homepage ProfessionalService + Person structure
 le_require( 'grid-skin' );    // Trial hairline-grid homepage skin (staging default, ?skin=grid elsewhere).
 le_require( 'staging-gate' ); // Staging passphrase gate.
 le_require( 'migrations' );   // One-off content migrations (run once, remembered in an option).
+le_require( 'copy-fixes' );  // One-off copy clean-up (sentence case, dashes, British spelling).

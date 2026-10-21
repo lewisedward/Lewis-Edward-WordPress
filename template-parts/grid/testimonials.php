@@ -48,7 +48,7 @@ $g_logos = is_array( $g_logos ) ? $g_logos : array();
 			?>
 			<figure class="g-tst__item<?php echo 0 === $i ? ' is-active' : ''; ?>">
 				<blockquote class="g-tst__quote"><span class="g-tst__mark" aria-hidden="true">&ldquo;</span><p><?php echo esc_html( le_field( 'testimonial_quote', $tid ) ); ?></p></blockquote>
-				<figcaption class="g-tst__meta"><?php if ( $g_tlogo ) : ?><img class="g-tst__logo" src="<?php echo esc_url( le_grid_logo( $g_tlogo ) ); ?>" alt="<?php echo esc_attr( $co ); ?>" loading="lazy" /><?php endif; ?><?php if ( has_post_thumbnail( $tid ) ) { echo get_the_post_thumbnail( $tid, 'le_avatar', array( 'class' => 'g-tst__avatar', 'loading' => 'lazy' ) ); } ?><span><?php echo esc_html( le_field( 'testimonial_author', $tid ) ); ?></span><span class="g-mono"><?php echo esc_html( trim( $role . ( $co ? ' — ' . $co : '' ) ) ); ?></span></figcaption>
+				<figcaption class="g-tst__meta"><?php if ( $g_tlogo ) : ?><img class="g-tst__logo" src="<?php echo esc_url( le_grid_logo( $g_tlogo ) ); ?>" alt="<?php echo esc_attr( $co ); ?>" loading="lazy" /><?php endif; ?><?php if ( has_post_thumbnail( $tid ) ) { echo get_the_post_thumbnail( $tid, 'le_avatar', array( 'class' => 'g-tst__avatar', 'loading' => 'lazy' ) ); } ?><span><?php echo esc_html( le_field( 'testimonial_author', $tid ) ); ?></span><span class="g-mono"><?php echo esc_html( trim( $role . ( $co ? ' – ' . $co : '' ) ) ); ?></span></figcaption>
 			</figure>
 			<?php endforeach; ?>
 		</div>

@@ -45,7 +45,7 @@ $le_menu      = function ( $location, $fallback, $ensure = null ) {
 <footer class="g-footer">
 	<div class="g-row g-footer__top">
 		<div class="g-cell g-footer__line">
-			<span class="g-label g-mono"><?php echo esc_html( le_option( 'grid_footer_est', sprintf( '%s — %s', __( 'Est. 2011', 'lewisedward' ), le_option( 'footer_location', __( 'London', 'lewisedward' ) ) ) ) ); ?></span>
+			<span class="g-label g-mono"><?php echo esc_html( le_option( 'grid_footer_est', sprintf( '%s – %s', __( 'Est. 2011', 'lewisedward' ), le_option( 'footer_location', __( 'London', 'lewisedward' ) ) ) ) ); ?></span>
 			<span class="g-footer__line-text"><?php echo esc_html( le_option( 'grid_footer_line', __( 'Raise your game online', 'lewisedward' ) ) ); ?></span>
 		</div>
 		<div class="g-cell g-footer__nav"><span class="g-footer__heading g-mono"><?php echo esc_html( le_option( 'grid_footer_explore_heading', __( 'Explore', 'lewisedward' ) ) ); ?></span><?php $le_menu( 'footer_discover', array( array( 'Services', '/services' ), array( 'Work', '/work' ), array( 'About', '/about' ), array( 'Journal', '/journal' ) ), array( __( 'Services', 'lewisedward' ), '/services' ) ); ?></div>

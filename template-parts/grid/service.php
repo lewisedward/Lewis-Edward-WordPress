@@ -85,7 +85,7 @@ $svc_hero_cta = le_link( 'svc_hero_cta', '/contact', __( 'Start a project', 'lew
 
 	<?php if ( $sv_bens ) : ?>
 	<section class="g-row g-sec" aria-label="<?php esc_attr_e( 'Why work with us', 'lewisedward' ); ?>">
-		<?php le_grid_intro( array( 'label' => le_field( 'svc_benefits_eyebrow', $sv_id, __( 'Why work with us', 'lewisedward' ) ), 'title' => esc_html( le_field( 'svc_benefits_title', $sv_id, __( 'The benefits of partnering with us.', 'lewisedward' ) ) ), 'text' => le_field( 'svc_benefits_intro', $sv_id, __( 'We pair deep WordPress expertise with a transparent, collaborative approach — so every project lands with clarity and confidence.', 'lewisedward' ) ), 'class' => 'g-sec__sticky' ) ); ?>
+		<?php le_grid_intro( array( 'label' => le_field( 'svc_benefits_eyebrow', $sv_id, __( 'Why work with us', 'lewisedward' ) ), 'title' => esc_html( le_field( 'svc_benefits_title', $sv_id, __( 'The benefits of partnering with us.', 'lewisedward' ) ) ), 'text' => le_field( 'svc_benefits_intro', $sv_id, __( 'We pair deep WordPress expertise with a transparent, collaborative approach, so every project lands with clarity and confidence.', 'lewisedward' ) ), 'class' => 'g-sec__sticky' ) ); ?>
 		<ul class="g-cell g-dark g-check">
 			<?php foreach ( $sv_bens as $row ) : $b = trim( (string) ( $row['benefit'] ?? '' ) ); if ( '' === $b ) { continue; } ?>
 			<li><?php echo esc_html( $b ); ?></li>

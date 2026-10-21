@@ -390,6 +390,14 @@
 .skin-grid .g-cta__preview:nth-child(2n) { border-right: 0; }
 .skin-grid .g-cta__preview:nth-last-child(-n+2) { border-bottom: 0; }
 .skin-grid .g-cta__preview:hover img { --ps: 1.04; }
+.skin-grid .g-cta__links { padding: 0; display: grid; grid-auto-rows: 1fr; }
+.skin-grid .g-cta__link { position: relative; display: flex; flex-direction: column; justify-content: space-between; gap: 16px; padding: 28px 32px; border-bottom: 1px solid var(--g-line); color: inherit; text-decoration: none; transition: background-color 0.2s ease; }
+.skin-grid .g-cta__link:last-child { border-bottom: 0; }
+.skin-grid .g-cta__link:hover { background: hsl(0 0% 100% / 0.04); }
+.skin-grid .g-cta__link .g-mono { color: hsl(var(--muted-foreground)); }
+.skin-grid .g-cta__t { font-family: var(--font-display); font-size: clamp(24px, 2.2vw, 32px); line-height: 1.1; letter-spacing: -0.02em; padding-right: 48px; }
+.skin-grid .g-cta__link > svg { position: absolute; right: 32px; bottom: 32px; width: 20px; height: 20px; transition: transform 0.3s ease; }
+.skin-grid .g-cta__link:hover > svg { transform: translateX(4px); }
 /* the footer's lime cell would repeat the contact h2: make it the smaller sign-off */
 
 @media (max-width: 1100px) {

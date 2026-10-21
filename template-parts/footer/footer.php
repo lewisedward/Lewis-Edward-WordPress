@@ -47,7 +47,7 @@ $le_footer_menu = function ( $location ) {
 			<div class="footer-grid">
 
 				<div class="footer-brand">
-					<a class="footer-brand__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php esc_attr_e( 'Lewis Edward — home', 'lewisedward' ); ?>">
+					<a class="footer-brand__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php esc_attr_e( 'Lewis Edward – home', 'lewisedward' ); ?>">
 						<img src="<?php echo esc_url( $le_logo_url ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" width="95" height="29" />
 					</a>
 					<p class="footer-brand__tagline"><?php echo esc_html( $le_tagline ); ?></p>

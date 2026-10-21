@@ -106,7 +106,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 			<video class="g-ph__video" autoplay muted loop playsinline preload="metadata" poster="<?php echo esc_url( $g_poster ); ?>"><source src="<?php echo esc_url( $g_video ); ?>" type="video/mp4"></video>
 			<span class="g-cap g-mono"><?php echo esc_html( $g_ejt_cap ); ?><?php echo le_grid_arrow_diag(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 		</a>
-		<div class="g-cell g-ph g-ph--mono g-hero__portrait"><img src="<?php echo esc_url( $g_portrait ); ?>" alt="<?php echo esc_attr( $g_portrait_alt ); ?>" fetchpriority="high" decoding="async" /><span class="g-cap g-mono"><?php echo esc_html( le_field( 'grid_hero_portrait_caption', false, __( 'Lewis — London', 'lewisedward' ) ) ); ?></span></div>
+		<div class="g-cell g-ph g-ph--mono g-hero__portrait"><img src="<?php echo esc_url( $g_portrait ); ?>" alt="<?php echo esc_attr( $g_portrait_alt ); ?>" fetchpriority="high" decoding="async" /><span class="g-cap g-mono"><?php echo esc_html( le_field( 'grid_hero_portrait_caption', false, __( 'Lewis – London', 'lewisedward' ) ) ); ?></span></div>
 		<div class="g-cell g-lime g-hero__title">
 			<?php if ( $g_eyebrow ) : ?><span class="g-mono g-hero__eyebrow"><?php echo esc_html( $g_eyebrow ); ?></span><?php endif; ?>
 			<h1><?php echo esc_html( le_field( 'home_hero_title_1' ) ); ?> <?php echo esc_html( le_field( 'home_hero_title_1_accent' ) ); ?> <?php echo esc_html( le_field( 'home_hero_title_2_pre' ) ); ?> &amp; <?php echo esc_html( le_field( 'home_hero_title_2_post' ) ); ?></h1>

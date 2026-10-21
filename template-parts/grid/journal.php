@@ -20,7 +20,11 @@ $base       = ( $paged - 1 ) * $per;
 $total      = (int) $wp_query->found_posts;
 $queried    = get_queried_object();
 $active     = ( $queried instanceof WP_Term && 'category' === $queried->taxonomy ) ? $queried->slug : '';
-$arch_name  = $jr_archive ? ( single_term_title( '', false ) ?: get_the_archive_title() ) : '';
+$arch_name  = $jr_archive ? ( single_term_title( '', false ) ?: wp_strip_all_tags( get_the_archive_title() ) ) : '';
+$arch_lead  = is_author() ? __( 'Written by', 'lewisedward' ) : __( 'Filed under', 'lewisedward' );
+if ( is_author() ) {
+	$arch_name = get_the_author_meta( 'display_name', (int) get_queried_object_id() );
+}
 
 $fid = 0;
 if ( ! $jr_archive && 1 === $paged ) {
@@ -75,7 +79,7 @@ $terms     = is_array( $terms ) ? array_filter( $terms, 'le_is_real_category' ) 
 				<span class="g-mono g-sec__count"><?php echo esc_html( str_pad( (string) $total, 2, '0', STR_PAD_LEFT ) ); ?> <?php echo esc_html( le_field( 'journalp_count_label', $pp, __( 'entries', 'lewisedward' ) ) ); ?></span>
 			</div>
 			<?php if ( $jr_archive ) : ?>
-			<h1 class="g-sec__title"><?php echo le_grid_heading( array( array( le_field( 'journalp_archive_h1', $pp ) ), array( le_field( 'journalp_archive_accent', $pp ), 'muted' ), array( $arch_name . '.', 'accent' ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h1>
+			<h1 class="g-sec__title"><?php echo le_grid_heading( array( array( $arch_lead ), array( $arch_name . '.', 'accent' ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h1>
 			<?php else : ?>
 			<h2 class="g-sec__title"><?php echo le_grid_heading( array( array( le_field( 'journalp_archive_h1', $pp ) ), array( le_field( 'journalp_archive_accent', $pp ), 'muted' ), array( le_field( 'journalp_archive_h3', $pp ), 'accent' ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h2>
 			<?php endif; ?>

@@ -66,7 +66,7 @@ $sp_pad = static function ( $n ) {
 
 	<?php if ( $sp_count ) : ?>
 	<section id="services" class="g-row g-sec" aria-label="<?php esc_attr_e( 'Core services', 'lewisedward' ); ?>">
-		<?php le_grid_intro( array( 'label' => le_field( 'services_core_eyebrow' ), 'count' => '01 — ' . str_pad( (string) $sp_count, 2, '0', STR_PAD_LEFT ), 'big' => str_pad( (string) $sp_count, 2, '0', STR_PAD_LEFT ), 'text' => le_field( 'services_core_note' ), 'link' => le_link( 'services_process_cta', '/contact', __( 'Get in touch', 'lewisedward' ), false ), 'class' => 'g-sec__sticky' ) ); ?>
+		<?php le_grid_intro( array( 'label' => le_field( 'services_core_eyebrow' ), 'count' => '01 – ' . str_pad( (string) $sp_count, 2, '0', STR_PAD_LEFT ), 'big' => str_pad( (string) $sp_count, 2, '0', STR_PAD_LEFT ), 'text' => le_field( 'services_core_note' ), 'link' => le_link( 'services_process_cta', '/contact', __( 'Get in touch', 'lewisedward' ), false ), 'class' => 'g-sec__sticky' ) ); ?>
 		<div class="g-cell g-dark g-sec__body">
 			<?php foreach ( $sp_items as $i => $item ) : $id = $sp_id( $item ); $excerpt = le_field( 'service_excerpt', $id ); $desc = ( '' !== $excerpt ) ? $excerpt : le_field( 'service_short_description', $id ); $tags = le_field( 'service_features', $id ); $tags = is_array( $tags ) ? $tags : array(); ?>
 			<a class="g-srv" href="<?php echo esc_url( get_permalink( $id ) ); ?>">
