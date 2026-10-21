@@ -416,3 +416,9 @@
 	.skin-grid .g-sec__big { font-size: 72px; }
 	.skin-grid .g-phero__aside .g-rail a { font-size: 16px; min-height: 0; }
 }
+
+/* Longer hero titles (40+ characters): smaller, full cell width, so they set in three lines rather than four. */
+.skin-grid .g-phero__title--wide { font-size: clamp(36px, 4.4vw, 72px); max-width: none; }
+@media (max-width: 720px) {
+	.skin-grid .g-phero__title--wide { font-size: clamp(30px, 9vw, 40px); }
+}
