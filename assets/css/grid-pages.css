@@ -547,3 +547,6 @@
    section, top-aligned titles sat tight under the row line with a band below. */
 .skin-grid .g-sec__body > .g-li { align-items: center; align-content: center; }
 .skin-grid .g-sec__body > .g-li > .g-li__num { padding-top: 0; }
+/* Sticky section intros clear the WP admin bar for logged-in editors (it was
+   pinning the label right under the header). */
+body.admin-bar.skin-grid .g-sec__sticky .g-sec__in { top: calc(92px + var(--wp-admin--admin-bar-height, 32px)); }
