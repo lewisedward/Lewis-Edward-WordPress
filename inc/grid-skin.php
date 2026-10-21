@@ -382,7 +382,14 @@ function le_grid_tone_title( $text ) {
 		return $multi ? '<span class="g-phero__line">' . $inner . '</span> ' : $inner;
 	};
 
-	// Explicit markers win.
+	// Explicit markers win once a grey {{...}} run is given. Lime-only markers
+	// (and the old text-primary spans) date from the two-tone headings, so
+	// they are dropped and the title is split into three tones instead.
+	if ( false === strpos( implode( ' ', $lines ), '{{' ) ) {
+		$lines = array_map( static function ( $l ) {
+			return trim( preg_replace( '/\[\[(.*?)\]\]/', '$1', $l ) );
+		}, $lines );
+	}
 	if ( preg_match( '/\[\[|\{\{/', implode( ' ', $lines ) ) ) {
 		$out = '';
 		foreach ( $lines as $line ) {
