@@ -51,7 +51,7 @@ if ( is_array( $wp_all ) ) {
 			</div>
 		</div>
 		<?php if ( $wp_fid && ( has_post_thumbnail( $wp_fid ) || le_field( 'work_home_image', $wp_fid ) ) ) : ?>
-		<a class="g-cell g-ph g-feature" href="<?php echo esc_url( get_permalink( $wp_fid ) ); ?>">
+		<a class="g-cell g-ph g-feature"<?php echo le_grid_work_href( $wp_fid ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<?php echo le_grid_work_img( $wp_fid, 'large', array( 'loading' => 'eager', 'fetchpriority' => 'high' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 			<span class="g-feature__label g-mono"><?php echo esc_html( le_field( 'workp_featured_label' ) ); ?></span>
 			<span class="g-feature__foot">

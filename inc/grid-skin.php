@@ -314,9 +314,13 @@ function le_grid_work_tile( $wid, $args = array() ) {
 	$meta  = array_filter( array( le_field( 'work_platform', $wid ), le_field( 'work_year', $wid ) ) );
 	$attrs = array( 'loading' => empty( $args['eager'] ) ? 'lazy' : 'eager' );
 	$img   = le_grid_work_img( $wid, $size, $attrs );
-	echo '<a class="g-cell g-work__item ' . esc_attr( $args['class'] ?? '' ) . '" href="' . esc_url( get_permalink( $wid ) ) . '"' . ( empty( $args['data'] ) ? '' : ' ' . $args['data'] ) . '>';
+	$ext   = le_work_showcase_url( $wid );
+	if ( $ext && ! $meta ) {
+		$meta = array( preg_replace( '/^www\./', '', (string) wp_parse_url( $ext, PHP_URL_HOST ) ) );
+	}
+	echo '<a class="g-cell g-work__item' . ( $ext ? ' g-work__item--ext' : '' ) . ' ' . esc_attr( $args['class'] ?? '' ) . '"' . le_grid_work_href( $wid ) . ( empty( $args['data'] ) ? '' : ' ' . $args['data'] ) . '>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo '<span class="g-ph g-work__media">' . $img . '</span>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	echo '<div class="g-work__meta"><h3 class="g-work__name">' . esc_html( get_the_title( $wid ) ) . '</h3><span class="g-mono">' . esc_html( implode( ' · ', $meta ) ) . '</span>' . le_grid_arrow_diag() . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo '<div class="g-work__meta"><h3 class="g-work__name">' . esc_html( get_the_title( $wid ) ) . ( $ext ? '<span class="g-sr"> ' . esc_html__( '(opens the live site in a new tab)', 'lewisedward' ) . '</span>' : '' ) . '</h3><span class="g-mono">' . esc_html( implode( ' · ', $meta ) ) . '</span>' . le_grid_arrow_diag() . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 	echo '</a>';
 }
 
@@ -494,3 +498,69 @@ function le_grid_tone_title( $text ) {
 	}
 	return trim( $out );
 }
+
+/**
+ * A showcase-only work item: no case study, just a name, an image and a link
+ * to the live site (Work → "Showcase only" toggle + Live URL).
+ *
+ * @param int $wid Work post ID.
+ * @return string Live URL when the post is showcase-only, else ''.
+ */
+function le_work_showcase_url( $wid ) {
+	if ( ! function_exists( 'get_field' ) || ! get_field( 'work_showcase', $wid ) ) {
+		return '';
+	}
+	return (string) le_field( 'work_live_url', $wid );
+}
+
+/**
+ * href (and target) attributes for a link to a work item: the case study, or
+ * the live site in a new tab for showcase-only items.
+ *
+ * @param int $wid Work post ID.
+ * @return string Attribute string, escaped.
+ */
+function le_grid_work_href( $wid ) {
+	$ext = le_work_showcase_url( $wid );
+	if ( $ext ) {
+		return ' href="' . esc_url( $ext ) . '" target="_blank" rel="noopener"';
+	}
+	return ' href="' . esc_url( get_permalink( $wid ) ) . '"';
+}
+
+/**
+ * IDs of showcase-only work posts (cached per request).
+ *
+ * @return int[]
+ */
+function le_work_showcase_ids() {
+	static $ids = null;
+	if ( null === $ids ) {
+		$ids = get_posts( array(
+			'post_type'      => 'work',
+			'post_status'    => 'publish',
+			'posts_per_page' => -1,
+			'fields'         => 'ids',
+			'no_found_rows'  => true,
+			'meta_query'     => array( array( 'key' => 'work_showcase', 'value' => '1' ) ), // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+		) );
+		$ids = array_map( 'intval', $ids );
+	}
+	return $ids;
+}
+
+// A showcase-only project has no page of its own: send visitors to the live site.
+add_action( 'template_redirect', function () {
+	if ( is_singular( 'work' ) ) {
+		$ext = le_work_showcase_url( get_queried_object_id() );
+		if ( $ext ) {
+			wp_redirect( $ext, 302 ); // phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect
+			exit;
+		}
+	}
+} );
+
+// …and keep those URLs out of the Yoast sitemap.
+add_filter( 'wpseo_exclude_from_sitemap_by_post_ids', function ( $ids ) {
+	return array_values( array_unique( array_merge( (array) $ids, le_work_showcase_ids() ) ) );
+} );

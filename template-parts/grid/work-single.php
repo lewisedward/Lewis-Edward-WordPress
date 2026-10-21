@@ -108,7 +108,7 @@ $wk_has_glance = ( $wk_year || $wk_dur || $wk_plat || $wk_services || $wk_tech )
 	<?php endif; ?>
 
 	<?php
-	$wk_next = get_posts( array( 'post_type' => 'work', 'posts_per_page' => 2, 'post__not_in' => array( $wk_id ), 'orderby' => 'menu_order date', 'order' => 'ASC', 'no_found_rows' => true, 'fields' => 'ids' ) );
+	$wk_next = get_posts( array( 'post_type' => 'work', 'posts_per_page' => 2, 'post__not_in' => array_merge( array( $wk_id ), le_work_showcase_ids() ), 'orderby' => 'menu_order date', 'order' => 'ASC', 'no_found_rows' => true, 'fields' => 'ids' ) );
 	if ( $wk_next ) :
 		?>
 	<section class="g-row g-tiles g-tiles--intro" aria-label="<?php esc_attr_e( 'More projects', 'lewisedward' ); ?>">

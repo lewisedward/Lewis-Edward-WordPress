@@ -170,17 +170,13 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 		// Five case studies: the chosen ones first, topped up with the latest.
 		$g_work_ids = array_values( array_filter( array_map( $g_id, $g_work ) ) );
 		if ( count( $g_work_ids ) < 5 ) {
-			$g_more = get_posts( array( 'post_type' => 'work', 'post_status' => 'publish', 'numberposts' => 5 - count( $g_work_ids ), 'post__not_in' => $g_work_ids, 'fields' => 'ids' ) );
+			$g_more = get_posts( array( 'post_type' => 'work', 'post_status' => 'publish', 'numberposts' => 5 - count( $g_work_ids ), 'post__not_in' => array_merge( $g_work_ids, le_work_showcase_ids() ), 'fields' => 'ids' ) );
 			$g_work_ids = array_merge( $g_work_ids, $g_more );
 		}
-		foreach ( array_slice( $g_work_ids, 0, 5 ) as $wid ) :
-			$g_wmeta = array_filter( array( le_field( 'work_platform', $wid ), le_field( 'work_year', $wid ) ) );
+		foreach ( array_slice( $g_work_ids, 0, 5 ) as $wid ) {
+			le_grid_work_tile( $wid );
+		}
 		?>
-		<a class="g-cell g-work__item" href="<?php echo esc_url( get_permalink( $wid ) ); ?>">
-			<span class="g-ph g-work__media"><?php echo le_grid_work_img( $wid, 'large', array( 'loading' => 'lazy' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
-			<div class="g-work__meta"><h3 class="g-work__name"><?php echo esc_html( get_the_title( $wid ) ); ?></h3><span class="g-mono"><?php echo esc_html( implode( ' · ', $g_wmeta ) ); ?></span><?php echo le_grid_arrow_diag(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
-		</a>
-		<?php endforeach; ?>
 		<a class="g-cell g-work__all" href="<?php echo esc_url( home_url( '/work' ) ); ?>">
 			<span class="g-mono"><?php echo esc_html( str_pad( (string) wp_count_posts( 'work' )->publish, 2, '0', STR_PAD_LEFT ) ); ?> <?php echo esc_html( le_field( 'grid_work_count_label', false, __( 'projects', 'lewisedward' ) ) ); ?></span>
 			<span class="g-work__all-title"><?php echo esc_html( le_field( 'grid_work_all_label', false, __( 'All work', 'lewisedward' ) ) ); ?></span>

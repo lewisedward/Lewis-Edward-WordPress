@@ -26,7 +26,7 @@ $g_cta_url = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : home
 		</a>
 		<div class="g-cell g-cta__previews">
 			<?php $g_prev = le_field( 'home_cta_previews', $g_pid ); $g_prev = is_array( $g_prev ) ? $g_prev : array(); foreach ( array_slice( $g_prev, 0, 4 ) as $pv ) : $pvid = $g_id( $pv ); $pvimg = le_grid_work_img( $pvid, 'medium_large', array( 'loading' => 'lazy' ) ); if ( ! $pvimg ) { continue; } ?>
-			<a class="g-ph g-cta__preview" href="<?php echo esc_url( get_permalink( $pvid ) ); ?>"><?php echo $pvimg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span class="g-cap g-mono"><?php echo esc_html( get_the_title( $pvid ) ); ?></span></a>
+			<a class="g-ph g-cta__preview"<?php echo le_grid_work_href( $pvid ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>><?php echo $pvimg; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span class="g-cap g-mono"><?php echo esc_html( get_the_title( $pvid ) ); ?></span></a>
 			<?php endforeach; ?>
 		</div>
 	</section>
