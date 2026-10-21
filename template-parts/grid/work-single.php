@@ -97,8 +97,9 @@ $wk_has_glance = ( $wk_year || $wk_dur || $wk_plat || $wk_services || $wk_tech )
 	<section class="g-row" aria-label="<?php esc_attr_e( 'Visual journey', 'lewisedward' ); ?>">
 		<?php le_grid_intro( array( 'label' => le_field( 'wk_features_eyebrow', $wk_id, __( 'Visual journey', 'lewisedward' ) ), 'count' => str_pad( (string) count( $wk_feats ), 2, '0', STR_PAD_LEFT ), 'title' => le_grid_heading( array( array( le_field( 'wk_features_title_pre', $wk_id, __( 'Explore', 'lewisedward' ) ) ), array( le_field( 'wk_features_title_mid', $wk_id, __( 'some', 'lewisedward' ) ), 'muted' ), array( le_field( 'wk_features_title_end', $wk_id, __( 'features.', 'lewisedward' ) ), 'accent' ) ) ), 'class' => 'g-sec__intro--bar' ) ); ?>
 	</section>
-	<section class="g-row g-journey" data-g-rail aria-label="<?php esc_attr_e( 'Feature images', 'lewisedward' ); ?>">
-		<div class="g-journey__track" data-g-rail-track data-cursor="<?php esc_attr_e( 'Drag', 'lewisedward' ); ?>" tabindex="0">
+	<?php $wk_rail = 'strip' === apply_filters( 'le_journey_layout', 'rows' ); // 'rows' (alternating 50/50) or 'strip' (horizontal drag strip). ?>
+	<section class="g-row g-journey<?php echo $wk_rail ? '' : ' g-journey--rows'; ?>"<?php echo $wk_rail ? ' data-g-rail' : ''; ?> aria-label="<?php esc_attr_e( 'Feature images', 'lewisedward' ); ?>">
+		<?php if ( $wk_rail ) : ?><div class="g-journey__track" data-g-rail-track data-cursor="<?php esc_attr_e( 'Drag', 'lewisedward' ); ?>" tabindex="0"><?php endif; ?>
 		<?php foreach ( $wk_feats as $i => $row ) : $img = $row['image']; ?>
 		<div class="g-cell g-journey__item">
 			<?php $img_w = (int) ( isset( $img['sizes']['large'] ) ? ( $img['sizes']['large-width'] ?? 0 ) : ( $img['width'] ?? 0 ) ); $img_h = (int) ( isset( $img['sizes']['large'] ) ? ( $img['sizes']['large-height'] ?? 0 ) : ( $img['height'] ?? 0 ) ); ?>
@@ -106,8 +107,8 @@ $wk_has_glance = ( $wk_year || $wk_dur || $wk_plat || $wk_services || $wk_tech )
 			<?php if ( ! empty( $row['description'] ) ) : ?><div class="g-journey__cap"><span class="g-mono"><?php echo esc_html( str_pad( (string) ( $i + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span><p><?php echo esc_html( $row['description'] ); ?></p></div><?php endif; ?>
 		</div>
 		<?php endforeach; ?>
-		</div>
-		<?php if ( count( $wk_feats ) > 1 ) : ?>
+		<?php if ( $wk_rail ) : ?></div><?php endif; ?>
+		<?php if ( $wk_rail && count( $wk_feats ) > 1 ) : ?>
 		<div class="g-journey__bar">
 			<span class="g-journey__count g-mono" data-g-rail-count aria-live="polite">01 / <?php echo esc_html( str_pad( (string) count( $wk_feats ), 2, '0', STR_PAD_LEFT ) ); ?></span>
 			<span class="g-journey__progress" aria-hidden="true"><span data-g-rail-progress></span></span>
