@@ -542,3 +542,8 @@
 @media (prefers-reduced-motion: reduce) {
 	.skin-grid .g-phero__wire svg, .skin-grid .g-phero__wire svg * { animation: none !important; }
 }
+
+/* List rows centre their content vertically: once rows stretch to fill the
+   section, top-aligned titles sat tight under the row line with a band below. */
+.skin-grid .g-sec__body > .g-li { align-items: center; align-content: center; }
+.skin-grid .g-sec__body > .g-li > .g-li__num { padding-top: 0; }
