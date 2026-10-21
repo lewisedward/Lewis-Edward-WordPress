@@ -98,7 +98,7 @@ $wk_has_glance = ( $wk_year || $wk_dur || $wk_plat || $wk_services || $wk_tech )
 		<?php le_grid_intro( array( 'label' => le_field( 'wk_features_eyebrow', $wk_id, __( 'Visual journey', 'lewisedward' ) ), 'count' => str_pad( (string) count( $wk_feats ), 2, '0', STR_PAD_LEFT ), 'title' => le_grid_heading( array( array( le_field( 'wk_features_title_pre', $wk_id, __( 'Explore', 'lewisedward' ) ) ), array( le_field( 'wk_features_title_mid', $wk_id, __( 'some', 'lewisedward' ) ), 'muted' ), array( le_field( 'wk_features_title_end', $wk_id, __( 'features.', 'lewisedward' ) ), 'accent' ) ) ), 'class' => 'g-sec__intro--bar' ) ); ?>
 	</section>
 	<section class="g-row g-journey" data-g-rail aria-label="<?php esc_attr_e( 'Feature images', 'lewisedward' ); ?>">
-		<div class="g-journey__track" data-g-rail-track tabindex="0">
+		<div class="g-journey__track" data-g-rail-track data-cursor="<?php esc_attr_e( 'Drag', 'lewisedward' ); ?>" tabindex="0">
 		<?php foreach ( $wk_feats as $i => $row ) : $img = $row['image']; ?>
 		<div class="g-cell g-journey__item">
 			<?php $img_w = (int) ( isset( $img['sizes']['large'] ) ? ( $img['sizes']['large-width'] ?? 0 ) : ( $img['width'] ?? 0 ) ); $img_h = (int) ( isset( $img['sizes']['large'] ) ? ( $img['sizes']['large-height'] ?? 0 ) : ( $img['height'] ?? 0 ) ); ?>

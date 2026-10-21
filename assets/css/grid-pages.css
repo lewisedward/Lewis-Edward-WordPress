@@ -611,3 +611,6 @@ body.admin-bar.skin-grid .g-sec__sticky .g-sec__in { top: calc(92px + var(--wp-a
 	.skin-grid .g-journey__item .g-ph > img { width: 100%; height: auto; }
 	.skin-grid .g-journey__bar { padding: 14px 20px; gap: 16px; }
 }
+/* The custom cursor shows a "Drag" label on the strip, so hide the native grab hand. */
+.has-custom-cursor .g-journey__track,
+.has-custom-cursor .g-journey__track.is-dragging { cursor: none; }
