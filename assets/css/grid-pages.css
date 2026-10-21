@@ -583,3 +583,5 @@ body.admin-bar.skin-grid .g-sec__sticky .g-sec__in { top: calc(92px + var(--wp-a
 .skin-grid .g-journey__item .g-ph > img { position: relative; inset: auto; width: 100%; height: auto; object-fit: contain; --pz: 1 !important; --py: 0px !important; transform: none; will-change: auto; }
 .skin-grid .g-journey__cap { margin-top: auto; }
 @media (max-width: 720px) { .skin-grid .g-media .g-ph { min-height: 0; } }
+.skin-grid .g-media .g-ph > img,
+.skin-grid .g-journey__item .g-ph > img { aspect-ratio: auto 16 / 10; }

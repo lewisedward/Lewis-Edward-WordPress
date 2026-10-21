@@ -100,7 +100,8 @@ $wk_has_glance = ( $wk_year || $wk_dur || $wk_plat || $wk_services || $wk_tech )
 	<section class="g-row g-journey" aria-label="<?php esc_attr_e( 'Feature images', 'lewisedward' ); ?>">
 		<?php foreach ( $wk_feats as $i => $row ) : $img = $row['image']; ?>
 		<div class="g-cell g-journey__item">
-			<span class="g-ph"><img src="<?php echo esc_url( $img['sizes']['large'] ?? $img['url'] ); ?>" alt="<?php echo esc_attr( ! empty( $img['alt'] ) ? $img['alt'] : ( $row['description'] ?? get_the_title() ) ); ?>" loading="lazy" decoding="async" /></span>
+			<?php $img_w = (int) ( isset( $img['sizes']['large'] ) ? ( $img['sizes']['large-width'] ?? 0 ) : ( $img['width'] ?? 0 ) ); $img_h = (int) ( isset( $img['sizes']['large'] ) ? ( $img['sizes']['large-height'] ?? 0 ) : ( $img['height'] ?? 0 ) ); ?>
+			<span class="g-ph"><img src="<?php echo esc_url( $img['sizes']['large'] ?? $img['url'] ); ?>"<?php echo ( $img_w && $img_h ) ? ' width="' . esc_attr( $img_w ) . '" height="' . esc_attr( $img_h ) . '"' : ''; ?> alt="<?php echo esc_attr( ! empty( $img['alt'] ) ? $img['alt'] : ( $row['description'] ?? get_the_title() ) ); ?>" loading="lazy" decoding="async" /></span>
 			<?php if ( ! empty( $row['description'] ) ) : ?><div class="g-journey__cap"><span class="g-mono"><?php echo esc_html( str_pad( (string) ( $i + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span><p><?php echo esc_html( $row['description'] ); ?></p></div><?php endif; ?>
 		</div>
 		<?php endforeach; ?>
