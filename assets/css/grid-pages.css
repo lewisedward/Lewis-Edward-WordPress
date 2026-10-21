@@ -569,3 +569,8 @@ body.admin-bar.skin-grid .g-sec__sticky .g-sec__in { top: calc(92px + var(--wp-a
 	.skin-grid .g-main .g-phero__title--long,
 	.skin-grid .g-main .g-phero__title--wide { font-size: clamp(30px, 8.6vw, 40px); }
 }
+
+/* Case-study "At a glance": rows stretch to fill the aside so it meets the hero's bottom edge. */
+.skin-grid .g-phero__aside .g-kv--stack { align-content: stretch; }
+.skin-grid .g-phero__aside .g-kv--stack > div:last-child,
+.skin-grid .g-phero__aside .g-kv--stack > div:nth-last-child(2):nth-child(odd):not(.g-kv__wide) { border-bottom: 0; }
