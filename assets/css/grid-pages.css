@@ -442,3 +442,10 @@
 @media (max-width: 720px) {
 	.skin-grid .g-people.g-people--3 > .g-cell, .skin-grid .g-people.g-people--4 > .g-cell { border-right: 0; }
 }
+/* Lime side card (contact ↔ quotes): dark text throughout so it reads on lime. */
+.skin-grid .g-cell.g-lime.g-side { color: hsl(var(--primary-foreground)); }
+.skin-grid .g-lime.g-side h2, .skin-grid .g-lime.g-side .g-line-link { color: inherit; }
+.skin-grid .g-lime .g-label { color: hsl(var(--primary-foreground) / 0.75); }
+.skin-grid .g-lime .g-label::before { background: hsl(var(--primary-foreground)); }
+/* Consent line: the privacy link matches the label it sits in. */
+.skin-grid .g-form .gform_wrapper.gform-theme .gfield_consent_label a, .skin-grid .g-form .ginput_container_consent a { font: inherit !important; letter-spacing: inherit !important; text-transform: inherit !important; color: var(--g-lime); text-decoration: underline; text-underline-offset: 3px; }
