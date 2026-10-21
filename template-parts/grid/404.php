@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		</div>
 		<div class="g-cell g-phero__main">
 			<div class="g-phero__top"><span class="g-mono"><?php esc_html_e( 'Not found', 'lewisedward' ); ?></span></div>
-			<h1 class="g-phero__title"><?php esc_html_e( 'Page not found', 'lewisedward' ); ?></h1>
+			<h1 class="g-phero__title"><?php echo le_grid_tone_title( __( 'Page not found', 'lewisedward' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h1>
 			<div class="g-phero__foot">
 				<p class="g-phero__lede"><?php esc_html_e( "The page you're after has moved or never existed.", 'lewisedward' ); ?></p>
 			</div>

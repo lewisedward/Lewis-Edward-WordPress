@@ -31,27 +31,8 @@ $sv_pid      = static function ( $x ) {
 	return is_object( $x ) ? (int) $x->ID : (int) $x;
 };
 
-// Headline: newline-separated lines; [[word]] turns lime; on a multi-line
-// headline without markers the first line is plain and the rest lime.
-$sv_title_html = '';
-$lines         = preg_split( '/\r\n|\r|\n|\\\\n/', trim( (string) $sv_headline ) );
-$lines         = array_values( array_filter( array_map( 'trim', (array) $lines ), 'strlen' ) );
-if ( ! $lines ) {
-	$lines = array( get_the_title() );
-}
-$allowed = array( 'span' => array( 'class' => array() ) );
-foreach ( $lines as $i => $line ) {
-	$line = str_replace( 'text-primary', 'g-accent', $line );
-	if ( false !== strpos( $line, '[[' ) ) {
-		$seg = preg_replace_callback( '/\[\[(.*?)\]\]/', static function ( $m ) {
-			return '<span class="g-accent">' . esc_html( $m[1] ) . '</span>';
-		}, $line );
-		$sv_title_html .= '<span class="g-phero__line">' . wp_kses( $seg, $allowed ) . '</span> ';
-	} else {
-		$cls = ( count( $lines ) > 1 && 0 === $i ) ? '' : 'g-accent';
-		$sv_title_html .= '<span class="g-phero__line ' . $cls . '">' . wp_kses( $line, $allowed ) . '</span> ';
-	}
-}
+// Headline: white / grey / lime (see le_grid_tone_title(); [[lime]] and {{grey}} markers in the field win).
+$sv_title_html = le_grid_tone_title( $sv_headline ? $sv_headline : get_the_title() );
 $svc_crumb    = le_link( 'svc_hero_crumb', '/services', __( 'Services', 'lewisedward' ), $sv_id );
 $svc_hero_cta = le_link( 'svc_hero_cta', '/contact', __( 'Start a project', 'lewisedward' ), $sv_id );
 ?>

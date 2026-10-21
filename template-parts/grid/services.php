@@ -43,7 +43,7 @@ $sp_pad = static function ( $n ) {
 				<span class="g-label g-mono"><?php echo esc_html( le_field( 'services_eyebrow' ) ); ?><?php if ( $sp_count ) : ?> <span class="g-sec__count"><?php echo esc_html( str_pad( (string) $sp_count, 2, '0', STR_PAD_LEFT ) ); ?></span><?php endif; ?></span>
 				<span class="g-mono"><?php echo esc_html( le_field( 'services_location' ) ); ?></span>
 			</div>
-			<h1 class="g-phero__title"><?php echo le_grid_heading( array( array( le_field( 'services_h1_1' ) ), array( le_field( 'services_h1_2' ), 'accent' ), array( le_field( 'services_h1_3' ) ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h1>
+			<h1 class="g-phero__title"><?php echo le_grid_heading( array( array( le_field( 'services_h1_1' ) ), array( le_field( 'services_h1_2' ), 'accent' ), array( le_field( 'services_h1_3' ), 'muted' ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h1>
 			<div class="g-phero__foot">
 				<div class="g-phero__lede">
 					<?php $il = le_field( 'services_intro_label' ); if ( $il ) : ?><span class="g-mono g-phero__lede-label"><?php echo esc_html( $il ); ?></span><?php endif; ?>

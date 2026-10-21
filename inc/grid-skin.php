@@ -356,3 +356,99 @@ function le_grid_cells_class( $n ) {
 	}
 	return 'g-cells g-cells--2';
 }
+
+/**
+ * Tone a single-field page title in the three-colour heading style used on the
+ * About page: white, then grey, then lime.
+ *
+ * Editors can choose the split themselves with markers in the field —
+ * {{grey words}} and [[lime words]] — (the older <span class="text-primary">
+ * markup counts as lime). Without markers the words are split into thirds,
+ * with the last third lime. Newlines become separate lines.
+ *
+ * @param string $text Raw title.
+ * @return string Escaped HTML.
+ */
+function le_grid_tone_title( $text ) {
+	$text  = preg_replace( '#<span[^>]*class="[^"]*text-primary[^"]*"[^>]*>(.*?)</span>#i', '[[$1]]', (string) $text );
+	$text  = wp_strip_all_tags( $text );
+	$lines = preg_split( '/\r\n|\r|\n|\\\\n/', trim( $text ) );
+	$lines = array_values( array_filter( array_map( 'trim', (array) $lines ), 'strlen' ) );
+	if ( ! $lines ) {
+		return '';
+	}
+	$multi = count( $lines ) > 1;
+	$wrap  = static function ( $inner ) use ( $multi ) {
+		return $multi ? '<span class="g-phero__line">' . $inner . '</span> ' : $inner;
+	};
+
+	// Explicit markers win.
+	if ( preg_match( '/\[\[|\{\{/', implode( ' ', $lines ) ) ) {
+		$out = '';
+		foreach ( $lines as $line ) {
+			$h    = esc_html( $line );
+			$h    = preg_replace( '/\[\[(.*?)\]\]/', '<span class="g-accent">$1</span>', $h );
+			$h    = preg_replace( '/\{\{(.*?)\}\}/', '<span class="g-muted">$1</span>', $h );
+			$out .= $wrap( $h );
+		}
+		return trim( $out );
+	}
+
+	// Otherwise: thirds by word count — white, grey, lime.
+	$words = array();
+	foreach ( $lines as $li => $line ) {
+		foreach ( preg_split( '/\s+/', $line ) as $w ) {
+			$words[] = array( $li, $w );
+		}
+	}
+	$n = count( $words );
+	if ( $n < 2 ) {
+		$lime = 0;
+		$grey = 0;
+	} elseif ( 2 === $n ) {
+		$lime = 1;
+		$grey = 0;
+	} else {
+		$lime = (int) ceil( $n / 3 );
+		$grey = max( 1, (int) round( ( $n - $lime ) / 2 ) );
+	}
+	// A lime run should not open on a connective ("& Maintenance"): hand it to the grey run.
+	$joiners = array( '&', 'and', 'of', 'for', 'a', 'the', 'to', 'with' );
+	while ( $lime > 1 && in_array( strtolower( $words[ $n - $lime ][1] ), $joiners, true ) ) {
+		$lime--;
+		$grey++;
+	}
+	$white = $n - $lime - $grey;
+	if ( $white < 1 && $n > 2 ) {
+		$white = 1;
+		$grey  = max( 0, $n - $lime - 1 );
+	}
+
+	$by_line = array();
+	foreach ( $words as $i => $w ) {
+		$tone                  = $i < $white ? '' : ( $i < $white + $grey ? 'g-muted' : 'g-accent' );
+		$by_line[ $w[0] ][]    = array( $tone, $w[1] );
+	}
+	$out = '';
+	foreach ( $by_line as $items ) {
+		$chunks = array();
+		$cur    = null;
+		foreach ( $items as $it ) {
+			if ( null === $cur || $cur[0] !== $it[0] ) {
+				if ( null !== $cur ) {
+					$chunks[] = $cur;
+				}
+				$cur = array( $it[0], array() );
+			}
+			$cur[1][] = $it[1];
+		}
+		$chunks[] = $cur;
+		$html     = array();
+		foreach ( $chunks as $c ) {
+			$t      = esc_html( implode( ' ', $c[1] ) );
+			$html[] = $c[0] ? '<span class="' . $c[0] . '">' . $t . '</span>' : $t;
+		}
+		$out .= $wrap( implode( ' ', $html ) );
+	}
+	return trim( $out );
+}

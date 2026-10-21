@@ -20,7 +20,7 @@ $lg_updated = $lg_privacy ? le_field( 'privacy_updated' ) : '';
 	<section class="g-row g-sec" aria-label="<?php echo esc_attr( $lg_title ); ?>">
 		<div class="g-cell g-sec__intro g-sec__sticky"><div class="g-sec__in">
 			<div class="g-sec__top"><?php if ( $lg_eyebrow ) : ?><span class="g-label g-mono"><?php echo esc_html( $lg_eyebrow ); ?></span><?php endif; ?><?php if ( $lg_updated ) : ?><span class="g-mono g-sec__count"><?php esc_html_e( 'Updated', 'lewisedward' ); ?> <?php echo esc_html( $lg_updated ); ?></span><?php endif; ?></div>
-			<h1 class="g-phero__title g-phero__title--long"><?php echo esc_html( $lg_title ); ?></h1>
+			<h1 class="g-phero__title g-phero__title--long"><?php echo le_grid_tone_title( $lg_title ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h1>
 		</div></div>
 		<div class="g-cell g-dark g-prose__cell">
 			<div class="g-prose">

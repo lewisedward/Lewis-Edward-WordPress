@@ -26,7 +26,7 @@ $cf_btn    = le_field( $cf_quotes ? 'quotes_card_btn' : 'contact_quote_btn' );
 	<section class="g-row g-sec g-sec--form" aria-label="<?php echo esc_attr( $cf_quotes ? __( 'Request a quote', 'lewisedward' ) : __( 'Contact', 'lewisedward' ) ); ?>">
 		<div class="g-cell g-sec__intro g-sec__sticky"><div class="g-sec__in">
 			<div class="g-sec__top"><span class="g-label g-mono"><?php echo esc_html( le_field( $p . 'eyebrow' ) ); ?></span></div>
-			<h1 class="g-phero__title g-phero__title--long"><?php echo nl2br( esc_html( le_field( $p . 'h1' ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h1>
+			<h1 class="g-phero__title g-phero__title--long"><?php echo le_grid_tone_title( le_field( $p . 'h1' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></h1>
 			<p class="g-phero__lede"><?php echo esc_html( le_field( $p . 'lead' ) ); ?></p>
 			<?php if ( $cf_title ) : ?>
 			<a class="g-cell g-lime g-side g-side--card" href="<?php echo esc_url( $cf_url ); ?>">
