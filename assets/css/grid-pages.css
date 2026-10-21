@@ -528,3 +528,17 @@
 @media (min-width: 1101px) {
 	.skin-grid .g-main .g-phero__main { padding-bottom: 28px; }
 }
+
+/* Service hero graphic: one entrance on page load — the lines draw in while
+   the graphic turns a quarter, the dots fade in last — then it rests. The
+   draw lives only inside the keyframes (fill-mode backwards), so dashed
+   strokes get their own dash pattern back once it finishes. */
+.skin-grid .g-phero__wire svg { animation: g-wire-turn 1.8s cubic-bezier(0.2, 0.7, 0.2, 1) 0.15s backwards; transform-origin: 50% 50%; }
+.skin-grid .g-phero__wire svg :is(path, circle, line, polyline, polygon, rect, ellipse):not(.g-wire__dot) { animation: g-wire-draw 1.6s cubic-bezier(0.45, 0, 0.2, 1) 0.15s backwards; }
+.skin-grid .g-phero__wire svg .g-wire__dot { animation: g-wire-fade 0.5s ease 1.4s backwards; }
+@keyframes g-wire-turn { from { transform: rotate(-90deg); } to { transform: rotate(0deg); } }
+@keyframes g-wire-draw { from { stroke-dasharray: 400; stroke-dashoffset: 400; } to { stroke-dasharray: 400; stroke-dashoffset: 0; } }
+@keyframes g-wire-fade { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+	.skin-grid .g-phero__wire svg, .skin-grid .g-phero__wire svg * { animation: none !important; }
+}
