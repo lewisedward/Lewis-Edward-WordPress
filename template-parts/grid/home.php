@@ -282,7 +282,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 	<section class="g-row g-about" aria-label="<?php esc_attr_e( 'About Lewis Edward', 'lewisedward' ); ?>">
 		<div class="g-cell g-about__side">
 			<span class="g-label g-mono"><?php echo esc_html( le_field( 'home_about_eyebrow', false, __( 'About', 'lewisedward' ) ) ); ?> <?php echo esc_html( le_field( 'home_about_year' ) ); ?></span>
-			<div class="g-ph g-about__photo"><img src="<?php echo esc_url( $g_about_photo ); ?>" alt="<?php echo esc_attr( $g_about_photo_alt ); ?>" loading="lazy" /></div>
+			<div class="g-ph g-ph--mono g-about__photo"><img src="<?php echo esc_url( $g_about_photo ); ?>" alt="<?php echo esc_attr( $g_about_photo_alt ); ?>" loading="lazy" /></div>
 		</div>
 		<div class="g-cell g-about__prose">
 			<div class="g-about__text">
