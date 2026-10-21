@@ -368,6 +368,144 @@
             "placeholder": "projects",
             "prepend": "",
             "append": ""
+        },
+        {
+            "key": "field_wp_more_tab",
+            "label": "More websites",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0,
+            "selected": 0
+        },
+        {
+            "key": "field_wp_more_note",
+            "label": "How this section works",
+            "name": "",
+            "aria-label": "",
+            "type": "message",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Lists every published Work item with “Showcase only (no case study)” turned on, at the bottom of the Work page. Each card uses the project title, its Homepage tile image (or featured image), the Card description, Platform and Year. The Live URL is optional: with no URL (or “Show Visit website” off) the card just isn't a link. Order with the Work item's Order attribute, otherwise newest first.",
+            "new_lines": "wpautop",
+            "esc_html": 0
+        },
+        {
+            "key": "field_wp_more_eyebrow",
+            "label": "Eyebrow",
+            "name": "workp_more_eyebrow",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "More websites",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_wp_more_t1",
+            "label": "Heading (white)",
+            "name": "workp_more_title_1",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Sites we’ve",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_wp_more_t2",
+            "label": "Heading (lime)",
+            "name": "workp_more_title_2",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "also built.",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_wp_more_text",
+            "label": "Intro text",
+            "name": "workp_more_text",
+            "aria-label": "",
+            "type": "textarea",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Projects without a full case study. Click through to see them live.",
+            "maxlength": "",
+            "prepend": "",
+            "append": "",
+            "rows": 3,
+            "new_lines": ""
+        },
+        {
+            "key": "field_wp_more_visit",
+            "label": "Visit link label",
+            "name": "workp_more_visit",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Leave blank to use the default shown in grey.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "placeholder": "Visit site",
+            "maxlength": "",
+            "prepend": "",
+            "append": ""
         }
     ],
     "location": [
@@ -391,5 +529,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1787661200
+    "modified": 1792623195
 }

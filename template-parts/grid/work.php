@@ -17,6 +17,9 @@ $wp_featured = le_field( 'workp_featured' );
 $wp_fid      = $wp_id( $wp_featured );
 $wp_items    = le_field( 'work_items' );
 $wp_items    = is_array( $wp_items ) ? array_values( array_filter( array_map( $wp_id, $wp_items ) ) ) : array();
+// Showcase-only sites (no case study) get their own "More websites" section at the bottom.
+$wp_more     = get_posts( array( 'post_type' => 'work', 'post_status' => 'publish', 'posts_per_page' => -1, 'fields' => 'ids', 'no_found_rows' => true, 'orderby' => array( 'menu_order' => 'ASC', 'date' => 'DESC' ), 'meta_query' => array( array( 'key' => 'work_showcase', 'value' => '1' ) ) ) ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_query
+$wp_items    = array_values( array_diff( $wp_items, $wp_more ) );
 $wp_count    = count( $wp_items );
 
 $wp_real  = static function ( $t ) {
@@ -78,6 +81,39 @@ if ( is_array( $wp_all ) ) {
 			<?php endif; ?>
 		</div></div>
 		<?php foreach ( $wp_items as $id ) { $cats = implode( ' ', wp_list_pluck( $wp_terms( $id ), 'slug' ) ); le_grid_work_tile( $id, array( 'data' => 'data-categories="' . esc_attr( $cats ) . '"' ) ); } ?>
+	</section>
+	<?php endif; ?>
+
+	<?php if ( $wp_more ) : ?>
+	<section id="more" class="g-row g-sec g-more" aria-label="<?php echo esc_attr( le_field( 'workp_more_eyebrow', false, __( 'More websites', 'lewisedward' ) ) ); ?>">
+		<?php
+		le_grid_intro( array(
+			'label' => le_field( 'workp_more_eyebrow', false, __( 'More websites', 'lewisedward' ) ),
+			'count' => str_pad( (string) count( $wp_more ), 2, '0', STR_PAD_LEFT ),
+			'title' => le_grid_heading( array( array( le_field( 'workp_more_title_1', false, __( 'Sites we’ve', 'lewisedward' ) ) ), array( le_field( 'workp_more_title_2', false, __( 'also built.', 'lewisedward' ) ), 'accent' ) ) ),
+			'text'  => le_field( 'workp_more_text', false, __( 'Projects without a full case study. Click through to see them live.', 'lewisedward' ) ),
+			'class' => 'g-sec__sticky',
+		) );
+		$wp_visit = le_field( 'workp_more_visit', false, __( 'Visit site', 'lewisedward' ) );
+		?>
+		<div class="g-cell g-more__grid">
+			<?php
+			foreach ( $wp_more as $mid ) :
+				$m_url  = le_work_showcase_url( $mid );
+				$m_tag  = $m_url ? 'a' : 'div';
+				$m_meta = array_filter( array( le_field( 'work_platform', $mid ), le_field( 'work_year', $mid ) ) );
+				$m_img  = le_grid_work_img( $mid, 'large', array( 'loading' => 'lazy', 'sizes' => '(max-width: 720px) 100vw, 34vw' ) );
+				?>
+			<<?php echo $m_tag; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> class="g-more__card<?php echo $m_url ? ' is-link' : ''; ?>"<?php echo $m_url ? ' href="' . esc_url( $m_url ) . '" target="_blank" rel="noopener"' : ''; ?>>
+				<span class="g-ph g-more__media"><?php echo $m_img; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+				<span class="g-more__body">
+					<h3 class="g-more__name"><?php echo esc_html( get_the_title( $mid ) ); ?></h3>
+					<?php $m_desc = le_field( 'work_card_description', $mid ); if ( $m_desc ) : ?><span class="g-more__desc"><?php echo esc_html( $m_desc ); ?></span><?php endif; ?>
+					<span class="g-more__meta g-mono"><span><?php echo esc_html( implode( ' · ', $m_meta ) ); ?></span><?php if ( $m_url ) : ?><span class="g-more__visit"><?php echo esc_html( $wp_visit ); ?> <?php echo le_grid_arrow_diag(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span class="g-sr"><?php esc_html_e( '(opens the live site in a new tab)', 'lewisedward' ); ?></span></span><?php endif; ?></span>
+				</span>
+			</<?php echo $m_tag; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+			<?php endforeach; ?>
+		</div>
 	</section>
 	<?php endif; ?>
 

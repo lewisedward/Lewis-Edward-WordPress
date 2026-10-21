@@ -158,7 +158,7 @@
 	   scaled up 12% in CSS, so nothing shows through). Only in-view frames
 	   are measured. Off under reduced motion and on coarse pointers. */
 	var coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
-	var media = Array.prototype.slice.call(document.querySelectorAll('.skin-grid .g-ph:not(.g-svc__bg) > img, .skin-grid .g-ph:not(.g-svc__bg) > video')).filter(function (m) { return !m.closest('.g-media, .g-journey'); }); // case-study screenshots stay uncropped
+	var media = Array.prototype.slice.call(document.querySelectorAll('.skin-grid .g-ph:not(.g-svc__bg) > img, .skin-grid .g-ph:not(.g-svc__bg) > video')).filter(function (m) { return !m.closest('.g-media, .g-journey, .g-more'); }); // case-study screenshots stay uncropped
 	if (!reduce && !coarse && media.length) {
 		body.classList.add('g-parallax');
 		var live = [];

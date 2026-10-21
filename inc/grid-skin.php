@@ -510,6 +510,9 @@ function le_work_showcase_url( $wid ) {
 	if ( ! function_exists( 'get_field' ) || ! get_field( 'work_showcase', $wid ) ) {
 		return '';
 	}
+	if ( '0' === (string) get_post_meta( $wid, 'work_live_show', true ) ) {
+		return ''; // "Show Visit website" switched off: keep the URL but don't link to it.
+	}
 	return (string) le_field( 'work_live_url', $wid );
 }
 
@@ -552,9 +555,15 @@ function le_work_showcase_ids() {
 // A showcase-only project has no page of its own: send visitors to the live site.
 add_action( 'template_redirect', function () {
 	if ( is_singular( 'work' ) ) {
-		$ext = le_work_showcase_url( get_queried_object_id() );
+		$wid = get_queried_object_id();
+		$ext = le_work_showcase_url( $wid );
 		if ( $ext ) {
 			wp_redirect( $ext, 302 ); // phpcs:ignore WordPress.Security.SafeRedirect.wp_redirect_wp_redirect
+			exit;
+		}
+		if ( function_exists( 'get_field' ) && get_field( 'work_showcase', $wid ) ) {
+			// Showcase item with no live link: there's no case study to show, so send people to its card.
+			wp_safe_redirect( home_url( '/work/#more' ), 302 );
 			exit;
 		}
 	}

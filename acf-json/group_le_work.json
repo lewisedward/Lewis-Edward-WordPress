@@ -25,7 +25,7 @@
             "name": "work_showcase",
             "aria-label": "",
             "type": "true_false",
-            "instructions": "Turn on to show a site you've worked on without writing a case study. Just add the title, a Featured Image (or Homepage tile image) and the Live URL below. Its tiles link straight to the live site in a new tab, and its own page redirects there and stays out of the sitemap.",
+            "instructions": "Turn on for a site you've worked on without a full case study. It then appears in the “More websites” section at the bottom of the Work page (not in the main project grid) with its title, Homepage tile image (or featured image), Card description, Platform and Year. The Live URL is optional; if set, the card and any tile link to the live site in a new tab.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -1005,5 +1005,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1792590079
+    "modified": 1792623195
 }
