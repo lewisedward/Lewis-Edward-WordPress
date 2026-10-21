@@ -232,8 +232,8 @@ function le_grid_wire( $hint, $i = 0 ) {
 		case 'audit': // a page of lines under a magnifier: audits.
 			$body = '<rect x="22.5" y="12.5" width="60" height="80"/><path d="M32 28h40M32 38h40M32 48h28M32 58h34M32 68h22"/><circle cx="78" cy="78" r="20"/><path d="M92.5 92.5 108 108"/><path d="M68 78h20M78 68v20" stroke-opacity="0.5"/><circle class="g-wire__dot" cx="78" cy="78" r="2.5"/>';
 			break;
-		case 'training': // steps climbing inside a ring: training.
-			$body = '<circle cx="60" cy="60" r="50"/><path d="M22 90h19V73h19V56h19V39h19"/><path d="M22 90h76" stroke-opacity="0.5"/><path d="M41 90V73M60 90V56M79 90V39" stroke-opacity="0.35"/><circle class="g-wire__dot" cx="98" cy="39" r="2.5"/>';
+		case 'training': // mortarboard with a hanging tassel: training.
+			$body = '<path d="M60 26 106 44 60 62 14 44z"/><path d="M14 44v5l46 18 46-18v-5" stroke-opacity="0.5"/><path d="M32 57v17c0 8 12.5 13 28 13s28-5 28-13V57"/><circle cx="60" cy="44" r="3"/><path d="M60 44 96 56v24"/><path d="M93 84v10M96 84v12M99 84v10" stroke-opacity="0.6"/><circle class="g-wire__dot" cx="96" cy="82" r="2.5"/>';
 			break;
 		case 'gauge': // speed gauge with ticks and a needle: optimisation.
 			$ticks = '';
