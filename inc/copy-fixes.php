@@ -114,6 +114,7 @@ function le_copy_fix_subs() {
 		array( 'Google map API', 'Google Maps API' ),
 		array( 'A WordPress Flexible article hero section', 'A flexible WordPress article hero section' ),
 		array( 'Ink Studio WordPress website is an animated', 'The Ink Studio WordPress website is an animated' ),
+		array( 'The The Ink Studio', 'The Ink Studio' ), // Keeps the rule above idempotent.
 		array( 'Full screen images', 'Full-screen images' ),
 		array( 'full width hero image', 'full-width hero image' ),
 		array( 'A brand new web design', 'A brand-new web design' ),
