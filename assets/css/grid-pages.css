@@ -552,3 +552,20 @@
 body.admin-bar.skin-grid .g-sec__sticky .g-sec__in { top: calc(92px + var(--wp-admin--admin-bar-height, 32px)); }
 /* Service hero aside: "Scroll to explore" sits bottom right. */
 .skin-grid .g-phero__aside .g-rail__head--foot { justify-content: flex-end; }
+
+/* Page H1 scale: one size for every page hero (2026-10-21). Long titles wrap wider instead of
+   getting a different size; --long / --wide only kept as hooks. */
+.skin-grid .g-main .g-phero__title,
+.skin-grid .g-main .g-phero__title--long,
+.skin-grid .g-main .g-phero__title--wide { font-size: clamp(36px, 4.6vw, 70px); line-height: 0.98; max-width: 20ch; }
+.skin-grid .g-main .g-phero__title--wide { max-width: 24ch; }
+@media (max-width: 1100px) {
+	.skin-grid .g-main .g-phero__title,
+	.skin-grid .g-main .g-phero__title--long,
+	.skin-grid .g-main .g-phero__title--wide { font-size: clamp(34px, 6vw, 60px); max-width: none; }
+}
+@media (max-width: 720px) {
+	.skin-grid .g-main .g-phero__title,
+	.skin-grid .g-main .g-phero__title--long,
+	.skin-grid .g-main .g-phero__title--wide { font-size: clamp(30px, 8.6vw, 40px); }
+}
