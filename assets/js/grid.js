@@ -109,8 +109,17 @@
 			if (readPct) { readPct.textContent = Math.round(p * 100) + '%'; }
 		};
 		window.addEventListener('scroll', function () { if (!readTick) { readTick = true; requestAnimationFrame(readUpdate); } }, { passive: true });
-		window.addEventListener('resize', readUpdate);
-		readUpdate();
+		// Below 1100px the bar is fixed under the header; reveal transforms on the column would
+		// trap a fixed element, so it moves to <body> there and back into the column on desktop.
+		var readHome = readBar.parentNode, readNext = readBar.nextSibling;
+		var readMq = window.matchMedia('(max-width: 1100px)');
+		var readPlace = function () {
+			if (readMq.matches && readBar.parentNode !== document.body) { document.body.appendChild(readBar); }
+			if (!readMq.matches && readBar.parentNode !== readHome) { readHome.insertBefore(readBar, readNext); }
+			readUpdate();
+		};
+		window.addEventListener('resize', readPlace);
+		readPlace();
 	}
 	Array.prototype.forEach.call(document.querySelectorAll('[data-g-copy]'), function (btn) {
 		var label = btn.textContent;
