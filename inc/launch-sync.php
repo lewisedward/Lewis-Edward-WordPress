@@ -314,13 +314,31 @@ function le_sync_sig( $v ) {
 function le_sync_loose( $s ) {
 	$s = is_array( $s ) ? wp_json_encode( $s ) : (string) $s;
 	$s = str_replace( array( '—', '–', '—', '–', '’', '’', '&ndash;', '&mdash;' ), array( '-', '-', '-', '-', "'", "'", '-', '-' ), $s );
-	return strtolower( preg_replace( '/[\s\-]+/', ' ', $s ) );
+	$s = strtolower( preg_replace( '/[\s\-]+/', ' ', $s ) );
+	return str_replace( array( 'e.g., ', 'i.e., ', 'ise', 'isation', 'our ' ), array( 'e.g. ', 'i.e. ', 'ize', 'ization', 'or ' ), $s );
 }
 
 function le_sync_brief( $s ) {
 	$s = is_array( $s ) ? wp_json_encode( $s ) : (string) $s;
 	$s = trim( preg_replace( '/\s+/', ' ', wp_strip_all_tags( $s ) ) );
 	return mb_strlen( $s ) > 140 ? mb_substr( $s, 0, 140 ) . '…' : $s;
+}
+
+/** Where two values first differ: ±70 characters of context from each side. */
+function le_sync_delta( $a, $b ) {
+	$x = is_array( $a ) || is_array( $b ) ? wp_json_encode( le_sync_sig( $a ), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ) : (string) $a;
+	$y = is_array( $a ) || is_array( $b ) ? wp_json_encode( le_sync_sig( $b ), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES ) : (string) $b;
+	if ( is_array( $a ) || is_array( $b ) ) {
+		$x = wp_json_encode( le_sync_sig( $a ), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES );
+		$y = wp_json_encode( le_sync_sig( $b ), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES );
+	}
+	$n = min( strlen( $x ), strlen( $y ) );
+	$i = 0;
+	while ( $i < $n && $x[ $i ] === $y[ $i ] ) {
+		$i++;
+	}
+	$i = max( 0, $i - 40 );
+	return array( 'live' => mb_strcut( $x, $i, 160 ), 'staging' => mb_strcut( $y, $i, 160 ), 'len' => strlen( $x ) . '/' . strlen( $y ) );
 }
 
 /** Classify one difference: same | case | diff. */
@@ -363,7 +381,7 @@ function le_sync_import( WP_REST_Request $req ) {
 			foreach ( array( 'title' => 'post_title', 'excerpt' => 'post_excerpt', 'content' => 'post_content' ) as $k => $col ) {
 				$c = le_sync_cmp( $lp->$col, $sp[ $k ] );
 				if ( 'same' !== $c ) {
-					$d[ $k ] = 'diff' === $c ? array( 'live' => le_sync_brief( $lp->$col ), 'staging' => le_sync_brief( $sp[ $k ] ) ) : 'case';
+					$d[ $k ] = 'diff' === $c ? le_sync_delta( $lp->$col, $sp[ $k ] ) : 'case';
 				}
 			}
 			$lf = le_sync_att( get_post_thumbnail_id( $lp ) );
@@ -377,7 +395,7 @@ function le_sync_import( WP_REST_Request $req ) {
 				if ( 'same' === $c ) {
 					continue;
 				}
-				$d[ 'f:' . $name ] = 'case' === $c ? 'case' : array( 'live' => le_sync_brief( le_sync_sig( $lv ) ), 'staging' => le_sync_brief( le_sync_sig( $f['v'] ) ) );
+				$d[ 'f:' . $name ] = 'case' === $c ? 'case' : le_sync_delta( $lv, $f['v'] );
 				le_sync_walk( array( 'type' => $f['type'] ) + ( function_exists( 'acf_get_field' ) ? (array) acf_get_field( $f['key'] ) : array() ), $f['v'], 'in', $ctx );
 			}
 			if ( $d ) {
@@ -388,7 +406,7 @@ function le_sync_import( WP_REST_Request $req ) {
 		foreach ( (array) $b['options'] as $name => $f ) {
 			$c = le_sync_cmp( $lo[ $name ]['v'] ?? null, $f['v'] );
 			if ( 'same' !== $c ) {
-				$report['options'][ $name ] = 'case' === $c ? 'case' : array( 'live' => le_sync_brief( le_sync_sig( $lo[ $name ]['v'] ?? null ) ), 'staging' => le_sync_brief( le_sync_sig( $f['v'] ) ) );
+				$report['options'][ $name ] = 'case' === $c ? 'case' : le_sync_delta( $lo[ $name ]['v'] ?? null, $f['v'] );
 			}
 		}
 		$n = 0;
