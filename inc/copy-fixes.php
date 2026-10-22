@@ -624,8 +624,8 @@ function le_copy_find( $needle ) {
 add_action(
 	'init',
 	static function () {
-		$host = isset( $_SERVER['HTTP_HOST'] ) ? strtolower( (string) $_SERVER['HTTP_HOST'] ) : ''; // phpcs:ignore
-		if ( 0 !== strpos( $host, 'staging.' ) || ! is_user_logged_in() || ! current_user_can( 'manage_options' ) ) {
+		// Admin-only and on request: ?le_copy_fix=dry to preview, =run to apply.
+		if ( ! is_user_logged_in() || ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
 		if ( isset( $_GET['le_copy_find'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended

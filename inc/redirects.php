@@ -21,6 +21,14 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function le_legacy_redirects() {
 	return array(
+		// 2026-10: case studies retired from the Work page (posts kept as drafts).
+		'/work/foresight' => '/work',
+		'/work/cxo' => '/work',
+		'/work/ink-advertising' => '/work',
+		'/work/sales-navigator' => '/work',
+		'/work/ink-studio' => '/work',
+		'/work/the-rum-kitchen' => '/work',
+		'/work/reachtv' => '/work',
 		// 2026-10: the agency service was renamed Agency Partnership and moved.
 		'/services/creative-agency-partner' => '/services/wordpress-agency-partnership',
 		'/services/agency-web-developer' => '/services/wordpress-agency-partnership',

@@ -24,17 +24,31 @@ function le_grid_skin() {
 	if ( null !== $on ) {
 		return $on;
 	}
-	$q = isset( $_GET['skin'] ) ? sanitize_key( wp_unslash( $_GET['skin'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$host    = isset( $_SERVER['HTTP_HOST'] ) ? strtolower( (string) wp_unslash( $_SERVER['HTTP_HOST'] ) ) : '';
+	$staging = ( 0 === strpos( $host, 'staging.' ) );
+	$q       = isset( $_GET['skin'] ) ? sanitize_key( wp_unslash( $_GET['skin'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	// Off staging, ?skin= is a preview switch for logged-in users only, so the
+	// public never sees (or search engines index) a second version of a page.
+	if ( ! $staging && ! ( function_exists( 'is_user_logged_in' ) && is_user_logged_in() ) ) {
+		$q = '';
+	}
 	if ( 'grid' === $q ) {
 		$on = true;
 	} elseif ( 'classic' === $q ) {
 		$on = false;
 	} else {
-		$host = isset( $_SERVER['HTTP_HOST'] ) ? strtolower( (string) wp_unslash( $_SERVER['HTTP_HOST'] ) ) : '';
-		$on   = ( 0 === strpos( $host, 'staging.' ) );
+		$on = apply_filters( 'le_grid_skin_default', $staging );
 	}
 	return $on;
 }
+
+// A ?skin= preview is never cached or indexed.
+add_action( 'send_headers', function () {
+	if ( isset( $_GET['skin'] ) && ! headers_sent() ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		header( 'X-Robots-Tag: noindex, nofollow', false );
+		header( 'Cache-Control: private, no-store' );
+	}
+} );
 
 add_filter( 'body_class', function ( $classes ) {
 	if ( le_grid_skin() ) {

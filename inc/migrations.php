@@ -16,6 +16,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  * at it, so the change does not depend on an admin edit on each environment.
  */
 add_action( 'init', function () {
+	// Held until the rename is launched on its own (after the redesign), so the two
+	// changes can be measured separately. Turn on with define( 'LE_AGENCY_RENAME', true ).
+	if ( ! ( defined( 'LE_AGENCY_RENAME' ) && LE_AGENCY_RENAME ) ) {
+		return;
+	}
 	if ( get_option( 'le_migration_agency_partnership' ) ) {
 		return;
 	}
