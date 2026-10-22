@@ -41,7 +41,7 @@ $pp      = le_journal_page_id();
 			<?php if ( has_excerpt() ) : ?><div class="g-phero__foot"><p class="g-phero__lede"><?php echo esc_html( get_the_excerpt() ); ?></p></div><?php endif; ?>
 		</div>
 		<?php if ( has_post_thumbnail() ) : ?>
-		<div class="g-cell g-ph"><?php the_post_thumbnail( 'large', array( 'alt' => esc_attr( get_the_title() ), 'loading' => 'eager', 'decoding' => 'async', 'fetchpriority' => 'high' ) ); ?></div>
+		<div class="g-cell g-ph"><?php the_post_thumbnail( 'large', array( 'alt' => le_img_alt( get_post_thumbnail_id(), get_the_title() ), 'loading' => 'eager', 'decoding' => 'async', 'fetchpriority' => 'high' ) ); ?></div>
 		<?php endif; ?>
 	</section>
 

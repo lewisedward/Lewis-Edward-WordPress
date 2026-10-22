@@ -61,7 +61,7 @@ $terms     = is_array( $terms ) ? array_filter( $terms, 'le_is_real_category' ) 
 		</div>
 		<?php if ( $fid && has_post_thumbnail( $fid ) ) : $fc = $jr_cats( $fid ); ?>
 		<a class="g-cell g-ph g-feature" href="<?php echo esc_url( get_permalink( $fid ) ); ?>">
-			<?php echo get_the_post_thumbnail( $fid, 'large', array( 'alt' => esc_attr( get_the_title( $fid ) ), 'loading' => 'eager', 'fetchpriority' => 'high' ) ); ?>
+			<?php echo get_the_post_thumbnail( $fid, 'large', array( 'alt' => le_img_alt( get_post_thumbnail_id( $fid ), get_the_title( $fid ) ), 'loading' => 'eager', 'fetchpriority' => 'high' ) ); ?>
 			<span class="g-feature__label g-mono"><?php echo esc_html( le_field( 'journalp_featured_label', $pp ) ); ?></span>
 			<span class="g-feature__foot">
 				<span><span class="g-phero__meta g-mono"><?php if ( $fc ) : ?><span><?php echo esc_html( $fc->name ); ?></span><?php endif; ?><span><?php echo esc_html( get_the_date( 'M Y', $fid ) ); ?></span><span><?php echo esc_html( le_reading_time( $fid ) . ' ' . __( 'min read', 'lewisedward' ) ); ?></span></span><h2 class="g-feature__title" style="margin-top:12px"><?php echo esc_html( get_the_title( $fid ) ); ?></h2><p class="g-feature__desc"><?php echo esc_html( get_the_excerpt( $fid ) ); ?></p></span>

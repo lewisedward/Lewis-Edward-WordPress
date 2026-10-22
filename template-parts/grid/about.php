@@ -66,7 +66,7 @@ $about_bio_cta = le_link( 'about_bio_cta', '/contact', __( 'Get in touch', 'lewi
 		<?php le_grid_intro( array( 'label' => le_field( 'about_team_eyebrow' ), 'count' => str_pad( (string) count( $ab_team ), 2, '0', STR_PAD_LEFT ), 'title' => le_grid_heading( array( array( le_field( 'about_team_h1' ) ), array( le_field( 'about_team_h_accent' ), 'accent' ), array( le_field( 'about_team_h_muted' ), 'muted' ) ) ) ) ); ?>
 		<?php foreach ( $ab_team as $member ) : $mid = is_object( $member ) ? (int) $member->ID : (int) $member; ?>
 		<div class="g-cell g-person">
-			<span class="g-ph g-ph--mono"><?php if ( has_post_thumbnail( $mid ) ) { echo get_the_post_thumbnail( $mid, 'le_portrait', array( 'alt' => esc_attr( get_the_title( $mid ) ), 'loading' => 'lazy', 'decoding' => 'async' ) ); } ?></span>
+			<span class="g-ph g-ph--mono"><?php if ( has_post_thumbnail( $mid ) ) { echo get_the_post_thumbnail( $mid, 'le_portrait', array( 'alt' => le_img_alt( get_post_thumbnail_id( $mid ), get_the_title( $mid ) ), 'loading' => 'lazy', 'decoding' => 'async' ) ); } ?></span>
 			<div class="g-person__meta"><h3><?php echo esc_html( get_the_title( $mid ) ); ?></h3><span class="g-mono"><?php echo esc_html( le_field( 'team_role', $mid ) ); ?></span></div>
 		</div>
 		<?php endforeach; ?>

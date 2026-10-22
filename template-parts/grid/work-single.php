@@ -70,7 +70,7 @@ $wk_has_glance = ( $wk_year || $wk_dur || $wk_plat || $wk_services || $wk_tech )
 
 	<?php if ( has_post_thumbnail() ) : ?>
 	<section class="g-row g-media" aria-label="<?php esc_attr_e( 'Project image', 'lewisedward' ); ?>">
-		<div class="g-cell g-ph"><?php the_post_thumbnail( 'le_hero', array( 'alt' => esc_attr( get_the_title() ), 'loading' => 'eager', 'decoding' => 'async', 'fetchpriority' => 'high' ) ); ?><span class="g-cap g-mono"><?php echo esc_html( get_the_title() ); ?></span></div>
+		<div class="g-cell g-ph"><?php the_post_thumbnail( 'full', array( 'alt' => le_img_alt( get_post_thumbnail_id(), get_the_title() ), 'sizes' => '100vw', 'loading' => 'eager', 'decoding' => 'async', 'fetchpriority' => 'high' ) ); ?><span class="g-cap g-mono"><?php echo esc_html( get_the_title() ); ?></span></div>
 	</section>
 	<?php endif; ?>
 

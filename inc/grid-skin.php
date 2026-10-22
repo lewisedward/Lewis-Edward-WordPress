@@ -284,6 +284,18 @@ function le_grid_wire( $hint, $i = 0 ) {
 }
 
 /**
+ * Alt text for an attachment: its own Media Library alt (descriptive, best for SEO), else a fallback.
+ *
+ * @param int    $att_id   Attachment ID.
+ * @param string $fallback Fallback text (e.g. the post title).
+ * @return string
+ */
+function le_img_alt( $att_id, $fallback = '' ) {
+	$alt = $att_id ? trim( (string) get_post_meta( (int) $att_id, '_wp_attachment_image_alt', true ) ) : '';
+	return '' !== $alt ? $alt : (string) $fallback;
+}
+
+/**
  * Responsive <img> for an ACF image array / attachment ID, with a plain <img> fallback for theme files.
  * Gives the browser a srcset so it never downloads more pixels than the slot needs.
  *
@@ -330,7 +342,7 @@ function le_grid_work_img( $wid, $size = 'large', $attrs = array() ) {
 	$img = le_field( 'work_home_image', $wid );
 	$img = is_array( $img ) ? (int) ( $img['ID'] ?? $img['id'] ?? 0 ) : (int) $img;
 	if ( $img && wp_attachment_is_image( $img ) ) {
-		$attrs['alt'] = $attrs['alt'] ?? get_the_title( $wid );
+		$attrs['alt'] = $attrs['alt'] ?? le_img_alt( $img, get_the_title( $wid ) );
 		return (string) wp_get_attachment_image( $img, $size, false, $attrs );
 	}
 	return (string) get_the_post_thumbnail( $wid, $size, $attrs );
