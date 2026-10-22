@@ -90,7 +90,7 @@ if ( is_array( $wp_all ) ) {
 		le_grid_intro( array(
 			'label' => le_field( 'workp_more_eyebrow', false, __( 'More websites', 'lewisedward' ) ),
 			'count' => str_pad( (string) count( $wp_more ), 2, '0', STR_PAD_LEFT ),
-			'title' => le_grid_heading( array( array( le_field( 'workp_more_title_1', false, __( 'Sites we’ve', 'lewisedward' ) ) ), array( le_field( 'workp_more_title_2', false, __( 'also built.', 'lewisedward' ) ), 'accent' ) ) ),
+			'title' => le_grid_heading( array( array( le_field( 'workp_more_title_1', false, __( 'Sites we’ve', 'lewisedward' ) ) ), array( le_field( 'workp_more_title_2', false, __( 'also worked on.', 'lewisedward' ) ), 'accent' ) ) ),
 			'text'  => le_field( 'workp_more_text', false, __( 'Projects without a full case study. Click through to see them live.', 'lewisedward' ) ),
 			'class' => 'g-sec__sticky',
 		) );
