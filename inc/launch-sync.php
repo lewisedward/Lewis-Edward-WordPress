@@ -351,6 +351,17 @@ function le_sync_cmp( $a, $b ) {
 	return le_sync_loose( $sa ) === le_sync_loose( $sb ) ? 'case' : 'diff';
 }
 
+/** Point staging links at this site (attachment references keep their staging URLs for download). */
+function le_sync_host( $v ) {
+	if ( is_array( $v ) ) {
+		if ( ! empty( $v['__att'] ) ) {
+			return $v;
+		}
+		return array_map( 'le_sync_host', $v );
+	}
+	return is_string( $v ) ? str_replace( '//staging.lewisedward.com', '//' . wp_parse_url( home_url(), PHP_URL_HOST ), $v ) : $v;
+}
+
 function le_sync_import( WP_REST_Request $req ) {
 	@set_time_limit( 600 ); // phpcs:ignore
 	$url = (string) $req->get_param( 'url' );
@@ -362,6 +373,12 @@ function le_sync_import( WP_REST_Request $req ) {
 	if ( ! is_array( $b ) || empty( $b['posts'] ) ) {
 		return new WP_Error( 'le_sync_bundle', 'Could not read the bundle', array( 'status' => 400 ) );
 	}
+	foreach ( $b['posts'] as $i => $sp ) {
+		$b['posts'][ $i ]['content'] = le_sync_host( $sp['content'] );
+		$b['posts'][ $i ]['excerpt'] = le_sync_host( $sp['excerpt'] );
+		$b['posts'][ $i ]['fields']  = le_sync_host( $sp['fields'] );
+	}
+	$b['options'] = le_sync_host( (array) $b['options'] );
 	$dry = (bool) $req->get_param( 'dry' );
 	$ctx = array( 'dry' => $dry, 'download' => array(), 'errors' => array(), 'made' => array(), 'missing_posts' => array() );
 
