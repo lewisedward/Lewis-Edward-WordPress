@@ -37,7 +37,7 @@ $about_bio_cta = le_link( 'about_bio_cta', '/contact', __( 'Get in touch', 'lewi
 			</div>
 		</div>
 		<?php if ( $ab_portrait_u ) : ?>
-		<div class="g-cell g-ph g-ph--mono g-phero__portrait"><img src="<?php echo esc_url( $ab_portrait_u ); ?>" alt="<?php echo esc_attr( $ab_portrait_a ); ?>" fetchpriority="high" decoding="async" /><span class="g-cap g-mono"><?php echo esc_html( le_field( 'about_bio_name' ) ); ?></span></div>
+		<div class="g-cell g-ph g-ph--mono g-phero__portrait"><?php echo le_grid_img( $ab_portrait, $ab_portrait_a, '(max-width: 1100px) 100vw, 40vw', array( 'fetchpriority' => 'high', 'loading' => 'eager' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span class="g-cap g-mono"><?php echo esc_html( le_field( 'about_bio_name' ) ); ?></span></div>
 		<?php endif; ?>
 	</section>
 

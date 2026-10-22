@@ -572,6 +572,6 @@
     "hide_on_screen": "",
     "active": true,
     "description": "Extra copy and media used by the grid layout. Every field is optional: empty fields fall back to the built-in wording.",
-    "show_in_rest": 0,
-    "modified": 1792531547
+    "show_in_rest": 1,
+    "modified": 1792679397
 }

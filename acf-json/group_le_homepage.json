@@ -1892,9 +1892,9 @@
     ],
     "active": true,
     "description": "Editable content for every homepage section.",
-    "show_in_rest": 0,
+    "show_in_rest": 1,
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1792648542
+    "modified": 1792679397
 }

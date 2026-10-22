@@ -41,9 +41,9 @@ $g_photo = static function ( $field ) {
 	if ( ! is_array( $img ) || empty( $img['url'] ) ) {
 		$img = le_field( 'home_about_portrait' );
 	}
-	$url = ( is_array( $img ) && ! empty( $img['url'] ) ) ? $img['url'] : LE_URI . '/assets/images/lewis-wordpress-developer.jpg';
+	$url = ( is_array( $img ) && ! empty( $img['url'] ) ) ? $img : LE_URI . '/assets/images/lewis-wordpress-developer.jpg';
 	$alt = ( is_array( $img ) && ! empty( $img['alt'] ) ) ? $img['alt'] : __( 'Lewis Edward, London WordPress web designer and developer', 'lewisedward' );
-	return array( $url, $alt );
+	return array( $url, $alt ); // $url is the ACF image array when set (gives srcset), else the theme fallback URL.
 };
 list( $g_portrait, $g_portrait_alt )       = $g_photo( 'grid_hero_portrait' );
 list( $g_about_photo, $g_about_photo_alt ) = $g_photo( 'grid_about_photo' );
@@ -103,10 +103,10 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 		</div>
 		<?php $g_ejt_id = (int) le_field( 'grid_hero_media_link' ); $g_ejt = $g_ejt_id ? get_post( $g_ejt_id ) : get_page_by_path( 'easyjet-traveller', OBJECT, 'work' ); $g_ejt_url = $g_ejt ? get_permalink( $g_ejt ) : home_url( '/work/' ); $g_ejt_cap = le_field( 'grid_hero_media_caption', false, $g_ejt ? get_the_title( $g_ejt ) : __( 'easyJet Traveller', 'lewisedward' ) ); ?>
 		<a class="g-cell g-ph g-ph--mono g-hero__media" href="<?php echo esc_url( $g_ejt_url ); ?>" aria-label="<?php echo esc_attr( $g_ejt_cap ); ?>">
-			<video class="g-ph__video" autoplay muted loop playsinline preload="metadata" poster="<?php echo esc_url( $g_poster ); ?>"><source src="<?php echo esc_url( $g_video ); ?>" type="video/mp4"></video>
+			<video class="g-ph__video" autoplay muted loop playsinline preload="auto" poster="<?php echo esc_url( $g_poster ); ?>"><?php if ( empty( $g_ov_file['url'] ) ) : ?><source src="<?php echo esc_url( LE_URI . '/assets/videos/macbook-easyjet-960.mp4?ver=' . le_asset_ver( 'assets/videos/macbook-easyjet-960.mp4' ) ); ?>" type="video/mp4" media="(max-width: 720px)"><?php endif; ?><source src="<?php echo esc_url( $g_video ); ?>" type="video/mp4"></video>
 			<span class="g-cap g-mono"><?php echo esc_html( $g_ejt_cap ); ?><?php echo le_grid_arrow_diag(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 		</a>
-		<div class="g-cell g-ph g-ph--mono g-hero__portrait"><img src="<?php echo esc_url( $g_portrait ); ?>" alt="<?php echo esc_attr( $g_portrait_alt ); ?>" fetchpriority="high" decoding="async" /><span class="g-cap g-mono"><?php echo esc_html( le_field( 'grid_hero_portrait_caption', false, __( 'Lewis – London', 'lewisedward' ) ) ); ?></span></div>
+		<div class="g-cell g-ph g-ph--mono g-hero__portrait"><?php echo le_grid_img( $g_portrait, $g_portrait_alt, '(max-width: 720px) 100vw, (max-width: 1100px) 50vw, 25vw', array( 'fetchpriority' => 'high', 'loading' => 'eager' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?><span class="g-cap g-mono"><?php echo esc_html( le_field( 'grid_hero_portrait_caption', false, __( 'Lewis – London', 'lewisedward' ) ) ); ?></span></div>
 		<div class="g-cell g-lime g-hero__title">
 			<?php if ( $g_eyebrow ) : ?><span class="g-mono g-hero__eyebrow"><?php echo esc_html( $g_eyebrow ); ?></span><?php endif; ?>
 			<h1><?php echo esc_html( le_field( 'home_hero_title_1' ) ); ?> <?php echo esc_html( le_field( 'home_hero_title_1_accent' ) ); ?> <?php echo esc_html( le_field( 'home_hero_title_2_pre' ) ); ?> &amp; <?php echo esc_html( le_field( 'home_hero_title_2_post' ) ); ?></h1>
@@ -224,7 +224,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 		</div>
 		<div class="g-cell g-clients__list">
 			<?php foreach ( $g_logos as $row ) : $img = isset( $row['logo'] ) ? $row['logo'] : null; if ( ! $img || empty( $img['url'] ) ) { continue; } $name = ! empty( $row['name'] ) ? $row['name'] : ( $img['alt'] ?? '' ); ?>
-			<div class="g-crow"><img src="<?php echo esc_url( le_grid_logo( $img['url'] ) ); ?>" alt="<?php echo esc_attr( $name ); ?>" loading="lazy" /></div>
+			<div class="g-crow"><img src="<?php echo esc_url( le_grid_logo( $img['url'] ) ); ?>" alt="<?php echo esc_attr( $name ); ?>"<?php echo ! empty( $img['width'] ) && ! empty( $img['height'] ) ? ' width="' . (int) $img['width'] . '" height="' . (int) $img['height'] . '"' : ''; ?> loading="lazy" decoding="async" /></div>
 			<?php endforeach; ?>
 		</div>
 	</section>
@@ -233,7 +233,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 	<section class="g-row g-svc" aria-label="<?php esc_attr_e( 'Services', 'lewisedward' ); ?>">
 		<div class="g-cell g-svc__left">
 			<?php $g_sv = le_field( 'grid_services_video' ); $g_sp = le_field( 'grid_services_poster' ); $g_sv = ( is_array( $g_sv ) && ! empty( $g_sv['url'] ) ) ? $g_sv['url'] : LE_URI . '/assets/videos/typing-macbook-sm.mp4?ver=' . le_asset_ver( 'assets/videos/typing-macbook-sm.mp4' ); $g_sp = ( is_array( $g_sp ) && ! empty( $g_sp['url'] ) ) ? $g_sp['url'] : LE_URI . '/assets/videos/typing-macbook-poster.jpg'; ?>
-			<span class="g-svc__bg g-ph g-ph--mono" aria-hidden="true"><video class="g-ph__video" autoplay muted loop playsinline preload="metadata" poster="<?php echo esc_url( $g_sp ); ?>"><source src="<?php echo esc_url( $g_sv ); ?>" type="video/mp4"></video></span>
+			<span class="g-svc__bg g-ph g-ph--mono" aria-hidden="true"><video class="g-ph__video" muted loop playsinline preload="none" poster="<?php echo esc_url( $g_sp ); ?>"><source src="<?php echo esc_url( $g_sv ); ?>" type="video/mp4"></video></span>
 			<span class="g-label g-mono g-svc__eyebrow"><span><?php echo esc_html( le_field( 'home_services_eyebrow', false, __( 'Services', 'lewisedward' ) ) ); ?></span><span>01 &ndash; <?php echo esc_html( str_pad( (string) count( $g_services ), 2, '0', STR_PAD_LEFT ) ); ?></span></span>
 			<h2 class="g-svc__title"><?php echo esc_html( le_field( 'home_services_title' ) ); ?></h2>
 			<div class="g-svc__foot">
@@ -261,7 +261,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 		</div>
 		<div class="g-cell g-ph g-ov__media">
 			<?php if ( $g_ov_video ) : ?>
-			<video class="g-ph__video" autoplay muted loop playsinline preload="metadata"<?php echo $g_ov_poster ? ' poster="' . esc_url( $g_ov_poster ) . '"' : ''; ?>><source src="<?php echo esc_url( $g_ov_video ); ?>" type="video/mp4"></video>
+			<video class="g-ph__video" muted loop playsinline preload="none" aria-hidden="true"<?php echo $g_ov_poster ? ' poster="' . esc_url( $g_ov_poster ) . '"' : ''; ?>><source src="<?php echo esc_url( $g_ov_video ); ?>" type="video/mp4"></video>
 			<?php elseif ( $g_ov_poster ) : ?>
 			<img src="<?php echo esc_url( $g_ov_poster ); ?>" alt="" loading="lazy" />
 			<?php endif; ?>
@@ -282,7 +282,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 	<section class="g-row g-about" aria-label="<?php esc_attr_e( 'About Lewis Edward', 'lewisedward' ); ?>">
 		<div class="g-cell g-about__side">
 			<span class="g-label g-mono"><?php echo esc_html( le_field( 'home_about_eyebrow', false, __( 'About', 'lewisedward' ) ) ); ?> <?php echo esc_html( le_field( 'home_about_year' ) ); ?></span>
-			<div class="g-ph g-ph--mono g-about__photo"><img src="<?php echo esc_url( $g_about_photo ); ?>" alt="<?php echo esc_attr( $g_about_photo_alt ); ?>" loading="lazy" /></div>
+			<div class="g-ph g-ph--mono g-about__photo"><?php echo le_grid_img( $g_about_photo, $g_about_photo_alt, '(max-width: 1100px) 100vw, 40vw', array( 'loading' => 'lazy' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
 		</div>
 		<div class="g-cell g-about__prose">
 			<div class="g-about__text">

@@ -284,6 +284,40 @@ function le_grid_wire( $hint, $i = 0 ) {
 }
 
 /**
+ * Responsive <img> for an ACF image array / attachment ID, with a plain <img> fallback for theme files.
+ * Gives the browser a srcset so it never downloads more pixels than the slot needs.
+ *
+ * @param array|int|string $img   ACF image array, attachment ID or URL.
+ * @param string           $alt   Alt text (falls back to the attachment's alt).
+ * @param string           $sizes sizes attribute.
+ * @param array            $attrs Extra attributes (loading, fetchpriority, class…).
+ * @return string
+ */
+function le_grid_img( $img, $alt = '', $sizes = '100vw', $attrs = array() ) {
+	$id  = is_array( $img ) ? (int) ( $img['ID'] ?? $img['id'] ?? 0 ) : ( is_numeric( $img ) ? (int) $img : 0 );
+	$url = is_array( $img ) ? (string) ( $img['url'] ?? '' ) : ( is_string( $img ) && ! is_numeric( $img ) ? $img : '' );
+	if ( '' === $alt && is_array( $img ) && ! empty( $img['alt'] ) ) {
+		$alt = (string) $img['alt'];
+	}
+	$attrs = array_merge( array( 'decoding' => 'async' ), $attrs, array( 'alt' => $alt, 'sizes' => $sizes ) );
+	if ( $id && wp_attachment_is_image( $id ) ) {
+		$tag = wp_get_attachment_image( $id, 'full', false, $attrs );
+		if ( $tag ) {
+			return $tag;
+		}
+	}
+	if ( '' === $url ) {
+		return '';
+	}
+	unset( $attrs['sizes'] );
+	$out = '<img src="' . esc_url( $url ) . '"';
+	foreach ( $attrs as $k => $v ) {
+		$out .= ' ' . esc_attr( $k ) . '="' . esc_attr( (string) $v ) . '"';
+	}
+	return $out . ' />';
+}
+
+/**
  * A work post's homepage/tile image: its "Homepage tile image" if set, else
  * the featured image. Returns the <img> markup or ''.
  *

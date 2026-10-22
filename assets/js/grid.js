@@ -52,7 +52,10 @@
 
 	/* Videos: play while visible, pause otherwise (saves battery, keeps loops in sync with the eye). */
 	var vids = document.querySelectorAll('.skin-grid video.g-ph__video');
-	if (vids.length) {
+	if (vids.length && reduce) {
+		// Reduced motion: stay on the poster frame.
+		vids.forEach(function (v) { v.removeAttribute('autoplay'); v.pause(); });
+	} else if (vids.length) {
 		var vo = new IntersectionObserver(function (entries) {
 			entries.forEach(function (e) {
 				var v = e.target;
