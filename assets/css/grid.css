@@ -445,7 +445,7 @@
 .skin-grid .g-hero__word > span { font-weight: 500; letter-spacing: -0.06em; }
 .skin-grid .g-svc__title { font-weight: 400; letter-spacing: -0.03em; }
 .skin-grid .g-header__logo { font-weight: 600; }
-.skin-grid .g-header__mark { display: block; width: 36px; height: 36px; }
+.skin-grid .g-header__mark { display: block; width: 32px; height: 32px; } /* 32px = exactly half the 64-unit grid, so the L lands on whole pixels */
 .skin-grid .g-header__mark-arc { stroke-dasharray: 100; stroke-dashoffset: 0; transition: stroke-dashoffset 0.7s cubic-bezier(0.2, 0.7, 0.2, 1); }
 .skin-grid .g-header__logo:hover .g-header__mark-arc { animation: g-mark-arc 0.9s cubic-bezier(0.2, 0.7, 0.2, 1); }
 @keyframes g-mark-arc { 0% { stroke-dashoffset: 100; } 100% { stroke-dashoffset: 0; } }

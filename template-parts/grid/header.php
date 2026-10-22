@@ -16,7 +16,7 @@ $le_cta       = le_link( 'header_cta', '/quotes', __( 'Get a Quote', 'lewisedwar
 $le_available = le_option( 'header_available', true );
 ?>
 <header class="g-header" data-header role="banner">
-	<a class="g-header__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php esc_attr_e( 'Lewis Edward – home', 'lewisedward' ); ?>"><svg class="g-header__mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M17.94 54V10H24.63V47.89H46.06V54Z" fill="currentColor"/><path class="g-header__mark-arc" d="M24.63 34.89a13 13 0 0 1 13 13" fill="none" stroke="currentColor" stroke-width="2" pathLength="100"/><path class="g-header__mark-ticks" d="M20.63 34.89h4M37.63 43.89v4" stroke="currentColor" stroke-width="2"/></svg></a>
+	<a class="g-header__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php esc_attr_e( 'Lewis Edward – home', 'lewisedward' ); ?>"><svg class="g-header__mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M18 10H24V48H46V54H18Z" fill="currentColor" shape-rendering="crispEdges"/><path class="g-header__mark-arc" d="M24 35a13 13 0 0 1 13 13" fill="none" stroke="currentColor" stroke-width="2" pathLength="100"/></svg></a>
 	<div class="g-header__meta g-mono">
 		<?php if ( $le_available ) : ?><span class="g-header__dot" aria-hidden="true"></span><span><?php echo esc_html( le_option( 'header_available_label', __( 'Available', 'lewisedward' ) ) ); ?></span><span class="g-header__sep" aria-hidden="true">/</span><?php endif; ?>
 		<time data-london-clock aria-label="<?php esc_attr_e( 'Current time in London', 'lewisedward' ); ?>">--:--</time> <span>LDN</span>
