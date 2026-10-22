@@ -47,9 +47,30 @@ $pp      = le_journal_page_id();
 
 	<section class="g-row g-sec" aria-label="<?php esc_attr_e( 'Article', 'lewisedward' ); ?>">
 		<div class="g-cell g-sec__intro g-sec__sticky"><div class="g-sec__in">
-			<div class="g-sec__top"><span class="g-label g-mono"><?php esc_html_e( 'Read', 'lewisedward' ); ?></span><span class="g-mono g-sec__count">01</span></div>
+			<div class="g-sec__top"><span class="g-label g-mono"><?php esc_html_e( 'Read', 'lewisedward' ); ?></span><span class="g-mono g-sec__count" data-g-read-pct>0%</span></div>
+			<div class="g-progress" data-g-read aria-hidden="true"><span data-g-read-fill></span></div>
 			<div class="g-sec__text"><span class="g-mono" style="display:block;color:hsl(var(--foreground)/0.5);margin-bottom:8px"><?php esc_html_e( 'Published', 'lewisedward' ); ?></span><time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><?php echo esc_html( get_the_date() ); ?></time><?php if ( $jr_cat ) : ?><br><span class="g-mono" style="display:block;color:hsl(var(--foreground)/0.5);margin:20px 0 8px"><?php esc_html_e( 'Filed under', 'lewisedward' ); ?></span><a href="<?php echo esc_url( get_category_link( $jr_cat ) ); ?>" style="color:inherit"><?php echo esc_html( $jr_cat->name ); ?></a><?php endif; ?></div>
 			<a class="g-line-link g-mono g-sec__link" href="<?php echo esc_url( home_url( '/contact' ) ); ?>"><span><?php esc_html_e( 'Talk to Lewis', 'lewisedward' ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+			<?php
+			$sh_url   = get_permalink();
+			$sh_title = get_the_title();
+			$sh_links = array(
+				'LinkedIn' => 'https://www.linkedin.com/sharing/share-offsite/?url=' . rawurlencode( $sh_url ),
+				'X'        => 'https://twitter.com/intent/tweet?url=' . rawurlencode( $sh_url ) . '&text=' . rawurlencode( $sh_title ),
+				'Facebook' => 'https://www.facebook.com/sharer/sharer.php?u=' . rawurlencode( $sh_url ),
+				'WhatsApp' => 'https://wa.me/?text=' . rawurlencode( $sh_title . ' ' . $sh_url ),
+				'Email'    => 'mailto:?subject=' . rawurlencode( $sh_title ) . '&body=' . rawurlencode( $sh_url ),
+			);
+			?>
+			<div class="g-share">
+				<span class="g-mono g-share__label"><?php esc_html_e( 'Share', 'lewisedward' ); ?></span>
+				<ul class="g-share__list">
+					<?php foreach ( $sh_links as $sh_name => $sh_href ) : ?>
+					<li><a class="g-share__btn g-mono" href="<?php echo esc_url( $sh_href ); ?>"<?php echo 'Email' === $sh_name ? '' : ' target="_blank" rel="noopener"'; ?>><?php echo esc_html( $sh_name ); ?><span class="g-sr"><?php echo 'Email' === $sh_name ? esc_html__( ' (opens your email app)', 'lewisedward' ) : esc_html__( ' (opens in a new tab)', 'lewisedward' ); ?></span></a></li>
+					<?php endforeach; ?>
+					<li><button type="button" class="g-share__btn g-mono" data-g-copy="<?php echo esc_url( $sh_url ); ?>" data-g-copied="<?php esc_attr_e( 'Copied', 'lewisedward' ); ?>"><?php esc_html_e( 'Copy link', 'lewisedward' ); ?></button></li>
+				</ul>
+			</div>
 		</div></div>
 		<article class="g-cell g-dark g-prose__cell">
 			<div class="g-prose jr-body__prose"><?php the_content(); ?></div>

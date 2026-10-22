@@ -758,3 +758,23 @@ body.admin-bar.skin-grid .g-sec__sticky .g-sec__in { top: calc(92px + var(--wp-a
 .skin-grid .g-lime.g-side--card:hover .g-line-link .g-arrow { transform: translateX(6px); }
 .skin-grid .g-lime.g-side--card .g-line-link .g-arrow { transition: transform 0.25s ease; }
 @media (max-width: 720px) { .skin-grid .g-lime.g-side--card .g-line-link { margin: auto -20px -28px; padding: 18px 20px; } }
+
+/* Journal post (2026-10-22): reading progress in the sticky column, share links, plain blockquote. */
+.skin-grid .g-progress { position: relative; height: 1px; margin: 18px 0 4px; background: var(--g-line); overflow: hidden; }
+.skin-grid .g-progress > span { position: absolute; inset: 0; background: var(--g-lime); transform: scaleX(0); transform-origin: left center; }
+.skin-grid .g-share { display: flex; flex-direction: column; gap: 12px; margin-top: 8px; }
+.skin-grid .g-share__label { color: hsl(var(--foreground) / 0.5); }
+.skin-grid .g-share__list { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.skin-grid .g-share__list li { margin: 0; padding: 0; }
+.skin-grid .g-share__btn { display: inline-flex; align-items: center; padding: 9px 12px; border: 1px solid var(--g-line); background: transparent; color: hsl(var(--foreground) / 0.8); text-decoration: none; cursor: pointer; transition: border-color 0.2s ease, color 0.2s ease; }
+.skin-grid .g-share__btn:hover, .skin-grid .g-share__btn:focus-visible { border-color: var(--g-lime); color: var(--g-lime); }
+.skin-grid .g-share__btn.is-copied { border-color: var(--g-lime); background: var(--g-lime); color: hsl(var(--primary-foreground)); }
+@media (max-width: 1100px) {
+	.skin-grid .g-progress { position: fixed; top: 64px; left: 0; right: 0; z-index: 60; height: 2px; margin: 0; background: transparent; }
+	body.admin-bar.skin-grid .g-progress { top: calc(64px + var(--wp-admin--admin-bar-height, 46px)); }
+}
+.skin-grid .g-prose blockquote { position: relative; margin: 40px 0; padding: 4px 0 4px 28px !important; border: 0 !important; border-left: 2px solid var(--g-lime) !important; border-radius: 0 !important; background: none !important; box-shadow: none !important; }
+.skin-grid .g-prose blockquote::before, .skin-grid .g-prose blockquote::after { display: none !important; content: none !important; }
+.skin-grid .g-prose blockquote p { margin: 0; font-family: var(--font-display); font-size: clamp(20px, 1.8vw, 26px); line-height: 1.35; letter-spacing: -0.015em; color: hsl(var(--foreground)); }
+.skin-grid .g-prose blockquote p + p { margin-top: 12px; }
+.skin-grid .g-prose blockquote cite, .skin-grid .g-prose blockquote footer { display: block; margin-top: 14px; font-family: var(--g-mono); font-size: 11px; font-style: normal; letter-spacing: 0.06em; text-transform: uppercase; color: hsl(var(--foreground) / 0.5); }

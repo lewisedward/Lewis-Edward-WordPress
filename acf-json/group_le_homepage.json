@@ -1600,11 +1600,11 @@
         },
         {
             "key": "field_h_cta_previews",
-            "label": "Hover preview projects",
+            "label": "CTA projects",
             "name": "home_cta_previews",
             "aria-label": "",
             "type": "relationship",
-            "instructions": "",
+            "instructions": "The projects shown beside “Get a quote” in the call-to-action at the foot of most pages (new design: the first 2–4, two per row; the classic design shows them on hover). Case-study pages never show themselves, and the Work page shows Services / FAQs / Contact links instead.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -1896,5 +1896,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1787661101
+    "modified": 1792648542
 }

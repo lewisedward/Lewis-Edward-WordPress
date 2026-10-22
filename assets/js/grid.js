@@ -91,6 +91,44 @@
 		}, { threshold: 0.3 });
 		to.observe(tst);
 	}
+	/* Journal post: reading progress (sticky column, or a bar under the header on small screens) and Copy link. */
+	var readBar = document.querySelector('[data-g-read]');
+	var readArt = document.querySelector('.g-prose__cell');
+	if (readBar && readArt) {
+		var readFill = readBar.querySelector('[data-g-read-fill]');
+		var readPct = document.querySelector('[data-g-read-pct]');
+		var readTick = false;
+		var readUpdate = function () {
+			readTick = false;
+			var r = readArt.getBoundingClientRect();
+			var head = 64;
+			var span = r.height - (window.innerHeight - head);
+			var p = span > 0 ? (head - r.top) / span : (r.top < head ? 1 : 0);
+			p = Math.max(0, Math.min(1, p));
+			readFill.style.transform = 'scaleX(' + p.toFixed(4) + ')';
+			if (readPct) { readPct.textContent = Math.round(p * 100) + '%'; }
+		};
+		window.addEventListener('scroll', function () { if (!readTick) { readTick = true; requestAnimationFrame(readUpdate); } }, { passive: true });
+		window.addEventListener('resize', readUpdate);
+		readUpdate();
+	}
+	Array.prototype.forEach.call(document.querySelectorAll('[data-g-copy]'), function (btn) {
+		var label = btn.textContent;
+		btn.addEventListener('click', function () {
+			var url = btn.getAttribute('data-g-copy');
+			var done = function () {
+				btn.textContent = btn.getAttribute('data-g-copied') || 'Copied';
+				btn.classList.add('is-copied');
+				setTimeout(function () { btn.textContent = label; btn.classList.remove('is-copied'); }, 2000);
+			};
+			if (navigator.clipboard && navigator.clipboard.writeText) {
+				navigator.clipboard.writeText(url).then(done, function () { window.prompt('', url); });
+			} else {
+				window.prompt('', url);
+			}
+		});
+	});
+
 	/* Visual journey strip: prev/next, counter, progress, mouse drag. */
 	Array.prototype.forEach.call(document.querySelectorAll('[data-g-rail]'), function (rail) {
 		var track = rail.querySelector('[data-g-rail-track]');
