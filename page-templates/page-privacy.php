@@ -18,6 +18,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 
+if ( le_grid_skin() ) {
+	get_template_part( 'template-parts/grid/legal', null, array( 'privacy' => true ) );
+	get_footer();
+	return;
+}
+
 $pp_body    = le_field( 'privacy_body' );
 $pp_updated = le_field( 'privacy_updated' );
 ?>

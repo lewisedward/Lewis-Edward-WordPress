@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 ?>
 	</div><!-- .site-content -->
 
-	<?php get_template_part( 'template-parts/footer/footer' ); ?>
+	<?php get_template_part( le_grid_skin() ? 'template-parts/grid/footer' : 'template-parts/footer/footer' ); ?>
 
 </div><!-- .site-wrapper -->
 

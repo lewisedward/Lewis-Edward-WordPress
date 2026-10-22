@@ -48,7 +48,7 @@ if ( ! $le_total ) {
 					$company = le_field( 'testimonial_company', $tid );
 					$meta    = $role;
 					if ( $company ) {
-						$meta = $meta ? $meta . ' — ' . $company : $company;
+						$meta = $meta ? $meta . ' – ' . $company : $company;
 					}
 					?>
 					<figure class="tst-slide<?php echo 0 === $i ? ' is-active' : ''; ?>" data-tst-slide="<?php echo esc_attr( (string) $i ); ?>"<?php echo 0 === $i ? '' : ' hidden'; ?>>

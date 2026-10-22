@@ -52,7 +52,7 @@ $le_menu_args = array(
 		<?php /* ---------- Desktop pill ---------- */ ?>
 		<nav class="navbar navbar--desktop glass" aria-label="<?php esc_attr_e( 'Primary', 'lewisedward' ); ?>">
 
-			<a class="navbar__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php esc_attr_e( 'Lewis Edward — home', 'lewisedward' ); ?>">
+			<a class="navbar__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php esc_attr_e( 'Lewis Edward – home', 'lewisedward' ); ?>">
 				<img src="<?php echo esc_url( $le_logo_url ); ?>" alt="<?php echo esc_attr( $le_logo_alt ); ?>" width="95" height="29" />
 			</a>
 
@@ -81,7 +81,7 @@ $le_menu_args = array(
 
 		<?php /* ---------- Mobile pill ---------- */ ?>
 		<nav class="navbar navbar--mobile glass" aria-label="<?php esc_attr_e( 'Primary', 'lewisedward' ); ?>">
-			<a class="navbar__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php esc_attr_e( 'Lewis Edward — home', 'lewisedward' ); ?>">
+			<a class="navbar__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php esc_attr_e( 'Lewis Edward – home', 'lewisedward' ); ?>">
 				<img src="<?php echo esc_url( $le_logo_url ); ?>" alt="<?php echo esc_attr( $le_logo_alt ); ?>" width="95" height="29" />
 			</a>
 			<?php if ( $le_available ) : ?>

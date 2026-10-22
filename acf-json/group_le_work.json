@@ -20,6 +20,26 @@
             "endpoint": 0
         },
         {
+            "key": "field_wk_showcase",
+            "label": "Showcase only (no case study)",
+            "name": "work_showcase",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Turn on for a site you've worked on without a full case study. It then appears in the “More websites” section at the bottom of the Work page (not in the main project grid) with its title, Homepage tile image (or featured image), Card description, Platform and Year. The Live URL is optional; if set, the card and any tile link to the live site in a new tab.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "Link to the live site instead of a case study",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "Showcase",
+            "ui_off_text": "Case study"
+        },
+        {
             "key": "field_wk_desc",
             "label": "Card description",
             "name": "work_card_description",
@@ -58,6 +78,31 @@
             "maxlength": "",
             "rows": 4,
             "new_lines": ""
+        },
+        {
+            "key": "field_wk_home_image",
+            "label": "Homepage tile image",
+            "name": "work_home_image",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Square-ish crop used for this project's tile on the homepage work grid (and its small preview beside the contact CTA). Leave empty to use the Featured Image, which stays the banner on the case study and the Work page.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
         },
         {
             "key": "field_wk_year",
@@ -125,7 +170,7 @@
             "name": "work_live_url",
             "aria-label": "",
             "type": "url",
-            "instructions": "Link to the live site. Use the toggle alongside to hide the button without deleting the URL.",
+            "instructions": "Link to the live site. Use the toggle alongside to hide the button without deleting the URL. Required for showcase-only projects.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -960,5 +1005,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1790070031
+    "modified": 1792623195
 }

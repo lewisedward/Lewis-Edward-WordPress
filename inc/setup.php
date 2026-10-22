@@ -47,6 +47,15 @@ function le_setup() {
 }
 add_action( 'after_setup_theme', 'le_setup' );
 
+// Keep large originals (retina screenshots) up to 4096px instead of WordPress's 2560px cap, so
+// case-study images stay sharp on high-density screens.
+add_filter(
+	'big_image_size_threshold',
+	static function () {
+		return 4096;
+	}
+);
+
 /**
  * Content width for embeds.
  */

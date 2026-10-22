@@ -15,6 +15,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 get_header();
+
+if ( le_grid_skin() ) {
+	get_template_part( 'template-parts/grid/home' );
+	get_footer();
+	return;
+}
 ?>
 
 <main id="main" class="site-main site-main--home">

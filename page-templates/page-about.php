@@ -19,6 +19,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 
+if ( le_grid_skin() ) {
+	get_template_part( 'template-parts/grid/about' );
+	get_footer();
+	return;
+}
+
 // -------- Hero --------
 $ab_portrait   = le_field( 'about_portrait' );
 $ab_portrait_u = ( is_array( $ab_portrait ) && ! empty( $ab_portrait['url'] ) ) ? $ab_portrait['url'] : '';

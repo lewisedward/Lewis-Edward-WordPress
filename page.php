@@ -12,6 +12,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 get_header();
+
+if ( le_grid_skin() ) {
+	while ( have_posts() ) {
+		the_post();
+		get_template_part( 'template-parts/grid/legal' );
+	}
+	get_footer();
+	return;
+}
 ?>
 
 <main id="main" class="site-main site-main--page">

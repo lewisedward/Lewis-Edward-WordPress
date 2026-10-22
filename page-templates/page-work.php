@@ -19,6 +19,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 
+if ( le_grid_skin() ) {
+	get_template_part( 'template-parts/grid/work' );
+	get_footer();
+	return;
+}
+
 $wp_featured = le_field( 'workp_featured' );
 $wp_fid      = is_object( $wp_featured ) ? (int) $wp_featured->ID : (int) $wp_featured;
 

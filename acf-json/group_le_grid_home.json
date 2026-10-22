@@ -1,0 +1,577 @@
+{
+    "key": "group_le_grid_home",
+    "title": "Homepage — grid layout",
+    "fields": [
+        {
+            "key": "field_grid_tab_hero",
+            "label": "Grid: hero",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_grid_hero_word",
+            "label": "Decorative word",
+            "name": "grid_hero_word",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The big word in the hero. Leave empty for \"Lewis\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "34",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Lewis",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_grid_hero_media_caption",
+            "label": "Media caption",
+            "name": "grid_hero_media_caption",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Caption on the hero video cell.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "easyJet Traveller",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_grid_hero_media_link",
+            "label": "Media links to",
+            "name": "grid_hero_media_link",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "The case study the hero video opens. Empty = easyJet Traveller.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "33",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "work"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": [],
+            "return_format": "id",
+            "multiple": 0,
+            "allow_null": 1,
+            "ui": 1
+        },
+        {
+            "key": "field_grid_hero_media_video",
+            "label": "Hero video (MP4)",
+            "name": "grid_hero_media_video",
+            "aria-label": "",
+            "type": "file",
+            "instructions": "Silent loop in the hero. Empty = the MacBook easyJet loop in the theme.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": "mp4,webm"
+        },
+        {
+            "key": "field_grid_hero_media_poster",
+            "label": "Hero video poster",
+            "name": "grid_hero_media_poster",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Shown before the video plays.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_grid_hero_portrait",
+            "label": "Hero portrait",
+            "name": "grid_hero_portrait",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "The mono-treated photo in the hero. Leave empty to reuse the About portrait (classic \"Portrait\" field below).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_grid_hero_portrait_caption",
+            "label": "Portrait caption",
+            "name": "grid_hero_portrait_caption",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Lewis – London",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_grid_ticker_label",
+            "label": "Ticker label",
+            "name": "grid_ticker_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Label before the scrolling client logos (logos come from the Clients section).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Trusted by",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_grid_hero_ai_value",
+            "label": "AI metric figure",
+            "name": "grid_hero_ai_value",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "The big figure in the fourth metric tile (its label is the classic field \"AI label\" above).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "5%",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_grid_tab_sections",
+            "label": "Grid: sections",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_grid_clients_side_title",
+            "label": "Clients: side heading",
+            "name": "grid_clients_side_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Above the sector list, which is built from the client logo names.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Sectors we build for",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_grid_clients_button",
+            "label": "Clients: button label",
+            "name": "grid_clients_button",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Selected work",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_grid_clients_sectors",
+            "label": "Clients: industries list",
+            "name": "grid_clients_sectors",
+            "aria-label": "",
+            "type": "repeater",
+            "instructions": "The numbered \"Industries we've built for\" list beside the client logos. Leave empty to derive one entry per client logo from its Name / alt text (\"Banking and Finance WordPress Website\" → \"Banking and Finance\").",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layout": "table",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "",
+            "button_label": "Add industry",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "key": "field_grid_clients_sector_name",
+                    "label": "Industry",
+                    "name": "name",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_grid_clients_sectors"
+                }
+            ]
+        },
+        {
+            "key": "field_grid_work_all_label",
+            "label": "Work: \"all work\" cell label",
+            "name": "grid_work_all_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "All work",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_grid_work_count_label",
+            "label": "Work: count label",
+            "name": "grid_work_count_label",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Word after the project count in the \"all work\" cell (e.g. \"12 projects\").",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "projects",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_grid_about_photo",
+            "label": "About photo",
+            "name": "grid_about_photo",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "Full-colour photo in the About section. Leave empty to reuse the About portrait (classic \"Portrait\" field).",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_grid_about_more",
+            "label": "About: link",
+            "name": "grid_about_more",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "Empty = \"More about Lewis\" → /about/.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_grid_services_video",
+            "label": "Services: background video (MP4)",
+            "name": "grid_services_video",
+            "aria-label": "",
+            "type": "file",
+            "instructions": "Mono loop behind the services title. Empty = typing MacBook loop in the theme.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_size": "",
+            "max_size": "",
+            "mime_types": "mp4,webm"
+        },
+        {
+            "key": "field_grid_services_poster",
+            "label": "Services: background poster",
+            "name": "grid_services_poster",
+            "aria-label": "",
+            "type": "image",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "50",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
+            "key": "field_grid_journal_eyebrow",
+            "label": "Journal: eyebrow",
+            "name": "grid_journal_eyebrow",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Journal",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_grid_journal_title",
+            "label": "Journal: heading",
+            "name": "grid_journal_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Notes from the studio",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_grid_journal_all",
+            "label": "Journal: all-articles label",
+            "name": "grid_journal_all",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "All articles",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_grid_journal_read",
+            "label": "Journal: read label",
+            "name": "grid_journal_read",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "25",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "Read",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_grid_journal_posts",
+            "label": "Journal: articles",
+            "name": "grid_journal_posts",
+            "aria-label": "",
+            "type": "relationship",
+            "instructions": "Hand-pick up to three articles. Leave empty to show the three latest.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "post"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "filters": [
+                "search"
+            ],
+            "return_format": "id",
+            "min": 0,
+            "max": 3,
+            "elements": "",
+            "bidirectional": 0,
+            "bidirectional_target": []
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "page_type",
+                "operator": "==",
+                "value": "front_page"
+            }
+        ]
+    ],
+    "menu_order": 1,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "Extra copy and media used by the grid layout. Every field is optional: empty fields fall back to the built-in wording.",
+    "show_in_rest": 1,
+    "modified": 1792679397
+}

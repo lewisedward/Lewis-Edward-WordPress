@@ -49,3 +49,10 @@ le_require( 'journal' );      // Journal (Posts) index/archive helpers.
 le_require( 'about-icons' );  // About page inline SVG icon set.
 le_require( 'svg-support' );  // Safe SVG uploads (sanitised).
 le_require( 'redirects' );    // Legacy 301 redirects (SEO preservation).
+le_require( 'schema' );       // Homepage ProfessionalService + Person structured data.
+le_require( 'grid-skin' );    // Trial hairline-grid homepage skin (staging default, ?skin=grid elsewhere).
+le_require( 'staging-gate' ); // Staging passphrase gate.
+le_require( 'migrations' );   // One-off content migrations (run once, remembered in an option).
+le_require( 'copy-fixes' );  // One-off copy clean-up (sentence case, dashes, British spelling).
+le_require( 'forms' );       // Gravity Forms messages and consent link.
+le_require( 'launch-sync' ); // Temporary: staging → live content sync for the redesign launch.

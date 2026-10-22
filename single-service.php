@@ -58,6 +58,15 @@ function le_service_headline( $headline ) {
 
 get_header();
 
+if ( le_grid_skin() ) {
+	while ( have_posts() ) {
+		the_post();
+		get_template_part( 'template-parts/grid/service' );
+	}
+	get_footer();
+	return;
+}
+
 while ( have_posts() ) :
 	the_post();
 	$sv_id       = get_the_ID();
@@ -204,7 +213,7 @@ while ( have_posts() ) :
 									<span class="pulse-dot" aria-hidden="true"></span>
 								</div>
 								<h2 class="svc-d-title"><?php echo esc_html( le_field( 'svc_benefits_title', $sv_id, __( 'The benefits of partnering with us.', 'lewisedward' ) ) ); ?></h2>
-								<p class="svc-d-split__intro"><?php echo esc_html( le_field( 'svc_benefits_intro', $sv_id, __( 'We pair deep WordPress expertise with a transparent, collaborative approach — so every project lands with clarity and confidence.', 'lewisedward' ) ) ); ?></p>
+								<p class="svc-d-split__intro"><?php echo esc_html( le_field( 'svc_benefits_intro', $sv_id, __( 'We pair deep WordPress expertise with a transparent, collaborative approach, so every project lands with clarity and confidence.', 'lewisedward' ) ) ); ?></p>
 							</div>
 							<div class="svc-d-benefits">
 								<?php foreach ( $sv_bens as $row ) : $b = isset( $row['benefit'] ) ? trim( $row['benefit'] ) : ''; if ( '' === $b ) { continue; } ?>

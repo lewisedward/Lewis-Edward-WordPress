@@ -18,6 +18,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 
+if ( le_grid_skin() ) {
+	get_template_part( 'template-parts/grid/contact', null, array( 'variant' => 'contact' ) );
+	wp_enqueue_script( 'le-form-groups' );
+	wp_enqueue_script( 'le-oaiq-forms' );
+	get_footer();
+	return;
+}
+
 $le_q_url = le_field( 'contact_quote_url' );
 $le_q_url = ( 0 === strpos( (string) $le_q_url, 'http' ) ) ? $le_q_url : home_url( $le_q_url );
 
