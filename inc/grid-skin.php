@@ -37,7 +37,8 @@ function le_grid_skin() {
 	} elseif ( 'classic' === $q ) {
 		$on = false;
 	} else {
-		$on = apply_filters( 'le_grid_skin_default', $staging );
+		// Launched 2026-10-22: the grid design is the default everywhere; ?skin=classic (logged in) previews the old one.
+		$on = apply_filters( 'le_grid_skin_default', true );
 	}
 	return $on;
 }
