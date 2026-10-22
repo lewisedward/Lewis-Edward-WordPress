@@ -323,6 +323,7 @@ function le_copy_fix_exact() {
 		'Business Improvement Districts' => 'Business improvement districts',
 		'About You' => 'About you',
 		'Quote Request' => 'Quote request',
+		'e.g., End of Q2 2026' => 'within 2 months', // Quote form deadline placeholder (2026-10-22).
 		'Your Name' => 'Your name',
 		'Email Address' => 'Email address',
 		'Your Message' => 'Your message',
@@ -559,7 +560,7 @@ function le_copy_fix_run( $dry = true ) {
 			}
 			$dirty = false;
 			foreach ( $meta['fields'] as $fi => $f ) {
-				foreach ( array( 'label', 'description' ) as $prop ) {
+				foreach ( array( 'label', 'description', 'placeholder' ) as $prop ) {
 					if ( empty( $f[ $prop ] ) || ! is_string( $f[ $prop ] ) ) {
 						continue;
 					}

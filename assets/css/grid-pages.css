@@ -750,3 +750,11 @@ body.admin-bar.skin-grid .g-sec__sticky .g-sec__in { top: calc(92px + var(--wp-a
 .skin-grid .g-form .gform_wrapper.gform-theme .gfield_validation_message::before,
 .skin-grid .g-form .gform_wrapper.gform-theme .validation_message::before { content: ""; flex: 0 0 5px; width: 5px; height: 5px; background: currentColor; }
 .skin-grid .g-form .gform_wrapper.gform-theme .gfield_error .gfield_description:not(.gfield_validation_message) { color: hsl(var(--foreground) / 0.5); }
+
+/* Lime side card (Contact / Quotes): the link row is a full-width bar that fills dark on hover. */
+.skin-grid .g-lime.g-side--card .g-line-link { margin: auto -32px -32px; padding: 20px 32px; border-top: 1px solid hsl(var(--primary-foreground) / 0.2); transition: background-color 0.25s ease, color 0.25s ease; }
+.skin-grid .g-lime.g-side--card:hover .g-line-link,
+.skin-grid .g-lime.g-side--card:focus-visible .g-line-link { background: hsl(var(--primary-foreground)); color: var(--g-lime); }
+.skin-grid .g-lime.g-side--card:hover .g-line-link .g-arrow { transform: translateX(6px); }
+.skin-grid .g-lime.g-side--card .g-line-link .g-arrow { transition: transform 0.25s ease; }
+@media (max-width: 720px) { .skin-grid .g-lime.g-side--card .g-line-link { margin: auto -20px -28px; padding: 18px 20px; } }
