@@ -54,3 +54,4 @@ le_require( 'grid-skin' );    // Trial hairline-grid homepage skin (staging defa
 le_require( 'staging-gate' ); // Staging passphrase gate.
 le_require( 'migrations' );   // One-off content migrations (run once, remembered in an option).
 le_require( 'copy-fixes' );  // One-off copy clean-up (sentence case, dashes, British spelling).
+le_require( 'forms' );       // Gravity Forms messages and consent link.

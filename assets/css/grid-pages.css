@@ -698,3 +698,55 @@ body.admin-bar.skin-grid .g-sec__sticky .g-sec__in { top: calc(92px + var(--wp-a
 	.skin-grid .g-more__card { border-right: 0; }
 	.skin-grid .g-more__body { padding: 18px 20px 22px; }
 }
+
+/* ===== Forms, round 2 (2026-10-22): one divider between groups, half-width pairs, uploads,
+   consent checkbox, validation. Selectors carry .gform_wrapper.gform-theme to beat Orbital. */
+.skin-grid .g-form { --g-err: hsl(6 88% 66%); }
+/* Groups: the last field's underline is the divider, so no extra border-top. */
+.skin-grid .g-form .le-fieldgroup { border-top: 0; padding-top: 40px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.skin-grid .g-form .le-fieldgroup:first-child { padding-top: 0; }
+.skin-grid .g-form .le-fieldgroup > .gfield { grid-column: 1 / -1; }
+.skin-grid .g-form .le-fieldgroup > .gfield--width-half { grid-column: auto / span 1; }
+@media (max-width: 720px) { .skin-grid .g-form .le-fieldgroup > .gfield--width-half { grid-column: 1 / -1; } }
+
+/* Uploads: dashed hairline drop zone, mono instructions, outline button. */
+.skin-grid .g-form .gform_wrapper.gform-theme .gform_drop_area { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; min-height: 180px; padding: 32px 24px; border: 1px dashed hsl(var(--foreground) / 0.25) !important; border-radius: 0 !important; background: hsl(var(--foreground) / 0.02) !important; box-shadow: none !important; color: hsl(var(--foreground) / 0.6); transition: border-color 0.2s ease, background-color 0.2s ease; }
+.skin-grid .g-form .gform_wrapper.gform-theme .gform_drop_area::before { content: ""; width: 28px; height: 28px; margin: 0 0 4px; background: var(--g-lime); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.4'%3E%3Cpath d='M12 16V4M7 9l5-5 5 5M4 15v5h16v-5'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.4'%3E%3Cpath d='M12 16V4M7 9l5-5 5 5M4 15v5h16v-5'/%3E%3C/svg%3E") center / contain no-repeat; color: inherit; }
+.skin-grid .g-form .gform_wrapper.gform-theme .gform_drop_area.hover, .skin-grid .g-form .gform_wrapper.gform-theme .gform_drop_area:hover { border-color: var(--g-lime) !important; background: hsl(var(--foreground) / 0.04) !important; }
+.skin-grid .g-form .gform_wrapper.gform-theme .gform_drop_instructions { font-family: var(--g-mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: hsl(var(--foreground) / 0.6); }
+.skin-grid .g-form .gform_wrapper.gform-theme .gform_drop_area svg, .skin-grid .g-form .gform_wrapper.gform-theme .gform_drop_area .gform-icon { display: none !important; }
+.skin-grid .g-form .gform_wrapper.gform-theme .gform_button_select_files { appearance: none; min-height: 0 !important; padding: 12px 18px !important; border: 1px solid hsl(var(--foreground) / 0.4) !important; border-radius: 0 !important; background: transparent !important; box-shadow: none !important; color: hsl(var(--foreground)) !important; font-family: var(--g-mono) !important; font-size: 11px !important; font-weight: 400 !important; letter-spacing: 0.06em !important; text-transform: uppercase; line-height: 1 !important; cursor: pointer; transition: border-color 0.2s ease, color 0.2s ease; }
+.skin-grid .g-form .gform_wrapper.gform-theme .gform_button_select_files:hover { border-color: var(--g-lime) !important; color: var(--g-lime) !important; }
+.skin-grid .g-form .gform_wrapper.gform-theme .ginput_container_fileupload + .gfield_description,
+.skin-grid .g-form .gform_wrapper.gform-theme .gfield--type-fileupload .gfield_description { margin-top: 12px; font-size: 13px; line-height: 1.5; color: hsl(var(--foreground) / 0.5); }
+.skin-grid .g-form .gform_wrapper.gform-theme .ginput_preview { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--g-line); font-size: 13px; color: hsl(var(--foreground) / 0.8); }
+.skin-grid .g-form .gform_wrapper.gform-theme .ginput_preview .gform_delete_file { order: 2; margin-left: auto; padding: 0; border: 0; background: none; color: hsl(var(--foreground) / 0.5); cursor: pointer; }
+.skin-grid .g-form .gform_wrapper.gform-theme .ginput_preview .gform_delete_file:hover { color: var(--g-err); }
+
+/* Consent: square hairline checkbox, vertically centred with the mono label. */
+.skin-grid .g-form .gform_wrapper.gform-theme .ginput_container_consent { display: flex !important; align-items: center !important; gap: 12px; }
+.skin-grid .g-form .gform_wrapper.gform-theme .ginput_container_consent input[type="checkbox"] { appearance: none; -webkit-appearance: none; flex: 0 0 18px; width: 18px !important; height: 18px !important; margin: 0 !important; padding: 0; border: 1px solid hsl(var(--foreground) / 0.45) !important; border-radius: 0 !important; background: transparent !important; box-shadow: none !important; cursor: pointer; display: grid; place-content: center; transition: border-color 0.2s ease, background-color 0.2s ease; }
+.skin-grid .g-form .gform_wrapper.gform-theme .ginput_container_consent input[type="checkbox"]::before { content: ""; width: 10px; height: 6px; border-left: 1.5px solid hsl(var(--primary-foreground)); border-bottom: 1.5px solid hsl(var(--primary-foreground)); transform: translateY(-1px) rotate(-45deg) scale(0); transition: transform 0.15s ease; }
+.skin-grid .g-form .gform_wrapper.gform-theme .ginput_container_consent input[type="checkbox"]:checked { background: var(--g-lime) !important; border-color: var(--g-lime) !important; }
+.skin-grid .g-form .gform_wrapper.gform-theme .ginput_container_consent input[type="checkbox"]:checked::before { transform: translateY(-1px) rotate(-45deg) scale(1); }
+.skin-grid .g-form .gform_wrapper.gform-theme .ginput_container_consent input[type="checkbox"]:hover { border-color: hsl(var(--foreground) / 0.8) !important; }
+.skin-grid .g-form .gform_wrapper.gform-theme .ginput_container_consent input[type="checkbox"]:focus-visible { outline: 1px solid var(--g-lime); outline-offset: 3px; }
+.skin-grid .g-form .gform_wrapper.gform-theme .gfield_consent_label { margin: 0 !important; line-height: 18px !important; padding: 0 !important; }
+
+/* Validation: hairline summary, red underline and a short message per field. */
+.skin-grid .g-form .gform_wrapper.gform-theme .gform_validation_errors { display: flex; align-items: center; gap: 14px; margin: 0 0 32px !important; padding: 16px 20px !important; border: 1px solid var(--g-err) !important; border-radius: 0 !important; background: hsl(6 88% 66% / 0.06) !important; box-shadow: none !important; outline: 0 !important; }
+.skin-grid .g-form .gform_wrapper.gform-theme .gform_validation_errors::before { content: ""; flex: 0 0 6px; width: 6px; height: 6px; background: var(--g-err); }
+.skin-grid .g-form .gform_wrapper.gform-theme .gform_validation_errors > h2,
+.skin-grid .g-form .gform_wrapper.gform-theme .gform_validation_errors .gform_submission_error { display: block !important; margin: 0 !important; padding: 0 !important; font-family: var(--g-mono) !important; font-size: 11px !important; font-weight: 400 !important; letter-spacing: 0.06em !important; line-height: 1.6 !important; text-transform: uppercase; color: hsl(var(--foreground)) !important; }
+.skin-grid .g-form .gform_wrapper.gform-theme .gform_validation_errors .gform-icon { display: none !important; }
+.skin-grid .g-form .gform_wrapper.gform-theme .gfield_error .gfield_label,
+.skin-grid .g-form .gform_wrapper.gform-theme .gfield_error legend.gfield_label { color: var(--g-err) !important; }
+.skin-grid .g-form .gform_wrapper.gform-theme .gfield_error input:not([type="checkbox"]):not([type="radio"]),
+.skin-grid .g-form .gform_wrapper.gform-theme .gfield_error textarea,
+.skin-grid .g-form .gform_wrapper.gform-theme .gfield_error select { border-bottom-color: var(--g-err) !important; box-shadow: none !important; }
+.skin-grid .g-form .gform_wrapper.gform-theme .gfield_error .ginput_container_consent input[type="checkbox"] { border-color: var(--g-err) !important; }
+.skin-grid .g-form .gform_wrapper.gform-theme .gfield_validation_message,
+.skin-grid .g-form .gform_wrapper.gform-theme .validation_message { display: flex; align-items: center; gap: 8px; margin: 10px 0 0 !important; padding: 0 !important; border: 0 !important; background: none !important; font-size: 13px !important; line-height: 1.4 !important; color: var(--g-err) !important; }
+.skin-grid .g-form .gform_wrapper.gform-theme .gfield_validation_message::before,
+.skin-grid .g-form .gform_wrapper.gform-theme .validation_message::before { content: ""; flex: 0 0 5px; width: 5px; height: 5px; background: currentColor; }
+.skin-grid .g-form .gform_wrapper.gform-theme .gfield_error .gfield_description:not(.gfield_validation_message) { color: hsl(var(--foreground) / 0.5); }
