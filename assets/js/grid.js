@@ -107,6 +107,12 @@
 			p = Math.max(0, Math.min(1, p));
 			readFill.style.transform = 'scaleX(' + p.toFixed(4) + ')';
 			if (readPct) { readPct.textContent = Math.round(p * 100) + '%'; }
+			if (readBar.parentNode === document.body) {
+				var hd = document.querySelector('.g-header');
+				readBar.style.top = (hd ? Math.max(0, Math.round(hd.getBoundingClientRect().bottom)) : 0) + 'px';
+			} else {
+				readBar.style.top = '';
+			}
 		};
 		window.addEventListener('scroll', function () { if (!readTick) { readTick = true; requestAnimationFrame(readUpdate); } }, { passive: true });
 		// Below 1100px the bar is fixed under the header; reveal transforms on the column would

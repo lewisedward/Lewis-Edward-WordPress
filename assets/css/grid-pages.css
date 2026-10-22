@@ -771,7 +771,6 @@ body.admin-bar.skin-grid .g-sec__sticky .g-sec__in { top: calc(92px + var(--wp-a
 .skin-grid .g-share__btn.is-copied { border-color: var(--g-lime); background: var(--g-lime); color: hsl(var(--primary-foreground)); }
 @media (max-width: 1100px) {
 	.skin-grid .g-progress { position: fixed; top: 64px; left: 0; right: 0; z-index: 60; height: 2px; margin: 0; background: transparent; }
-	body.admin-bar.skin-grid .g-progress { top: calc(64px + var(--wp-admin--admin-bar-height, 46px)); }
 }
 .skin-grid .g-prose blockquote { position: relative; margin: 40px 0; padding: 4px 0 4px 28px !important; border: 0 !important; border-left: 2px solid var(--g-lime) !important; border-radius: 0 !important; background: none !important; box-shadow: none !important; }
 .skin-grid .g-prose blockquote::before, .skin-grid .g-prose blockquote::after { display: none !important; content: none !important; }
