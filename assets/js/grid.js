@@ -267,7 +267,7 @@
 		});
 	});
 
-	/* Clients: a mono preview of the sector's case study rides beside the list at the pointer's height (desktop, hover devices). */
+	/* Clients: a colour preview of the sector's case study rides beside the list at the pointer's height (desktop, hover devices). */
 	var cside = document.querySelector('.skin-grid .g-clients__side');
 	var cprev = cside && cside.querySelector('.g-clients__preview');
 	if (cprev && window.matchMedia('(hover: hover) and (min-width: 1101px)').matches) {

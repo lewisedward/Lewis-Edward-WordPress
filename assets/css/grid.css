@@ -197,7 +197,7 @@
 @media (hover: hover) and (min-width: 1101px) {
 	.skin-grid .g-clients__preview { display: block; position: absolute; top: 0; left: 0; width: 240px; aspect-ratio: 16 / 10; overflow: hidden; pointer-events: none; opacity: 0; border: 1px solid var(--g-line); background: hsl(var(--foreground) / 0.06); transform: translate3d(var(--px, 0), var(--py, 0), 0) scale(0.94); transition: opacity 0.25s ease, transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1); will-change: transform; }
 	.skin-grid .g-clients__side.is-previewing .g-clients__preview { opacity: 1; transform: translate3d(var(--px, 0), var(--py, 0), 0) scale(1); transition: opacity 0.25s ease; }
-	.skin-grid .g-clients__preview img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; filter: grayscale(1) contrast(1.05); opacity: 0; transition: opacity 0.3s ease; }
+	.skin-grid .g-clients__preview img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; opacity: 0; transition: opacity 0.3s ease; }
 	.skin-grid .g-clients__preview img.is-on { opacity: 1; }
 	.skin-grid .g-clients__preview::after { content: ""; position: absolute; inset: 0; background: radial-gradient(hsl(var(--background) / 0.28) 0.8px, transparent 1.2px) 0 0 / 4px 4px; }
 }
