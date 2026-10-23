@@ -495,6 +495,18 @@ function le_sync_import( WP_REST_Request $req ) {
 			wp_update_post( array( 'ID' => $lp->ID, 'post_status' => $op['status'] ) );
 			$done[] = $key . ' status ' . $op['status'];
 		}
+		if ( ! empty( $op['content'] ) ) {
+			wp_update_post( array( 'ID' => $lp->ID, 'post_content' => $sp['content'] ) );
+			$done[] = $key . ' content';
+		}
+		if ( ! empty( $op['seo'] ) ) {
+			foreach ( array( 'title' => '_yoast_wpseo_title', 'desc' => '_yoast_wpseo_metadesc' ) as $k => $mk ) {
+				if ( ! empty( $sp['seo'][ $k ] ) ) {
+					update_post_meta( $lp->ID, $mk, $sp['seo'][ $k ] );
+					$done[] = $key . ' ' . $mk;
+				}
+			}
+		}
 		if ( ! empty( $op['featured'] ) && $sp['featured'] ) {
 			$aid = le_sync_att_in( $sp['featured'], $ctx );
 			if ( $aid ) {
