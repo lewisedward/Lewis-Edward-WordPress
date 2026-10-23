@@ -131,26 +131,6 @@
             "preview_size": "medium"
         },
         {
-            "key": "field_grid_hero_portrait_video",
-            "label": "Hero portrait video (MP4)",
-            "name": "grid_hero_portrait_video",
-            "aria-label": "",
-            "type": "file",
-            "instructions": "Silent loop in the portrait tile (shown in mono). Empty = Lewis typing loop in the theme. The Hero portrait photo below is used as its poster.",
-            "required": 0,
-            "conditional_logic": 0,
-            "wrapper": {
-                "width": "50",
-                "class": "",
-                "id": ""
-            },
-            "return_format": "array",
-            "library": "all",
-            "min_size": "",
-            "max_size": "",
-            "mime_types": "mp4,webm"
-        },
-        {
             "key": "field_grid_hero_portrait",
             "label": "Hero portrait",
             "name": "grid_hero_portrait",
@@ -593,5 +573,5 @@
     "active": true,
     "description": "Extra copy and media used by the grid layout. Every field is optional: empty fields fall back to the built-in wording.",
     "show_in_rest": 1,
-    "modified": 1792767039
+    "modified": 1792679397
 }

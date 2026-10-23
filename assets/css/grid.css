@@ -107,7 +107,6 @@
 @keyframes g-ticker { to { transform: translateX(-50%); } }
 /* the portrait is a tall photo in a wide cell: keep the face in frame */
 .skin-grid .g-hero__portrait img { object-position: 50% 18%; }
-.skin-grid .g-hero__portrait video { object-position: 50% 10%; }
 .skin-grid .g-about__photo img { object-position: 50% 15%; }
 
 /* ---- About ----------------------------------------------------------------- */
