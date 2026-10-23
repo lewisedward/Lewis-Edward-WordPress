@@ -112,8 +112,13 @@ function le_legacy_redirects() {
 		'/product/expert' => '/services',
 		'/product/lite' => '/services',
 		'/product/premium' => '/services',
-		'/privacy-and-cookie-policy' => '/privacy',
+		'/privacy-and-cookie-policy' => '/privacy-policy',
 		'/services/website-auditing' => '/services/website-audits',
+		// 2026-10: old URLs Search Console still reports as 404.
+		'/services/website-consultancy' => '/services/consultancy',
+		'/service/website-consultancy' => '/services/consultancy',
+		'/journal/how-designers-should-brief-a-web-developer' => '/journal',
+		'/journal/pantones-2025-colour-of-the-year-embrace-mocha-mousse-in-your-web-design' => '/journal',
 	);
 }
 
@@ -136,6 +141,16 @@ function le_do_legacy_redirects() {
 	$path = strtolower( untrailingslashit( $path ) );
 	if ( '' === $path ) {
 		$path = '/';
+	}
+
+	// Old /journal/<slug> article URLs: the posts now live at /<slug>/. Without this,
+	// WordPress's 404 guessing can send them to an image attachment of the same name.
+	if ( preg_match( '#^/journal/([a-z0-9-]+)$#', $path, $m ) ) {
+		$post = get_page_by_path( $m[1], OBJECT, 'post' );
+		if ( $post && 'publish' === $post->post_status ) {
+			wp_safe_redirect( get_permalink( $post ), 301 );
+			exit;
+		}
 	}
 
 	$map = le_legacy_redirects();
