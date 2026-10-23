@@ -158,6 +158,52 @@ add_action( 'init', function () {
 }, 31 );
 
 /**
+ * One-off: remove duplicate ACF field definitions. The site move left some
+ * fields in the database twice under the same key (two "Clients: industries
+ * list" repeaters, two journal post pickers…), and ACF reads whichever comes
+ * first, so new sub-fields never showed in the editor. Keep the newest copy of
+ * each key, delete the rest with their sub-fields, then let the JSON sync below
+ * re-import every group from the theme. Saved values are untouched.
+ */
+function le_acf_delete_field_tree( $id ) {
+	$n    = 0;
+	$kids = get_posts( array( 'post_type' => 'acf-field', 'post_parent' => $id, 'post_status' => 'any', 'numberposts' => -1, 'fields' => 'ids' ) );
+	foreach ( $kids as $kid ) {
+		$n += le_acf_delete_field_tree( (int) $kid );
+	}
+	wp_delete_post( $id, true );
+	return $n + 1;
+}
+add_action( 'acf/init', function () {
+	if ( get_option( 'le_migration_acf_dedupe' ) ) {
+		return;
+	}
+	global $wpdb;
+	$keys    = $wpdb->get_col( "SELECT post_name FROM {$wpdb->posts} WHERE post_type = 'acf-field' GROUP BY post_name HAVING COUNT(*) > 1" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+	$deleted = 0;
+	foreach ( $keys as $key ) {
+		$ids = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM {$wpdb->posts} WHERE post_type = 'acf-field' AND post_name = %s ORDER BY ID DESC", $key ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		array_shift( $ids );
+		foreach ( $ids as $id ) {
+			if ( get_post( (int) $id ) ) {
+				$deleted += le_acf_delete_field_tree( (int) $id );
+			}
+		}
+	}
+	if ( function_exists( 'acf_get_store' ) ) {
+		foreach ( array( 'fields', 'field-groups' ) as $store ) {
+			$st = acf_get_store( $store );
+			if ( $st && method_exists( $st, 'reset' ) ) {
+				$st->reset();
+			}
+		}
+	}
+	delete_option( 'le_acf_json_hashes' );
+	delete_option( 'le_acf_json_sync_sig' );
+	update_option( 'le_migration_acf_dedupe', gmdate( 'c' ) . ' keys:' . count( $keys ) . ' deleted:' . $deleted, false );
+}, 15 );
+
+/**
  * ACF local JSON sync without the admin button. The JSON in the theme is the
  * source of truth: whenever a group's JSON content (ignoring its "modified"
  * stamp) differs from what was last imported, import it. Comparing content

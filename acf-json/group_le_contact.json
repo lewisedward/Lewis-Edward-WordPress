@@ -184,7 +184,7 @@
             "name": "contact_quote_url",
             "aria-label": "",
             "type": "text",
-            "instructions": "Relative (\/quotes) or full URL.",
+            "instructions": "Relative (/quotes) or full URL.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -194,7 +194,7 @@
             },
             "default_value": "",
             "maxlength": "",
-            "placeholder": "\/quotes",
+            "placeholder": "/quotes",
             "prepend": "",
             "append": ""
         },
@@ -242,7 +242,7 @@
             {
                 "param": "page_template",
                 "operator": "==",
-                "value": "page-templates\/page-contact.php"
+                "value": "page-templates/page-contact.php"
             }
         ]
     ],
@@ -258,5 +258,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1786222978
+    "modified": 1792784548
 }
