@@ -56,4 +56,3 @@ le_require( 'staging-gate' ); // Staging passphrase gate.
 le_require( 'migrations' );   // One-off content migrations (run once, remembered in an option).
 le_require( 'copy-fixes' );  // One-off copy clean-up (sentence case, dashes, British spelling).
 le_require( 'forms' );       // Gravity Forms messages and consent link.
-le_require( 'launch-sync' ); // Temporary: staging → live content sync for the redesign launch.
