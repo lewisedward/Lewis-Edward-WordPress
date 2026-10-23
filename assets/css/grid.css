@@ -435,7 +435,7 @@
 	.skin-grid .g-fact:nth-child(-n+2) { border-bottom: 1px solid var(--g-line); }
 	.skin-grid .g-fact__num { font-size: 44px; }
 	.skin-grid .g-caps { grid-column: 1 / -1; }
-	.skin-grid .g-clients__sectors { display: grid; grid-template-columns: 1fr 1fr; }
+	.skin-grid .g-clients__sectors { display: flex; flex-direction: column; }
 	.skin-grid .g-clients__sectors li { font-size: 13px; }
 	.skin-grid .g-clients__row { grid-template-columns: 24px 1fr auto; gap: 8px; padding: 10px 20px; }
 	.skin-grid .g-clients__who { font-size: 11px; }
