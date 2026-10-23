@@ -34,8 +34,10 @@ function le_legacy_redirects() {
 		'/services/agency-web-developer' => '/services/wordpress-agency-partnership',
 		'/services/saas-applications' => '/services/ai-development',
 		'/services/agency-partner' => '/services/wordpress-agency-partnership',
-		'/london-wordpress-developer' => '/london-wordpress-and-ai-developers',
-		'/charity-donations-for-wordpress' => '/services/ecommerce',
+		'/london-wordpress-developer' => '/services/web-development',
+		'/london-wordpress-and-ai-developers' => '/services/web-development',
+		'/charity-donations-for-wordpress' => '/services/e-commerce',
+		'/services/ecommerce' => '/services/e-commerce',
 		'/upgrade-to-https' => '/services/website-security',
 		'/projects/diligenc' => '/work',
 		'/projects/the-parlour' => '/work',
@@ -83,7 +85,7 @@ function le_legacy_redirects() {
 		'/service/web-development' => '/services/web-development',
 		'/service/website-support' => '/services/website-support',
 		'/service/agency-web-developer' => '/services/wordpress-agency-partnership',
-		'/service/ecommerce' => '/services/ecommerce',
+		'/service/ecommerce' => '/services/e-commerce',
 		'/sub-services/api-third-party-integrations' => '/services/api-integrations',
 		'/sub-services/content-entry' => '/services/website-support',
 		'/services/content-entry' => '/services/website-support',
@@ -147,6 +149,15 @@ function le_do_legacy_redirects() {
 	if ( isset( $normalised[ $path ] ) ) {
 		$to = $normalised[ $path ];
 
+		// Follow chains inside the map so every old URL is a single hop.
+		for ( $i = 0; $i < 5; $i++ ) {
+			$next = $normalised[ strtolower( untrailingslashit( $to ) ) ] ?? null;
+			if ( ! $next || $next === $to ) {
+				break;
+			}
+			$to = $next;
+		}
+
 		// The agency service's new address only exists once the post has been
 		// renamed in wp-admin. Until then, keep sending the older paths to the
 		// current address rather than to a page that is not there yet, and
@@ -158,7 +169,12 @@ function le_do_legacy_redirects() {
 			$to = '/services/creative-agency-partner';
 		}
 
-		wp_safe_redirect( home_url( $to ), 301 );
+		// Land on the canonical (trailing-slash) URL, not a second redirect.
+		$url = home_url( $to );
+		if ( ! pathinfo( (string) wp_parse_url( $url, PHP_URL_PATH ), PATHINFO_EXTENSION ) ) {
+			$url = trailingslashit( $url );
+		}
+		wp_safe_redirect( $url, 301 );
 		exit;
 	}
 }
