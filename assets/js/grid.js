@@ -267,7 +267,7 @@
 		});
 	});
 
-	/* Clients: a mono preview of the sector's case study follows the pointer (desktop, hover devices). */
+	/* Clients: a mono preview of the sector's case study rides beside the list at the pointer's height (desktop, hover devices). */
 	var cside = document.querySelector('.skin-grid .g-clients__side');
 	var cprev = cside && cside.querySelector('.g-clients__preview');
 	if (cprev && window.matchMedia('(hover: hover) and (min-width: 1101px)').matches) {
@@ -281,7 +281,7 @@
 		}
 		function aim(e) {
 			var r = cside.getBoundingClientRect();
-			tx = e.clientX - r.left + 28;
+			tx = r.width + 24; // Beside the list, so the client names stay readable.
 			ty = e.clientY - r.top - cprev.offsetHeight / 2;
 			if (!raf) { raf = requestAnimationFrame(place); }
 		}
