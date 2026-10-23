@@ -140,6 +140,24 @@ add_action( 'init', function () {
 }, 30 );
 
 /**
+ * 2026-10-23: the logo changed to "L." (Geist 500). Point Yoast's organisation
+ * logo at a fresh copy of the new mark so the schema and knowledge panel use it.
+ */
+add_action( 'init', function () {
+	if ( get_option( 'le_migration_yoast_logo_ldot' ) || ! class_exists( 'WPSEO_Options' ) || ! method_exists( 'WPSEO_Options', 'set' ) ) {
+		return;
+	}
+	$logo_id = le_import_theme_image( 'assets/images/brand/le-logo-1024.png', 'Lewis Edward logo' );
+	if ( ! $logo_id ) {
+		return;
+	}
+	WPSEO_Options::set( 'company_logo', (string) wp_get_attachment_url( $logo_id ) );
+	WPSEO_Options::set( 'company_logo_id', $logo_id );
+	WPSEO_Options::set( 'company_logo_meta', false );
+	update_option( 'le_migration_yoast_logo_ldot', gmdate( 'c' ), false );
+}, 31 );
+
+/**
  * ACF local JSON sync without the admin button: whenever a field group's JSON
  * in the theme is newer than its database copy (or the group has never been
  * synced), import it. The JSON is the source of truth in this repo, so this
