@@ -191,19 +191,41 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 			<?php
 			// Industries: the grid_clients_sectors repeater, or failing that one entry per client
 			// logo read from its name ("Banking and Finance WordPress Website…" → "Banking and Finance").
-			$g_sectors = array();
+			$g_sectors = array(); // Each: name, who (client names), url, img (attachment ID).
 			$g_sec_set = le_field( 'grid_clients_sectors' );
 			foreach ( is_array( $g_sec_set ) ? $g_sec_set : array() as $row ) {
 				$n = trim( (string) ( $row['name'] ?? '' ) );
-				if ( $n && ! in_array( $n, $g_sectors, true ) ) {
-					$g_sectors[] = $n;
+				if ( ! $n || in_array( $n, wp_list_pluck( $g_sectors, 'name' ), true ) ) {
+					continue;
 				}
+				$who = array();
+				$url = '';
+				$img = 0;
+				foreach ( is_array( $row['work'] ?? null ) ? $row['work'] : array() as $wid ) {
+					$wid = is_object( $wid ) ? $wid->ID : (int) $wid;
+					if ( ! $wid || 'publish' !== get_post_status( $wid ) ) {
+						continue;
+					}
+					$who[] = wp_strip_all_tags( get_the_title( $wid ) );
+					$url   = $url ? $url : get_permalink( $wid );
+					$img   = $img ? $img : (int) get_post_thumbnail_id( $wid );
+				}
+				foreach ( array_filter( array_map( 'trim', explode( ',', (string) ( $row['others'] ?? '' ) ) ) ) as $o ) {
+					$who[] = $o;
+				}
+				if ( ! empty( $row['link']['url'] ) ) {
+					$url = $row['link']['url'];
+				}
+				if ( ! empty( $row['image'] ) ) {
+					$img = is_array( $row['image'] ) ? (int) ( $row['image']['ID'] ?? 0 ) : (int) $row['image'];
+				}
+				$g_sectors[] = array( 'name' => $n, 'who' => $who, 'url' => $url, 'img' => $img );
 			}
 			foreach ( $g_sectors ? array() : $g_logos as $row ) {
 				$src = ! empty( $row['name'] ) ? $row['name'] : ( $row['logo']['alt'] ?? '' );
 				$n   = trim( preg_replace( '/\s*(WordPress|Website|Web)\b.*$/i', '', (string) $src ) );
-				if ( $n && ! in_array( $n, $g_sectors, true ) ) {
-					$g_sectors[] = $n;
+				if ( $n && ! in_array( $n, wp_list_pluck( $g_sectors, 'name' ), true ) ) {
+					$g_sectors[] = array( 'name' => $n, 'who' => array(), 'url' => '', 'img' => 0 );
 				}
 			}
 			?>
@@ -211,10 +233,25 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 			<?php if ( $g_sectors ) : ?>
 			<span class="g-clients__side-title"><?php echo esc_html( le_field( 'grid_clients_side_title', false, __( 'Sectors we build for', 'lewisedward' ) ) ); ?></span>
 			<ul class="g-clients__sectors">
-				<?php foreach ( $g_sectors as $i => $sec ) : ?>
-				<li><span class="g-mono"><?php echo esc_html( str_pad( (string) ( $i + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span><span><?php echo esc_html( $sec ); ?></span></li>
+				<?php
+				foreach ( $g_sectors as $i => $sec ) :
+					$num  = str_pad( (string) ( $i + 1 ), 2, '0', STR_PAD_LEFT );
+					$prev = $sec['img'] ? wp_get_attachment_image_url( $sec['img'], 'medium_large' ) : '';
+					$tag  = $sec['url'] ? 'a' : 'div';
+					?>
+				<li>
+					<<?php echo $tag; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> class="g-clients__row"<?php echo $sec['url'] ? ' href="' . esc_url( $sec['url'] ) . '"' : ''; ?><?php echo $prev ? ' data-preview="' . esc_url( $prev ) . '"' : ''; ?>>
+						<span class="g-mono"><?php echo esc_html( $num ); ?></span>
+						<span class="g-clients__sec">
+							<span class="g-clients__name"><?php echo esc_html( $sec['name'] ); ?></span>
+							<?php if ( $sec['who'] ) : ?><span class="g-clients__who"><?php echo esc_html( implode( ', ', $sec['who'] ) ); ?></span><?php endif; ?>
+						</span>
+						<?php echo $sec['url'] ? le_grid_arrow_diag() : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					</<?php echo $tag; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+				</li>
 				<?php endforeach; ?>
 			</ul>
+			<span class="g-clients__preview" aria-hidden="true"></span>
 			<?php endif; ?>
 		</div>
 		<div class="g-cell g-clients__copy">

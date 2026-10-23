@@ -266,5 +266,44 @@
 			});
 		});
 	});
+
+	/* Clients: a mono preview of the sector's case study follows the pointer (desktop, hover devices). */
+	var cside = document.querySelector('.skin-grid .g-clients__side');
+	var cprev = cside && cside.querySelector('.g-clients__preview');
+	if (cprev && window.matchMedia('(hover: hover) and (min-width: 1101px)').matches) {
+		var imgs = {}, tx = 0, ty = 0, cx = 0, cy = 0, raf = 0, live = false;
+		function place() {
+			cx += (tx - cx) * (reduce ? 1 : 0.18);
+			cy += (ty - cy) * (reduce ? 1 : 0.18);
+			cprev.style.setProperty('--px', cx.toFixed(1) + 'px');
+			cprev.style.setProperty('--py', cy.toFixed(1) + 'px');
+			raf = (live && (Math.abs(tx - cx) > 0.5 || Math.abs(ty - cy) > 0.5)) ? requestAnimationFrame(place) : 0;
+		}
+		function aim(e) {
+			var r = cside.getBoundingClientRect();
+			tx = e.clientX - r.left + 28;
+			ty = e.clientY - r.top - cprev.offsetHeight / 2;
+			if (!raf) { raf = requestAnimationFrame(place); }
+		}
+		function show(row, e) {
+			var src = row.getAttribute('data-preview');
+			if (!src) { hide(); return; }
+			if (!imgs[src]) {
+				var im = new Image();
+				im.alt = ''; im.decoding = 'async'; im.src = src;
+				cprev.appendChild(im);
+				imgs[src] = im;
+			}
+			Object.keys(imgs).forEach(function (k) { imgs[k].classList.toggle('is-on', k === src); });
+			if (!live) { live = true; aim(e); cx = tx; cy = ty; place(); }
+			cside.classList.add('is-previewing');
+		}
+		function hide() { live = false; cside.classList.remove('is-previewing'); }
+		cside.querySelectorAll('.g-clients__row').forEach(function (row) {
+			row.addEventListener('mouseenter', function (e) { show(row, e); });
+		});
+		cside.querySelector('.g-clients__sectors').addEventListener('mousemove', aim);
+		cside.querySelector('.g-clients__sectors').addEventListener('mouseleave', hide);
+	}
 	void root;
 })();

@@ -278,7 +278,7 @@
             "name": "grid_clients_sectors",
             "aria-label": "",
             "type": "repeater",
-            "instructions": "The numbered \"Industries we've built for\" list beside the client logos. Leave empty to derive one entry per client logo from its Name / alt text (\"Banking and Finance WordPress Website\" → \"Banking and Finance\").",
+            "instructions": "The numbered \"Industries we've built for\" list beside the client logos. Each row can name its clients (pick case studies, plus any other names), link through and show a preview on hover. Leave the whole list empty to derive one entry per client logo from its Name / alt text.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -286,7 +286,7 @@
                 "class": "",
                 "id": ""
             },
-            "layout": "table",
+            "layout": "block",
             "pagination": 0,
             "min": 0,
             "max": 0,
@@ -304,7 +304,7 @@
                     "required": 0,
                     "conditional_logic": 0,
                     "wrapper": {
-                        "width": "",
+                        "width": "30",
                         "class": "",
                         "id": ""
                     },
@@ -314,6 +314,102 @@
                     "prepend": "",
                     "append": "",
                     "parent_repeater": "field_grid_clients_sectors"
+                },
+                {
+                    "key": "field_grid_clients_sector_work",
+                    "label": "Case studies",
+                    "name": "work",
+                    "aria-label": "",
+                    "type": "relationship",
+                    "instructions": "Clients with a case study, in order. The row links to the first and its featured image is the hover preview.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "70",
+                        "class": "",
+                        "id": ""
+                    },
+                    "parent_repeater": "field_grid_clients_sectors",
+                    "post_type": [
+                        "work"
+                    ],
+                    "post_status": [
+                        "publish"
+                    ],
+                    "taxonomy": "",
+                    "filters": [
+                        "search"
+                    ],
+                    "return_format": "id",
+                    "min": "",
+                    "max": 4,
+                    "elements": "",
+                    "bidirectional": 0,
+                    "bidirectional_target": []
+                },
+                {
+                    "key": "field_grid_clients_sector_others",
+                    "label": "Other clients",
+                    "name": "others",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "Optional. Names without a case study, comma separated (e.g. \"Ancala, Arcus\").",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "50",
+                        "class": "",
+                        "id": ""
+                    },
+                    "parent_repeater": "field_grid_clients_sectors",
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": ""
+                },
+                {
+                    "key": "field_grid_clients_sector_link",
+                    "label": "Link override",
+                    "name": "link",
+                    "aria-label": "",
+                    "type": "link",
+                    "instructions": "Optional. Defaults to the first case study.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "parent_repeater": "field_grid_clients_sectors",
+                    "return_format": "array"
+                },
+                {
+                    "key": "field_grid_clients_sector_image",
+                    "label": "Preview override",
+                    "name": "image",
+                    "aria-label": "",
+                    "type": "image",
+                    "instructions": "Optional. Defaults to the first case study's featured image.",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "25",
+                        "class": "",
+                        "id": ""
+                    },
+                    "parent_repeater": "field_grid_clients_sectors",
+                    "return_format": "id",
+                    "library": "all",
+                    "min_width": "",
+                    "min_height": "",
+                    "min_size": "",
+                    "max_width": "",
+                    "max_height": "",
+                    "max_size": "",
+                    "mime_types": "",
+                    "preview_size": "thumbnail"
                 }
             ]
         },
@@ -573,5 +669,5 @@
     "active": true,
     "description": "Extra copy and media used by the grid layout. Every field is optional: empty fields fall back to the built-in wording.",
     "show_in_rest": 1,
-    "modified": 1792767335
+    "modified": 1792783037
 }
