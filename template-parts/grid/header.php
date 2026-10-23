@@ -13,12 +13,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 $le_cta       = le_link( 'header_cta', '/quotes', __( 'Get a Quote', 'lewisedward' ), 'option' );
-$le_available = le_option( 'header_available', true );
 ?>
 <header class="g-header" data-header role="banner">
 	<a class="g-header__logo" href="<?php echo esc_url( home_url( '/' ) ); ?>" aria-label="<?php esc_attr_e( 'Lewis Edward – home', 'lewisedward' ); ?>"><svg class="g-header__mark" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M14 8H20V52H14ZM20 46H42V52H20ZM48 44H56V52H48Z" fill="currentColor" shape-rendering="crispEdges"/></svg></a>
 	<div class="g-header__meta g-mono">
-		<?php if ( $le_available ) : ?><span class="g-header__dot" aria-hidden="true"></span><span><?php echo esc_html( le_option( 'header_available_label', __( 'Available', 'lewisedward' ) ) ); ?></span><span class="g-header__sep" aria-hidden="true">/</span><?php endif; ?>
 		<time data-london-clock aria-label="<?php esc_attr_e( 'Current time in London', 'lewisedward' ); ?>">--:--</time> <span>LDN</span>
 	</div>
 	<nav class="g-header__nav" aria-label="<?php esc_attr_e( 'Primary', 'lewisedward' ); ?>">
