@@ -80,7 +80,7 @@
 .skin-grid .g-hero__intro .g-hero__lede p { margin: 0 0 0.5em; }
 .skin-grid .g-hero__intro .g-line-link { justify-content: flex-start; gap: 14px; margin: 0; }
 .skin-grid .g-hero__word > span { align-self: flex-start; }
-.skin-grid .g-hero__word > span { display: block; margin: 0; font-family: var(--font-display); font-weight: 400; font-size: clamp(96px, min(14vw, 22vh), 200px); line-height: 0.8; letter-spacing: -0.05em; transform: translateY(0.08em); color: hsl(var(--foreground)); }
+.skin-grid .g-hero__word > span { display: block; margin: 0; font-family: var(--font-display); font-weight: 400; font-size: clamp(80px, min(13vw, 19vh), 200px); line-height: 0.8; letter-spacing: -0.05em; transform: translateY(0.08em); color: hsl(var(--foreground)); }
 .skin-grid .g-hero__stmt { display: flex; flex-direction: column; gap: 18px; font-size: 24px; line-height: 1.25; letter-spacing: -0.01em; }
 .skin-grid .g-hero__stmt p { margin: 0; }
 .skin-grid .g-hero__lede p { margin: 0 0 0.6em; }
@@ -570,7 +570,7 @@ body.skin-grid.admin-bar .g-svc__left { top: calc(64px + var(--wp-admin--admin-b
 /* Short desktop viewports (e.g. 1200×800 laptops): the hero word cell is ~350px tall, so tighten it and let the word follow the height. */
 @media (min-width: 1101px) and (max-height: 860px) {
 	.skin-grid .g-hero__word { gap: 16px; padding-top: 24px; }
-	.skin-grid .g-hero__word > span { font-size: clamp(96px, min(14vw, 18vh), 200px); }
+	.skin-grid .g-hero__word > span { font-size: clamp(80px, min(13vw, 16vh), 200px); }
 }
 @media (max-width: 782px) {
 	/* WP's phone admin bar is absolutely positioned and scrolls away, so the header goes back to the top. */
