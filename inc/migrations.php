@@ -158,10 +158,11 @@ add_action( 'init', function () {
 }, 31 );
 
 /**
- * ACF local JSON sync without the admin button: whenever a field group's JSON
- * in the theme is newer than its database copy (or the group has never been
- * synced), import it. The JSON is the source of truth in this repo, so this
- * keeps the field-group editor in wp-admin in step after every deploy.
+ * ACF local JSON sync without the admin button. The JSON in the theme is the
+ * source of truth: whenever a group's JSON content (ignoring its "modified"
+ * stamp) differs from what was last imported, import it. Comparing content
+ * rather than timestamps means a database copy saved more recently (a site
+ * migration, a server clock ahead of the repo) can't block a deployed change.
  */
 add_action( 'acf/init', function () {
 	if ( ! function_exists( 'acf_get_local_json_files' ) || ! function_exists( 'acf_import_field_group' ) || ! function_exists( 'acf_get_field_group_post' ) ) {
@@ -175,20 +176,34 @@ add_action( 'acf/init', function () {
 	if ( get_option( 'le_acf_json_sync_sig' ) === $sig ) {
 		return;
 	}
+	$hashes = get_option( 'le_acf_json_hashes', array() );
+	$hashes = is_array( $hashes ) ? $hashes : array();
+	$hash   = function ( $file ) {
+		$j = json_decode( (string) file_get_contents( $file ), true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		if ( ! is_array( $j ) ) {
+			return '';
+		}
+		unset( $j['modified'], $j['ID'] );
+		return md5( wp_json_encode( $j ) );
+	};
 	foreach ( $files as $key => $file ) {
 		$json = json_decode( (string) file_get_contents( $file ), true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
 		if ( ! is_array( $json ) || empty( $json['key'] ) ) {
 			continue;
 		}
-		$post        = acf_get_field_group_post( $json['key'] );
-		$db_modified = $post ? (int) get_post_modified_time( 'U', true, $post ) : 0;
-		if ( $post && (int) ( $json['modified'] ?? 0 ) <= $db_modified ) {
+		$post = acf_get_field_group_post( $json['key'] );
+		$h    = $hash( $file );
+		if ( $post && isset( $hashes[ $json['key'] ] ) && $hashes[ $json['key'] ] === $h ) {
 			continue;
 		}
 		if ( $post ) {
 			$json['ID'] = $post->ID;
 		}
 		acf_import_field_group( $json );
+		clearstatcache( true, $file );
+		$hashes[ $json['key'] ] = $hash( $file ); // ACF rewrites the file from the database on import.
 	}
-	update_option( 'le_acf_json_sync_sig', $sig, false );
+	update_option( 'le_acf_json_hashes', $hashes, false );
+	clearstatcache();
+	update_option( 'le_acf_json_sync_sig', md5( wp_json_encode( array_map( 'filemtime', acf_get_local_json_files() ) ) ), false );
 }, 20 );
