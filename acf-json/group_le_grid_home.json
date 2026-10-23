@@ -388,7 +388,7 @@
             "name": "grid_about_more",
             "aria-label": "",
             "type": "link",
-            "instructions": "Empty = \"More about Lewis\" → /about/.",
+            "instructions": "Empty = \"More about us\" → /about/.",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {

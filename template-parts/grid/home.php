@@ -288,7 +288,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 			<div class="g-about__text">
 			<h2><?php echo esc_html( le_field( 'home_about_headline_1' ) ); ?> <?php echo esc_html( le_field( 'home_about_headline_muted' ) ); ?> <?php echo esc_html( le_field( 'home_about_headline_since' ) ); ?> <?php echo esc_html( le_field( 'home_about_headline_year' ) ); ?></h2>
 			<p><?php echo esc_html( le_field( 'home_about_lede' ) ); ?></p>
-			<?php $g_more = le_link( 'grid_about_more', '/about/', __( 'More about Lewis', 'lewisedward' ), false ); ?>
+			<?php $g_more = le_link( 'grid_about_more', '/about/', __( 'More about us', 'lewisedward' ), false ); ?>
 			<a class="g-line-link g-mono g-about__more" href="<?php echo esc_url( $g_more['url'] ); ?>"<?php le_link_target_attr( $g_more ); ?>><span><?php echo esc_html( $g_more['title'] ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 			</div>
 			<?php if ( $g_stats ) : ?>
