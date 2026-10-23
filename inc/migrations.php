@@ -253,3 +253,60 @@ add_action( 'acf/init', function () {
 	clearstatcache();
 	update_option( 'le_acf_json_sync_sig', md5( wp_json_encode( array_map( 'filemtime', acf_get_local_json_files() ) ) ), false );
 }, 20 );
+
+/**
+ * One-off: company logos for the testimonials that had none (The Physios, Tide
+ * Insurance, Zena's Kitchen). Downloads each client's own header SVG into the
+ * Media Library (sanitised like a normal SVG upload) and sets the testimonial's
+ * "Company logo" field. Runs for an admin in wp-admin, so SVG uploads are allowed.
+ * The grid skin shows every logo white, so the source colours don't matter.
+ */
+add_action( 'admin_init', function () {
+	if ( get_option( 'le_migration_testimonial_logos' ) || ! current_user_can( 'manage_options' ) || ! function_exists( 'update_field' ) ) {
+		return;
+	}
+	require_once ABSPATH . 'wp-admin/includes/file.php';
+	require_once ABSPATH . 'wp-admin/includes/media.php';
+	require_once ABSPATH . 'wp-admin/includes/image.php';
+	$logos = array(
+		'the-physios'    => array( 'https://thephysios.com/wp-content/uploads/2020/11/white.svg', 'the-physios-logo.svg', 'The Physios logo' ),
+		'tide-insurance' => array( 'https://tideinsurance.com/wp-content/uploads/2024/09/logo-new-white.svg', 'tide-insurance-logo.svg', 'Tide Insurance logo' ),
+		'zenas-kitchen'  => array( 'https://zenaskitchen.com/wp-content/uploads/2022/01/Logo-Open-Sans.svg', 'zenas-kitchen-logo.svg', "Zena's Kitchen logo" ),
+	);
+	$log = array();
+	foreach ( get_posts( array( 'post_type' => 'testimonial', 'post_status' => 'any', 'numberposts' => -1 ) ) as $t ) {
+		$slug = sanitize_title( (string) get_field( 'testimonial_company', $t->ID ) );
+		if ( ! isset( $logos[ $slug ] ) ) {
+			continue;
+		}
+		$cur = get_field( 'testimonial_logo', $t->ID );
+		if ( ! empty( $cur ) ) {
+			$log[] = $slug . ':kept';
+			continue;
+		}
+		list( $url, $name, $alt ) = $logos[ $slug ];
+		$tmp = download_url( $url, 20 );
+		if ( is_wp_error( $tmp ) ) {
+			$log[] = $slug . ':download-failed';
+			continue;
+		}
+		$raw   = (string) file_get_contents( $tmp ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		$clean = function_exists( 'le_sanitize_svg_string' ) ? le_sanitize_svg_string( $raw ) : '';
+		if ( ! $clean || false === stripos( $clean, '<svg' ) ) {
+			wp_delete_file( $tmp );
+			$log[] = $slug . ':not-svg';
+			continue;
+		}
+		file_put_contents( $tmp, $clean ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
+		$id = media_handle_sideload( array( 'name' => $name, 'tmp_name' => $tmp ), 0, $alt );
+		if ( is_wp_error( $id ) ) {
+			wp_delete_file( $tmp );
+			$log[] = $slug . ':' . $id->get_error_code();
+			continue;
+		}
+		update_post_meta( $id, '_wp_attachment_image_alt', $alt );
+		update_field( 'field_ts_logo', $id, $t->ID );
+		$log[] = $slug . ':' . $id;
+	}
+	update_option( 'le_migration_testimonial_logos', gmdate( 'c' ) . ' ' . implode( ' ', $log ), false );
+} );
