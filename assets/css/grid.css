@@ -74,7 +74,7 @@
 .skin-grid .g-header__cta:hover .g-arrow { transform: translateX(4px); }
 
 /* ---- Hero ------------------------------------------------------------------ */
-.skin-grid .g-hero { grid-template-columns: 1fr 1fr; grid-template-rows: minmax(300px, 1.15fr) minmax(300px, 1fr) 88px; height: calc(100vh - 64px); height: calc(100svh - 64px); min-height: 700px; }
+.skin-grid .g-hero { grid-template-columns: 1fr 1fr; grid-template-rows: minmax(300px, 1fr) minmax(300px, 1fr) 88px; height: calc(100vh - 64px); height: calc(100svh - 64px); min-height: 700px; }
 .skin-grid .g-hero__word { display: flex; flex-direction: column; justify-content: space-between; align-items: stretch; padding: 32px 32px 0 24px; overflow: hidden; gap: 32px; min-height: 0; }
 .skin-grid .g-hero__intro { display: flex; flex-direction: column; gap: 22px; max-width: 30ch; font-size: clamp(16px, 1.2vw, 19px); line-height: 1.45; letter-spacing: -0.005em; color: hsl(var(--foreground) / 0.85); }
 .skin-grid .g-hero__intro .g-hero__lede p { margin: 0 0 0.5em; }
