@@ -173,6 +173,11 @@
 .skin-grid .g-work__intro { display: flex; flex-direction: column; padding: 28px 32px; }
 .skin-grid .g-work__intro h2 { margin: 40px 0 0; font-family: var(--font-display); font-weight: 400; font-size: 34px; line-height: 1.1; letter-spacing: -0.02em; }
 .skin-grid .g-work__item:hover .g-work__media img { --ps: 1.04; }
+@media (hover: hover) {
+	.skin-grid .g-work .g-work__media img, .skin-grid .g-work .g-work__media video { filter: grayscale(1); transition: --ps 0.8s ease, filter 0.5s ease; }
+	.skin-grid .g-work .g-work__item:hover .g-work__media img, .skin-grid .g-work .g-work__item:hover .g-work__media video,
+	.skin-grid .g-work .g-work__item:focus-visible .g-work__media img, .skin-grid .g-work .g-work__item:focus-visible .g-work__media video { filter: none; }
+}
 .skin-grid .g-team { display: flex; margin-top: auto; padding-top: 40px; }
 .skin-grid .g-team img { width: 44px; height: 44px; border-radius: 999px; object-fit: cover; border: 1px solid hsl(var(--foreground) / 0.35); margin-right: -10px; filter: grayscale(1); }
 
