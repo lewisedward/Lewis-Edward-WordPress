@@ -67,6 +67,15 @@ function le_legacy_redirects() {
 		'/london-web-designer' => '/services/web-design',
 		'/long-tail-search-seo' => '/services/seo',
 		'/projects/capx' => '/work',
+		// 2026-10-24: carried over from the Cloudflare bulk redirect list (now disabled)
+		// so every legacy path is handled here in a single hop.
+		'/work/capx' => '/work',
+		'/projects/the-physios' => '/work/the-physios',
+		'/projects/the-rum-kitchen' => '/work',
+		'/projects/sales-navigator' => '/work',
+		'/projects/switchback' => '/work',
+		'/projects/southface-dermatology' => '/work',
+		'/more/privacy-and-cookie-policy' => '/privacy-policy',
 		'/sub-service/content-entry' => '/services/website-support',
 		'/sub-service/wordpress-api-integrations' => '/services/api-integrations',
 		'/web-design' => '/services/web-design',
