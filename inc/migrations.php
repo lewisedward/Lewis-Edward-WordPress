@@ -349,3 +349,43 @@ add_action( 'init', function () {
 
 	update_option( 'le_migration_seo_audit_2026_10', gmdate( 'c' ) . ' ' . implode( ' ', $log ), false );
 }, 20 );
+
+/**
+ * 2026-10-24 SEO audit follow-ups, part 2.
+ *
+ * Service H1s brought into line with the retargeted Yoast titles, and the
+ * homepage title / meta description test (Search Console CTR was 0.1% on
+ * 56k impressions). Previous values are kept in the option for rollback.
+ */
+add_action( 'init', function () {
+	if ( get_option( 'le_migration_seo_audit_2026_10_b' ) || ! function_exists( 'update_field' ) ) {
+		return;
+	}
+	$log = array();
+
+	$headlines = array(
+		'seo'                          => 'WordPress SEO agency in London',
+		'wordpress-agency-partnership' => 'White-label WordPress developers for creative agencies',
+	);
+	foreach ( $headlines as $slug => $headline ) {
+		$post = get_page_by_path( $slug, OBJECT, 'service' );
+		if ( ! $post ) {
+			$log[] = $slug . ':missing';
+			continue;
+		}
+		$log[] = $slug . ':was:' . (string) get_field( 'service_headline', $post->ID );
+		update_field( 'service_headline', $headline, $post->ID );
+	}
+
+	$front = (int) get_option( 'page_on_front' );
+	if ( $front ) {
+		$log[] = 'home:title-was:' . (string) get_post_meta( $front, '_yoast_wpseo_title', true );
+		$log[] = 'home:desc-was:' . (string) get_post_meta( $front, '_yoast_wpseo_metadesc', true );
+		update_post_meta( $front, '_yoast_wpseo_title', 'London WordPress Web Designer & Developer - Est. 2011' );
+		update_post_meta( $front, '_yoast_wpseo_metadesc', "Bespoke WordPress design, development and support from a small London studio trusted by easyJet, Lord's and the Church of England since 2011. Get a quote." );
+	} else {
+		$log[] = 'home:no-static-front-page';
+	}
+
+	update_option( 'le_migration_seo_audit_2026_10_b', gmdate( 'c' ) . ' ' . implode( ' | ', $log ), false );
+}, 20 );
