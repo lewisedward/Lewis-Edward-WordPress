@@ -35,7 +35,9 @@ function le_legacy_redirects() {
 		'/services/saas-applications' => '/services/ai-development',
 		'/services/agency-partner' => '/services/wordpress-agency-partnership',
 		'/london-wordpress-developer' => '/services/web-development',
-		'/london-wordpress-and-ai-developers' => '/services/web-development',
+		'/london-wordpress-and-ai-developers' => '/services/ai-development',
+		// 2026-10: the Lovable-era "story" page was folded into About (was indexed).
+		'/story' => '/about',
 		'/charity-donations-for-wordpress' => '/services/e-commerce',
 		'/services/ecommerce' => '/services/e-commerce',
 		'/upgrade-to-https' => '/services/website-security',

@@ -310,3 +310,42 @@ add_action( 'admin_init', function () {
 	}
 	update_option( 'le_migration_testimonial_logos', gmdate( 'c' ) . ' ' . implode( ' ', $log ), false );
 } );
+
+/**
+ * 2026-10-24 SEO audit follow-ups.
+ *
+ * 1. Yoast's cached service sitemap still listed /services/creative-agency-partner/
+ *    (now a 301) and omitted /services/wordpress-agency-partnership/. Clearing the
+ *    sitemap cache makes Yoast rebuild every sub-sitemap from current slugs.
+ * 2. Two service titles retargeted at terms people search for: "WordPress SEO
+ *    agency" (the easiest term in the agency cluster) and "white-label WordPress
+ *    developer for creative agencies" (the partnership positioning). Only set
+ *    where the post exists; Yoast's %%sitename%% suffix is kept via the template.
+ */
+add_action( 'init', function () {
+	if ( get_option( 'le_migration_seo_audit_2026_10' ) ) {
+		return;
+	}
+	$log = array();
+
+	if ( class_exists( 'WPSEO_Sitemaps_Cache' ) && method_exists( 'WPSEO_Sitemaps_Cache', 'clear' ) ) {
+		WPSEO_Sitemaps_Cache::clear();
+		$log[] = 'sitemap-cache-cleared';
+	}
+
+	$titles = array(
+		'seo'                          => 'WordPress SEO Agency London | %%sitename%%',
+		'wordpress-agency-partnership' => 'White-Label WordPress Developer for Agencies | %%sitename%%',
+	);
+	foreach ( $titles as $slug => $title ) {
+		$post = get_page_by_path( $slug, OBJECT, 'service' );
+		if ( ! $post ) {
+			$log[] = $slug . ':missing';
+			continue;
+		}
+		update_post_meta( $post->ID, '_yoast_wpseo_title', $title );
+		$log[] = $slug . ':' . $post->ID;
+	}
+
+	update_option( 'le_migration_seo_audit_2026_10', gmdate( 'c' ) . ' ' . implode( ' ', $log ), false );
+}, 20 );
