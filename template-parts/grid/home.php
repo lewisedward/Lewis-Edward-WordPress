@@ -77,6 +77,10 @@ $g_ov_video   = le_field( 'home_overlap_video' );
 $g_ov_poster  = le_field( 'home_overlap_poster' );
 $g_ov_video   = is_array( $g_ov_video ) ? ( $g_ov_video['url'] ?? '' ) : (string) $g_ov_video; // the field returns a URL on this site
 $g_ov_poster  = ( is_array( $g_ov_poster ) && ! empty( $g_ov_poster['url'] ) ) ? $g_ov_poster['url'] : '';
+if ( ! $g_ov_video ) { // Default: the binary-face loop in black and white, with the projected numbers kept green.
+	$g_ov_video  = LE_URI . '/assets/videos/le-partnership-mono-2048.mp4?ver=' . le_asset_ver( 'assets/videos/le-partnership-mono-2048.mp4' );
+	$g_ov_poster = LE_URI . '/assets/videos/le-partnership-mono-poster.jpg?ver=' . le_asset_ver( 'assets/videos/le-partnership-mono-poster.jpg' );
+}
 
 // About.
 $g_stats      = le_field( 'home_about_stats' );
