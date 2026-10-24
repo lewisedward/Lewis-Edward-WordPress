@@ -76,6 +76,11 @@ function le_legacy_redirects() {
 		'/projects/switchback' => '/work',
 		'/projects/southface-dermatology' => '/work',
 		'/more/privacy-and-cookie-policy' => '/privacy-policy',
+		// Renamed journal posts: old slug differs from the new one, so the generic
+		// /journal/<slug> lookup below cannot find them.
+		'/journal/the-art-of-wordpress-website-hover-styles' => '/hover-styles-and-interactions',
+		'/journal/eco-friendly-wordpress-practical-tips-to-reduce-your-websites-carbon-footprint' => '/sustainable-wordpress-website',
+		'/journal/white-label-wordpress-website-development' => '/wordpress-development-partner-for-agencies',
 		'/sub-service/content-entry' => '/services/website-support',
 		'/sub-service/wordpress-api-integrations' => '/services/api-integrations',
 		'/web-design' => '/services/web-design',
