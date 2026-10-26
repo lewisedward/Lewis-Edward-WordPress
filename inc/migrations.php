@@ -532,3 +532,25 @@ add_action( 'init', function () {
 	}
 	update_option( 'le_migration_wordpress_agency_service', gmdate( 'c' ) . ' ' . implode( ' ', $log ), false );
 }, 20 );
+
+/**
+ * 2026-10-26b: Yoast builds a post's indexable on save, so meta written after
+ * wp_insert_post() was ignored. Re-save the WordPress Agency service so the
+ * title and description take effect.
+ */
+add_action( 'init', function () {
+	if ( get_option( 'le_migration_wordpress_agency_resave' ) ) {
+		return;
+	}
+	$post = get_page_by_path( 'wordpress-agency', OBJECT, 'service' );
+	if ( ! $post ) {
+		return;
+	}
+	update_post_meta( $post->ID, '_yoast_wpseo_title', 'London WordPress Agency - Design, Development & Support' );
+	update_post_meta( $post->ID, '_yoast_wpseo_metadesc', "A small, senior London WordPress agency. Bespoke design, hand-coded development and proactive support for brands like easyJet, Lord's and the Church of England." );
+	wp_update_post( array( 'ID' => $post->ID, 'post_status' => 'publish' ) );
+	if ( class_exists( 'WPSEO_Sitemaps_Cache' ) && method_exists( 'WPSEO_Sitemaps_Cache', 'clear' ) ) {
+		WPSEO_Sitemaps_Cache::clear();
+	}
+	update_option( 'le_migration_wordpress_agency_resave', gmdate( 'c' ), false );
+}, 21 );
