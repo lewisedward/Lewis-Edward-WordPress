@@ -577,3 +577,154 @@ add_action( 'init', function () {
 	}
 	update_option( 'le_migration_wordpress_agency_cost_faq', gmdate( 'c' ), false );
 }, 22 );
+
+/**
+ * 2026-10-26d: "WordPress Development Agency" service, second page of the
+ * agency cluster. Same shape as the hub migration; links up to the hub.
+ */
+add_action( 'init', function () {
+	if ( get_option( 'le_migration_wp_dev_agency_service' ) || ! function_exists( 'update_field' ) ) {
+		return;
+	}
+	if ( get_page_by_path( 'wordpress-development-agency', OBJECT, 'service' ) ) {
+		update_option( 'le_migration_wp_dev_agency_service', 'already-exists', false );
+		return;
+	}
+	$log = array();
+	$title = 'WordPress Development Agency London | Lewis Edward';
+	$desc  = 'A London WordPress development agency that hand-codes every build. Bespoke themes, ACF, integrations and headless WordPress for brands, agencies and in-house teams.';
+
+	$id = wp_insert_post( array(
+		'post_type'    => 'service',
+		'post_status'  => 'publish',
+		'post_title'   => 'WordPress Development Agency',
+		'post_name'    => 'wordpress-development-agency',
+		'post_content' => '',
+		'meta_input'   => array(
+			'_yoast_wpseo_title'    => $title,
+			'_yoast_wpseo_metadesc' => $desc,
+			'_yoast_wpseo_focuskw'  => 'wordpress development agency',
+		),
+	), true );
+	if ( is_wp_error( $id ) ) {
+		update_option( 'le_migration_wp_dev_agency_service', 'insert-failed:' . $id->get_error_message(), false );
+		return;
+	}
+	$log[] = 'post:' . $id;
+
+	$by_slug = static function ( $slugs, $type ) {
+		$ids = array();
+		foreach ( $slugs as $s ) {
+			$p = get_page_by_path( $s, OBJECT, $type );
+			if ( $p ) {
+				$ids[] = $p->ID;
+			}
+		}
+		return $ids;
+	};
+
+	update_field( 'field_sv_subtitle', 'Built from scratch', $id );
+	update_field( 'field_sv_desc', 'Hand-coded WordPress builds, integrations and headless from a senior London team.', $id );
+	update_field( 'field_sv_excerpt', "Bespoke WordPress development for brands like easyJet, Lord's and the Church of England - and the agencies that design for them.", $id );
+	update_field( 'field_sv_features', array(
+		array( 'field_sv_feature_tag' => 'Hand-coded' ),
+		array( 'field_sv_feature_tag' => 'Integrations' ),
+		array( 'field_sv_feature_tag' => 'Headless' ),
+	), $id );
+	update_field( 'field_sv_headline', 'A WordPress development agency that writes its own code', $id );
+	update_field( 'field_sv_intro', "We're the development side of a small London WordPress agency - senior developers who hand-code every theme, wire up every integration and never reach for a page builder. Brands come to us for bespoke builds; creative agencies and in-house teams come to us when they need serious WordPress engineering without hiring for it.", $id );
+	update_field( 'field_6a8d88e295d9a', 'WordPress development, the way it should be done', $id );
+	update_field( 'field_sv_dfeatures', array(
+		array( 'field_sv_df_title' => 'Bespoke theme development', 'field_sv_df_desc' => "Every site is coded from your designs (or ours) into a clean, custom theme. No bloated frameworks, no 300 unused options, nothing you don't need." ),
+		array( 'field_sv_df_title' => 'Advanced Custom Fields', 'field_sv_df_desc' => 'Structured, editable content for everything - flexible page builders of your own, without the plugin. 99% of the site is editable from the back end.' ),
+		array( 'field_sv_df_title' => 'Integrations & APIs', 'field_sv_df_desc' => "CRMs, payment gateways, booking systems, HubSpot, Stripe, Teachable, custom APIs. If it has an endpoint, we've probably connected WordPress to it." ),
+		array( 'field_sv_df_title' => 'Headless & performance', 'field_sv_df_desc' => "Headless WordPress with React or Next.js when it's the right call, and relentless Core Web Vitals work when it isn't. Fast either way." ),
+		array( 'field_sv_df_title' => 'WooCommerce development', 'field_sv_df_desc' => 'Custom shops, checkout flows and product logic that go well beyond what off-the-shelf WooCommerce does.' ),
+		array( 'field_sv_df_title' => 'White-label for agencies', 'field_sv_df_desc' => 'Development capacity for creative agencies: pixel-perfect builds from your Figma files, under your brand if you prefer. See our agency partnership.' ),
+	), $id );
+	update_field( 'field_sv_process', array(
+		array( 'field_sv_ps_step' => '01', 'field_sv_ps_title' => 'Scope & architecture', 'field_sv_ps_desc' => 'We read the designs, the brief and the data, then write a short technical scope: templates, fields, integrations, hosting. Fixed price, dated plan.' ),
+		array( 'field_sv_ps_step' => '02', 'field_sv_ps_title' => 'Front-end build', 'field_sv_ps_desc' => 'Designs are coded into responsive front-end templates first, so you see the real thing in a browser early and we iron out the details before WordPress is involved.' ),
+		array( 'field_sv_ps_step' => '03', 'field_sv_ps_title' => 'WordPress integration', 'field_sv_ps_desc' => 'Templates become a theme; content becomes ACF fields; integrations are wired and tested. You get a staging site and a login from week one.' ),
+		array( 'field_sv_ps_step' => '04', 'field_sv_ps_title' => 'QA, launch & handover', 'field_sv_ps_desc' => "Cross-browser and device testing, performance and SEO checks, redirects, launch. Then a month's bug guarantee, documentation and optional support." ),
+	), $id );
+	update_field( 'field_sv_benefits', array(
+		array( 'field_sv_b_item' => 'Hand-coded themes - no page builders, no theme marketplaces, no technical debt on day one' ),
+		array( 'field_sv_b_item' => 'Senior developers only; the person scoping your build is the person building it' ),
+		array( 'field_sv_b_item' => 'Integrations as standard: HubSpot, Stripe, WooCommerce, Teachable, custom APIs and AI tools' ),
+		array( 'field_sv_b_item' => 'Fast by default - Core Web Vitals treated as a requirement, not a plugin' ),
+		array( 'field_sv_b_item' => 'Agency-friendly: Figma in, pixel-perfect WordPress out, white label if you want it' ),
+		array( 'field_sv_b_item' => '15 years of WordPress, 100+ builds, clients from easyJet to the Church of England' ),
+	), $id );
+	update_field( 'field_sv_faq', array(
+		array( 'field_sv_faq_q' => 'What is a WordPress development agency?', 'field_sv_faq_a' => 'A WordPress development agency is a team that builds and engineers WordPress websites professionally - custom themes, plugins, integrations and performance - rather than designing them or assembling them from templates. We do the engineering for brands directly and as a white-label partner for creative agencies.' ),
+		array( 'field_sv_faq_q' => 'How much does WordPress development cost?', 'field_sv_faq_a' => "Our bespoke WordPress builds start from £5,000 and go up with the number of templates, integrations and custom functionality. Agencies working with us regularly get a day rate or a fixed price per build, whichever suits the project. We quote a fixed figure after scoping." ),
+		array( 'field_sv_faq_q' => 'Do you build from our designs?', 'field_sv_faq_a' => "Yes - that's most of what we do for agencies. Send Figma, Adobe XD, Sketch or PDFs and we code them pixel-perfect, including hover states, animations and responsive breakpoints you haven't drawn yet." ),
+		array( 'field_sv_faq_q' => 'Can you work with our existing WordPress site?', 'field_sv_faq_a' => "Yes. We audit the codebase first and tell you honestly whether to extend it, refactor it or rebuild. Plenty of our development work starts with someone else's theme." ),
+		array( 'field_sv_faq_q' => 'Do you do headless WordPress?', 'field_sv_faq_a' => "When it's the right fit, yes - WordPress as the CMS with a React or Next.js front end. For most brochure and content sites a well-built classic theme is faster to ship and easier to run, and we'll tell you which you need." ),
+		array( 'field_sv_faq_q' => 'Who owns the code?', 'field_sv_faq_a' => 'You do. Every build is delivered as a clean, documented theme in a Git repository that you own, with no licence fees or lock-in to us.' ),
+	), $id );
+	update_field( 'field_sv_related_work', $by_slug( array( 'church-of-england', 'classic-shoe-repairs', 'prism', 'storezar', 'hubba', 'easyjet-traveller' ), 'work' ), $id );
+	update_field( 'field_sv_related', $by_slug( array( 'wordpress-agency', 'web-development', 'wordpress-agency-partnership', 'api-integrations', 'webflow', 'migrate-to-wordpress' ), 'service' ), $id );
+
+	// Re-save so Yoast rebuilds the indexable with the meta above.
+	wp_update_post( array( 'ID' => $id, 'post_status' => 'publish' ) );
+
+	// Services page core list: directly after the hub.
+	$services_page = get_page_by_path( 'services' );
+	if ( $services_page ) {
+		$items = get_field( 'services_items', $services_page->ID, false );
+		$items = is_array( $items ) ? array_map( 'intval', $items ) : array();
+		$hub   = get_page_by_path( 'wordpress-agency', OBJECT, 'service' );
+		$pos   = $hub ? array_search( (int) $hub->ID, $items, true ) : false;
+		if ( false === $pos ) {
+			array_unshift( $items, (int) $id );
+		} else {
+			array_splice( $items, $pos + 1, 0, array( (int) $id ) );
+		}
+		update_field( 'services_items', array_values( array_unique( $items ) ), $services_page->ID );
+		$log[] = 'services-page:' . $services_page->ID;
+	}
+
+	if ( ! function_exists( 'wp_update_nav_menu_item' ) ) {
+		require_once ABSPATH . 'wp-admin/includes/nav-menu.php';
+	}
+	$locations = get_nav_menu_locations();
+	if ( ! empty( $locations['primary'] ) ) {
+		$parent = 0;
+		foreach ( (array) wp_get_nav_menu_items( $locations['primary'] ) as $item ) {
+			if ( 0 === (int) $item->menu_item_parent && 'services' === sanitize_title( $item->title ) ) {
+				$parent = (int) $item->ID;
+				break;
+			}
+		}
+		if ( $parent ) {
+			$mi = wp_update_nav_menu_item( $locations['primary'], 0, array(
+				'menu-item-title'       => 'WordPress development agency',
+				'menu-item-object'      => 'service',
+				'menu-item-object-id'   => $id,
+				'menu-item-type'        => 'post_type',
+				'menu-item-description' => 'Hand-coded builds, integrations and headless.',
+				'menu-item-parent-id'   => $parent,
+				'menu-item-position'    => 0,
+				'menu-item-status'      => 'publish',
+			) );
+			$log[] = 'primary-menu:' . ( is_wp_error( $mi ) ? $mi->get_error_message() : $mi );
+		}
+	}
+	if ( ! empty( $locations['footer_services'] ) ) {
+		$mi = wp_update_nav_menu_item( $locations['footer_services'], 0, array(
+			'menu-item-title'     => 'WordPress development agency',
+			'menu-item-object'    => 'service',
+			'menu-item-object-id' => $id,
+			'menu-item-type'      => 'post_type',
+			'menu-item-status'    => 'publish',
+		) );
+		$log[] = 'footer-menu:' . ( is_wp_error( $mi ) ? $mi->get_error_message() : $mi );
+	}
+
+	if ( class_exists( 'WPSEO_Sitemaps_Cache' ) && method_exists( 'WPSEO_Sitemaps_Cache', 'clear' ) ) {
+		WPSEO_Sitemaps_Cache::clear();
+	}
+	update_option( 'le_migration_wp_dev_agency_service', gmdate( 'c' ) . ' ' . implode( ' ', $log ), false );
+}, 23 );
