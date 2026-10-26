@@ -332,8 +332,11 @@
 .skin-grid .g-stack__item--logo img { object-fit: contain; filter: grayscale(1) brightness(0) invert(1); opacity: 0.8; }
 .skin-grid .g-stack__item--count, .skin-grid .g-stack__item--zap { background: hsl(var(--primary)); background-image: var(--brand-gradient); color: hsl(var(--background)); font-size: 9px; font-weight: 600; }
 .skin-grid .g-caps { padding: 28px 32px; }
-.skin-grid .g-caps__list { list-style: none; margin: 18px 0 0; padding: 0; }
-.skin-grid .g-caps__list li { border-top: 1px solid var(--g-line); }
+.skin-grid .g-caps { display: flex; flex-direction: column; }
+.skin-grid .g-caps__list { list-style: none; margin: 18px 0 0; padding: 0; flex: 1; display: flex; flex-direction: column; }
+.skin-grid .g-caps__list li { border-top: 1px solid var(--g-line); flex: 1; display: flex; }
+.skin-grid .g-caps__list li:last-child { border-bottom: 1px solid var(--g-line); }
+.skin-grid .g-caps__list li > a { flex: 1; align-items: center; }
 .skin-grid .g-caps__list a { display: grid; grid-template-columns: 28px 1fr auto; gap: 14px; align-items: baseline; padding: 12px 0; color: inherit; text-decoration: none; font-size: 17px; letter-spacing: -0.01em; transition: color 0.2s ease; }
 .skin-grid .g-caps__list a:hover { color: var(--g-lime); }
 .skin-grid .g-caps__list .g-mono { color: hsl(var(--foreground) / 0.5); }
