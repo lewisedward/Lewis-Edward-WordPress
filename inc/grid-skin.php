@@ -71,8 +71,33 @@ add_action( 'wp_head', function () {
 		$rel  = 'assets/fonts/geist/' . $file . '-latin-wght-normal.woff2';
 		$css .= "@font-face{font-family:'$fam';src:url('" . esc_url( LE_URI . '/' . $rel . '?ver=' . le_asset_ver( $rel ) ) . "') format('woff2');font-weight:100 900;font-style:normal;font-display:swap}\n";
 	}
+	// Metric-matched stand-in for Geist (Arial scaled to Geist's width and line metrics), so text
+	// doesn't reflow when Geist swaps in. Only referenced by the mobile font stack in grid.css.
+	// Arial, Helvetica, Roboto (Android) and Liberation Sans share Arial's widths; DejaVu Sans is wider, so it gets its own face.
+	$css .= "@font-face{font-family:'Geist Fallback';src:local('Arial'),local('ArialMT'),local('Helvetica'),local('Roboto'),local('Roboto-Regular'),local('Liberation Sans'),local('LiberationSans');size-adjust:102.7%;ascent-override:97.86%;descent-override:28.72%;line-gap-override:0%}\n";
+	$css .= "@font-face{font-family:'Geist Fallback DV';src:local('DejaVu Sans'),local('DejaVuSans');size-adjust:90.82%;ascent-override:110.66%;descent-override:32.48%;line-gap-override:0%}\n";
+	// Phones only (media attribute): fetch Geist up front so it is usually in before first paint and nothing swaps.
+	$geist = 'assets/fonts/geist/geist-latin-wght-normal.woff2';
+	echo '<link rel="preload" href="' . esc_url( LE_URI . '/' . $geist . '?ver=' . le_asset_ver( $geist ) ) . '" as="font" type="font/woff2" crossorigin media="(max-width: 720px)">' . "\n";
 	echo "<style id=\"le-grid-fonts\">\n" . $css . "</style>\n"; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }, 3 );
+
+/**
+ * Phones: fetch the hero video poster (the mobile LCP image) at high priority.
+ * The media attribute keeps desktop from requesting it this way.
+ */
+add_action( 'wp_head', function () {
+	if ( ! le_grid_skin() || ! is_front_page() ) {
+		return;
+	}
+	$rel    = 'assets/videos/macbook-easyjet-poster.jpg';
+	$poster = LE_URI . '/' . $rel . '?ver=' . le_asset_ver( $rel );
+	$ov     = function_exists( 'le_field' ) ? le_field( 'grid_hero_media_poster', (int) get_option( 'page_on_front' ) ) : null;
+	if ( is_array( $ov ) && ! empty( $ov['url'] ) ) {
+		$poster = $ov['url'];
+	}
+	echo '<link rel="preload" as="image" href="' . esc_url( $poster ) . '" media="(max-width: 720px)" fetchpriority="high">' . "\n";
+}, 2 );
 
 /**
  * Inline the skin stylesheet straight after theme.css (which prints at priority 2).

@@ -646,3 +646,9 @@ body.skin-grid:not(.home) .site-content, body.skin-grid.single .site-content { p
 	.skin-grid .le-consent__inner { display: block; }
 	.skin-grid .le-consent__btn { flex: none; }
 }
+
+/* Phones only: put the metric-matched 'Geist Fallback' straight after Geist, so the
+   hero copy keeps its line breaks and height when Geist swaps in (was CLS ~0.2). */
+@media (max-width: 720px) {
+	.skin-grid { --font-display: 'Geist', 'Geist Fallback', 'Geist Fallback DV', 'Chillax', 'Chillax Fallback', sans-serif; --font-body: 'Geist', 'Geist Fallback', 'Geist Fallback DV', 'Chillax', 'Chillax Fallback', sans-serif; }
+}
