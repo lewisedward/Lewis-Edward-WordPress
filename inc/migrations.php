@@ -389,3 +389,146 @@ add_action( 'init', function () {
 
 	update_option( 'le_migration_seo_audit_2026_10_b', gmdate( 'c' ) . ' ' . implode( ' | ', $log ), false );
 }, 20 );
+
+/**
+ * 2026-10-26: new "WordPress Agency" service, the hub of the agency keyword
+ * cluster (copy approved in the "London WordPress Agency page copy" doc).
+ * Creates the service post with its ACF content and Yoast meta, adds it to the
+ * Services page core list, the primary Services dropdown and the footer
+ * Services menu. Safe to re-run: skips when the post already exists.
+ */
+add_action( 'init', function () {
+	if ( get_option( 'le_migration_wordpress_agency_service' ) || ! function_exists( 'update_field' ) ) {
+		return;
+	}
+	$log = array();
+	if ( get_page_by_path( 'wordpress-agency', OBJECT, 'service' ) ) {
+		update_option( 'le_migration_wordpress_agency_service', 'already-exists', false );
+		return;
+	}
+
+	$id = wp_insert_post( array(
+		'post_type'   => 'service',
+		'post_status' => 'publish',
+		'post_title'  => 'WordPress Agency',
+		'post_name'   => 'wordpress-agency',
+		'post_content' => '',
+	), true );
+	if ( is_wp_error( $id ) ) {
+		update_option( 'le_migration_wordpress_agency_service', 'insert-failed:' . $id->get_error_message(), false );
+		return;
+	}
+	$log[] = 'post:' . $id;
+
+	$by_slug = static function ( $slugs, $type ) {
+		$ids = array();
+		foreach ( $slugs as $s ) {
+			$p = get_page_by_path( $s, OBJECT, $type );
+			if ( $p ) {
+				$ids[] = $p->ID;
+			}
+		}
+		return $ids;
+	};
+
+	update_field( 'field_sv_subtitle', 'Small by design', $id );
+	update_field( 'field_sv_desc', 'Bespoke WordPress design, development and support from a small senior team in London.', $id );
+	update_field( 'field_sv_excerpt', "The WordPress agency behind sites for easyJet, Lord's Cricket Ground, the Church of England and 50+ other brands - small enough to care, experienced enough to handle the complicated stuff.", $id );
+	update_field( 'field_sv_features', array(
+		array( 'field_sv_feature_tag' => 'Design' ),
+		array( 'field_sv_feature_tag' => 'Development' ),
+		array( 'field_sv_feature_tag' => 'Support' ),
+	), $id );
+	update_field( 'field_sv_headline', 'A London WordPress agency that still answers the phone', $id );
+	update_field( 'field_sv_intro', "We're a London WordPress agency of five - designers, developers and, let's face it, geeks - who've been building bespoke WordPress websites since 2011. No account managers, no page builders, no outsourcing. You talk to the people who design and build your site, and we stick around to look after it once it's live.", $id );
+	update_field( 'field_6a8d88e295d9a', 'Everything a WordPress agency should do, done properly', $id );
+	update_field( 'field_sv_dfeatures', array(
+		array( 'field_sv_df_title' => 'WordPress web design', 'field_sv_df_desc' => "Bespoke designs built around your brand and your content, not a theme we've used twenty times before. Clean, fast and easy to edit once it's yours." ),
+		array( 'field_sv_df_title' => 'WordPress development', 'field_sv_df_desc' => 'Hand-coded themes with Advanced Custom Fields, so 99% of the site is editable from the back end and none of it depends on a page builder.' ),
+		array( 'field_sv_df_title' => 'E-commerce', 'field_sv_df_desc' => 'WooCommerce and Shopify builds with the payment, booking and shipping integrations you actually need - and nothing slowing the checkout down.' ),
+		array( 'field_sv_df_title' => 'Website support & hosting', 'field_sv_df_desc' => 'Proactive updates, security, backups and fully managed UK hosting on 100% green energy. Answered by us, personally - not a ticket queue.' ),
+		array( 'field_sv_df_title' => 'Migrations', 'field_sv_df_desc' => 'From Webflow, Squarespace, Wix, Drupal or an old WordPress build to a new one - with every URL redirected so you keep your rankings.' ),
+		array( 'field_sv_df_title' => 'AI & integrations', 'field_sv_df_desc' => 'CRMs, APIs, custom tools and AI features built around the site, from a team ranked in the top 5% of AI developers globally.' ),
+	), $id );
+	update_field( 'field_sv_process', array(
+		array( 'field_sv_ps_step' => '01', 'field_sv_ps_title' => 'Discovery', 'field_sv_ps_desc' => 'A call, a look at your current site and analytics, and a short written scope with a fixed price. No 40-page proposals, no surprises later.' ),
+		array( 'field_sv_ps_step' => '02', 'field_sv_ps_title' => 'Design', 'field_sv_ps_desc' => "Figma designs for desktop and mobile, built on your brand. You see real pages, not mood boards, and we iterate until you're happy." ),
+		array( 'field_sv_ps_step' => '03', 'field_sv_ps_title' => 'Build', 'field_sv_ps_desc' => 'The design is coded into front-end templates and integrated into WordPress with Advanced Custom Fields. You get a staging link from week one.' ),
+		array( 'field_sv_ps_step' => '04', 'field_sv_ps_title' => 'Launch & support', 'field_sv_ps_desc' => "Redirects, SEO checks, speed tuning and a tested launch. Then a month's guarantee, training for your team and an optional support plan." ),
+	), $id );
+	update_field( 'field_sv_benefits', array(
+		array( 'field_sv_b_item' => 'Senior team only - the person on the call is the person writing the code' ),
+		array( 'field_sv_b_item' => 'Hand-coded WordPress, no page builders, fast Core Web Vitals as standard' ),
+		array( 'field_sv_b_item' => 'Fixed prices and honest timelines - a brochure site in 4-6 weeks, complex builds in 8-12' ),
+		array( 'field_sv_b_item' => "Trusted by easyJet, Lord's, the Church of England, United Airlines and NTT DATA" ),
+		array( 'field_sv_b_item' => 'UK-based hosting and support, answered by us, not a ticket queue' ),
+		array( 'field_sv_b_item' => '15 years in business, 100+ projects, and 1.5 nervous breakdowns' ),
+	), $id );
+	update_field( 'field_sv_faq', array(
+		array( 'field_sv_faq_q' => 'What does a WordPress agency do?', 'field_sv_faq_a' => 'A WordPress agency designs, builds, hosts and maintains websites on WordPress. At Lewis Edward that means bespoke design, hand-coded development, WooCommerce, migrations, hosting and ongoing support from one small London team, rather than passing you between departments.' ),
+		array( 'field_sv_faq_q' => 'How much does a WordPress website cost in the UK?', 'field_sv_faq_a' => 'It depends on the number of templates, integrations and content. A simple brochure site sits at the lower end, e-commerce, membership or multilingual builds at the upper end, and most bespoke agency builds are five-figure projects. We quote a fixed price after a discovery call, so you know the number before any work starts.' ),
+		array( 'field_sv_faq_q' => 'How long does a WordPress agency take to build a site?', 'field_sv_faq_a' => 'A brochure site takes 4-6 weeks from signed-off designs; a larger build with custom functionality takes 8-12 weeks. We give you a dated plan up front and a staging link from the first week.' ),
+		array( 'field_sv_faq_q' => 'Do you use page builders like Elementor?', 'field_sv_faq_a' => 'No. We hand-code every theme and use Advanced Custom Fields for editing, which keeps the site fast, secure and free of plugin bloat. You still edit everything yourself - it just works better.' ),
+		array( 'field_sv_faq_q' => 'Do you only work with London businesses?', 'field_sv_faq_a' => "We're based in London and most of our clients are UK brands, but we work with organisations across Europe and the US over video calls and shared tools. The process is the same wherever you are." ),
+		array( 'field_sv_faq_q' => 'Can you take over a WordPress site another agency built?', 'field_sv_faq_a' => "Yes. We audit it first, tell you honestly what's worth keeping, and then either fix and support it or plan a rebuild. Plenty of our support clients came to us this way." ),
+	), $id );
+	update_field( 'field_sv_related_work', $by_slug( array( 'lords-cricket-ground', 'easyjet-traveller', 'church-of-england', 'biogen', 'storezar', 'hubba' ), 'work' ), $id );
+	update_field( 'field_sv_related', $by_slug( array( 'web-design', 'web-development', 'website-support', 'e-commerce', 'wordpress-agency-partnership', 'ai-development' ), 'service' ), $id );
+
+	update_post_meta( $id, '_yoast_wpseo_title', 'London WordPress Agency - Design, Development & Support' );
+	update_post_meta( $id, '_yoast_wpseo_metadesc', "A small, senior London WordPress agency. Bespoke design, hand-coded development and proactive support for brands like easyJet, Lord's and the Church of England." );
+	update_post_meta( $id, '_yoast_wpseo_focuskw', 'wordpress agency' );
+
+	// Services page: first item in the core list.
+	$services_page = get_page_by_path( 'services' );
+	if ( $services_page ) {
+		$items = get_field( 'services_items', $services_page->ID, false );
+		$items = is_array( $items ) ? array_map( 'intval', $items ) : array();
+		array_unshift( $items, (int) $id );
+		update_field( 'services_items', array_values( array_unique( $items ) ), $services_page->ID );
+		$log[] = 'services-page:' . $services_page->ID;
+	}
+
+	// Menus: first child of the primary "Services" item, and appended to the footer Services menu.
+	if ( ! function_exists( 'wp_update_nav_menu_item' ) ) {
+		require_once ABSPATH . 'wp-admin/includes/nav-menu.php';
+	}
+	$locations = get_nav_menu_locations();
+	if ( ! empty( $locations['primary'] ) ) {
+		$parent = 0;
+		foreach ( (array) wp_get_nav_menu_items( $locations['primary'] ) as $item ) {
+			if ( 0 === (int) $item->menu_item_parent && 'services' === sanitize_title( $item->title ) ) {
+				$parent = (int) $item->ID;
+				break;
+			}
+		}
+		if ( $parent ) {
+			$mi = wp_update_nav_menu_item( $locations['primary'], 0, array(
+				'menu-item-title'       => 'WordPress agency',
+				'menu-item-object'      => 'service',
+				'menu-item-object-id'   => $id,
+				'menu-item-type'        => 'post_type',
+				'menu-item-description' => 'Design, development and support under one roof.',
+				'menu-item-parent-id'   => $parent,
+				'menu-item-position'    => 0,
+				'menu-item-status'      => 'publish',
+			) );
+			$log[] = 'primary-menu:' . ( is_wp_error( $mi ) ? $mi->get_error_message() : $mi );
+		}
+	}
+	if ( ! empty( $locations['footer_services'] ) ) {
+		$mi = wp_update_nav_menu_item( $locations['footer_services'], 0, array(
+			'menu-item-title'     => 'WordPress agency',
+			'menu-item-object'    => 'service',
+			'menu-item-object-id' => $id,
+			'menu-item-type'      => 'post_type',
+			'menu-item-status'    => 'publish',
+		) );
+		$log[] = 'footer-menu:' . ( is_wp_error( $mi ) ? $mi->get_error_message() : $mi );
+	}
+
+	if ( class_exists( 'WPSEO_Sitemaps_Cache' ) && method_exists( 'WPSEO_Sitemaps_Cache', 'clear' ) ) {
+		WPSEO_Sitemaps_Cache::clear();
+	}
+	update_option( 'le_migration_wordpress_agency_service', gmdate( 'c' ) . ' ' . implode( ' ', $log ), false );
+}, 20 );
