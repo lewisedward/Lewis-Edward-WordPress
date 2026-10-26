@@ -73,8 +73,8 @@ add_action( 'wp_head', function () {
 	}
 	// Metric-matched stand-in for Geist (Arial scaled to Geist's width and line metrics), so text
 	// doesn't reflow when Geist swaps in. Only referenced by the mobile font stack in grid.css.
-	// Arial, Helvetica, Roboto (Android) and Liberation Sans share Arial's widths; DejaVu Sans is wider, so it gets its own face.
-	$css .= "@font-face{font-family:'Geist Fallback';src:local('Arial'),local('ArialMT'),local('Helvetica'),local('Roboto'),local('Roboto-Regular'),local('Liberation Sans'),local('LiberationSans');size-adjust:102.7%;ascent-override:97.86%;descent-override:28.72%;line-gap-override:0%}\n";
+	// Arial, Helvetica, Roboto (Android), Liberation Sans and Arimo (Google's Linux, i.e. PageSpeed) share Arial's widths; DejaVu Sans is wider, so it gets its own face.
+	$css .= "@font-face{font-family:'Geist Fallback';src:local('Arial'),local('ArialMT'),local('Helvetica'),local('Roboto'),local('Roboto-Regular'),local('Liberation Sans'),local('LiberationSans'),local('Arimo'),local('Arimo-Regular');size-adjust:102.7%;ascent-override:97.86%;descent-override:28.72%;line-gap-override:0%}\n";
 	$css .= "@font-face{font-family:'Geist Fallback DV';src:local('DejaVu Sans'),local('DejaVuSans');size-adjust:90.82%;ascent-override:110.66%;descent-override:32.48%;line-gap-override:0%}\n";
 	// Phones only (media attribute): fetch Geist up front so it is usually in before first paint and nothing swaps.
 	$geist = 'assets/fonts/geist/geist-latin-wght-normal.woff2';
