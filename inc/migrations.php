@@ -554,3 +554,26 @@ add_action( 'init', function () {
 	}
 	update_option( 'le_migration_wordpress_agency_resave', gmdate( 'c' ), false );
 }, 21 );
+
+/**
+ * 2026-10-26c: cost FAQ on the WordPress Agency service - Lewis's figure.
+ */
+add_action( 'init', function () {
+	if ( get_option( 'le_migration_wordpress_agency_cost_faq' ) || ! function_exists( 'update_field' ) ) {
+		return;
+	}
+	$post = get_page_by_path( 'wordpress-agency', OBJECT, 'service' );
+	if ( ! $post ) {
+		return;
+	}
+	$faq = get_field( 'service_faq', $post->ID );
+	if ( is_array( $faq ) ) {
+		foreach ( $faq as $i => $row ) {
+			if ( isset( $row['question'] ) && false !== stripos( $row['question'], 'cost' ) ) {
+				$faq[ $i ]['answer'] = "Our bespoke WordPress websites start from £5,000 and go up from there depending on the number of templates, integrations and content. A simple brochure site sits at the lower end; e-commerce, membership or multilingual builds at the upper end. We quote a fixed price after a discovery call, so you know the number before any work starts.";
+			}
+		}
+		update_field( 'service_faq', $faq, $post->ID );
+	}
+	update_option( 'le_migration_wordpress_agency_cost_faq', gmdate( 'c' ), false );
+}, 22 );
