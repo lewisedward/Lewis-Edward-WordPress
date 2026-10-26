@@ -47,6 +47,11 @@ add_filter( 'wpseo_metadesc', function ( $desc ) {
 		: sprintf( 'Selected %s projects by Lewis Edward, a London WordPress web designer and developer, with case studies for brands and agencies.', $name );
 } );
 
+/** A UK business: Open Graph locale is en_GB, not WordPress's en_US default. */
+add_filter( 'wpseo_locale', function () {
+	return 'en_GB';
+} );
+
 /** The author archive duplicates the journal: keep it out of the index and the sitemap. */
 add_filter( 'wpseo_robots', function ( $robots ) {
 	return is_author() ? 'noindex, follow' : $robots;

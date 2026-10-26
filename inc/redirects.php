@@ -35,7 +35,9 @@ function le_legacy_redirects() {
 		'/services/saas-applications' => '/services/ai-development',
 		'/services/agency-partner' => '/services/wordpress-agency-partnership',
 		'/london-wordpress-developer' => '/services/web-development',
-		'/london-wordpress-and-ai-developers' => '/services/web-development',
+		'/london-wordpress-and-ai-developers' => '/services/ai-development',
+		// 2026-10: the Lovable-era "story" page was folded into About (was indexed).
+		'/story' => '/about',
 		'/charity-donations-for-wordpress' => '/services/e-commerce',
 		'/services/ecommerce' => '/services/e-commerce',
 		'/upgrade-to-https' => '/services/website-security',
@@ -65,6 +67,20 @@ function le_legacy_redirects() {
 		'/london-web-designer' => '/services/web-design',
 		'/long-tail-search-seo' => '/services/seo',
 		'/projects/capx' => '/work',
+		// 2026-10-24: carried over from the Cloudflare bulk redirect list (now disabled)
+		// so every legacy path is handled here in a single hop.
+		'/work/capx' => '/work',
+		'/projects/the-physios' => '/work/the-physios',
+		'/projects/the-rum-kitchen' => '/work',
+		'/projects/sales-navigator' => '/work',
+		'/projects/switchback' => '/work',
+		'/projects/southface-dermatology' => '/work',
+		'/more/privacy-and-cookie-policy' => '/privacy-policy',
+		// Renamed journal posts: old slug differs from the new one, so the generic
+		// /journal/<slug> lookup below cannot find them.
+		'/journal/the-art-of-wordpress-website-hover-styles' => '/hover-styles-and-interactions',
+		'/journal/eco-friendly-wordpress-practical-tips-to-reduce-your-websites-carbon-footprint' => '/sustainable-wordpress-website',
+		'/journal/white-label-wordpress-website-development' => '/wordpress-development-partner-for-agencies',
 		'/sub-service/content-entry' => '/services/website-support',
 		'/sub-service/wordpress-api-integrations' => '/services/api-integrations',
 		'/web-design' => '/services/web-design',
