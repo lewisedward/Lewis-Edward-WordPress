@@ -164,6 +164,15 @@ add_action( 'wp_head', function () {
 function le_grid_arrow() {
 	return '<svg class="g-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
 }
+/**
+ * The large "L." arrow: the logo's L bent into an arrow, with a hairline copy
+ * sitting off-register that slides into line on hover. Used on the "All work"
+ * tile and the "Get a quote" panel.
+ */
+function le_grid_big_arrow( $class ) {
+	$d = 'M14 8H26V74H78V56L112 80L78 104V86H14Z';
+	return '<svg class="g-bigarrow ' . esc_attr( $class ) . '" viewBox="0 0 120 120" aria-hidden="true" focusable="false"><path class="g-bigarrow__ghost" d="' . $d . '"/><path class="g-bigarrow__solid" d="' . $d . '"/></svg>';
+}
 function le_grid_arrow_diag() {
 	return '<svg class="g-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>';
 }

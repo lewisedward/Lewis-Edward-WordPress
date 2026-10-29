@@ -35,7 +35,7 @@ $g_cta_links = apply_filters( 'le_grid_cta_links', $g_cta_links );
 		<a class="g-cell g-lime g-cta__go" href="<?php echo esc_url( $g_cta_url ); ?>">
 			<h2><?php echo esc_html( le_field( 'home_cta_line1', $g_pid ) ); ?> <br><?php echo esc_html( le_field( 'home_cta_line2_pre', $g_pid ) ); ?> <em><?php echo esc_html( le_field( 'home_cta_word', $g_pid ) ); ?></em></h2>
 			<span class="g-mono"><?php echo esc_html( le_field( 'home_cta_ring', $g_pid, __( 'Request a quote', 'lewisedward' ) ) ); ?></span>
-			<svg class="g-cta__arrow" viewBox="0 0 120 120" aria-hidden="true" focusable="false"><path d="M8 8h104v104M112 8 8 112"/></svg>
+			<?php echo le_grid_big_arrow( 'g-cta__arrow' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		</a>
 		<?php if ( $g_cta_links ) : ?>
 		<nav class="g-cell g-cta__links" aria-label="<?php esc_attr_e( 'Next steps', 'lewisedward' ); ?>">

@@ -184,7 +184,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 		<a class="g-cell g-work__all" href="<?php echo esc_url( home_url( '/work' ) ); ?>">
 			<span class="g-mono"><?php echo esc_html( str_pad( (string) wp_count_posts( 'work' )->publish, 2, '0', STR_PAD_LEFT ) ); ?> <?php echo esc_html( le_field( 'grid_work_count_label', false, __( 'projects', 'lewisedward' ) ) ); ?></span>
 			<span class="g-work__all-title"><?php echo esc_html( le_field( 'grid_work_all_label', false, __( 'All work', 'lewisedward' ) ) ); ?></span>
-			<svg class="g-work__all-arrow" viewBox="0 0 120 120" aria-hidden="true" focusable="false"><path d="M8 8h104v104M112 8 8 112"/></svg>
+			<?php echo le_grid_big_arrow( 'g-work__all-arrow' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		</a>
 	</section>
 	<?php endif; ?>
