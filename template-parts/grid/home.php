@@ -273,8 +273,21 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 	<?php /* ---- Services (h2 + h3s) ---- */ ?>
 	<section class="g-row g-svc" aria-label="<?php esc_attr_e( 'Services', 'lewisedward' ); ?>">
 		<div class="g-cell g-svc__left">
-			<?php $g_sv = le_field( 'grid_services_video' ); $g_sp = le_field( 'grid_services_poster' ); $g_sv = ( is_array( $g_sv ) && ! empty( $g_sv['url'] ) ) ? $g_sv['url'] : LE_URI . '/assets/videos/lewis-typing-shine.mp4?ver=' . le_asset_ver( 'assets/videos/lewis-typing-shine.mp4' ); $g_sp = ( is_array( $g_sp ) && ! empty( $g_sp['url'] ) ) ? $g_sp['url'] : LE_URI . '/assets/videos/lewis-typing-shine-poster.jpg?ver=' . le_asset_ver( 'assets/videos/lewis-typing-shine-poster.jpg' ); ?>
-			<span class="g-svc__bg g-ph g-ph--mono<?php echo ( is_array( le_field( 'grid_services_video' ) ) && ! empty( le_field( 'grid_services_video' )['url'] ) ) ? '' : ' g-ph--tinted'; ?>" aria-hidden="true"><video class="g-ph__video" muted loop playsinline preload="none" poster="<?php echo esc_url( $g_sp ); ?>"><source src="<?php echo esc_url( $g_sv ); ?>" type="video/mp4"></video></span>
+			<?php
+			// Background: an uploaded video (shown mono); else an uploaded image on its own (mono, no video);
+			// else the theme's typing loop, graded with the lime laptop glow.
+			$g_sv_f = le_field( 'grid_services_video' );
+			$g_sp_f = le_field( 'grid_services_poster' );
+			$g_sv   = ( is_array( $g_sv_f ) && ! empty( $g_sv_f['url'] ) ) ? $g_sv_f['url'] : '';
+			$g_sp   = ( is_array( $g_sp_f ) && ! empty( $g_sp_f['url'] ) ) ? $g_sp_f['url'] : '';
+			?>
+			<?php if ( $g_sv ) : ?>
+			<span class="g-svc__bg g-ph g-ph--mono" aria-hidden="true"><video class="g-ph__video" muted loop playsinline preload="none"<?php echo $g_sp ? ' poster="' . esc_url( $g_sp ) . '"' : ''; ?>><source src="<?php echo esc_url( $g_sv ); ?>" type="video/mp4"></video></span>
+			<?php elseif ( $g_sp ) : ?>
+			<span class="g-svc__bg g-ph g-ph--mono" aria-hidden="true"><?php echo le_grid_img( $g_sp_f, '', '(max-width: 720px) 100vw, 50vw', array( 'loading' => 'lazy' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+			<?php else : ?>
+			<span class="g-svc__bg g-ph g-ph--mono g-ph--tinted" aria-hidden="true"><video class="g-ph__video" muted loop playsinline preload="none" poster="<?php echo esc_url( LE_URI . '/assets/videos/lewis-typing-shine-poster.jpg?ver=' . le_asset_ver( 'assets/videos/lewis-typing-shine-poster.jpg' ) ); ?>"><source src="<?php echo esc_url( LE_URI . '/assets/videos/lewis-typing-shine.mp4?ver=' . le_asset_ver( 'assets/videos/lewis-typing-shine.mp4' ) ); ?>" type="video/mp4"></video></span>
+			<?php endif; ?>
 			<span class="g-label g-mono g-svc__eyebrow"><span><?php echo esc_html( le_field( 'home_services_eyebrow', false, __( 'Services', 'lewisedward' ) ) ); ?></span><span>01 &ndash; <?php echo esc_html( str_pad( (string) count( $g_services ), 2, '0', STR_PAD_LEFT ) ); ?></span></span>
 			<h2 class="g-svc__title"><?php echo esc_html( le_field( 'home_services_title' ) ); ?></h2>
 			<div class="g-svc__foot">
