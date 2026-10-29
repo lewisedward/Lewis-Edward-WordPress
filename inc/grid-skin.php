@@ -166,7 +166,8 @@ function le_grid_arrow() {
 }
 /**
  * The large pixel arrow: a 7×7 dot-matrix grid with the arrow's cells lit. On
- * hover the lit cells shift up and right in a wave from the tail to the head.
+ * hover the arrow blinks off and redraws itself pixel by pixel, tail to tip,
+ * in hard steps like an LED display.
  * Used on the "All work" tile and the "Get a quote" panel.
  */
 function le_grid_big_arrow( $class ) {
@@ -176,8 +177,10 @@ function le_grid_big_arrow( $class ) {
 			$on  = ( 0 === $r || 6 === $c || 6 === $r + $c );
 			$x   = 6 + $c * 16;
 			$y   = 6 + $r * 16;
+			// Draw order: up the diagonal from the tail, then both arms of the head grow out from the tip.
+			$k    = ( 6 === $r + $c ) ? $c : ( 0 === $r ? 12 - $c : 6 + $r );
 			$out .= $on
-				? '<rect class="g-bigarrow__px" style="--i:' . ( $c + 6 - $r ) . '" x="' . $x . '" y="' . $y . '" width="12" height="12"/>'
+				? '<rect class="g-bigarrow__px" style="--i:' . $k . '" x="' . $x . '" y="' . $y . '" width="12" height="12"/>'
 				: '<rect class="g-bigarrow__dot" x="' . $x . '" y="' . $y . '" width="12" height="12"/>';
 		}
 	}

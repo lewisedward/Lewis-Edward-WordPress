@@ -168,11 +168,13 @@
 .skin-grid .g-work__all-title { font-family: var(--font-display); font-size: 34px; letter-spacing: -0.02em; line-height: 1.1; }
 .skin-grid .g-bigarrow { overflow: visible; }
 .skin-grid .g-bigarrow__dot { fill: currentColor; opacity: 0.07; }
-.skin-grid .g-bigarrow__px { fill: currentColor; transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1), fill 0.25s ease; transition-delay: calc(var(--i, 0) * 28ms); }
-a:hover > .g-bigarrow .g-bigarrow__px, a:focus-visible > .g-bigarrow .g-bigarrow__px { transform: translate(4px, -4px); }
+.skin-grid .g-bigarrow { --px-off: 0.07; }
+.skin-grid .g-bigarrow__px { fill: currentColor; }
+@keyframes g-px-on { from { opacity: var(--px-off); } to { opacity: 1; } }
+a:hover > .g-bigarrow .g-bigarrow__px, a:focus-visible > .g-bigarrow .g-bigarrow__px { animation: g-px-on 1ms steps(1, end) calc(var(--i, 0) * 45ms + 60ms) both; }
 .skin-grid .g-work__all-arrow { position: absolute; right: 32px; bottom: 32px; width: 96px; height: 96px; color: hsl(var(--foreground) / 0.85); }
 .skin-grid .g-work__all:hover .g-bigarrow__px, .skin-grid .g-work__all:focus-visible .g-bigarrow__px { fill: var(--g-lime); }
-@media (prefers-reduced-motion: reduce) { .skin-grid .g-bigarrow__px { transition: fill 0.2s ease; transition-delay: 0s; } a:hover > .g-bigarrow .g-bigarrow__px, a:focus-visible > .g-bigarrow .g-bigarrow__px { transform: none; } }
+@media (prefers-reduced-motion: reduce) { a:hover > .g-bigarrow .g-bigarrow__px, a:focus-visible > .g-bigarrow .g-bigarrow__px { animation: none; } }
 .skin-grid .g-work > .g-cell { border-bottom: 1px solid var(--g-line); }
 .skin-grid .g-work { border-bottom: 0; }
 .skin-grid .g-work__intro { display: flex; flex-direction: column; padding: 28px 32px; }
@@ -414,6 +416,7 @@ a:hover > .g-bigarrow .g-bigarrow__px, a:focus-visible > .g-bigarrow .g-bigarrow
 .skin-grid .g-cta__go h2 em { font-style: normal; font-weight: inherit; }
 .skin-grid .g-cta__go > .g-mono { color: hsl(var(--primary-foreground) / 0.75); }
 .skin-grid .g-cta__arrow { position: absolute; right: 40px; bottom: 40px; width: 120px; height: 120px; }
+.skin-grid .g-cta__arrow { --px-off: 0.1; }
 .skin-grid .g-cta__arrow .g-bigarrow__dot { opacity: 0.1; }
 .skin-grid .g-cta__previews { padding: 0; display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 1fr; }
 .skin-grid .g-cta__preview { border-right: 1px solid var(--g-line); border-bottom: 1px solid var(--g-line); min-height: var(--g-mod); }
