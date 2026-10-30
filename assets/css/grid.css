@@ -47,6 +47,18 @@
 .skin-grid .g-ph > img, .skin-grid .g-ph > video { --py: 0px; --pz: 1; transform: translate3d(0, var(--py), 0) scale(calc(var(--pz) * var(--ps, 1))); transition: --ps 0.8s ease; }
 .skin-grid.g-parallax .g-ph:not(.g-svc__bg) > img, .skin-grid.g-parallax .g-ph:not(.g-svc__bg) > video { --pz: 1.12; will-change: transform; }
 .skin-grid .g-ph--mono img, .skin-grid .g-ph--mono video { filter: grayscale(1) contrast(1.2) brightness(0.95); }
+/* Black and white until hover: photos, videos and avatars come into colour (hover devices only). */
+.skin-grid .g-ph__color { opacity: 0; transition: opacity 0.6s ease; z-index: 0; }
+@media (hover: hover) {
+	.skin-grid .g-ph--mono > img, .skin-grid .g-ph--mono > video { transition: --ps 0.8s ease, filter 0.6s ease; }
+	.skin-grid .g-ph--mono::after { transition: opacity 0.6s ease; }
+	.skin-grid .g-ph--mono:hover > img, .skin-grid .g-ph--mono:hover > video:not(.g-ph__color),
+	.skin-grid .g-svc__left:hover .g-svc__bg:not(.g-ph--tinted) > img, .skin-grid .g-svc__left:hover .g-svc__bg:not(.g-ph--tinted) > video { filter: none; }
+	.skin-grid .g-ph--mono:hover::after, .skin-grid .g-svc__left:hover .g-svc__bg::after { opacity: 0.25; }
+	.skin-grid .is-color > .g-ph__color { opacity: 1; }
+	.skin-grid .g-team img, .skin-grid .g-stack__item--team img, .skin-grid .g-tst__avatar { transition: filter 0.5s ease; }
+	.skin-grid .g-team img:hover, .skin-grid .g-stack__item--team:hover img, .skin-grid .g-tst__item:hover .g-tst__avatar { filter: none; }
+}
 /* Videos graded black and white with a lime accent baked in (the services loop): keep their colour. */
 .skin-grid .g-ph--mono.g-ph--tinted video { filter: none; }
 .skin-grid .g-ph--mono::after { content: ""; position: absolute; inset: 0; pointer-events: none; background-image: radial-gradient(circle, hsl(0 0% 0% / 0.9) 0.7px, transparent 0.9px); background-size: 4px 4px; mix-blend-mode: overlay; opacity: 0.6; }
@@ -316,7 +328,7 @@ a:hover > .g-bigarrow .g-bigarrow__px, a:focus-visible > .g-bigarrow .g-bigarrow
 	.skin-grid .g-cta__arrow { width: 72px; height: 72px; right: 20px; bottom: 20px; }
 }
 @media (prefers-reduced-motion: reduce) {
-	.skin-grid .g-ph__video { display: none; }
+	.skin-grid .g-ph__video, .skin-grid .g-ph__color { display: none; }
 	.skin-grid .g-ticker__track { animation: none; }
 }
 

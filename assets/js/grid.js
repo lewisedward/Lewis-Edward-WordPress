@@ -305,5 +305,26 @@
 		cside.querySelector('.g-clients__sectors').addEventListener('mousemove', aim);
 		cside.querySelector('.g-clients__sectors').addEventListener('mouseleave', hide);
 	}
+
+	/* Colour twins: the baked black-and-white loops fade to a synced colour copy on hover (loaded on first hover). */
+	if (window.matchMedia('(hover: hover)').matches && !reduce) {
+		document.querySelectorAll('.skin-grid video.g-ph__color[data-color-src]').forEach(function (cv) {
+			var wrap = cv.parentElement;
+			var host = wrap.classList.contains('g-svc__bg') ? wrap.closest('.g-svc__left') : wrap;
+			var base = wrap.querySelector('video.g-ph__video');
+			var t = 0;
+			host.addEventListener('mouseenter', function () {
+				clearTimeout(t);
+				if (!cv.getAttribute('src')) { cv.src = cv.getAttribute('data-color-src'); }
+				try { if (base) { cv.currentTime = base.currentTime; } } catch (e) {}
+				var p = cv.play(); if (p && p.catch) { p.catch(function () {}); }
+				wrap.classList.add('is-color');
+			});
+			host.addEventListener('mouseleave', function () {
+				wrap.classList.remove('is-color');
+				t = setTimeout(function () { cv.pause(); }, 700);
+			});
+		});
+	}
 	void root;
 })();

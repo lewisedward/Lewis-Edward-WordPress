@@ -73,6 +73,7 @@ $g_svc_all    = le_link( 'home_services_all', '/services', __( 'All services', '
 // Partnership.
 $g_ov_items   = le_field( 'home_overlap_items' );
 $g_ov_items   = is_array( $g_ov_items ) ? $g_ov_items : array();
+$g_ov_color   = '';
 $g_ov_video   = le_field( 'home_overlap_video' );
 $g_ov_poster  = le_field( 'home_overlap_poster' );
 $g_ov_video   = is_array( $g_ov_video ) ? ( $g_ov_video['url'] ?? '' ) : (string) $g_ov_video; // the field returns a URL on this site
@@ -80,6 +81,7 @@ $g_ov_poster  = ( is_array( $g_ov_poster ) && ! empty( $g_ov_poster['url'] ) ) ?
 if ( ! $g_ov_video ) { // Default: the binary-face loop in black and white, with the projected numbers kept green.
 	$g_ov_video  = LE_URI . '/assets/videos/le-partnership-mono-2048.mp4?ver=' . le_asset_ver( 'assets/videos/le-partnership-mono-2048.mp4' );
 	$g_ov_poster = LE_URI . '/assets/videos/le-partnership-mono-poster.jpg?ver=' . le_asset_ver( 'assets/videos/le-partnership-mono-poster.jpg' );
+	$g_ov_color  = LE_URI . '/assets/videos/le-partnership-color-2048.mp4?ver=' . le_asset_ver( 'assets/videos/le-partnership-color-2048.mp4' );
 }
 
 // About.
@@ -286,7 +288,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 			<?php elseif ( $g_sp ) : ?>
 			<span class="g-svc__bg g-ph g-ph--mono" aria-hidden="true"><?php echo le_grid_img( $g_sp_f, '', '(max-width: 720px) 100vw, 50vw', array( 'loading' => 'lazy' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 			<?php else : ?>
-			<span class="g-svc__bg g-ph g-ph--mono g-ph--tinted" aria-hidden="true"><video class="g-ph__video" muted loop playsinline preload="none" poster="<?php echo esc_url( LE_URI . '/assets/videos/lewis-typing-shine-poster.jpg?ver=' . le_asset_ver( 'assets/videos/lewis-typing-shine-poster.jpg' ) ); ?>"><source src="<?php echo esc_url( LE_URI . '/assets/videos/lewis-typing-shine.mp4?ver=' . le_asset_ver( 'assets/videos/lewis-typing-shine.mp4' ) ); ?>" type="video/mp4"></video></span>
+			<span class="g-svc__bg g-ph g-ph--mono g-ph--tinted" aria-hidden="true"><video class="g-ph__video" muted loop playsinline preload="none" poster="<?php echo esc_url( LE_URI . '/assets/videos/lewis-typing-shine-poster.jpg?ver=' . le_asset_ver( 'assets/videos/lewis-typing-shine-poster.jpg' ) ); ?>"><source src="<?php echo esc_url( LE_URI . '/assets/videos/lewis-typing-shine.mp4?ver=' . le_asset_ver( 'assets/videos/lewis-typing-shine.mp4' ) ); ?>" type="video/mp4"></video><video class="g-ph__color" muted loop playsinline preload="none" aria-hidden="true" data-color-src="<?php echo esc_url( LE_URI . '/assets/videos/lewis-typing-color.mp4?ver=' . le_asset_ver( 'assets/videos/lewis-typing-color.mp4' ) ); ?>"></video></span>
 			<?php endif; ?>
 			<span class="g-label g-mono g-svc__eyebrow"><span><?php echo esc_html( le_field( 'home_services_eyebrow', false, __( 'Services', 'lewisedward' ) ) ); ?></span><span>01 &ndash; <?php echo esc_html( str_pad( (string) count( $g_services ), 2, '0', STR_PAD_LEFT ) ); ?></span></span>
 			<h2 class="g-svc__title"><?php echo esc_html( le_field( 'home_services_title' ) ); ?></h2>
@@ -315,7 +317,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 		</div>
 		<div class="g-cell g-ph g-ov__media">
 			<?php if ( $g_ov_video ) : ?>
-			<video class="g-ph__video" muted loop playsinline preload="none" aria-hidden="true"<?php echo $g_ov_poster ? ' poster="' . esc_url( $g_ov_poster ) . '"' : ''; ?>><source src="<?php echo esc_url( $g_ov_video ); ?>" type="video/mp4"></video>
+			<video class="g-ph__video" muted loop playsinline preload="none" aria-hidden="true"<?php echo $g_ov_poster ? ' poster="' . esc_url( $g_ov_poster ) . '"' : ''; ?>><source src="<?php echo esc_url( $g_ov_video ); ?>" type="video/mp4"></video><?php if ( ! empty( $g_ov_color ) ) : ?><video class="g-ph__color" muted loop playsinline preload="none" aria-hidden="true" data-color-src="<?php echo esc_url( $g_ov_color ); ?>"></video><?php endif; ?>
 			<?php elseif ( $g_ov_poster ) : ?>
 			<img src="<?php echo esc_url( $g_ov_poster ); ?>" alt="" loading="lazy" />
 			<?php endif; ?>
