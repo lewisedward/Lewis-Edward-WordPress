@@ -728,3 +728,35 @@ add_action( 'init', function () {
 	}
 	update_option( 'le_migration_wp_dev_agency_service', gmdate( 'c' ) . ' ' . implode( ' ', $log ), false );
 }, 23 );
+
+/**
+ * 2026-10-31: the two agency pages out of the core list on /services/ (back to
+ * the original six) and into the specialised list instead.
+ */
+add_action( 'init', function () {
+	if ( get_option( 'le_migration_agency_pages_to_sub_list' ) || ! function_exists( 'update_field' ) ) {
+		return;
+	}
+	$services_page = get_page_by_path( 'services' );
+	if ( ! $services_page ) {
+		return;
+	}
+	$agency = array();
+	foreach ( array( 'wordpress-agency', 'wordpress-development-agency' ) as $slug ) {
+		$p = get_page_by_path( $slug, OBJECT, 'service' );
+		if ( $p ) {
+			$agency[] = (int) $p->ID;
+		}
+	}
+	$core = get_field( 'services_items', $services_page->ID, false );
+	$core = is_array( $core ) ? array_map( 'intval', $core ) : array();
+	$core = array_values( array_diff( $core, $agency ) );
+	update_field( 'services_items', $core, $services_page->ID );
+
+	$sub = get_field( 'services_sub_items', $services_page->ID, false );
+	$sub = is_array( $sub ) ? array_map( 'intval', $sub ) : array();
+	$sub = array_values( array_unique( array_merge( $sub, $agency ) ) );
+	update_field( 'services_sub_items', $sub, $services_page->ID );
+
+	update_option( 'le_migration_agency_pages_to_sub_list', gmdate( 'c' ) . ' core:' . count( $core ) . ' sub:' . count( $sub ), false );
+}, 24 );
