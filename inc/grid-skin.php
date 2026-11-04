@@ -235,9 +235,11 @@ add_filter( 'wp_get_attachment_image_attributes', function ( $attr, $attachment 
 function le_grid_logo( $url ) {
 	$base = pathinfo( (string) wp_parse_url( $url, PHP_URL_PATH ), PATHINFO_FILENAME );
 	$base = preg_replace( '/-(scaled|\d+x\d+)$/', '', strtolower( $base ) );
-	$rel  = 'assets/images/clients/' . $base . '-mono.svg';
-	if ( $base && file_exists( LE_DIR . '/' . $rel ) ) {
-		return LE_URI . '/' . $rel . '?ver=' . le_asset_ver( $rel );
+	foreach ( array( 'svg', 'png' ) as $ext ) { // A white-on-transparent version in the theme wins over the upload.
+		$rel = 'assets/images/clients/' . $base . '-mono.' . $ext;
+		if ( $base && file_exists( LE_DIR . '/' . $rel ) ) {
+			return LE_URI . '/' . $rel . '?ver=' . le_asset_ver( $rel );
+		}
 	}
 	return $url;
 }
