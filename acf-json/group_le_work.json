@@ -229,6 +229,34 @@
             "bidirectional_target": []
         },
         {
+            "key": "field_work_testimonial",
+            "label": "Client testimonial",
+            "name": "work_testimonial",
+            "aria-label": "",
+            "type": "post_object",
+            "instructions": "Optional. Pick the client's testimonial to show it on this case study, after the results. Leave empty if there isn't one.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "testimonial"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "return_format": "id",
+            "multiple": 0,
+            "allow_null": 1,
+            "bidirectional": 0,
+            "ui": 1,
+            "bidirectional_target": []
+        },
+        {
             "key": "field_wk_tech",
             "label": "Tech stack",
             "name": "work_technologies",
@@ -1005,5 +1033,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1792784548
+    "modified": 1793788277
 }

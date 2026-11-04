@@ -15,20 +15,24 @@ $g_pid = $g_pid ? $g_pid : false;
 $g_id  = static function ( $item ) {
 	return is_object( $item ) ? (int) $item->ID : (int) $item;
 };
-$g_tsts  = le_field( 'home_tst_items', $g_pid );
-$g_tsts  = is_array( $g_tsts ) ? $g_tsts : array();
+// A caller can pass its own list (a case study passes its one client testimonial) and label.
+$g_tsts  = isset( $args['items'] ) ? (array) $args['items'] : le_field( 'home_tst_items', $g_pid );
+$g_tsts  = is_array( $g_tsts ) ? array_values( array_filter( $g_tsts ) ) : array();
+$g_tlbl  = isset( $args['label'] ) ? (string) $args['label'] : le_field( 'home_tst_eyebrow', $g_pid, __( 'Testimonials', 'lewisedward' ) );
 $g_logos = le_field( 'home_clients_logos', $g_pid );
 $g_logos = is_array( $g_logos ) ? $g_logos : array();
 ?>
 	<?php if ( $g_tsts ) : ?>
 	<section class="g-row g-tst" aria-label="<?php esc_attr_e( 'Testimonials', 'lewisedward' ); ?>">
 		<div class="g-cell g-tst__side">
-			<span class="g-label g-mono"><?php echo esc_html( le_field( 'home_tst_eyebrow', $g_pid, __( 'Testimonials', 'lewisedward' ) ) ); ?></span>
+			<span class="g-label g-mono"><?php echo esc_html( $g_tlbl ); ?></span>
+			<?php if ( count( $g_tsts ) > 1 ) : ?>
 			<div class="g-tst__nav">
 				<span class="g-tst__count g-mono"><span data-tst-current>01</span> / <?php echo esc_html( str_pad( (string) count( $g_tsts ), 2, '0', STR_PAD_LEFT ) ); ?></span>
 				<span class="g-tst__btns"><button type="button" class="g-tst__btn" data-tst-prev aria-label="<?php esc_attr_e( 'Previous testimonial', 'lewisedward' ); ?>"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button><button type="button" class="g-tst__btn" data-tst-next aria-label="<?php esc_attr_e( 'Next testimonial', 'lewisedward' ); ?>"><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></button></span>
 				<span class="g-tst__bar" aria-hidden="true"><i></i></span>
 			</div>
+			<?php endif; ?>
 		</div>
 		<div class="g-cell g-tst__stage" data-tst>
 			<?php foreach ( $g_tsts as $i => $t ) : $tid = $g_id( $t ); $role = le_field( 'testimonial_role', $tid ); $co = le_field( 'testimonial_company', $tid ); ?>

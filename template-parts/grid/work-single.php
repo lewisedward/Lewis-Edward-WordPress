@@ -93,6 +93,14 @@ $wk_has_glance = ( $wk_year || $wk_dur || $wk_plat || $wk_services || $wk_tech )
 	</section>
 	<?php endif; ?>
 
+	<?php
+	// Optional client testimonial for this project.
+	$wk_tst = (int) le_field( 'work_testimonial', $wk_id );
+	if ( $wk_tst && 'publish' === get_post_status( $wk_tst ) ) {
+		get_template_part( 'template-parts/grid/testimonials', null, array( 'items' => array( $wk_tst ), 'label' => __( 'Client feedback', 'lewisedward' ) ) );
+	}
+	?>
+
 	<?php if ( $wk_feats ) : ?>
 	<section class="g-row" aria-label="<?php esc_attr_e( 'Visual journey', 'lewisedward' ); ?>">
 		<?php le_grid_intro( array( 'label' => le_field( 'wk_features_eyebrow', $wk_id, __( 'Visual journey', 'lewisedward' ) ), 'count' => str_pad( (string) count( $wk_feats ), 2, '0', STR_PAD_LEFT ), 'title' => le_grid_heading( array( array( le_field( 'wk_features_title_pre', $wk_id, __( 'Explore', 'lewisedward' ) ) ), array( le_field( 'wk_features_title_mid', $wk_id, __( 'some', 'lewisedward' ) ), 'muted' ), array( le_field( 'wk_features_title_end', $wk_id, __( 'features.', 'lewisedward' ) ), 'accent' ) ) ), 'class' => 'g-sec__intro--bar' ) ); ?>
