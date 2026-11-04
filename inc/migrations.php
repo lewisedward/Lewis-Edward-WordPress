@@ -760,3 +760,60 @@ add_action( 'init', function () {
 
 	update_option( 'le_migration_agency_pages_to_sub_list', gmdate( 'c' ) . ' core:' . count( $core ) . ' sub:' . count( $sub ), false );
 }, 24 );
+
+/**
+ * One-off: the Brighton & Hove Museums logo for its testimonial. Their site
+ * prints the logo as inline SVG (no file), so this reads it from their
+ * homepage header, adds the xmlns a standalone file needs, sanitises it like
+ * a normal SVG upload and imports it to the Media Library. It is set as the
+ * "Company logo" of any testimonial whose company mentions Brighton and has
+ * none yet. Runs for an admin in wp-admin, so SVG uploads are allowed.
+ */
+add_action( 'admin_init', function () {
+	if ( get_option( 'le_migration_bhm_logo' ) || ! current_user_can( 'manage_options' ) || ! function_exists( 'update_field' ) ) {
+		return;
+	}
+	require_once ABSPATH . 'wp-admin/includes/file.php';
+	require_once ABSPATH . 'wp-admin/includes/media.php';
+	require_once ABSPATH . 'wp-admin/includes/image.php';
+	$log = array();
+	$res = wp_remote_get( 'https://brightonmuseums.org.uk/', array( 'timeout' => 20, 'user-agent' => 'Mozilla/5.0 (compatible; LewisEdwardSite/1.0)' ) );
+	$html = is_wp_error( $res ) ? '' : (string) wp_remote_retrieve_body( $res );
+	$svg  = '';
+	if ( $html && preg_match( '#<header\b.*?(<svg\b[^>]*viewBox="0 0 218\.691 99\.999"[^>]*>.*?</svg>)#is', $html, $m ) ) {
+		$svg = $m[1];
+	} elseif ( $html && preg_match( '#(<svg\b[^>]*viewBox="0 0 218\.691 99\.999"[^>]*>.*?</svg>)#is', $html, $m ) ) {
+		$svg = $m[1];
+	}
+	if ( ! $svg ) {
+		update_option( 'le_migration_bhm_logo', gmdate( 'c' ) . ' not-found:' . ( is_wp_error( $res ) ? $res->get_error_code() : wp_remote_retrieve_response_code( $res ) ), false );
+		return;
+	}
+	if ( false === stripos( $svg, 'xmlns=' ) ) {
+		$svg = preg_replace( '#^<svg\b#i', '<svg xmlns="http://www.w3.org/2000/svg"', $svg );
+	}
+	$clean = function_exists( 'le_sanitize_svg_string' ) ? le_sanitize_svg_string( '<?xml version="1.0" encoding="UTF-8"?>' . "\n" . $svg ) : '';
+	if ( ! $clean || false === stripos( $clean, '<svg' ) ) {
+		update_option( 'le_migration_bhm_logo', gmdate( 'c' ) . ' sanitise-failed', false );
+		return;
+	}
+	$tmp = wp_tempnam( 'brighton-hove-museums-logo.svg' );
+	file_put_contents( $tmp, $clean ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_file_put_contents
+	$id = media_handle_sideload( array( 'name' => 'brighton-hove-museums-logo.svg', 'tmp_name' => $tmp ), 0, 'Brighton & Hove Museums logo' );
+	if ( is_wp_error( $id ) ) {
+		wp_delete_file( $tmp );
+		update_option( 'le_migration_bhm_logo', gmdate( 'c' ) . ' upload:' . $id->get_error_code(), false );
+		return;
+	}
+	update_post_meta( $id, '_wp_attachment_image_alt', 'Brighton & Hove Museums logo' );
+	$log[] = 'media:' . $id;
+	foreach ( get_posts( array( 'post_type' => 'testimonial', 'post_status' => 'any', 'numberposts' => -1 ) ) as $t ) {
+		$co = (string) get_field( 'testimonial_company', $t->ID );
+		if ( false === stripos( $co, 'brighton' ) || get_field( 'testimonial_logo', $t->ID ) ) {
+			continue;
+		}
+		update_field( 'field_ts_logo', $id, $t->ID );
+		$log[] = 'testimonial:' . $t->ID;
+	}
+	update_option( 'le_migration_bhm_logo', gmdate( 'c' ) . ' ' . implode( ' ', $log ), false );
+} );
