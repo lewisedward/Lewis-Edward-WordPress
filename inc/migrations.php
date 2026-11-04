@@ -817,3 +817,60 @@ add_action( 'admin_init', function () {
 	}
 	update_option( 'le_migration_bhm_logo', gmdate( 'c' ) . ' ' . implode( ' ', $log ), false );
 } );
+
+/**
+ * 2026-11-04: roll back the homepage title / meta description test.
+ *
+ * The 24 Oct test (migration _b above) did not move CTR (0.1% before and after)
+ * and homepage impressions fell by about two thirds from the same week, with the
+ * head terms dropping out of the top 100. This restores the pre-test values
+ * from the rollback log in le_migration_seo_audit_2026_10_b. An empty logged
+ * value means the field was unset (Yoast template), so the meta is deleted
+ * rather than set to "". The homepage title and meta are then to be left alone
+ * until at least 25 Nov so Google settles on one version.
+ */
+add_action( 'init', function () {
+	if ( get_option( 'le_migration_home_title_rollback_2026_11' ) ) {
+		return;
+	}
+	$log   = array();
+	$prior = (string) get_option( 'le_migration_seo_audit_2026_10_b' );
+	$front = (int) get_option( 'page_on_front' );
+	if ( ! $front || '' === $prior ) {
+		update_option( 'le_migration_home_title_rollback_2026_11', gmdate( 'c' ) . ' skipped:' . ( $front ? 'no-rollback-log' : 'no-static-front-page' ), false );
+		return;
+	}
+
+	$restore = array(
+		'_yoast_wpseo_title'    => 'home:title-was:',
+		'_yoast_wpseo_metadesc' => 'home:desc-was:',
+	);
+	foreach ( $restore as $key => $marker ) {
+		$pos = strpos( $prior, $marker );
+		if ( false === $pos ) {
+			$log[] = $key . ':marker-missing';
+			continue;
+		}
+		$value = substr( $prior, $pos + strlen( $marker ) );
+		$end   = strpos( $value, ' | home:' ); // the title may itself contain " | " (Yoast separator).
+		if ( false !== $end ) {
+			$value = substr( $value, 0, $end );
+		}
+		$value = trim( $value );
+		$log[] = $key . ':now-was:' . (string) get_post_meta( $front, $key, true );
+		if ( '' === $value ) {
+			delete_post_meta( $front, $key );
+			$log[] = $key . ':unset';
+		} else {
+			update_post_meta( $front, $key, $value );
+			$log[] = $key . ':restored:' . $value;
+		}
+	}
+
+	if ( has_action( 'litespeed_purge_all' ) ) {
+		do_action( 'litespeed_purge_all' );
+		$log[] = 'litespeed-purged';
+	}
+
+	update_option( 'le_migration_home_title_rollback_2026_11', gmdate( 'c' ) . ' ' . implode( ' | ', $log ), false );
+}, 20 );
