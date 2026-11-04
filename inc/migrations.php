@@ -37,18 +37,18 @@ add_action( 'init', function () {
 		return;
 	}
 	$old_slug = $post->post_name;
-	wp_update_post( array( 'ID' => $post->ID, 'post_title' => 'Agency Partnership', 'post_name' => 'wordpress-agency-partnership' ) );
+	wp_update_post( array( 'ID' => $post->ID, 'post_title' => 'Agency partner', 'post_name' => 'wordpress-agency-partnership' ) );
 
 	foreach ( wp_get_nav_menus() as $menu ) {
 		foreach ( (array) wp_get_nav_menu_items( $menu->term_id ) as $item ) {
 			if ( 'post_type' === $item->type && 'service' === $item->object && (int) $item->object_id === (int) $post->ID ) {
 				if ( '' === trim( (string) get_post_field( 'post_title', $item->ID ) ) || 'Creative Agency Partner' === trim( (string) get_post_field( 'post_title', $item->ID ) ) ) {
-					wp_update_post( array( 'ID' => $item->ID, 'post_title' => 'Agency Partnership' ) );
+					wp_update_post( array( 'ID' => $item->ID, 'post_title' => 'Agency partner' ) );
 				}
 			} elseif ( 'custom' === $item->type && false !== strpos( (string) $item->url, '/services/' . $old_slug ) ) {
 				update_post_meta( $item->ID, '_menu_item_url', str_replace( '/services/' . $old_slug, '/services/wordpress-agency-partnership', (string) $item->url ) );
 				if ( 'Creative Agency Partner' === trim( (string) $item->title ) ) {
-					wp_update_post( array( 'ID' => $item->ID, 'post_title' => 'Agency Partnership' ) );
+					wp_update_post( array( 'ID' => $item->ID, 'post_title' => 'Agency partner' ) );
 				}
 			}
 		}
@@ -440,7 +440,7 @@ add_action( 'init', function () {
 		array( 'field_sv_feature_tag' => 'Support' ),
 	), $id );
 	update_field( 'field_sv_headline', 'A London WordPress agency that still answers the phone', $id );
-	update_field( 'field_sv_intro', "We're a London WordPress agency of five - designers, developers and, let's face it, geeks - who've been building bespoke WordPress websites since 2011. No account managers, no page builders, no outsourcing. You talk to the people who design and build your site, and we stick around to look after it once it's live.", $id );
+	update_field( 'field_sv_intro', "We're a London WordPress agency of five - designers, developers and, let's face it, geeks - who've been building bespoke WordPress websites since 2011. No account managers, no outsourcing, and no page builders unless you ask for one. You talk to the people who design and build your site, and we stick around to look after it once it's live.", $id );
 	update_field( 'field_6a8d88e295d9a', 'Everything a WordPress agency should do, done properly', $id );
 	update_field( 'field_sv_dfeatures', array(
 		array( 'field_sv_df_title' => 'WordPress web design', 'field_sv_df_desc' => "Bespoke designs built around your brand and your content, not a theme we've used twenty times before. Clean, fast and easy to edit once it's yours." ),
@@ -458,7 +458,7 @@ add_action( 'init', function () {
 	), $id );
 	update_field( 'field_sv_benefits', array(
 		array( 'field_sv_b_item' => 'Senior team only - the person on the call is the person writing the code' ),
-		array( 'field_sv_b_item' => 'Hand-coded WordPress, no page builders, fast Core Web Vitals as standard' ),
+		array( 'field_sv_b_item' => 'Hand-coded WordPress by default, with fast Core Web Vitals as standard' ),
 		array( 'field_sv_b_item' => 'Fixed prices and honest timelines - a brochure site in 4-6 weeks, complex builds in 8-12' ),
 		array( 'field_sv_b_item' => "Trusted by easyJet, Lord's, the Church of England, United Airlines and NTT DATA" ),
 		array( 'field_sv_b_item' => 'UK-based hosting and support, answered by us, not a ticket queue' ),
@@ -632,7 +632,7 @@ add_action( 'init', function () {
 		array( 'field_sv_feature_tag' => 'Headless' ),
 	), $id );
 	update_field( 'field_sv_headline', 'A WordPress development agency that writes its own code', $id );
-	update_field( 'field_sv_intro', "We're the development side of a small London WordPress agency - senior developers who hand-code every theme, wire up every integration and never reach for a page builder. Brands come to us for bespoke builds; creative agencies and in-house teams come to us when they need serious WordPress engineering without hiring for it.", $id );
+	update_field( 'field_sv_intro', "We're the development side of a small London WordPress agency - senior developers who hand-code every theme, wire up every integration and only reach for a page builder when a client asks for one. Brands come to us for bespoke builds; creative agencies and in-house teams come to us when they need serious WordPress engineering without hiring for it.", $id );
 	update_field( 'field_6a8d88e295d9a', 'WordPress development, the way it should be done', $id );
 	update_field( 'field_sv_dfeatures', array(
 		array( 'field_sv_df_title' => 'Bespoke theme development', 'field_sv_df_desc' => "Every site is coded from your designs (or ours) into a clean, custom theme. No bloated frameworks, no 300 unused options, nothing you don't need." ),
@@ -649,7 +649,7 @@ add_action( 'init', function () {
 		array( 'field_sv_ps_step' => '04', 'field_sv_ps_title' => 'QA, launch & handover', 'field_sv_ps_desc' => "Cross-browser and device testing, performance and SEO checks, redirects, launch. Then a month's bug guarantee, documentation and optional support." ),
 	), $id );
 	update_field( 'field_sv_benefits', array(
-		array( 'field_sv_b_item' => 'Hand-coded themes - no page builders, no theme marketplaces, no technical debt on day one' ),
+		array( 'field_sv_b_item' => 'Hand-coded themes by default - no theme marketplaces, no technical debt on day one' ),
 		array( 'field_sv_b_item' => 'Senior developers only; the person scoping your build is the person building it' ),
 		array( 'field_sv_b_item' => 'Integrations as standard: HubSpot, Stripe, WooCommerce, Teachable, custom APIs and AI tools' ),
 		array( 'field_sv_b_item' => 'Fast by default - Core Web Vitals treated as a requirement, not a plugin' ),

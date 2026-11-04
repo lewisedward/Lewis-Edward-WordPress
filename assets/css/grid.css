@@ -421,7 +421,7 @@ a:hover > .g-bigarrow .g-bigarrow__px, a:focus-visible > .g-bigarrow .g-bigarrow
 .skin-grid .g-tst__quote p { margin: 0; }
 .skin-grid .g-tst__meta { display: flex; flex-direction: column; gap: 6px; padding: 36px 32px; background: var(--g-dark); font-size: 14px; }
 .skin-grid .g-tst__meta .g-mono { color: hsl(var(--foreground) / 0.6); }
-.skin-grid .g-tst__logo { height: 64px; width: auto; max-width: 200px; object-fit: contain; object-position: left; margin-top: auto; order: 9; padding-top: 28px; filter: grayscale(1) brightness(0) invert(1); opacity: 0.8; }
+.skin-grid .g-tst__logo { height: 64px; width: auto; max-width: min(100%, 320px); object-fit: contain; object-position: left; margin-top: auto; order: 9; padding-top: 28px; filter: grayscale(1) brightness(0) invert(1); opacity: 0.8; }
 .skin-grid .g-tst__avatar { width: 56px; height: 56px; border-radius: 999px; object-fit: cover; filter: grayscale(1); margin-bottom: 16px; }
 
 /* ---- Contact --------------------------------------------------------------- */
