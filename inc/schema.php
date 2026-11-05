@@ -54,6 +54,7 @@ function le_front_page_schema() {
 			'@type'       => 'Offer',
 			'itemOffered' => array_filter( array(
 				'@type'       => 'Service',
+				'@id'         => get_permalink( $sid ) . '#service',
 				'name'        => get_the_title( $sid ),
 				'url'         => get_permalink( $sid ),
 				'description' => $desc ? wp_strip_all_tags( (string) $desc ) : null,
@@ -185,3 +186,70 @@ function le_print_front_page_schema() {
 }
 add_action( 'wp_head', 'le_print_front_page_schema', 5 );
 add_filter( 'wpseo_schema_graph', 'le_merge_schema_into_yoast', 20 );
+
+/**
+ * Service pages: add a Service node to Yoast's graph and point the page's
+ * WebPage node at it, so each service page names what it is about and who
+ * provides it. The @id matches the homepage OfferCatalog item for the same
+ * service, so the two reference one entity.
+ *
+ * @param array<int,array<string,mixed>> $graph Yoast graph pieces.
+ * @return array<int,array<string,mixed>>
+ */
+function le_service_page_schema( $graph ) {
+	if ( ! is_singular( 'service' ) || ! is_array( $graph ) ) {
+		return $graph;
+	}
+	$sid = get_queried_object_id();
+	if ( ! $sid ) {
+		return $graph;
+	}
+
+	$org_id  = null;
+	$page_id = null;
+	foreach ( $graph as $node ) {
+		$types = (array) ( $node['@type'] ?? array() );
+		if ( ! $org_id && in_array( 'Organization', $types, true ) ) {
+			$org_id = $node['@id'] ?? null;
+		}
+		if ( ! $page_id && in_array( 'WebPage', $types, true ) ) {
+			$page_id = $node['@id'] ?? null;
+		}
+	}
+	if ( ! $org_id ) {
+		$org_id = home_url( '/' ) . '#organization';
+	}
+
+	$url  = get_permalink( $sid );
+	$desc = le_field( 'service_short_description', $sid );
+	if ( ! $desc ) {
+		$desc = le_field( 'service_excerpt', $sid );
+	}
+	$desc = trim( preg_replace( '/\s+/', ' ', wp_strip_all_tags( (string) $desc ) ) );
+
+	$service = array_filter( array(
+		'@type'            => 'Service',
+		'@id'              => $url . '#service',
+		'name'             => get_the_title( $sid ),
+		'serviceType'      => get_the_title( $sid ),
+		'description'      => $desc ?: null,
+		'url'              => $url,
+		'provider'         => array( '@id' => $org_id ),
+		'areaServed'       => array(
+			array( '@type' => 'City', 'name' => 'London' ),
+			array( '@type' => 'Country', 'name' => 'United Kingdom' ),
+		),
+		'mainEntityOfPage' => $page_id ? array( '@id' => $page_id ) : null,
+	) );
+
+	foreach ( $graph as $i => $node ) {
+		if ( $page_id && ( $node['@id'] ?? null ) === $page_id ) {
+			$graph[ $i ]['about']      = array( '@id' => $service['@id'] );
+			$graph[ $i ]['mainEntity'] = array( '@id' => $service['@id'] );
+			break;
+		}
+	}
+	$graph[] = $service;
+	return $graph;
+}
+add_filter( 'wpseo_schema_graph', 'le_service_page_schema', 21 );
