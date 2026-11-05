@@ -913,3 +913,17 @@ add_action( 'init', function () {
 	}
 	update_option( 'le_migration_service_metadesc_2026_11', gmdate( 'c' ) . ' ' . implode( ' | ', $log ), false );
 }, 20 );
+
+/**
+ * 2026-11-05 audit item 9: rebuild the sitemap index now that the category
+ * and work-category sitemaps are excluded (inc/seo.php).
+ */
+add_action( 'init', function () {
+	if ( get_option( 'le_migration_sitemap_rebuild_2026_11' ) ) {
+		return;
+	}
+	if ( class_exists( 'WPSEO_Sitemaps_Cache' ) && method_exists( 'WPSEO_Sitemaps_Cache', 'clear' ) ) {
+		WPSEO_Sitemaps_Cache::clear();
+	}
+	update_option( 'le_migration_sitemap_rebuild_2026_11', gmdate( 'c' ), false );
+}, 20 );

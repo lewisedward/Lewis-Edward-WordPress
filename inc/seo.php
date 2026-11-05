@@ -58,6 +58,19 @@ add_filter( 'wpseo_robots', function ( $robots ) {
 } );
 add_filter( 'wpseo_sitemap_exclude_author', '__return_empty_array' );
 
+/**
+ * Category and work-category archives are navigation, not landing pages: they
+ * sat in Search Console's "Discovered, not indexed" bucket competing for crawl
+ * with the pages that matter. Keep them crawlable (follow) but out of the index
+ * and the sitemap.
+ */
+add_filter( 'wpseo_robots', function ( $robots ) {
+	return ( is_category() || is_tax( 'work_category' ) ) ? 'noindex, follow' : $robots;
+} );
+add_filter( 'wpseo_sitemap_exclude_taxonomy', function ( $exclude, $taxonomy ) {
+	return in_array( $taxonomy, array( 'category', 'work_category' ), true ) ? true : $exclude;
+}, 10, 2 );
+
 /** Default share image for pages without a featured image of their own. */
 add_action( 'wpseo_add_opengraph_additional_images', function ( $images ) {
 	if ( is_object( $images ) && method_exists( $images, 'has_images' ) && ! $images->has_images() && method_exists( $images, 'add_image' ) ) {
