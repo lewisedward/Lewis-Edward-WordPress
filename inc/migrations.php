@@ -1044,3 +1044,77 @@ add_action( 'init', function () {
 	}
 	update_option( 'le_migration_support_section_labels_2026_11', gmdate( 'c' ) . ' ' . implode( ' | ', $log ), false );
 }, 21 );
+
+/**
+ * 2026-11-05: optional "How did you hear about us?" dropdown on both forms.
+ *
+ * Analytics only runs after cookie consent, so most enquiries arrive with no
+ * known source (Lidia's 21 Oct quote request left no trace in GA). The answer
+ * is stored with the entry and appears in the notification email via
+ * {all_fields}. Contact form (1): after "Your message", before consent.
+ * Quote form (2): end of the "Your project" section, after "Budget range".
+ * Admin label how_heard marks the field so this never adds it twice.
+ */
+add_action( 'init', function () {
+	if ( get_option( 'le_migration_how_heard_2026_11' ) || ! class_exists( 'GFAPI' ) || ! class_exists( 'GF_Fields' ) ) {
+		return;
+	}
+	$choices = array();
+	foreach ( array( 'Google search', 'ChatGPT or another AI tool', 'Recommendation or word of mouth', 'LinkedIn', 'Instagram', 'Clutch or another directory', 'Other' ) as $c ) {
+		$choices[] = array( 'text' => $c, 'value' => $c, 'isSelected' => false );
+	}
+	$targets = array(
+		1 => array( 'after_type' => 'textarea' ),          // Your message.
+		2 => array( 'after_label' => 'Budget range' ),     // Last field of "Your project".
+	);
+	$log = array();
+	foreach ( $targets as $form_id => $rule ) {
+		$form = GFAPI::get_form( $form_id );
+		if ( ! $form ) {
+			$log[] = $form_id . ':no-form';
+			continue;
+		}
+		$pos = null;
+		foreach ( $form['fields'] as $i => $f ) {
+			if ( 'how_heard' === $f->adminLabel ) {
+				$pos = false;
+				break;
+			}
+			$label = trim( preg_replace( '/\s*\(optional\)\s*$/i', '', (string) $f->label ) );
+			if ( ( isset( $rule['after_type'] ) && $rule['after_type'] === $f->type ) || ( isset( $rule['after_label'] ) && 0 === strcasecmp( $rule['after_label'], $label ) ) ) {
+				$pos = $i + 1;
+			}
+		}
+		if ( false === $pos ) {
+			$log[] = $form_id . ':exists';
+			continue;
+		}
+		if ( null === $pos ) {
+			$pos = count( $form['fields'] ); // Fallback: end of the form.
+			foreach ( $form['fields'] as $i => $f ) {
+				if ( 'consent' === $f->type ) {
+					$pos = $i;
+					break;
+				}
+			}
+			$log[] = $form_id . ':anchor-missing';
+		}
+		$field = GF_Fields::create( array(
+			'type'        => 'select',
+			'id'          => GFFormsModel::get_next_field_id( $form['fields'] ),
+			'formId'      => $form_id,
+			'label'       => 'How did you hear about us? (optional)',
+			'adminLabel'  => 'how_heard',
+			'isRequired'  => false,
+			'placeholder' => 'Select one',
+			'choices'     => $choices,
+		) );
+		array_splice( $form['fields'], $pos, 0, array( $field ) );
+		$res     = GFAPI::update_form( $form );
+		$log[]   = $form_id . ':' . ( is_wp_error( $res ) ? 'error:' . $res->get_error_message() : 'added-id-' . $field->id . '-at-' . $pos );
+	}
+	if ( has_action( 'litespeed_purge_all' ) ) {
+		do_action( 'litespeed_purge_all' );
+	}
+	update_option( 'le_migration_how_heard_2026_11', gmdate( 'c' ) . ' ' . implode( ' | ', $log ), false );
+}, 22 );
