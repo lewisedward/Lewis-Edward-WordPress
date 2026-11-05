@@ -61,4 +61,7 @@ $le_menu      = function ( $location, $fallback, $ensure = null ) {
 		<a class="g-cell" href="<?php echo esc_url( $le_linkedin ); ?>" target="_blank" rel="noopener noreferrer"><span>LinkedIn</span><?php echo le_grid_arrow_diag(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 		<div class="g-cell g-cell--split"><a href="<?php echo esc_url( home_url( '/privacy' ) ); ?>"><?php esc_html_e( 'Privacy policy', 'lewisedward' ); ?></a><button class="g-footer__cookies" type="button" data-consent-open><?php esc_html_e( 'Cookie settings', 'lewisedward' ); ?></button></div>
 	</div>
+	<div class="g-row g-footer__reg">
+		<div class="g-cell g-mono"><?php esc_html_e( 'Registered office: 71-75 Shelton Street, London WC2H 9JQ', 'lewisedward' ); ?></div>
+	</div>
 </footer>
