@@ -1118,3 +1118,75 @@ add_action( 'init', function () {
 	}
 	update_option( 'le_migration_how_heard_2026_11', gmdate( 'c' ) . ' ' . implode( ' | ', $log ), false );
 }, 22 );
+
+/**
+ * 2026-11-05: personal autoreply to whoever submits the contact or quote form.
+ *
+ * Sent from Lewis (hello@lewisedward.com, via WP Mail SMTP / Resend, domain
+ * verified) to the email field, with a copy of what they sent. Wording agreed
+ * with Lewis. "Force From Email" in WP Mail SMTP must be off, otherwise the
+ * sender is rewritten to team@. Added once; marked by the notification name.
+ */
+add_action( 'init', function () {
+	if ( get_option( 'le_migration_autoreply_2026_11' ) || ! class_exists( 'GFAPI' ) ) {
+		return;
+	}
+	$sig  = "Lewis\nLewis Edward · WordPress web design &amp; development · London";
+	$copy = "\n\n<strong>A copy of what you sent</strong>\n{all_fields:noadmin}";
+	$set  = array(
+		2 => array(
+			'email'   => '5',
+			'subject' => 'Thanks for your quote request, {Your name (First):3.3}',
+			'body'    => "Hi {Your name (First):3.3},\n\n"
+				. "Thanks for getting in touch about your project. Your request has come straight to me, and I'll read it properly and reply personally within one working day, usually sooner.\n\n"
+				. "If it looks like a good fit, the next step is a short call to talk it through. After that I'll send a written scope with a fixed price, so you know exactly what you're getting before anything starts.\n\n"
+				. "In the meantime, you can see some recent work here: <a href=\"https://lewisedward.com/work/\">lewisedward.com/work</a>\n\n"
+				. "If anything changes or you'd like to add something, just reply to this email.\n\n" . $sig . $copy,
+		),
+		1 => array(
+			'email'   => '3',
+			'subject' => 'Thanks for your message, {Your name (First):1.3}',
+			'body'    => "Hi {Your name (First):1.3},\n\n"
+				. "Thanks for your message. It's come straight to me and I'll reply personally within one working day, usually sooner.\n\n"
+				. "If you'd like to add anything in the meantime, just reply to this email.\n\n" . $sig . $copy,
+		),
+	);
+	$log = array();
+	foreach ( $set as $form_id => $n ) {
+		$form = GFAPI::get_form( $form_id );
+		if ( ! $form ) {
+			$log[] = $form_id . ':no-form';
+			continue;
+		}
+		$exists = false;
+		foreach ( (array) rgar( $form, 'notifications' ) as $existing ) {
+			if ( 'Autoreply to sender' === rgar( $existing, 'name' ) ) {
+				$exists = true;
+			}
+		}
+		if ( $exists ) {
+			$log[] = $form_id . ':exists';
+			continue;
+		}
+		$id                           = uniqid();
+		$form['notifications'][ $id ] = array(
+			'id'                => $id,
+			'name'              => 'Autoreply to sender',
+			'isActive'          => true,
+			'service'           => 'wordpress',
+			'event'             => 'form_submission',
+			'toType'            => 'field',
+			'to'                => $n['email'],
+			'from'              => 'hello@lewisedward.com',
+			'fromName'          => 'Lewis Edward',
+			'replyTo'           => 'hello@lewisedward.com',
+			'subject'           => $n['subject'],
+			'message'           => $n['body'],
+			'disableAutoformat' => false,
+			'enableAttachments' => false,
+		);
+		$res   = GFAPI::update_form( $form );
+		$log[] = $form_id . ':' . ( is_wp_error( $res ) ? 'error:' . $res->get_error_message() : 'added-' . $id );
+	}
+	update_option( 'le_migration_autoreply_2026_11', gmdate( 'c' ) . ' ' . implode( ' | ', $log ), false );
+}, 23 );
