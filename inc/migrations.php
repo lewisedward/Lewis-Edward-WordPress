@@ -874,3 +874,42 @@ add_action( 'init', function () {
 
 	update_option( 'le_migration_home_title_rollback_2026_11', gmdate( 'c' ) . ' ' . implode( ' | ', $log ), false );
 }, 20 );
+
+/**
+ * 2026-11-05 Search Console audit, item 5: service page meta descriptions
+ * rewritten as click propositions (named clients, year, London, an action).
+ * Previous values are logged in the option for rollback. Homepage untouched.
+ */
+add_action( 'init', function () {
+	if ( get_option( 'le_migration_service_metadesc_2026_11' ) ) {
+		return;
+	}
+	$log   = array();
+	$descs = array(
+		'web-design' => 'Bespoke WordPress web design from a small London studio trusted by easyJet, Lord\'s and the Church of England since 2011. Fast, easy to edit. Get a quote.',
+		'web-development' => 'Hand-coded WordPress development in London. Custom themes, ACF and integrations for easyJet, Lord\'s and the Church of England since 2011. Get a quote.',
+		'website-support' => 'Proactive WordPress support and maintenance from London: updates, security, backups and same-day fixes from a small senior team trusted since 2011.',
+		'wordpress-agency' => 'A small, senior London WordPress agency: bespoke design, hand-coded development and proactive support for easyJet, Lord\'s and the Church of England.',
+		'wordpress-development-agency' => 'London WordPress development agency that hand-codes every build: bespoke themes, ACF, integrations and headless WordPress for brands and agencies.',
+		'e-commerce' => 'WooCommerce and Shopify development from a London WordPress studio established in 2011. Fast, secure online shops that are easy to run. Get a quote.',
+		'seo' => 'WordPress SEO from a London agency that builds the sites it optimises: technical fixes, Core Web Vitals, content and structured data. White-hat only.',
+		'wordpress-agency-partnership' => 'White-label WordPress, Webflow and AI development for creative agencies, delivered under your brand. A London partner with 15 years\' experience.',
+		'ai-development' => 'AI development in London: custom tools, CRM and WordPress integrations built with Claude and Lovable around your existing systems. Est. 2011.',
+		'website-optimisation' => 'WordPress performance optimisation from London: Core Web Vitals, caching, image and code fixes by developers who hand-code the sites they tune.',
+		'web-hosting' => 'Fully managed WordPress hosting in the UK, including tech support: fast, secure and powered by 100% green energy, from a London studio since 2011.',
+	);
+	foreach ( $descs as $slug => $desc ) {
+		$post = get_page_by_path( $slug, OBJECT, 'service' );
+		if ( ! $post ) {
+			$log[] = $slug . ':missing';
+			continue;
+		}
+		$log[] = $slug . ':was:' . (string) get_post_meta( $post->ID, '_yoast_wpseo_metadesc', true );
+		update_post_meta( $post->ID, '_yoast_wpseo_metadesc', $desc );
+	}
+	if ( has_action( 'litespeed_purge_all' ) ) {
+		do_action( 'litespeed_purge_all' );
+		$log[] = 'litespeed-purged';
+	}
+	update_option( 'le_migration_service_metadesc_2026_11', gmdate( 'c' ) . ' ' . implode( ' | ', $log ), false );
+}, 20 );
