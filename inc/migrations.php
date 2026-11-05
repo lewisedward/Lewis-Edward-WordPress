@@ -1190,3 +1190,30 @@ add_action( 'init', function () {
 	}
 	update_option( 'le_migration_autoreply_2026_11', gmdate( 'c' ) . ' ' . implode( ' | ', $log ), false );
 }, 23 );
+
+/**
+ * 2026-11-05: the "How did you hear about us?" field's admin label (how_heard)
+ * showed as-is in the admin notification and entry screen. Give it a readable
+ * admin label. The add-field migration above is guarded by its option, so it
+ * will not add the field again.
+ */
+add_action( 'init', function () {
+	if ( get_option( 'le_migration_how_heard_label_2026_11' ) || ! class_exists( 'GFAPI' ) ) {
+		return;
+	}
+	$log = array();
+	foreach ( array( 1, 2 ) as $form_id ) {
+		$form = GFAPI::get_form( $form_id );
+		if ( ! $form ) {
+			continue;
+		}
+		foreach ( $form['fields'] as $f ) {
+			if ( 'how_heard' === $f->adminLabel ) {
+				$f->adminLabel = 'How they heard about us';
+				$log[]         = $form_id . ':' . $f->id;
+			}
+		}
+		GFAPI::update_form( $form );
+	}
+	update_option( 'le_migration_how_heard_label_2026_11', gmdate( 'c' ) . ' ' . implode( ' | ', $log ), false );
+}, 24 );
