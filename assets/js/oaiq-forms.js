@@ -1,33 +1,80 @@
 /**
  * Form conversion tracking: OpenAI (ChatGPT) Ads pixel + Google Analytics.
  *
- * Fires the OpenAI "lead_created" conversion and a GA4 "generate_lead"
- * event (registered as a key event in GA4) when a Gravity Forms submission
- * succeeds. Gravity Forms triggers `gform_confirmation_loaded` once per
- * successful AJAX submission (when the inline confirmation replaces the
- * form), so each completed quote or contact form counts as exactly one
- * lead. It does NOT fire on initial render or on validation errors.
+ * On a successful Gravity Forms submission this fires:
+ *   - OpenAI "lead_created" (both forms), and
+ *   - a GA4 key event per form: "generate_lead" for the contact form (ID 1)
+ *     and "request_quote" for the quote form (ID 2).
  *
- * Enqueued only on the form pages (contact, quotes), where Gravity Forms
- * already loads jQuery — declared as a dependency so jQuery is guaranteed
- * present before this binds.
+ * Both forms submit by postback (full page reload), so success is detected
+ * by the confirmation wrapper Gravity Forms prints in the response page.
+ * The AJAX `gform_confirmation_loaded` hook is kept too, in case a form is
+ * ever switched to AJAX; each submission still counts exactly once.
  *
- * Note: this relies on AJAX-mode forms with an inline confirmation. If a
- * form is set to redirect to a separate thank-you page on submit, the
- * conversion should instead be fired on that page.
+ * gtag and oaiq only exist once the visitor has accepted cookies (see
+ * consent.js), so nothing is sent without consent. Enqueued only on the
+ * contact and quotes pages.
  */
 ( function () {
-	if ( ! window.jQuery ) {
-		return;
+	var EVENTS = { 1: 'generate_lead', 2: 'request_quote' };
+	var sent = {};
+
+	function track( formId ) {
+		formId = parseInt( formId, 10 ) || 0;
+		if ( sent[ formId ] ) {
+			return true;
+		}
+		var name = EVENTS[ formId ] || 'generate_lead';
+		var done = false;
+		if ( 'function' === typeof window.gtag ) {
+			window.gtag( 'event', name, {
+				form_id: String( formId ),
+				form_name: 2 === formId ? 'quote' : 'contact',
+				page_path: location.pathname
+			} );
+			done = true;
+		}
+		if ( 'function' === typeof window.oaiq ) {
+			window.oaiq( 'measure', 'lead_created', { type: 'customer_action' } );
+			done = true;
+		}
+		if ( done ) {
+			sent[ formId ] = true;
+		}
+		return done;
 	}
 
-	window.jQuery( document ).on( 'gform_confirmation_loaded', function ( e, formId ) {
-		if ( window.oaiq ) {
-			window.oaiq( 'measure', 'lead_created', { type: 'customer_action' } );
+	// Postback forms: the confirmation is in the page that loads after submit.
+	function fromPage() {
+		var wraps = document.querySelectorAll( '[id^="gform_confirmation_wrapper_"]' );
+		if ( ! wraps.length ) {
+			return;
 		}
-		// gtag only exists once the visitor has accepted analytics cookies.
-		if ( 'function' === typeof window.gtag ) {
-			window.gtag( 'event', 'generate_lead', { form_id: String( formId || '' ), page_path: location.pathname } );
-		}
-	} );
+		var ids = [];
+		wraps.forEach( function ( w ) {
+			ids.push( w.id.replace( 'gform_confirmation_wrapper_', '' ) );
+		} );
+		// consent.js may define gtag a moment after this runs: retry briefly.
+		var tries = 0;
+		( function attempt() {
+			var pending = ids.filter( function ( id ) { return ! track( id ); } );
+			if ( pending.length && ++tries < 20 ) {
+				ids = pending;
+				setTimeout( attempt, 250 );
+			}
+		}() );
+	}
+
+	if ( 'loading' === document.readyState ) {
+		document.addEventListener( 'DOMContentLoaded', fromPage );
+	} else {
+		fromPage();
+	}
+
+	// AJAX forms (not used today, kept for safety).
+	if ( window.jQuery ) {
+		window.jQuery( document ).on( 'gform_confirmation_loaded', function ( e, formId ) {
+			track( formId );
+		} );
+	}
 }() );
