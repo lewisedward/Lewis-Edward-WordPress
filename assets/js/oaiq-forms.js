@@ -1,7 +1,8 @@
 /**
- * OpenAI (ChatGPT) Ads — form conversion tracking.
+ * Form conversion tracking: OpenAI (ChatGPT) Ads pixel + Google Analytics.
  *
- * Fires the "lead_created" conversion when a Gravity Forms submission
+ * Fires the OpenAI "lead_created" conversion and a GA4 "generate_lead"
+ * event (registered as a key event in GA4) when a Gravity Forms submission
  * succeeds. Gravity Forms triggers `gform_confirmation_loaded` once per
  * successful AJAX submission (when the inline confirmation replaces the
  * form), so each completed quote or contact form counts as exactly one
@@ -20,9 +21,13 @@
 		return;
 	}
 
-	window.jQuery( document ).on( 'gform_confirmation_loaded', function () {
+	window.jQuery( document ).on( 'gform_confirmation_loaded', function ( e, formId ) {
 		if ( window.oaiq ) {
 			window.oaiq( 'measure', 'lead_created', { type: 'customer_action' } );
+		}
+		// gtag only exists once the visitor has accepted analytics cookies.
+		if ( 'function' === typeof window.gtag ) {
+			window.gtag( 'event', 'generate_lead', { form_id: String( formId || '' ), page_path: location.pathname } );
 		}
 	} );
 }() );
