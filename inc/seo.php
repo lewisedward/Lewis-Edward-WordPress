@@ -71,6 +71,14 @@ add_filter( 'wpseo_sitemap_exclude_taxonomy', function ( $exclude, $taxonomy ) {
 	return in_array( $taxonomy, array( 'category', 'work_category' ), true ) ? true : $exclude;
 }, 10, 2 );
 
+/**
+ * WordPress 6.8+ prints a speculationrules script whose exclusion patterns
+ * (/wp-*.php, /wp-admin/*, /wp-content/*, /*) Googlebot reads as URLs and
+ * crawls, filling Search Console's 404 report. The prefetch gain is marginal
+ * behind LiteSpeed and Cloudflare, so the script is not printed at all.
+ */
+add_filter( 'wp_speculation_rules_configuration', '__return_null' );
+
 /** Default share image for pages without a featured image of their own. */
 add_action( 'wpseo_add_opengraph_additional_images', function ( $images ) {
 	if ( is_object( $images ) && method_exists( $images, 'has_images' ) && ! $images->has_images() && method_exists( $images, 'add_image' ) ) {
