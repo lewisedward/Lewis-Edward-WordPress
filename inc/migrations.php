@@ -967,3 +967,46 @@ add_action( 'init', function () {
 	}
 	update_option( 'le_migration_footer_consultancy_2026_11', gmdate( 'c' ) . ' ' . implode( ' ', $log ), false );
 }, 20 );
+
+/**
+ * 2026-11-05: "Website support" renamed "WordPress support & maintenance".
+ * Buyers search "wordpress support" / "wordpress maintenance"; the short title
+ * feeds the nav, footer, cards, homepage list and Service schema. Slug and
+ * Yoast title are left alone; the H1 and every menu item for the service
+ * follow the new name. Previous values logged for rollback.
+ */
+add_action( 'init', function () {
+	if ( get_option( 'le_migration_support_rename_2026_11' ) || ! function_exists( 'update_field' ) ) {
+		return;
+	}
+	$log  = array();
+	$post = get_page_by_path( 'website-support', OBJECT, 'service' );
+	if ( ! $post ) {
+		update_option( 'le_migration_support_rename_2026_11', gmdate( 'c' ) . ' missing', false );
+		return;
+	}
+	$new = 'WordPress support & maintenance';
+
+	$log[] = 'title-was:' . $post->post_title;
+	wp_update_post( array( 'ID' => $post->ID, 'post_title' => $new, 'post_name' => 'website-support' ) );
+
+	$log[] = 'h1-was:' . (string) get_field( 'service_headline', $post->ID );
+	update_field( 'service_headline', $new, $post->ID );
+
+	$items = get_posts( array(
+		'post_type'      => 'nav_menu_item',
+		'post_status'    => 'any',
+		'posts_per_page' => -1,
+		'meta_query'     => array( array( 'key' => '_menu_item_object_id', 'value' => $post->ID ) ),
+		'fields'         => 'ids',
+	) );
+	foreach ( $items as $mid ) {
+		$log[] = 'menu-' . $mid . '-was:' . get_the_title( $mid );
+		wp_update_post( array( 'ID' => $mid, 'post_title' => $new ) );
+	}
+
+	if ( has_action( 'litespeed_purge_all' ) ) {
+		do_action( 'litespeed_purge_all' );
+	}
+	update_option( 'le_migration_support_rename_2026_11', gmdate( 'c' ) . ' ' . implode( ' | ', $log ), false );
+}, 20 );
