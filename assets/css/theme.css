@@ -1289,6 +1289,8 @@ a.eyebrow:hover { color: hsl(var(--primary)); }
 .footer-bottom__left { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
 @media (min-width: 640px) { .footer-bottom__left { gap: 1.25rem; } }
 @media (max-width: 575px) { .footer-bottom__left { justify-content: center; } }
+.footer-registered { margin: 1rem 0 0; padding: 0 1.25rem; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; color: hsl(var(--foreground) / var(--eyebrow-alpha)); }
+@media (max-width: 767px) { .footer-registered { text-align: center; } }
 .footer-bottom__copy { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.2em; color:hsl(var(--foreground) / var(--eyebrow-alpha)); }
 .footer-bottom__right { display: flex; align-items: center; gap: 1rem; }
 @media (max-width: 575px) { .footer-bottom__right { display: none; } }

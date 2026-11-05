@@ -108,5 +108,7 @@ $le_footer_menu = function ( $location ) {
 			</div>
 		</div>
 
+		<p class="footer-registered"><?php esc_html_e( 'Registered office: 71-75 Shelton Street, London WC2H 9JQ', 'lewisedward' ); ?></p>
+
 	</div>
 </footer>
