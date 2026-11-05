@@ -1217,3 +1217,36 @@ add_action( 'init', function () {
 	}
 	update_option( 'le_migration_how_heard_label_2026_11', gmdate( 'c' ) . ' ' . implode( ' | ', $log ), false );
 }, 24 );
+
+/**
+ * 2026-11-05: switch the autoreplies to the branded template (inc/email-template.php).
+ * The footer now carries the business line, so the second signature line goes,
+ * and Gravity Forms' grey {all_fields} table is replaced by {le_summary}.
+ */
+add_action( 'init', function () {
+	if ( get_option( 'le_migration_autoreply_brand_2026_11' ) || ! class_exists( 'GFAPI' ) ) {
+		return;
+	}
+	$log = array();
+	foreach ( array( 1, 2 ) as $form_id ) {
+		$form = GFAPI::get_form( $form_id );
+		if ( ! $form ) {
+			continue;
+		}
+		foreach ( (array) $form['notifications'] as $nid => $n ) {
+			if ( 'Autoreply to sender' !== rgar( $n, 'name' ) ) {
+				continue;
+			}
+			$msg = (string) $n['message'];
+			$new = str_replace(
+				array( "\nLewis Edward · WordPress web design &amp; development · London", "<strong>A copy of what you sent</strong>\n{all_fields:noadmin}" ),
+				array( '', '{le_summary}' ),
+				$msg
+			);
+			$form['notifications'][ $nid ]['message'] = $new;
+			$log[] = $form_id . ':' . ( $new === $msg ? 'unchanged' : 'updated' );
+		}
+		GFAPI::update_form( $form );
+	}
+	update_option( 'le_migration_autoreply_brand_2026_11', gmdate( 'c' ) . ' ' . implode( ' | ', $log ), false );
+}, 25 );

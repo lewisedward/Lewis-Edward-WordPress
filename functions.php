@@ -56,3 +56,4 @@ le_require( 'staging-gate' ); // Staging passphrase gate.
 le_require( 'migrations' );   // One-off content migrations (run once, remembered in an option).
 le_require( 'copy-fixes' );  // One-off copy clean-up (sentence case, dashes, British spelling).
 le_require( 'forms' );       // Gravity Forms messages and consent link.
+le_require( 'email-template' ); // Branded HTML shell for the Gravity Forms autoreplies.
