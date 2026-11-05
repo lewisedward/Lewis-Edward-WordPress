@@ -927,3 +927,43 @@ add_action( 'init', function () {
 	}
 	update_option( 'le_migration_sitemap_rebuild_2026_11', gmdate( 'c' ), false );
 }, 20 );
+
+/**
+ * 2026-11-05 audit item 3: the Consultancy service was "Discovered, not
+ * indexed" with only the Services listing linking to it. Add it to the footer
+ * Services menu so every page links to it.
+ */
+add_action( 'init', function () {
+	if ( get_option( 'le_migration_footer_consultancy_2026_11' ) ) {
+		return;
+	}
+	$log  = array();
+	$post = get_page_by_path( 'consultancy', OBJECT, 'service' );
+	$locations = get_nav_menu_locations();
+	if ( $post && ! empty( $locations['footer_services'] ) ) {
+		$exists = false;
+		foreach ( (array) wp_get_nav_menu_items( $locations['footer_services'] ) as $item ) {
+			if ( (int) $item->object_id === (int) $post->ID ) {
+				$exists = true;
+			}
+		}
+		if ( $exists ) {
+			$log[] = 'already-in-menu';
+		} else {
+			$mi = wp_update_nav_menu_item( $locations['footer_services'], 0, array(
+				'menu-item-title'     => 'Consultancy',
+				'menu-item-object'    => 'service',
+				'menu-item-object-id' => $post->ID,
+				'menu-item-type'      => 'post_type',
+				'menu-item-status'    => 'publish',
+			) );
+			$log[] = 'footer-menu:' . ( is_wp_error( $mi ) ? $mi->get_error_message() : $mi );
+		}
+	} else {
+		$log[] = $post ? 'no-footer-services-location' : 'consultancy-missing';
+	}
+	if ( has_action( 'litespeed_purge_all' ) ) {
+		do_action( 'litespeed_purge_all' );
+	}
+	update_option( 'le_migration_footer_consultancy_2026_11', gmdate( 'c' ) . ' ' . implode( ' ', $log ), false );
+}, 20 );

@@ -77,9 +77,46 @@ $pp      = le_journal_page_id();
 		</article>
 	</section>
 
+	<?php
+	/*
+	 * Related services: two or three service pages chosen by the post's category,
+	 * always including the agency hub, so every article links down into the
+	 * service cluster in copy rather than only through the navigation.
+	 */
+	$jr_svc_map = array(
+		'web-design'      => array( 'web-design', 'wordpress-agency', 'website-support' ),
+		'web-development' => array( 'web-development', 'wordpress-development-agency', 'website-support' ),
+		'ai'              => array( 'ai-development', 'web-development', 'wordpress-agency' ),
+		'industry'        => array( 'wordpress-agency', 'wordpress-agency-partnership', 'web-design' ),
+	);
+	$jr_svc_slugs = ( $jr_cat && isset( $jr_svc_map[ $jr_cat->slug ] ) ) ? $jr_svc_map[ $jr_cat->slug ] : array( 'web-design', 'web-development', 'wordpress-agency' );
+	$jr_svcs      = array();
+	foreach ( $jr_svc_slugs as $jr_slug ) {
+		$jr_sp = get_page_by_path( $jr_slug, OBJECT, 'service' );
+		if ( $jr_sp && 'publish' === $jr_sp->post_status ) {
+			$jr_svcs[] = $jr_sp;
+		}
+	}
+	?>
+	<?php if ( $jr_svcs ) : ?>
+	<section class="g-row g-sec" aria-label="<?php esc_attr_e( 'Related services', 'lewisedward' ); ?>">
+		<?php le_grid_intro( array( 'label' => __( 'Services', 'lewisedward' ), 'count' => '02', 'title' => le_grid_heading( array( array( __( 'How we', 'lewisedward' ) ), array( __( 'can help', 'lewisedward' ), 'muted' ), array( __( 'with this.', 'lewisedward' ), 'accent' ) ) ), 'link' => array( 'url' => home_url( '/services/' ), 'title' => __( 'All services', 'lewisedward' ) ) ) ); ?>
+		<div class="g-cell g-dark g-sec__body">
+			<?php $n = 0; foreach ( $jr_svcs as $jr_sp ) : $n++; $jr_desc = le_field( 'service_short_description', $jr_sp->ID ); ?>
+			<a class="g-li" href="<?php echo esc_url( get_permalink( $jr_sp ) ); ?>">
+				<span class="g-li__num g-mono"><?php echo esc_html( str_pad( (string) $n, 2, '0', STR_PAD_LEFT ) ); ?></span>
+				<span><h3 class="g-li__title"><?php echo esc_html( get_the_title( $jr_sp ) ); ?></h3><span class="g-li__sub g-mono"><?php esc_html_e( 'Service', 'lewisedward' ); ?></span></span>
+				<?php if ( $jr_desc ) : ?><p class="g-li__desc"><?php echo esc_html( wp_strip_all_tags( (string) $jr_desc ) ); ?></p><?php endif; ?>
+				<span class="g-li__go"><?php echo le_grid_arrow_diag(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+			</a>
+			<?php endforeach; ?>
+		</div>
+	</section>
+	<?php endif; ?>
+
 	<?php if ( $jr_more ) : ?>
 	<section class="g-row g-sec" aria-label="<?php esc_attr_e( 'More from the journal', 'lewisedward' ); ?>">
-		<?php le_grid_intro( array( 'label' => __( 'Continue', 'lewisedward' ), 'count' => '02', 'title' => le_grid_heading( array( array( __( 'Keep', 'lewisedward' ) ), array( __( 'reading', 'lewisedward' ), 'muted' ), array( __( 'the journal.', 'lewisedward' ), 'accent' ) ) ), 'link' => array( 'url' => $pp ? get_permalink( $pp ) : home_url( '/journal' ), 'title' => __( 'All articles', 'lewisedward' ) ) ) ); ?>
+		<?php le_grid_intro( array( 'label' => __( 'Continue', 'lewisedward' ), 'count' => '03', 'title' => le_grid_heading( array( array( __( 'Keep', 'lewisedward' ) ), array( __( 'reading', 'lewisedward' ), 'muted' ), array( __( 'the journal.', 'lewisedward' ), 'accent' ) ) ), 'link' => array( 'url' => $pp ? get_permalink( $pp ) : home_url( '/journal' ), 'title' => __( 'All articles', 'lewisedward' ) ) ) ); ?>
 		<div class="g-cell g-dark g-sec__body">
 			<?php $n = 0; foreach ( $jr_more as $m ) : $mid = $m->ID; $n++; $mc = get_the_category( $mid ); ?>
 			<a class="g-li" href="<?php echo esc_url( get_permalink( $mid ) ); ?>">
