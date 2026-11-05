@@ -1010,3 +1010,37 @@ add_action( 'init', function () {
 	}
 	update_option( 'le_migration_support_rename_2026_11', gmdate( 'c' ) . ' ' . implode( ' | ', $log ), false );
 }, 20 );
+
+/**
+ * 2026-11-05: the support page's "Our approach" section still carried the old
+ * service name in its eyebrow ("Website support") and title ("Our website
+ * support options") after the rename above. Previous values logged.
+ */
+add_action( 'init', function () {
+	if ( get_option( 'le_migration_support_section_labels_2026_11' ) || ! function_exists( 'update_field' ) ) {
+		return;
+	}
+	$log  = array();
+	$post = get_page_by_path( 'website-support', OBJECT, 'service' );
+	if ( ! $post ) {
+		update_option( 'le_migration_support_section_labels_2026_11', gmdate( 'c' ) . ' missing', false );
+		return;
+	}
+	$fields = array(
+		'svc_process_eyebrow' => array( 'Website support', 'Support & maintenance' ),
+		'svc_process_title'   => array( 'Our website support options', 'Our WordPress support options' ),
+	);
+	foreach ( $fields as $name => $pair ) {
+		$was = (string) get_field( $name, $post->ID );
+		if ( $was === $pair[0] ) {
+			update_field( $name, $pair[1], $post->ID );
+			$log[] = $name . ':was:' . $was;
+		} else {
+			$log[] = $name . ':left:' . $was;
+		}
+	}
+	if ( has_action( 'litespeed_purge_all' ) ) {
+		do_action( 'litespeed_purge_all' );
+	}
+	update_option( 'le_migration_support_section_labels_2026_11', gmdate( 'c' ) . ' ' . implode( ' | ', $log ), false );
+}, 21 );
