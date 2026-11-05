@@ -1250,3 +1250,72 @@ add_action( 'init', function () {
 	}
 	update_option( 'le_migration_autoreply_brand_2026_11', gmdate( 'c' ) . ' ' . implode( ' | ', $log ), false );
 }, 25 );
+
+/**
+ * 2026-11-05: three sector landing pages (Travel & tourism; Arts, culture &
+ * heritage; Financial services), created as DRAFTS for Lewis to review. Copy
+ * lives in inc/data/sectors-2026-11.json. Skips any slug that already exists.
+ */
+add_action( 'init', function () {
+	if ( get_option( 'le_migration_sectors_2026_11' ) || ! function_exists( 'update_field' ) || ! post_type_exists( 'sector' ) ) {
+		return;
+	}
+	$file = LE_DIR . '/inc/data/sectors-2026-11.json';
+	$data = file_exists( $file ) ? json_decode( (string) file_get_contents( $file ), true ) : null; // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+	if ( ! is_array( $data ) ) {
+		update_option( 'le_migration_sectors_2026_11', gmdate( 'c' ) . ' no-data', false );
+		return;
+	}
+	$ids_by_slug = static function ( $slugs, $type ) {
+		$ids = array();
+		foreach ( (array) $slugs as $s ) {
+			$p = get_page_by_path( $s, OBJECT, $type );
+			if ( $p && 'publish' === $p->post_status ) {
+				$ids[] = $p->ID;
+			}
+		}
+		return $ids;
+	};
+	$log = array();
+	foreach ( $data as $s ) {
+		if ( get_page_by_path( $s['slug'], OBJECT, 'sector' ) ) {
+			$log[] = $s['slug'] . ':exists';
+			continue;
+		}
+		$id = wp_insert_post( array( 'post_type' => 'sector', 'post_status' => 'draft', 'post_title' => $s['title'], 'post_name' => $s['slug'], 'post_content' => '' ), true );
+		if ( is_wp_error( $id ) ) {
+			$log[] = $s['slug'] . ':failed';
+			continue;
+		}
+		update_field( 'field_sv_subtitle', $s['subtitle'], $id );
+		update_field( 'field_sv_desc', $s['desc'], $id );
+		update_field( 'field_sv_headline', $s['headline'], $id );
+		update_field( 'field_sv_intro', $s['intro'], $id );
+		update_field( 'field_6a8d88e295d9a', $s['included_title'], $id );
+		update_field( 'field_sv_dfeatures', array_map( static function ( $f ) {
+			return array( 'field_sv_df_title' => $f[0], 'field_sv_df_desc' => $f[1] );
+		}, $s['features'] ), $id );
+		update_field( 'field_sv_benefits', array_map( static function ( $b ) {
+			return array( 'field_sv_b_item' => $b );
+		}, $s['benefits'] ), $id );
+		update_field( 'field_sv_faq', array_map( static function ( $q ) {
+			return array( 'field_sv_faq_q' => $q[0], 'field_sv_faq_a' => $q[1] );
+		}, $s['faq'] ), $id );
+		update_field( 'field_sv_related_work', $ids_by_slug( $s['work'], 'work' ), $id );
+		update_field( 'field_sv_related', $ids_by_slug( $s['related'], 'service' ), $id );
+		update_field( 'field_sv_testimonials', array_values( array_filter( array_map( 'intval', (array) $s['testimonials'] ), static function ( $t ) {
+			return 'publish' === get_post_status( $t );
+		} ) ), $id );
+		update_field( 'field_svl_included_eyebrow', $s['included_eyebrow'], $id );
+		update_field( 'field_svl_benefits_title', $s['benefits_title'], $id );
+		update_field( 'field_svl_work_eyebrow', $s['work_eyebrow'], $id );
+		update_field( 'field_svl_work_title', $s['work_title'], $id );
+		update_field( 'field_svl_related_eyebrow', 'How we help', $id );
+		update_field( 'field_svl_related_title', 'Services for ' . strtolower( $s['title'] ) . '.', $id );
+		update_post_meta( $id, '_yoast_wpseo_title', $s['seo_title'] );
+		update_post_meta( $id, '_yoast_wpseo_metadesc', $s['seo_desc'] );
+		$log[] = $s['slug'] . ':' . $id;
+	}
+	flush_rewrite_rules( false ); // /sectors/{slug} is a new permalink base.
+	update_option( 'le_migration_sectors_2026_11', gmdate( 'c' ) . ' ' . implode( ' ', $log ), false );
+}, 30 );

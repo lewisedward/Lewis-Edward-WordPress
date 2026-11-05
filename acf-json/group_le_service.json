@@ -529,6 +529,37 @@
             "bidirectional_target": []
         },
         {
+            "key": "field_sv_testimonials",
+            "label": "Testimonials",
+            "name": "service_testimonials",
+            "aria-label": "",
+            "type": "relationship",
+            "instructions": "Optional. Pick the testimonials to show on this page, in order. Leave empty to show the homepage set.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "post_type": [
+                "testimonial"
+            ],
+            "post_status": [
+                "publish"
+            ],
+            "taxonomy": "",
+            "filters": [
+                "search"
+            ],
+            "return_format": "id",
+            "min": "",
+            "max": "",
+            "elements": "",
+            "bidirectional": 0,
+            "bidirectional_target": []
+        },
+        {
             "key": "field_svl_tab",
             "label": "Section labels",
             "name": "",
@@ -978,6 +1009,13 @@
                 "operator": "==",
                 "value": "service"
             }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "sector"
+            }
         ]
     ],
     "menu_order": 0,
@@ -994,5 +1032,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1792784548
+    "modified": 1793913378
 }

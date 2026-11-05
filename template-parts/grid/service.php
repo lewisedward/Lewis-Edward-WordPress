@@ -33,7 +33,8 @@ $sv_pid      = static function ( $x ) {
 
 // Headline: white / grey / lime (see le_grid_tone_title(); [[lime]] and {{grey}} markers in the field win).
 $sv_title_html = le_grid_tone_title( $sv_headline ? $sv_headline : get_the_title() );
-$svc_crumb    = le_link( 'svc_hero_crumb', '/services', __( 'Services', 'lewisedward' ), $sv_id );
+$sv_sector    = 'sector' === get_post_type( $sv_id ); // Sector pages share this template.
+$svc_crumb    = $sv_sector ? le_link( 'svc_hero_crumb', '/work', __( 'Work', 'lewisedward' ), $sv_id ) : le_link( 'svc_hero_crumb', '/services', __( 'Services', 'lewisedward' ), $sv_id );
 $svc_hero_cta = le_link( 'svc_hero_cta', '/contact', __( 'Start a project', 'lewisedward' ), $sv_id );
 ?>
 <main id="main" class="site-main site-main--service-single g-main">
@@ -136,7 +137,12 @@ $svc_hero_cta = le_link( 'svc_hero_cta', '/contact', __( 'Start a project', 'lew
 	</section>
 	<?php endif; ?>
 
-	<?php get_template_part( 'template-parts/grid/testimonials' ); ?>
+	<?php
+	// The page's own testimonials when picked, otherwise the homepage set.
+	$sv_tsts = le_field( 'service_testimonials', $sv_id );
+	$sv_tsts = is_array( $sv_tsts ) ? array_values( array_filter( array_map( $sv_pid, $sv_tsts ) ) ) : array();
+	get_template_part( 'template-parts/grid/testimonials', null, $sv_tsts ? array( 'items' => $sv_tsts, 'label' => __( 'Client feedback', 'lewisedward' ) ) : array() );
+	?>
 	<?php get_template_part( 'template-parts/grid/cta' ); ?>
 
 </main>

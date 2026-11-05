@@ -1,0 +1,261 @@
+[
+ {
+  "slug": "travel-tourism",
+  "title": "Travel & tourism",
+  "subtitle": "Travel & tourism",
+  "desc": "WordPress websites for airlines, travel publishers and tourism brands.",
+  "headline": "WordPress websites for [[travel brands]]",
+  "intro": "We design and build WordPress websites for airlines, travel publishers and tourism brands – from easyJet Traveller, the in-flight magazine, to Ethiopian Airlines and United Airlines. Fast, content-rich sites that inspire people to book, stay quick under campaign traffic and are easy for your team to keep fresh.",
+  "included_eyebrow": "What we build",
+  "included_title": "Built for inspiration, search and peak traffic",
+  "features": [
+   [
+    "Editorial and destination content",
+    "Modular templates for destination guides, travel stories and offers, so your content team can build rich pages without a developer – as we did for easyJet Traveller."
+   ],
+   [
+    "Fast search across big archives",
+    "Instant search and content recommendations that help visitors find the right destination or article in seconds, even across thousands of pages."
+   ],
+   [
+    "Built for traffic peaks",
+    "Caching, a CDN and tuned hosting so the site stays fast when a campaign, newsletter or social post sends a spike of visitors."
+   ],
+   [
+    "Multilingual and multi-market",
+    "Content in several languages and for several markets from one WordPress install, as for Ethiopian Airlines."
+   ],
+   [
+    "Booking and partner integrations",
+    "Connections to booking engines, CRMs, affiliate feeds and third-party APIs, so the site does more than look good."
+   ],
+   [
+    "Easy for your team to update",
+    "Hand-coded themes with Advanced Custom Fields, so almost everything is editable from the back end – no page builder required."
+   ]
+  ],
+  "benefits_title": "Why travel brands work with us.",
+  "benefits": [
+   "Trusted by easyJet Traveller, Ethiopian Airlines and United Airlines",
+   "A small senior team – the person on the call is the person building your site",
+   "Fast Core Web Vitals as standard, for better rankings and fewer drop-offs",
+   "Migrations with every URL redirected, so you keep your search traffic",
+   "UK hosting and support, answered by us, not a ticket queue"
+  ],
+  "faq": [
+   [
+    "Can you integrate our booking engine or API?",
+    "Yes. We regularly connect WordPress to booking systems, CRMs and third-party APIs. We'll look at the documentation during discovery and confirm the approach before giving you a fixed price."
+   ],
+   [
+    "Can the site cope with big spikes in traffic?",
+    "Yes. We build with caching and a CDN from day one and host on tuned servers, so campaign launches and newsletter sends don't slow the site down. easyJet Traveller was built for exactly this kind of traffic."
+   ],
+   [
+    "Do you build multilingual travel websites?",
+    "Yes. We can run several languages and markets from one WordPress install, with translated content and the right language tags for search engines."
+   ],
+   [
+    "Can you work alongside our in-house or agency team?",
+    "Yes. We often build sites designed by creative agencies or work with in-house teams, and we're happy to work white label."
+   ],
+   [
+    "How much does a travel website cost?",
+    "It depends on the number of templates, integrations and the size of the content. Our websites start from £5,000, and we give you a fixed quote after a short discovery call."
+   ]
+  ],
+  "work": [
+   "easyjet-traveller",
+   "ethiopian-airlines",
+   "united-airlines",
+   "more-corners",
+   "business-traveller"
+  ],
+  "work_eyebrow": "Travel work",
+  "work_title": "Travel websites we've built.",
+  "related": [
+   "web-design",
+   "web-development",
+   "api-integrations",
+   "web-hosting",
+   "seo"
+  ],
+  "testimonials": [
+   300,
+   297
+  ],
+  "seo_title": "Travel Website Design & WordPress Development | Lewis Edward",
+  "seo_desc": "WordPress websites for airlines, travel publishers and tourism brands, from easyJet Traveller to Ethiopian Airlines. Fast, content-rich and built to convert."
+ },
+ {
+  "slug": "arts-culture-heritage",
+  "title": "Arts, culture & heritage",
+  "subtitle": "Arts, culture & heritage",
+  "desc": "WordPress websites for museums, venues, arts organisations and heritage brands.",
+  "headline": "WordPress websites for [[museums, venues and the arts]]",
+  "intro": "We design, build and look after WordPress websites for museums, venues and arts organisations – including Brighton & Hove Museums, Lord's Cricket Ground and ArtsEd. Sites that tell your story, sell tickets and memberships, and are easy for small teams to run.",
+  "included_eyebrow": "What we build",
+  "included_title": "Built to tell your story and sell tickets",
+  "features": [
+   [
+    "Ticketing, membership and donations",
+    "Booking, membership and donation journeys integrated with your ticketing platform – for Brighton & Hove Museums we replaced embedded Spektrix widgets with a fully integrated, API-driven journey."
+   ],
+   [
+    "What's on and events",
+    "Structured listings for exhibitions, events and performances, with filters by venue, date and type that your team can update in minutes."
+   ],
+   [
+    "Several venues, one website",
+    "One WordPress install that serves several venues or brands, each with its own content, opening times and look."
+   ],
+   [
+    "Storytelling and heritage",
+    "Timelines, video and scroll-led layouts that bring collections and history to life, like the heritage timeline we built for Lord's."
+   ],
+   [
+    "Accessible to every visitor",
+    "Clear structure, readable type, good contrast and keyboard-friendly navigation, so the site works for visitors of every age and ability."
+   ],
+   [
+    "Ongoing support and development",
+    "Retained support for updates, security and new features, so your website keeps improving between big projects."
+   ]
+  ],
+  "benefits_title": "Why cultural organisations work with us.",
+  "benefits": [
+   "Trusted by Brighton & Hove Museums, Lord's Cricket Ground and ArtsEd",
+   "Experience integrating ticketing, membership and donation platforms",
+   "Work phased to fit your budget and funding cycles",
+   "Hand-coded WordPress that small teams can run without a developer",
+   "UK hosting and support, answered by us, not a ticket queue"
+  ],
+  "faq": [
+   [
+    "Can you integrate our ticketing platform?",
+    "Yes. We built a full API integration with Spektrix for Brighton & Hove Museums, covering ticketing, membership and donations, and we can connect other platforms that offer an API. We'll confirm the approach during discovery."
+   ],
+   [
+    "Can one website serve several venues?",
+    "Yes. We can run several venues or brands from one WordPress install, sharing events, shop and membership while each venue keeps its own pages and identity."
+   ],
+   [
+    "Is the website accessible?",
+    "We design and build with accessibility in mind from the start – clear structure, readable text, good colour contrast and keyboard-friendly navigation – and we can test against the WCAG guidelines your organisation works to."
+   ],
+   [
+    "We have a tight budget. Can the work be phased?",
+    "Yes. Many cultural organisations work to funding cycles, so we can split a project into phases, starting with what matters most and adding to it over time."
+   ],
+   [
+    "Do you offer ongoing support?",
+    "Yes. We look after Brighton & Hove Museums' website on an ongoing basis – updates, security, hosting and new development – and offer the same to other organisations."
+   ]
+  ],
+  "work": [
+   "brighton-hove-museums",
+   "lords-cricket-ground",
+   "artsed"
+  ],
+  "work_eyebrow": "Culture work",
+  "work_title": "Cultural websites we've built.",
+  "related": [
+   "website-support",
+   "web-development",
+   "api-integrations",
+   "web-design",
+   "web-hosting"
+  ],
+  "testimonials": [
+   1746
+  ],
+  "seo_title": "Museum & Arts Website Design | WordPress | Lewis Edward",
+  "seo_desc": "WordPress websites for museums, venues and arts organisations, including Brighton & Hove Museums and Lord's. Ticketing, membership and ongoing support."
+ },
+ {
+  "slug": "financial-services",
+  "title": "Financial services",
+  "subtitle": "Financial services",
+  "desc": "WordPress websites for banks, insurers, investment firms and financial brands.",
+  "headline": "WordPress websites for [[financial services]]",
+  "intro": "We design and build secure, credible WordPress websites for banks, insurers and investment firms – including New Horizon Bank, Tide Insurance, Hunnewell Partners and the Church of England Pensions Board. Sites that build trust, explain complex products clearly and stay easy for your team to keep compliant.",
+  "included_eyebrow": "What we build",
+  "included_title": "Built for trust, clarity and compliance",
+  "features": [
+   [
+    "Trust-first design",
+    "Clear, confident design that makes a firm look as established as it is, from private equity to retail banking."
+   ],
+   [
+    "Calculators and interactive tools",
+    "Bespoke calculators, decision trees and personalised results, like the retirement planning tool we built for the Church of England Pensions Board."
+   ],
+   [
+    "Compliance-friendly content",
+    "Disclosures, legal copy and product details your team can update quickly, with accessibility built in – New Horizon Bank's site was built with ADA compliance in mind."
+   ],
+   [
+    "Security and hosting",
+    "Hardened WordPress, regular updates, backups and managed UK hosting, with a short list of well-maintained plugins."
+   ],
+   [
+    "Prototype first",
+    "For Hunnewell Partners we prototyped the site before building it, so the partners could see and approve it before a line of code was written."
+   ],
+   [
+    "Forms and integrations",
+    "Secure enquiry forms and connections to CRMs and third-party services, so leads go straight to the right people."
+   ]
+  ],
+  "benefits_title": "Why financial firms work with us.",
+  "benefits": [
+   "Trusted by New Horizon Bank, Tide Insurance, Hunnewell Partners and the Church of England Pensions Board",
+   "Security and updates handled as standard, not as an extra",
+   "Hand-coded WordPress with a lean plugin stack",
+   "A small senior team who can work with your compliance and IT teams",
+   "UK hosting and support, answered by us, not a ticket queue"
+  ],
+  "faq": [
+   [
+    "Is WordPress secure enough for financial services?",
+    "Yes, when it's built and maintained properly. We hand-code themes, keep plugins to a short list of well-maintained ones, apply updates promptly and host on managed servers with backups and monitoring."
+   ],
+   [
+    "Can you build calculators and interactive tools?",
+    "Yes. We built a retirement planning tool for the Church of England Pensions Board with a decision tree, interactive calculators and personalised results, and we can build calculators and tools around your products."
+   ],
+   [
+    "Can you work with our compliance and IT teams?",
+    "Yes. We're used to review and sign-off processes, and can work to your security questionnaires, hosting requirements and approval steps."
+   ],
+   [
+    "Can our team update content without a developer?",
+    "Yes. Almost everything is editable in WordPress, so your team can update rates, disclosures and news themselves, with clear fields rather than a page builder."
+   ],
+   [
+    "How much does a financial services website cost?",
+    "It depends on the number of templates, tools and integrations. Our websites start from £5,000, and we give you a fixed quote after a short discovery call."
+   ]
+  ],
+  "work": [
+   "new-horizon-bank",
+   "tide-insurance",
+   "hunnewell-partners",
+   "church-of-england"
+  ],
+  "work_eyebrow": "Finance work",
+  "work_title": "Financial websites we've built.",
+  "related": [
+   "web-design",
+   "web-development",
+   "website-security",
+   "web-hosting",
+   "website-support"
+  ],
+  "testimonials": [
+   301
+  ],
+  "seo_title": "Financial Services Website Design | Lewis Edward",
+  "seo_desc": "Secure WordPress websites for banks, insurers and investment firms, including New Horizon Bank and Tide Insurance. Built for trust, clarity and compliance."
+ }
+]

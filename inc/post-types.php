@@ -70,6 +70,14 @@ function le_register_post_types() {
 		'rewrite'     => array( 'slug' => 'services', 'with_front' => false ),
 	) );
 
+	// Sectors — industry landing pages at /sectors/{slug} (travel, culture, finance…).
+	// Same fields and grid template as a service page; no archive yet.
+	le_register_cpt( 'sector', __( 'Sector', 'lewisedward' ), __( 'Sectors', 'lewisedward' ), array(
+		'menu_icon'   => 'dashicons-building',
+		'has_archive' => false,
+		'rewrite'     => array( 'slug' => 'sectors', 'with_front' => false ),
+	) );
+
 	// Work / portfolio — single case studies at /work/{slug}. The /work listing
 	// is a static Page (Work template), so the CPT archive is disabled.
 	le_register_cpt( 'work', __( 'Project', 'lewisedward' ), __( 'Work', 'lewisedward' ), array(
