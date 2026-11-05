@@ -55,7 +55,7 @@ function le_front_page_schema() {
 			'itemOffered' => array_filter( array(
 				'@type'       => 'Service',
 				'@id'         => get_permalink( $sid ) . '#service',
-				'name'        => get_the_title( $sid ),
+				'name'        => html_entity_decode( wp_strip_all_tags( get_post_field( 'post_title', $sid ) ), ENT_QUOTES, 'UTF-8' ),
 				'url'         => get_permalink( $sid ),
 				'description' => $desc ? wp_strip_all_tags( (string) $desc ) : null,
 				'provider'    => array( '@id' => $service_id ),
@@ -246,8 +246,8 @@ function le_service_page_schema( $graph ) {
 	$service = array_filter( array(
 		'@type'            => 'Service',
 		'@id'              => $url . '#service',
-		'name'             => get_the_title( $sid ),
-		'serviceType'      => get_the_title( $sid ),
+		'name'             => html_entity_decode( wp_strip_all_tags( get_post_field( 'post_title', $sid ) ), ENT_QUOTES, 'UTF-8' ),
+		'serviceType'      => html_entity_decode( wp_strip_all_tags( get_post_field( 'post_title', $sid ) ), ENT_QUOTES, 'UTF-8' ),
 		'description'      => $desc ?: null,
 		'url'              => $url,
 		'provider'         => array( '@id' => $org_id ),
