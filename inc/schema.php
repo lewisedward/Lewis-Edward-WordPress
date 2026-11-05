@@ -86,17 +86,33 @@ function le_front_page_schema() {
 		'description'  => $lede,
 		'image'        => $portrait,
 		'logo'         => $logo,
+		'legalName'    => 'Lewis Edward Ltd',
 		'email'        => 'hello@lewisedward.com',
 		'foundingDate' => (string) $est,
 		'founder'      => array( '@id' => $person_id ),
 		'employee'     => array( '@id' => $person_id ),
-		'address'      => array( '@type' => 'PostalAddress', 'addressLocality' => 'London', 'addressCountry' => 'GB' ),
+		'address'      => array(
+			'@type'           => 'PostalAddress',
+			'streetAddress'   => '71-75 Shelton Street',
+			'addressLocality' => 'London',
+			'addressRegion'   => 'Greater London',
+			'postalCode'      => 'WC2H 9JQ',
+			'addressCountry'  => 'GB',
+		),
+		'openingHoursSpecification' => array(
+			array(
+				'@type'     => 'OpeningHoursSpecification',
+				'dayOfWeek' => array( 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday' ),
+				'opens'     => '08:00',
+				'closes'    => '20:00',
+			),
+		),
 		'areaServed'   => array(
 			array( '@type' => 'City', 'name' => 'London' ),
 			array( '@type' => 'Country', 'name' => 'United Kingdom' ),
 		),
 		'priceRange'   => '££',
-		'sameAs'       => array_values( array_filter( array( $linkedin ) ) ),
+		'sameAs'       => array_values( array_filter( array( $linkedin, 'https://find-and-update.company-information.service.gov.uk/company/11928542' ) ) ),
 		'knowsAbout'   => array( 'WordPress web design', 'WordPress web development', 'WooCommerce', 'WordPress website support', 'AI development', 'Webflow', 'Web hosting' ),
 	);
 	if ( $offers ) {
