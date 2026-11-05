@@ -1,6 +1,6 @@
 <?php
 /**
- * Branded HTML email for the Gravity Forms autoreplies.
+ * Branded HTML email for the Gravity Forms autoreplies and enquiry alerts.
  *
  * The wording stays editable in Gravity Forms (Form > Settings > Notifications >
  * "Autoreply to sender"); this file only dresses it: a dark card in the site's
@@ -30,23 +30,39 @@ function le_email_tokens() {
 	);
 }
 
-/** Notifications that get the branded shell. */
+/**
+ * Which branded variant a notification gets: 'autoreply' (to the person who
+ * submitted), 'admin' (the enquiry alert to Lewis) or '' (left as it is).
+ */
+function le_email_variant( $notification, $entry = array() ) {
+	$name = (string) rgar( (array) $notification, 'name' );
+	if ( 'Autoreply to sender' === $name ) {
+		return 'autoreply';
+	}
+	if ( 'Admin Notification' === $name && in_array( (int) rgar( (array) $entry, 'form_id' ), array( 1, 2 ), true ) ) {
+		return 'admin';
+	}
+	return '';
+}
+
+/** Back-compat helper. */
 function le_email_is_branded( $notification ) {
-	return 'Autoreply to sender' === rgar( (array) $notification, 'name' );
+	return '' !== le_email_variant( $notification );
 }
 
 /**
- * {le_summary}: the submitted answers as clean label/value rows, skipping
+ * The submitted answers as clean label/value rows in a panel, skipping
  * section headings, consent, honeypot and empty fields.
+ *
+ * @param array  $form  Gravity Forms form.
+ * @param array  $entry Entry.
+ * @param string $title Panel heading.
  */
-add_filter( 'gform_replace_merge_tags', function ( $text, $form, $entry ) {
-	if ( false === strpos( (string) $text, '{le_summary}' ) || ! is_array( $entry ) ) {
-		return $text;
-	}
+function le_email_summary( $form, $entry, $title = 'What you sent' ) {
 	$t    = le_email_tokens();
 	$rows = '';
 	foreach ( (array) rgar( $form, 'fields' ) as $field ) {
-		if ( in_array( $field->type, array( 'section', 'consent', 'html', 'page', 'captcha', 'honeypot' ), true ) || ! empty( $field->visibility ) && 'hidden' === $field->visibility ) {
+		if ( in_array( $field->type, array( 'section', 'consent', 'html', 'page', 'captcha', 'honeypot' ), true ) || ( ! empty( $field->visibility ) && 'hidden' === $field->visibility ) ) {
 			continue;
 		}
 		$value = GFCommon::get_lead_field_display( $field, RGFormsModel::get_lead_field_value( $entry, $field ), rgar( $entry, 'currency' ), true, 'html' );
@@ -61,15 +77,75 @@ add_filter( 'gform_replace_merge_tags', function ( $text, $form, $entry ) {
 			. '</td></tr>';
 	}
 	if ( '' === $rows ) {
-		return str_replace( '{le_summary}', '', $text );
+		return '';
 	}
-	$block = '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="' . $t['panel'] . '" style="background:' . $t['panel'] . ';margin-top:8px;">'
+	return '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="' . $t['panel'] . '" style="background:' . $t['panel'] . ';margin-top:8px;">'
 		. '<tr><td style="padding:22px 24px 8px;">'
-		. '<div style="font-family:' . $t['mono'] . ';font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:' . $t['lime'] . ';padding-bottom:10px;">&#9632;&nbsp; What you sent</div>'
+		. '<div style="font-family:' . $t['mono'] . ';font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:' . $t['lime'] . ';padding-bottom:10px;">&#9632;&nbsp; ' . esc_html( $title ) . '</div>'
 		. '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">' . $rows . '</table>'
 		. '</td></tr></table>';
-	return str_replace( '{le_summary}', $block, $text );
+}
+
+/** {le_summary} merge tag for the autoreply message. */
+add_filter( 'gform_replace_merge_tags', function ( $text, $form, $entry ) {
+	if ( false === strpos( (string) $text, '{le_summary}' ) || ! is_array( $entry ) ) {
+		return $text;
+	}
+	return str_replace( '{le_summary}', le_email_summary( $form, $entry ), $text );
 }, 10, 3 );
+
+/**
+ * The submitter's first name, full name and email from an entry.
+ *
+ * @return array{first:string,full:string,email:string}
+ */
+function le_email_sender( $form, $entry ) {
+	$out = array( 'first' => '', 'full' => '', 'email' => '' );
+	foreach ( (array) rgar( $form, 'fields' ) as $field ) {
+		if ( 'name' === $field->type && '' === $out['full'] ) {
+			$first        = trim( (string) rgar( $entry, $field->id . '.3' ) );
+			$last         = trim( (string) rgar( $entry, $field->id . '.6' ) );
+			$full         = trim( $first . ' ' . $last );
+			$out['first'] = $first ? $first : $full;
+			$out['full']  = $full ? $full : trim( (string) rgar( $entry, (string) $field->id ) );
+		}
+		if ( 'email' === $field->type && '' === $out['email'] ) {
+			$out['email'] = sanitize_email( (string) rgar( $entry, (string) $field->id ) );
+		}
+	}
+	return $out;
+}
+
+/**
+ * Body of the enquiry alert to Lewis: who, a Reply button, the answers and a
+ * link to the entry in WordPress.
+ */
+function le_email_admin_body( $form, $entry ) {
+	$t      = le_email_tokens();
+	$who    = le_email_sender( $form, $entry );
+	$quote  = 2 === (int) rgar( $form, 'id' );
+	$kind   = $quote ? 'quote request' : 'enquiry';
+	$name   = '' !== $who['full'] ? $who['full'] : 'someone';
+	$link   = admin_url( 'admin.php?page=gf_entries&view=entry&id=' . (int) rgar( $form, 'id' ) . '&lid=' . (int) rgar( $entry, 'id' ) );
+	$h      = 'margin:0 0 6px;font-family:' . $t['font'] . ';font-size:26px;line-height:1.25;font-weight:500;letter-spacing:-0.015em;color:' . $t['text'] . ';';
+	$meta   = 'margin:0 0 26px;font-family:' . $t['mono'] . ';font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:' . $t['muted'] . ';';
+	$date   = wp_date( 'D j M Y, H:i', strtotime( (string) rgar( $entry, 'date_created' ) . ' UTC' ) );
+	$button = '';
+	if ( $who['email'] ) {
+		$subject = $quote ? 'Re: your quote request' : 'Re: your message';
+		$mailto  = 'mailto:' . rawurlencode( $who['email'] ) . '?subject=' . rawurlencode( $subject );
+		$button  = '<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 0 28px;"><tr>'
+			. '<td bgcolor="' . $t['lime'] . '" style="background:' . $t['lime'] . ';background-image:linear-gradient(135deg,#d6ff33,#88cc00);">'
+			. '<a href="' . esc_url( $mailto, array( 'mailto' ) ) . '" style="display:inline-block;padding:14px 22px;font-family:' . $t['mono'] . ';font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#161818;text-decoration:none;">Reply to ' . esc_html( $who['first'] ? $who['first'] : $who['email'] ) . ' &rarr;</a>'
+			. '</td><td style="padding-left:18px;font-family:' . $t['font'] . ';font-size:14px;"><a href="' . esc_url( $link ) . '" style="color:' . $t['muted'] . ';text-decoration:underline;">View in WordPress</a></td>'
+			. '</tr></table>';
+	}
+	return '<div style="' . $meta . '"><span style="color:' . $t['lime'] . ';">&#9632;</span>&nbsp; New ' . esc_html( $kind ) . ' &middot; ' . esc_html( $date ) . '</div>'
+		. '<div style="' . $h . '">' . esc_html( $name ) . '</div>'
+		. ( $who['email'] ? '<div style="margin:0 0 26px;font-family:' . $t['font'] . ';font-size:15px;"><a href="mailto:' . esc_attr( $who['email'] ) . '" style="color:' . $t['lime'] . ';text-decoration:none;">' . esc_html( $who['email'] ) . '</a></div>' : '' )
+		. $button
+		. le_email_summary( $form, $entry, $quote ? 'Quote request' : 'Message' );
+}
 
 /**
  * Wrap the merged message in the branded shell.
@@ -77,7 +153,7 @@ add_filter( 'gform_replace_merge_tags', function ( $text, $form, $entry ) {
  * @param string $body      Message HTML (merge tags already replaced).
  * @param string $preheader Inbox preview text.
  */
-function le_email_shell( $body, $preheader = '' ) {
+function le_email_shell( $body, $preheader = '', $variant = 'autoreply' ) {
 	$t    = le_email_tokens();
 	$mark = LE_URI . '/assets/images/brand/le-sig-mark-96.png';
 	$home = home_url( '/' );
@@ -130,7 +206,7 @@ function le_email_shell( $body, $preheader = '' ) {
 			</div>
 			<div style="font-family:<?php echo esc_attr( $t['font'] ); ?>;font-size:12px;line-height:1.6;color:<?php echo esc_attr( $t['muted'] ); ?>;padding-top:10px;">
 				WordPress web design &amp; development since 2011. Lewis Edward Ltd, registered in England &amp; Wales (11928542). 71-75 Shelton Street, London WC2H 9JQ.<br>
-				You're getting this because you contacted us through lewisedward.com.
+				<?php echo 'admin' === $variant ? 'Enquiry alert from the forms on lewisedward.com. Hit reply to answer them directly.' : 'You&#8217;re getting this because you contacted us through lewisedward.com.'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static strings. ?>
 			</div>
 		</td></tr>
 	</table>
@@ -142,13 +218,36 @@ function le_email_shell( $body, $preheader = '' ) {
 	return (string) ob_get_clean();
 }
 
-/** Apply the shell to branded notifications just before sending. */
-add_filter( 'gform_pre_send_email', function ( $email, $message_format, $notification = array() ) {
-	if ( ! le_email_is_branded( $notification ) || 'html' !== $message_format ) {
+/**
+ * Apply the shell just before sending. The enquiry alert also gets a
+ * readable subject ("... from Lidia") and Reply-To set to the person who
+ * submitted, so hitting Reply answers them directly.
+ */
+add_filter( 'gform_pre_send_email', function ( $email, $message_format, $notification = array(), $entry = array() ) {
+	$variant = le_email_variant( $notification, $entry );
+	if ( '' === $variant || 'html' !== $message_format ) {
+		return $email;
+	}
+	if ( 'admin' === $variant ) {
+		$form = GFAPI::get_form( (int) rgar( $entry, 'form_id' ) );
+		if ( ! $form ) {
+			return $email;
+		}
+		$who              = le_email_sender( $form, $entry );
+		$email['message'] = le_email_admin_body( $form, $entry );
+		if ( '' !== $who['full'] && false === strpos( (string) $email['subject'], ' from ' ) ) {
+			$email['subject'] .= ' from ' . $who['full'];
+		}
+		if ( $who['email'] && is_email( $who['email'] ) ) {
+			$reply = '' !== $who['full'] ? '"' . str_replace( array( '"', "\r", "\n" ), '', $who['full'] ) . '" <' . $who['email'] . '>' : $who['email'];
+			$email['headers']['Reply-To'] = 'Reply-To: ' . $reply;
+		}
+		$preheader = ( '' !== $who['full'] ? $who['full'] : 'New enquiry' ) . ( $who['email'] ? ' · ' . $who['email'] : '' );
+		$email['message'] = le_email_shell( $email['message'], $preheader, 'admin' );
 		return $email;
 	}
 	$plain     = trim( preg_replace( '/\s+/', ' ', wp_strip_all_tags( (string) $email['message'] ) ) );
 	$preheader = function_exists( 'mb_substr' ) ? mb_substr( $plain, 0, 110 ) : substr( $plain, 0, 110 );
-	$email['message'] = le_email_shell( $email['message'], $preheader );
+	$email['message'] = le_email_shell( $email['message'], $preheader, 'autoreply' );
 	return $email;
-}, 10, 3 );
+}, 10, 4 );
