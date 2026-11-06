@@ -137,7 +137,7 @@ $wk_has_glance = ( $wk_year || $wk_dur || $wk_plat || $wk_services || $wk_tech )
 	if ( $wk_next ) :
 		?>
 	<section class="g-row g-tiles g-tiles--intro" aria-label="<?php esc_attr_e( 'More projects', 'lewisedward' ); ?>">
-		<?php le_grid_intro( array( 'label' => le_field( 'wk_next_eyebrow', $wk_id, __( 'More projects', 'lewisedward' ) ), 'title' => le_grid_heading( array( array( le_field( 'wk_next_title_pre', $wk_id, __( 'Keep exploring', 'lewisedward' ) ) ), array( le_field( 'wk_next_title_end', $wk_id, __( 'our work.', 'lewisedward' ) ), 'accent' ) ) ), 'link' => array( 'url' => home_url( '/work' ), 'title' => __( 'All work', 'lewisedward' ) ) ) ); ?>
+		<?php le_grid_intro( array( 'label' => le_field( 'wk_next_eyebrow', $wk_id, __( 'More projects', 'lewisedward' ) ), 'title' => le_grid_heading( array( array( le_field( 'wk_next_title_pre', $wk_id, __( 'Keep exploring', 'lewisedward' ) ) ), array( le_field( 'wk_next_title_end', $wk_id, __( 'our work.', 'lewisedward' ) ), 'accent' ) ) ), 'link' => array( 'url' => home_url( '/work/' ), 'title' => __( 'All work', 'lewisedward' ) ) ) ); ?>
 		<?php foreach ( $wk_next as $nid ) { le_grid_work_tile( $nid ); } ?>
 	</section>
 	<?php endif; ?>

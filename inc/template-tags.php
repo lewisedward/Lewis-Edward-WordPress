@@ -97,7 +97,7 @@ function le_breadcrumbs() {
 	echo '<a href="' . esc_url( home_url( '/' ) ) . '">' . esc_html__( 'Home', 'lewisedward' ) . '</a>';
 
 	if ( is_singular( 'post' ) ) {
-		echo ' <span class="sep">/</span> <a href="' . esc_url( home_url( '/journal' ) ) . '">' . esc_html__( 'Journal', 'lewisedward' ) . '</a>';
+		echo ' <span class="sep">/</span> <a href="' . esc_url( home_url( '/journal/' ) ) . '">' . esc_html__( 'Journal', 'lewisedward' ) . '</a>';
 		echo ' <span class="sep">/</span> <span class="current">' . esc_html( get_the_title() ) . '</span>';
 	} elseif ( is_singular( array( 'service', 'work' ) ) ) {
 		$pt         = get_post_type();

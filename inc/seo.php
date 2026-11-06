@@ -91,3 +91,57 @@ add_action( 'wpseo_add_opengraph_additional_images', function ( $images ) {
 		) );
 	}
 } );
+
+/**
+ * Internal menu links with a trailing slash. Menu items saved in wp-admin as
+ * /services, /work, /privacy etc. otherwise point at a 301 on every page.
+ */
+add_filter( 'nav_menu_link_attributes', function ( $atts ) {
+	if ( empty( $atts['href'] ) ) {
+		return $atts;
+	}
+	$home = untrailingslashit( home_url() );
+	$href = (string) $atts['href'];
+	if ( 0 === strpos( $href, '/' ) && 0 !== strpos( $href, '//' ) ) {
+		$href = $home . $href;
+	}
+	if ( 0 !== strpos( $href, $home . '/' ) ) {
+		return $atts; // External, mailto:, anchors.
+	}
+	$parts = wp_parse_url( $href );
+	$path  = isset( $parts['path'] ) ? $parts['path'] : '/';
+	if ( '/privacy' === untrailingslashit( $path ) ) {
+		$path = '/privacy-policy/';
+	}
+	if ( '/' !== substr( $path, -1 ) && ! preg_match( '/\.[a-z0-9]{2,5}$/i', $path ) ) {
+		$path .= '/';
+	}
+	$atts['href'] = $home . $path
+		. ( isset( $parts['query'] ) ? '?' . $parts['query'] : '' )
+		. ( isset( $parts['fragment'] ) ? '#' . $parts['fragment'] : '' );
+	return $atts;
+} );
+
+/**
+ * Tell Cloudflare that public pages for anonymous visitors may be cached at
+ * the edge for 2 hours. Paired with the Cloudflare cache rule set to "use
+ * cache-control header if present", so responses that say no-store (the
+ * host's bot-protection challenge page, previews, logged-in views) are never
+ * cached and served to everyone.
+ */
+add_action( 'template_redirect', function () {
+	if ( headers_sent() || is_admin() || is_user_logged_in() || is_404() || is_search() || is_preview() ) {
+		return;
+	}
+	if ( function_exists( 'le_is_staging_host' ) && le_is_staging_host() ) {
+		return;
+	}
+	$method = isset( $_SERVER['REQUEST_METHOD'] ) ? strtoupper( (string) $_SERVER['REQUEST_METHOD'] ) : 'GET';
+	if ( 'GET' !== $method && 'HEAD' !== $method ) {
+		return;
+	}
+	if ( ! empty( $_GET ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		return; // Previews, ?skin=, search, form postbacks.
+	}
+	header( 'Cache-Control: public, max-age=0, s-maxage=7200' );
+}, 99 );

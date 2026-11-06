@@ -69,7 +69,7 @@ while ( have_posts() ) :
 			<div class="section__inner">
 				<div class="jr-hero glass" data-reveal>
 					<div class="jr-hero__eyebrow-row">
-						<a class="eyebrow jr-hero__back" href="<?php echo esc_url( home_url( '/journal' ) ); ?>"><?php esc_html_e( 'Journal', 'lewisedward' ); ?></a>
+						<a class="eyebrow jr-hero__back" href="<?php echo esc_url( home_url( '/journal/' ) ); ?>"><?php esc_html_e( 'Journal', 'lewisedward' ); ?></a>
 						<span class="jr-hero__rule" aria-hidden="true"></span>
 						<?php if ( $jr_cat ) : ?><span class="eyebrow jr-hero__cat"><?php echo esc_html( $jr_cat ); ?></span><?php endif; ?>
 						<span class="pulse-dot" aria-hidden="true"></span>

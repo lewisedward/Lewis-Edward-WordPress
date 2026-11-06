@@ -40,7 +40,7 @@ if ( ! $archive_name ) {
 		<div class="section__inner">
 			<div class="jr-archive glass jr-archive--standalone" data-reveal>
 				<div class="jr-archive__head">
-					<a class="eyebrow jr-archive__back" href="<?php echo esc_url( $pp ? get_permalink( $pp ) : home_url( '/journal' ) ); ?>"><?php esc_html_e( 'Journal', 'lewisedward' ); ?></a>
+					<a class="eyebrow jr-archive__back" href="<?php echo esc_url( $pp ? get_permalink( $pp ) : home_url( '/journal/' ) ); ?>"><?php esc_html_e( 'Journal', 'lewisedward' ); ?></a>
 					<span class="jr-archive__rule" aria-hidden="true"></span>
 					<span class="eyebrow"><?php echo esc_html( str_pad( (string) $total, 2, '0', STR_PAD_LEFT ) ); ?> <?php esc_html_e( 'entries', 'lewisedward' ); ?></span>
 					<span class="pulse-dot" aria-hidden="true"></span>

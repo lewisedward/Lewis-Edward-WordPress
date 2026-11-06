@@ -170,7 +170,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 			<span class="g-label g-mono"><?php echo esc_html( le_field( 'home_recentwork_title', false, __( 'Recent Work', 'lewisedward' ) ) ); ?></span>
 			<h2><?php echo esc_html( le_field( 'home_work_title_pre' ) ); ?> <?php echo esc_html( le_field( 'home_work_title_accent' ) ); ?> <?php echo esc_html( le_field( 'home_work_title_post' ) ); ?></h2>
 			<p><?php echo esc_html( le_field( 'home_work_lede' ) ); ?></p>
-			<a class="g-line-link g-mono" href="<?php echo esc_url( home_url( '/work' ) ); ?>"><span><?php echo esc_html( le_field( 'home_recentwork_discover', false, __( 'Discover all work', 'lewisedward' ) ) ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+			<a class="g-line-link g-mono" href="<?php echo esc_url( home_url( '/work/' ) ); ?>"><span><?php echo esc_html( le_field( 'home_recentwork_discover', false, __( 'Discover all work', 'lewisedward' ) ) ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 		</div>
 		<?php
 		// Five case studies: the chosen ones first, topped up with the latest.
@@ -183,7 +183,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 			le_grid_work_tile( $wid );
 		}
 		?>
-		<a class="g-cell g-work__all" href="<?php echo esc_url( home_url( '/work' ) ); ?>">
+		<a class="g-cell g-work__all" href="<?php echo esc_url( home_url( '/work/' ) ); ?>">
 			<span class="g-mono"><?php echo esc_html( str_pad( (string) wp_count_posts( 'work' )->publish, 2, '0', STR_PAD_LEFT ) ); ?> <?php echo esc_html( le_field( 'grid_work_count_label', false, __( 'projects', 'lewisedward' ) ) ); ?></span>
 			<span class="g-work__all-title"><?php echo esc_html( le_field( 'grid_work_all_label', false, __( 'All work', 'lewisedward' ) ) ); ?></span>
 			<?php echo le_grid_big_arrow( 'g-work__all-arrow' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
@@ -263,7 +263,7 @@ $g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : h
 		<div class="g-cell g-clients__copy">
 			<h2><?php echo esc_html( le_field( 'home_clients_title_pre' ) ); ?> <span class="g-accent"><?php echo esc_html( (string) (int) le_field( 'home_clients_counter' ) ); ?>+</span> <?php echo esc_html( le_field( 'home_clients_title_post' ) ); ?></h2>
 			<p><?php echo esc_html( le_field( 'home_clients_lede' ) ); ?></p>
-			<a class="g-btn g-mono" href="<?php echo esc_url( home_url( '/work' ) ); ?>"><span><?php echo esc_html( le_field( 'grid_clients_button', false, __( 'Selected work', 'lewisedward' ) ) ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+			<a class="g-btn g-mono" href="<?php echo esc_url( home_url( '/work/' ) ); ?>"><span><?php echo esc_html( le_field( 'grid_clients_button', false, __( 'Selected work', 'lewisedward' ) ) ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 		</div>
 		<div class="g-cell g-clients__list">
 			<?php foreach ( $g_logos as $row ) : $img = isset( $row['logo'] ) ? $row['logo'] : null; if ( ! $img || empty( $img['url'] ) ) { continue; } $name = ! empty( $row['name'] ) ? $row['name'] : ( $img['alt'] ?? '' ); ?>

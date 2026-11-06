@@ -24,7 +24,7 @@ function le_default_menu_blueprint() {
 	return array(
 		'parent' => array(
 			'title' => 'Services',
-			'url'   => home_url( '/services' ),
+			'url'   => home_url( '/services/' ),
 		),
 		'children' => array(
 			array( 'Web Design', '/services/web-design', 'Enterprise-level WordPress design with creativity and precision.' ),
@@ -140,10 +140,10 @@ function le_footer_menu_blueprints() {
 		'footer_discover' => array(
 			'name'  => 'Footer — Discover',
 			'items' => array(
-				array( 'title' => 'About',    'url' => home_url( '/about' ) ),
-				array( 'title' => 'Work',     'url' => home_url( '/work' ) ),
-				array( 'title' => 'Journal',  'url' => home_url( '/journal' ) ),
-				array( 'title' => 'FAQs',     'url' => home_url( '/faq' ) ),
+				array( 'title' => 'About',    'url' => home_url( '/about/' ) ),
+				array( 'title' => 'Work',     'url' => home_url( '/work/' ) ),
+				array( 'title' => 'Journal',  'url' => home_url( '/journal/' ) ),
+				array( 'title' => 'FAQs',     'url' => home_url( '/faq/' ) ),
 				array( 'title' => 'Sitetally', 'url' => 'https://sitetally.com', 'target' => '_blank' ),
 			),
 		),
@@ -161,8 +161,8 @@ function le_footer_menu_blueprints() {
 		'footer_take_action' => array(
 			'name'  => 'Footer — Take Action',
 			'items' => array(
-				array( 'title' => 'Start a conversation', 'url' => home_url( '/contact' ) ),
-				array( 'title' => 'Request a quote',      'url' => home_url( '/quotes' ) ),
+				array( 'title' => 'Start a conversation', 'url' => home_url( '/contact/' ) ),
+				array( 'title' => 'Request a quote',      'url' => home_url( '/quotes/' ) ),
 			),
 		),
 	);

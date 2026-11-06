@@ -34,7 +34,7 @@ $pp      = le_journal_page_id();
 	<section class="g-row g-phero g-phero--post" aria-label="<?php echo esc_attr( get_the_title() ); ?>">
 		<div class="g-cell g-phero__main">
 			<div class="g-phero__top">
-				<nav class="g-phero__crumbs g-mono" aria-label="<?php esc_attr_e( 'Breadcrumb', 'lewisedward' ); ?>"><a href="<?php echo esc_url( $pp ? get_permalink( $pp ) : home_url( '/journal' ) ); ?>"><?php esc_html_e( 'Journal', 'lewisedward' ); ?></a><?php if ( $jr_cat ) : ?><span>/</span><a href="<?php echo esc_url( get_category_link( $jr_cat ) ); ?>"><?php echo esc_html( $jr_cat->name ); ?></a><?php endif; ?></nav>
+				<nav class="g-phero__crumbs g-mono" aria-label="<?php esc_attr_e( 'Breadcrumb', 'lewisedward' ); ?>"><a href="<?php echo esc_url( $pp ? get_permalink( $pp ) : home_url( '/journal/' ) ); ?>"><?php esc_html_e( 'Journal', 'lewisedward' ); ?></a><?php if ( $jr_cat ) : ?><span>/</span><a href="<?php echo esc_url( get_category_link( $jr_cat ) ); ?>"><?php echo esc_html( $jr_cat->name ); ?></a><?php endif; ?></nav>
 				<span class="g-mono"><?php echo esc_html( get_the_date( 'M Y' ) . ' · ' . $jr_read ); ?></span>
 			</div>
 			<h1 class="g-phero__title g-phero__title--long"><?php the_title(); ?></h1>
@@ -50,7 +50,7 @@ $pp      = le_journal_page_id();
 			<div class="g-sec__top"><span class="g-label g-mono"><?php esc_html_e( 'Read', 'lewisedward' ); ?></span><span class="g-mono g-sec__count" data-g-read-pct>0%</span></div>
 			<div class="g-progress" data-g-read aria-hidden="true"><span data-g-read-fill></span></div>
 			<div class="g-sec__text"><span class="g-mono" style="display:block;color:hsl(var(--foreground)/0.5);margin-bottom:8px"><?php esc_html_e( 'Published', 'lewisedward' ); ?></span><time datetime="<?php echo esc_attr( get_the_date( 'c' ) ); ?>"><?php echo esc_html( get_the_date() ); ?></time><?php if ( $jr_cat ) : ?><br><span class="g-mono" style="display:block;color:hsl(var(--foreground)/0.5);margin:20px 0 8px"><?php esc_html_e( 'Filed under', 'lewisedward' ); ?></span><a href="<?php echo esc_url( get_category_link( $jr_cat ) ); ?>" style="color:inherit"><?php echo esc_html( $jr_cat->name ); ?></a><?php endif; ?></div>
-			<a class="g-line-link g-mono g-sec__link" href="<?php echo esc_url( home_url( '/contact' ) ); ?>"><span><?php esc_html_e( 'Talk to Lewis', 'lewisedward' ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+			<a class="g-line-link g-mono g-sec__link" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><span><?php esc_html_e( 'Talk to Lewis', 'lewisedward' ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 			<?php
 			$sh_url   = get_permalink();
 			$sh_title = get_the_title();
@@ -116,7 +116,7 @@ $pp      = le_journal_page_id();
 
 	<?php if ( $jr_more ) : ?>
 	<section class="g-row g-sec" aria-label="<?php esc_attr_e( 'More from the journal', 'lewisedward' ); ?>">
-		<?php le_grid_intro( array( 'label' => __( 'Continue', 'lewisedward' ), 'count' => '03', 'title' => le_grid_heading( array( array( __( 'Keep', 'lewisedward' ) ), array( __( 'reading', 'lewisedward' ), 'muted' ), array( __( 'the journal.', 'lewisedward' ), 'accent' ) ) ), 'link' => array( 'url' => $pp ? get_permalink( $pp ) : home_url( '/journal' ), 'title' => __( 'All articles', 'lewisedward' ) ) ) ); ?>
+		<?php le_grid_intro( array( 'label' => __( 'Continue', 'lewisedward' ), 'count' => '03', 'title' => le_grid_heading( array( array( __( 'Keep', 'lewisedward' ) ), array( __( 'reading', 'lewisedward' ), 'muted' ), array( __( 'the journal.', 'lewisedward' ), 'accent' ) ) ), 'link' => array( 'url' => $pp ? get_permalink( $pp ) : home_url( '/journal/' ), 'title' => __( 'All articles', 'lewisedward' ) ) ) ); ?>
 		<div class="g-cell g-dark g-sec__body">
 			<?php $n = 0; foreach ( $jr_more as $m ) : $mid = $m->ID; $n++; $mc = get_the_category( $mid ); ?>
 			<a class="g-li" href="<?php echo esc_url( get_permalink( $mid ) ); ?>">

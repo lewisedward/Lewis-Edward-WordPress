@@ -23,7 +23,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			</div>
 			<div class="g-phero__tags" style="gap:12px">
 				<a class="g-btn g-mono" href="<?php echo esc_url( home_url( '/' ) ); ?>"><span><?php esc_html_e( 'Back to home', 'lewisedward' ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
-				<a class="g-btn g-mono" href="<?php echo esc_url( home_url( '/work' ) ); ?>"><span><?php esc_html_e( 'View our work', 'lewisedward' ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
+				<a class="g-btn g-mono" href="<?php echo esc_url( home_url( '/work/' ) ); ?>"><span><?php esc_html_e( 'View our work', 'lewisedward' ); ?></span><?php echo le_grid_arrow(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 			</div>
 		</div>
 	</section>

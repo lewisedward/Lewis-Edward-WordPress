@@ -29,7 +29,7 @@ if ( le_grid_skin() ) {
 			<a class="btn btn--primary" href="<?php echo esc_url( home_url( '/' ) ); ?>">
 				<?php esc_html_e( 'Back to home', 'lewisedward' ); ?>
 			</a>
-			<a class="btn btn--ghost" href="<?php echo esc_url( home_url( '/work' ) ); ?>">
+			<a class="btn btn--ghost" href="<?php echo esc_url( home_url( '/work/' ) ); ?>">
 				<?php esc_html_e( 'View our work', 'lewisedward' ); ?>
 			</a>
 		</p>

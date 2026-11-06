@@ -128,11 +128,11 @@ $le_menu_args = array(
 if ( ! function_exists( 'le_primary_menu_fallback' ) ) :
 function le_primary_menu_fallback() {
 	$items = array(
-		array( 'Services', home_url( '/services' ) ),
-		array( 'Work', home_url( '/work' ) ),
-		array( 'About', home_url( '/about' ) ),
-		array( 'Journal', home_url( '/journal' ) ),
-		array( 'Contact', home_url( '/contact' ) ),
+		array( 'Services', home_url( '/services/' ) ),
+		array( 'Work', home_url( '/work/' ) ),
+		array( 'About', home_url( '/about/' ) ),
+		array( 'Journal', home_url( '/journal/' ) ),
+		array( 'Contact', home_url( '/contact/' ) ),
 	);
 	echo '<ul class="primary-menu">';
 	foreach ( $items as $it ) {
