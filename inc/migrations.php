@@ -1319,3 +1319,19 @@ add_action( 'init', function () {
 	flush_rewrite_rules( false ); // /sectors/{slug} is a new permalink base.
 	update_option( 'le_migration_sectors_2026_11', gmdate( 'c' ) . ' ' . implode( ' ', $log ), false );
 }, 30 );
+
+/**
+ * 2026-11-06: purge LiteSpeed (and, through its Cloudflare link, the edge)
+ * once so every cached page picks up the trailing-slash link changes.
+ */
+add_action( 'init', function () {
+	if ( get_option( 'le_migration_purge_slashes_2026_11' ) ) {
+		return;
+	}
+	$log = array();
+	if ( has_action( 'litespeed_purge_all' ) ) {
+		do_action( 'litespeed_purge_all' );
+		$log[] = 'litespeed-purged';
+	}
+	update_option( 'le_migration_purge_slashes_2026_11', gmdate( 'c' ) . ' ' . implode( ' | ', $log ), false );
+}, 20 );

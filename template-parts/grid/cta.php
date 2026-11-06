@@ -15,8 +15,8 @@ $g_pid = $g_pid ? $g_pid : false;
 $g_id  = static function ( $item ) {
 	return is_object( $item ) ? (int) $item->ID : (int) $item;
 };
-$g_cta_url = le_field( 'home_cta_url', $g_pid, '/quotes' );
-$g_cta_url = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : home_url( $g_cta_url );
+$g_cta_url = le_field( 'home_cta_url', $g_pid, '/quotes/' );
+$g_cta_url = le_slash_url( ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : home_url( $g_cta_url ) );
 
 // Next-step links replace the project previews where projects are already the page's subject (the Work index).
 $g_self      = is_singular( 'work' ) ? (int) get_queried_object_id() : 0;

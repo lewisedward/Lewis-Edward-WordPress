@@ -96,31 +96,53 @@ add_action( 'wpseo_add_opengraph_additional_images', function ( $images ) {
  * Internal menu links with a trailing slash. Menu items saved in wp-admin as
  * /services, /work, /privacy etc. otherwise point at a 301 on every page.
  */
-add_filter( 'nav_menu_link_attributes', function ( $atts ) {
-	if ( empty( $atts['href'] ) ) {
-		return $atts;
+function le_slash_url( $url ) {
+	if ( ! is_string( $url ) || '' === $url ) {
+		return $url;
 	}
 	$home = untrailingslashit( home_url() );
-	$href = (string) $atts['href'];
+	$href = $url;
 	if ( 0 === strpos( $href, '/' ) && 0 !== strpos( $href, '//' ) ) {
 		$href = $home . $href;
 	}
 	if ( 0 !== strpos( $href, $home . '/' ) ) {
-		return $atts; // External, mailto:, anchors.
+		return $url; // External, mailto:, tel:, anchors.
 	}
 	$parts = wp_parse_url( $href );
 	$path  = isset( $parts['path'] ) ? $parts['path'] : '/';
 	if ( '/privacy' === untrailingslashit( $path ) ) {
 		$path = '/privacy-policy/';
 	}
+	if ( 0 === strpos( $path, '/wp-' ) ) {
+		return $url; // wp-content, wp-json, wp-admin.
+	}
 	if ( '/' !== substr( $path, -1 ) && ! preg_match( '/\.[a-z0-9]{2,5}$/i', $path ) ) {
 		$path .= '/';
 	}
-	$atts['href'] = $home . $path
+	return $home . $path
 		. ( isset( $parts['query'] ) ? '?' . $parts['query'] : '' )
 		. ( isset( $parts['fragment'] ) ? '#' . $parts['fragment'] : '' );
+}
+
+add_filter( 'nav_menu_link_attributes', function ( $atts ) {
+	if ( ! empty( $atts['href'] ) ) {
+		$atts['href'] = le_slash_url( (string) $atts['href'] );
+	}
 	return $atts;
 } );
+
+// ACF link and URL fields (header CTA, section links) entered as /quotes or /contact.
+add_filter( 'acf/format_value/type=link', function ( $value ) {
+	if ( is_array( $value ) && ! empty( $value['url'] ) ) {
+		$value['url'] = le_slash_url( (string) $value['url'] );
+	} elseif ( is_string( $value ) ) {
+		$value = le_slash_url( $value );
+	}
+	return $value;
+}, 20 );
+add_filter( 'acf/format_value/type=url', function ( $value ) {
+	return is_string( $value ) ? le_slash_url( $value ) : $value;
+}, 20 );
 
 /**
  * Tell Cloudflare that public pages for anonymous visitors may be cached at

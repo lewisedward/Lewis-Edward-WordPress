@@ -54,8 +54,8 @@ $g_hero_logos = is_array( $g_hero_logos ) ? $g_hero_logos : array();
 $g_team       = le_field( 'home_hero_team' );
 $g_team       = is_array( $g_team ) ? $g_team : array();
 $g_quote      = le_link( 'home_hero_cta', '/quotes', le_field( 'home_hero_cta_headline', false, __( 'Start a project', 'lewisedward' ) ) );
-$g_quote_url  = le_field( 'home_hero_cta_url', false, '/quotes' );
-$g_quote_url  = ( 0 === strpos( (string) $g_quote_url, 'http' ) ) ? $g_quote_url : home_url( $g_quote_url );
+$g_quote_url  = le_field( 'home_hero_cta_url', false, '/quotes/' );
+$g_quote_url  = le_slash_url( ( 0 === strpos( (string) $g_quote_url, 'http' ) ) ? $g_quote_url : home_url( $g_quote_url ) );
 
 // Recent work.
 $g_work       = le_field( 'home_work_projects' );
@@ -93,8 +93,8 @@ $g_tsts       = le_field( 'home_tst_items', $g_pid );
 $g_tsts       = is_array( $g_tsts ) ? $g_tsts : array();
 
 // Contact.
-$g_cta_url    = le_field( 'home_cta_url', $g_pid, '/quotes' );
-$g_cta_url    = ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : home_url( $g_cta_url );
+$g_cta_url    = le_field( 'home_cta_url', $g_pid, '/quotes/' );
+$g_cta_url    = le_slash_url( ( 0 === strpos( (string) $g_cta_url, 'http' ) ) ? $g_cta_url : home_url( $g_cta_url ) );
 ?>
 <main id="main" class="site-main site-main--home g-main">
 
