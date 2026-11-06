@@ -1335,3 +1335,47 @@ add_action( 'init', function () {
 	}
 	update_option( 'le_migration_purge_slashes_2026_11b', gmdate( 'c' ) . ' ' . implode( ' | ', $log ), false );
 }, 20 );
+
+/**
+ * 2026-11-06 SEO review: new Yoast titles and meta descriptions on ten service
+ * pages, matched to the searches each page should win. Old values are logged
+ * in the option so they can be restored. Homepage untouched (frozen to 25 Nov).
+ */
+add_action( 'init', function () {
+	if ( get_option( 'le_migration_service_titles_2026_11_06' ) ) {
+		return;
+	}
+	$set = array(
+		'web-design'           => array( 'WordPress Web Design Company in London | Lewis Edward', 'Bespoke WordPress websites, designed and built by one small London team. Trusted by easyJet, Lord\'s and ArtsEd. Fixed-price quotes from £5,000.' ),
+		'web-development'      => array( 'WordPress Developer London | Custom Themes & Plugins', 'Hand-coded WordPress themes, plugins and integrations from London developers building on WordPress since 2011. Clear scope, fixed price, no surprises.' ),
+		'website-support'      => array( 'WordPress Support & Maintenance London | Same-Day Fixes', 'Monthly WordPress support from a UK team: updates, backups, security monitoring and same-day fixes. Support plans from £100 a month.' ),
+		'web-hosting'          => array( 'Managed WordPress Hosting UK, Including Tech Support', 'Fast, fully managed WordPress hosting on UK servers, including tech support from the people who built your site. Daily backups and green energy.' ),
+		'consultancy'          => array( 'WordPress Consultant London | Independent Expert Advice', 'Need a second opinion on a WordPress site, an agency quote or a rebuild? Independent advice from a London WordPress consultant working since 2011.' ),
+		'website-security'     => array( 'Hacked WordPress Site? Malware Removal & Security', 'Hacked or infected WordPress site? We clean it, find how they got in and lock it down, usually same day. Then we keep it patched and monitored.' ),
+		'website-optimisation' => array( 'WordPress Speed Optimisation | Core Web Vitals Fixes', 'Slow WordPress site? We fix Core Web Vitals, images, caching and bloated plugins, and show you the before and after scores.' ),
+		'migrate-to-wordpress' => array( 'WordPress Migration Services UK | Webflow, Wix, Squarespace', 'Moving to WordPress from Webflow, Wix, Squarespace or another CMS? We migrate your content, keep your rankings with proper redirects and train your team.' ),
+		'e-commerce'           => array( 'WooCommerce Agency London | WooCommerce & Shopify Builds', '' ),
+		'website-audits'       => array( 'WordPress Website Audit | Technical, SEO & UX Review', '' ),
+	);
+	$log = array();
+	foreach ( $set as $slug => $vals ) {
+		$post = get_page_by_path( $slug, OBJECT, 'service' );
+		if ( ! $post ) {
+			$log[] = $slug . ':missing';
+			continue;
+		}
+		$log[] = $slug . ':title-was:' . (string) get_post_meta( $post->ID, '_yoast_wpseo_title', true );
+		update_post_meta( $post->ID, '_yoast_wpseo_title', $vals[0] );
+		if ( '' !== $vals[1] ) {
+			$log[] = $slug . ':desc-was:' . (string) get_post_meta( $post->ID, '_yoast_wpseo_metadesc', true );
+			update_post_meta( $post->ID, '_yoast_wpseo_metadesc', $vals[1] );
+		}
+		// Re-save so Yoast rebuilds its indexable from the new meta.
+		wp_update_post( array( 'ID' => $post->ID ) );
+	}
+	if ( has_action( 'litespeed_purge_all' ) ) {
+		do_action( 'litespeed_purge_all' );
+		$log[] = 'litespeed-purged';
+	}
+	update_option( 'le_migration_service_titles_2026_11_06', gmdate( 'c' ) . ' ' . implode( ' | ', $log ), false );
+}, 20 );

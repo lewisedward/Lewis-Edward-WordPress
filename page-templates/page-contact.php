@@ -27,7 +27,7 @@ if ( le_grid_skin() ) {
 }
 
 $le_q_url = le_field( 'contact_quote_url' );
-$le_q_url = ( 0 === strpos( (string) $le_q_url, 'http' ) ) ? $le_q_url : home_url( $le_q_url );
+$le_q_url = le_slash_url( ( 0 === strpos( (string) $le_q_url, 'http' ) ) ? $le_q_url : home_url( $le_q_url ) );
 
 $le_form = le_field( 'contact_form_shortcode' );
 ?>

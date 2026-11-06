@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 $cf_quotes = ( isset( $args['variant'] ) && 'quotes' === $args['variant'] );
 $p         = $cf_quotes ? 'quotes_' : 'contact_';
 $cf_url    = le_field( $cf_quotes ? 'quotes_card_url' : 'contact_quote_url' );
-$cf_url    = ( 0 === strpos( (string) $cf_url, 'http' ) ) ? $cf_url : home_url( $cf_url );
+$cf_url    = le_slash_url( ( 0 === strpos( (string) $cf_url, 'http' ) ) ? $cf_url : home_url( $cf_url ) );
 $cf_form   = le_field( $p . 'form_shortcode' );
 $cf_title  = le_field( $cf_quotes ? 'quotes_card_title' : 'contact_quote_title' );
 $cf_badge  = le_field( $cf_quotes ? 'quotes_card_badge' : 'contact_quote_badge' );
