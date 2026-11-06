@@ -1325,7 +1325,7 @@ add_action( 'init', function () {
  * once so every cached page picks up the trailing-slash link changes.
  */
 add_action( 'init', function () {
-	if ( get_option( 'le_migration_purge_slashes_2026_11' ) ) {
+	if ( get_option( 'le_migration_purge_slashes_2026_11b' ) ) {
 		return;
 	}
 	$log = array();
@@ -1333,5 +1333,5 @@ add_action( 'init', function () {
 		do_action( 'litespeed_purge_all' );
 		$log[] = 'litespeed-purged';
 	}
-	update_option( 'le_migration_purge_slashes_2026_11', gmdate( 'c' ) . ' ' . implode( ' | ', $log ), false );
+	update_option( 'le_migration_purge_slashes_2026_11b', gmdate( 'c' ) . ' ' . implode( ' | ', $log ), false );
 }, 20 );

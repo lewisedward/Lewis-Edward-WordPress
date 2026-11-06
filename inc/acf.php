@@ -159,6 +159,9 @@ function le_link( $selector, $default_url = '', $default_title = '', $post_id = 
 	if ( '' !== $url && '/' === $url[0] ) {
 		$url = home_url( $url );
 	}
+	if ( function_exists( 'le_slash_url' ) ) {
+		$url = le_slash_url( $url ); // Internal links straight to the trailing-slash URL, not a 301.
+	}
 
 	return array(
 		'url'    => $url,
