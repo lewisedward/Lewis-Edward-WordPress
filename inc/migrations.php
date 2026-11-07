@@ -1669,3 +1669,37 @@ add_action( 'init', function () {
 	}
 	update_option( 'le_migration_merge_dev_agency_2026_11', gmdate( 'c' ) . ' ' . implode( ' | ', $log ), false );
 }, 30 );
+
+/**
+ * 2026-11-07: rewritten copy for /services/wordpress-agency-partnership/
+ * (white label for agencies). Agency names deliberately left out. Old field
+ * values in le_migration_agency_rewrite_2026_11_backup.
+ */
+add_action( 'init', function () {
+	if ( get_option( 'le_migration_agency_rewrite_2026_11' ) || ! function_exists( 'update_field' ) || ! function_exists( 'le_apply_service_rewrite' ) ) {
+		return;
+	}
+	$file = LE_DIR . '/inc/data/service-rewrite-agency-2026-11.json';
+	$data = file_exists( $file ) ? json_decode( (string) file_get_contents( $file ), true ) : null; // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+	if ( ! is_array( $data ) ) {
+		update_option( 'le_migration_agency_rewrite_2026_11', gmdate( 'c' ) . ' no-data', false );
+		return;
+	}
+	$backup = array();
+	$log    = array();
+	foreach ( $data as $slug => $s ) {
+		$p = get_page_by_path( $slug, OBJECT, 'service' );
+		if ( $p ) {
+			foreach ( array( 'service_headline', 'service_intro', 'whats_included_title', 'service_detail_features', 'service_process', 'service_benefits', 'service_faq', 'service_related_work', 'service_related', 'service_testimonials', 'svc_process_eyebrow', 'svc_process_title', 'svc_process_note', 'svc_benefits_eyebrow', 'svc_benefits_title', 'svc_benefits_intro' ) as $k ) {
+				$backup[ $slug ][ $k ] = get_field( $k, $p->ID, false );
+			}
+		}
+		$log[] = le_apply_service_rewrite( $slug, $s );
+	}
+	update_option( 'le_migration_agency_rewrite_2026_11_backup', $backup, false );
+	if ( has_action( 'litespeed_purge_all' ) ) {
+		do_action( 'litespeed_purge_all' );
+		$log[] = 'litespeed-purged';
+	}
+	update_option( 'le_migration_agency_rewrite_2026_11', gmdate( 'c' ) . ' ' . implode( ' | ', $log ), false );
+}, 31 );

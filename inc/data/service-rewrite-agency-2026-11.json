@@ -1,0 +1,69 @@
+{
+  "wordpress-agency-partnership": {
+    "headline": "White-label WordPress developers for creative agencies",
+    "intro": "You win the work and design it; we build it. We're a small London team of senior developers who turn agency designs into pixel-perfect WordPress, Webflow and Shopify sites, under your brand or ours. We can join pre-project calls to help you scope and answer technical questions, so you quote with confidence, and we build as close to the designs as possible so your feedback rounds stay short.",
+    "included_title": "A development team you don't have to hire.",
+    "features": [
+      ["Pixel-perfect builds", "Your designs built exactly as drawn, including hover states, animations and the responsive breakpoints you haven't designed yet. Minimal feedback rounds."],
+      ["White label", "We work behind the scenes under your brand: your email, your project management, your client relationship. Or alongside you, introduced as your development partner. Your call."],
+      ["Scoping support", "We join pre-project meetings, review designs for feasibility and help you price the build accurately before you commit to a client."],
+      ["Flexible capacity", "A steady pipeline or the odd project when you need it. No retainers or minimums."],
+      ["Your tools, your process", "Slack, Trello, Asana, Jira, Basecamp or email. We fit around how your studio already works."],
+      ["Beyond the build", "Complex functionality, integrations, AI tools, hosting and ongoing support, so you can offer clients more than design without adding headcount."]
+    ],
+    "cost_eyebrow": "Agency pricing",
+    "cost_title": "How agency pricing works.",
+    "cost_intro": "Every quote is fixed before we start, so you know your cost before you price the job for your client.",
+    "cost_rows": [
+      ["Fixed price per build", "quoted per project", "For one-off projects: we scope from your designs and give you a fixed figure you can build your margin on."],
+      ["Day rate", "agreed upfront", "For ongoing or open-ended work, sprints, or development on a client account."],
+      ["Hosting & support for your clients", "from £100 a month", "Keeping launched sites updated, backed up and monitored, under your brand if you prefer."]
+    ],
+    "cost_note": "Bespoke WordPress builds typically start from £5,000.",
+    "process_eyebrow": "How we deliver",
+    "process_title": "From design handover to launch.",
+    "process_note": "2-6 weeks",
+    "process_intro": "A standard brochure site from supplied designs takes 2-4 weeks. Complex builds with custom functionality typically take 4-6 weeks.",
+    "process": [
+      ["01", "Scope & quote", "Send the designs or bring us onto a call. We flag anything tricky early and send a fixed price and timeline."],
+      ["02", "Design handover", "Figma, Adobe XD, Sketch or PDFs. Mobile designs, hover states and animation references help, but we'll adapt desktop designs when they aren't there."],
+      ["03", "Build", "Designs are coded into front-end templates, then integrated into WordPress with flexible, editable sections. You get a staging link to review early."],
+      ["04", "Launch & aftercare", "Cross-browser and device testing, launch, and a month's bug guarantee. Ongoing support and hosting available, under your brand if you prefer."]
+    ],
+    "proof_eyebrow": "Agency projects",
+    "proof_title": "Built for agencies.",
+    "proof": [
+      ["easyjet-traveller", "For a travel publishing agency: a modular, content-rich site for easyJet's in-flight magazine, built to stay fast for millions of monthly visitors."],
+      ["more-corners", "For the same agency: a custom site for a travel content brand with over 500K followers, which we continue to develop and support."],
+      ["church-of-england", "For a London agency: a pixel-perfect retirement planning tool for the Church of England Pensions Board, with a decision tree and interactive calculators, built from the agency's designs."],
+      ["prism", "For the same London agency: a modular content hub for Arthur D. Little, built from Adobe XD designs, with HubSpot integration."]
+    ],
+    "benefits_eyebrow": "Why agencies stay",
+    "benefits_title": "Why agencies keep coming back.",
+    "benefits_intro": "We look after your clients the way you would.",
+    "benefits": [
+      "Senior developers only, and you talk to them directly, not an account manager",
+      "Fixed quotes, so your margin is protected",
+      "Pixel-perfect builds that keep feedback rounds short",
+      "White label as standard if you want it",
+      "NDAs and SOWs signed on request",
+      "A month's bug guarantee on every build",
+      "Building on WordPress since 2011, for brands from easyJet to Lord's"
+    ],
+    "team_title": "Your development partner.",
+    "team_text": "I'm Lewis. I've been building WordPress sites since 2011, and working as the development partner for creative agencies is my favourite kind of work: you bring the ideas and the client, and I make sure the build does the design justice. You deal with me and a small team of senior developers directly.",
+    "faq": [
+      ["What is white-label WordPress development?", "It means we build the website and you present it as your own work. We can work under your agency's name, use your email and tools, and never contact your client directly unless you want us to."],
+      ["Can you work directly with our designers?", "Yes. We regularly collaborate with design teams, helping with scoping, giving feedback on feasibility and suggesting improvements during the design phase."],
+      ["Can you join client or pre-project meetings?", "Yes, as part of your team or as your development partner, whichever suits. It helps us answer technical questions early and scope accurately."],
+      ["How do you price agency work?", "A fixed price per build after we've seen the designs, or a day rate agreed upfront for ongoing work. Either way you know the cost before you quote your client."],
+      ["What's your typical turnaround?", "A standard brochure site from supplied designs takes 2-4 weeks. Complex builds with custom functionality typically take 4-6 weeks. We'll give you an accurate timeline upfront."],
+      ["Do you sign NDAs and SOWs?", "Yes. We're happy to sign NDAs, SOWs and any other agreements you need."],
+      ["Which platforms do you build on?", "Mostly WordPress, plus <a href=\"https://lewisedward.com/services/webflow/\">Webflow</a> and Shopify. We can also build <a href=\"https://lewisedward.com/services/ai-development/\">AI features</a> and integrations into your clients' sites."],
+      ["Can you look after the site once it's live?", "Yes. We offer <a href=\"https://lewisedward.com/services/website-support/\">hosting and support</a> from £100 a month, under your brand if you prefer, with same-day fixes."]
+    ],
+    "work": ["easyjet-traveller", "church-of-england", "prism", "more-corners", "hubba"],
+    "related": ["wordpress-agency", "web-development", "webflow", "e-commerce", "website-support"],
+    "testimonials": ["Rob White", "Isobel Pickles", "Paul Hattam"]
+  }
+}
