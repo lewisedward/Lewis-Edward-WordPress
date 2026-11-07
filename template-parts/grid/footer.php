@@ -56,12 +56,9 @@ $le_menu      = function ( $location, $fallback, $ensure = null ) {
 		</div>
 	</div>
 	<div class="g-row g-footer__mid">
-		<div class="g-cell g-footer__legalcell"><span class="g-footer__legal g-mono"><span>&copy; <?php echo esc_html( date_i18n( 'Y' ) ); ?> <?php echo esc_html( le_option( 'footer_copyright_name', __( 'Lewis Edward Ltd', 'lewisedward' ) ) ); ?></span><span><?php echo esc_html( le_option( 'footer_location', __( 'London', 'lewisedward' ) ) ); ?>, UK</span></span></div>
+		<div class="g-cell g-footer__legalcell"><span class="g-footer__legal g-mono"><span>&copy; <?php echo esc_html( date_i18n( 'Y' ) ); ?> <?php echo esc_html( le_option( 'footer_copyright_name', __( 'Lewis Edward Ltd', 'lewisedward' ) ) ); ?></span><span><?php echo esc_html( le_option( 'footer_location', __( 'London', 'lewisedward' ) ) ); ?>, UK</span></span><span class="g-footer__regoffice g-mono"><?php esc_html_e( 'Reg. office: 71-75 Shelton St, London WC2H 9JQ', 'lewisedward' ); ?></span></div>
 		<a class="g-cell" href="mailto:hello@lewisedward.com">hello@lewisedward.com</a>
 		<a class="g-cell" href="<?php echo esc_url( $le_linkedin ); ?>" target="_blank" rel="noopener noreferrer"><span>LinkedIn</span><?php echo le_grid_arrow_diag(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></a>
 		<div class="g-cell g-cell--split"><a href="<?php echo esc_url( home_url( '/privacy-policy/' ) ); ?>"><?php esc_html_e( 'Privacy policy', 'lewisedward' ); ?></a><button class="g-footer__cookies" type="button" data-consent-open><?php esc_html_e( 'Cookie settings', 'lewisedward' ); ?></button></div>
-	</div>
-	<div class="g-row g-footer__reg">
-		<div class="g-cell g-mono"><?php esc_html_e( 'Registered office: 71-75 Shelton Street, London WC2H 9JQ', 'lewisedward' ); ?></div>
 	</div>
 </footer>

@@ -1499,3 +1499,14 @@ add_action( 'init', function () {
 	}
 	update_option( 'le_migration_purge_price_label_2026_11', gmdate( 'c' ), false );
 }, 40 );
+
+/** 2026-11-07: purge once so cached pages pick up the footer address move. */
+add_action( 'init', function () {
+	if ( get_option( 'le_migration_purge_footer_address_2026_11' ) ) {
+		return;
+	}
+	if ( has_action( 'litespeed_purge_all' ) ) {
+		do_action( 'litespeed_purge_all' );
+	}
+	update_option( 'le_migration_purge_footer_address_2026_11', gmdate( 'c' ), false );
+}, 40 );
