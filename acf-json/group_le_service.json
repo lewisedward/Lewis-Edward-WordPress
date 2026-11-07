@@ -403,6 +403,390 @@
             ]
         },
         {
+            "aria-label": "",
+            "instructions": "Defaults to \"What it costs\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "key": "field_sv_cost_eyebrow",
+            "label": "Cost — eyebrow",
+            "name": "svc_cost_eyebrow",
+            "type": "text",
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "aria-label": "",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "key": "field_sv_cost_title",
+            "label": "Cost — heading",
+            "name": "service_cost_title",
+            "type": "text",
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "aria-label": "",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "key": "field_sv_cost_intro",
+            "label": "Cost — intro",
+            "name": "service_cost_intro",
+            "type": "textarea",
+            "default_value": "",
+            "maxlength": "",
+            "rows": 3,
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "aria-label": "",
+            "instructions": "Leave empty to hide the cost section.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "key": "field_sv_cost_rows",
+            "label": "Cost — price rows",
+            "name": "service_cost_rows",
+            "type": "repeater",
+            "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "",
+            "button_label": "Add price row",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "aria-label": "",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "key": "field_sv_cost_label",
+                    "label": "Project / plan",
+                    "name": "label",
+                    "type": "text",
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_sv_cost_rows"
+                },
+                {
+                    "aria-label": "",
+                    "instructions": "e.g. from £5,000",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "key": "field_sv_cost_price",
+                    "label": "Price",
+                    "name": "price",
+                    "type": "text",
+                    "default_value": "",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": "",
+                    "parent_repeater": "field_sv_cost_rows"
+                },
+                {
+                    "aria-label": "",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "key": "field_sv_cost_desc",
+                    "label": "What it covers",
+                    "name": "description",
+                    "type": "textarea",
+                    "default_value": "",
+                    "maxlength": "",
+                    "rows": 3,
+                    "placeholder": "",
+                    "new_lines": "",
+                    "parent_repeater": "field_sv_cost_rows"
+                }
+            ]
+        },
+        {
+            "aria-label": "",
+            "instructions": "e.g. what moves the price.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "key": "field_sv_cost_note",
+            "label": "Cost — note under the rows",
+            "name": "service_cost_note",
+            "type": "textarea",
+            "default_value": "",
+            "maxlength": "",
+            "rows": 3,
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "aria-label": "",
+            "instructions": "Optional text under the process heading.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "key": "field_sv_process_intro",
+            "label": "Process — intro",
+            "name": "svc_process_intro",
+            "type": "textarea",
+            "default_value": "",
+            "maxlength": "",
+            "rows": 3,
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "aria-label": "",
+            "instructions": "Defaults to \"Recent projects\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "key": "field_sv_proof_eyebrow",
+            "label": "Proof — eyebrow",
+            "name": "svc_proof_eyebrow",
+            "type": "text",
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "aria-label": "",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "key": "field_sv_proof_title",
+            "label": "Proof — heading",
+            "name": "service_proof_title",
+            "type": "text",
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "aria-label": "",
+            "instructions": "Leave empty to hide. Two to four projects with a specific line each.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "key": "field_sv_proof",
+            "label": "Proof — projects",
+            "name": "service_proof",
+            "type": "repeater",
+            "layout": "block",
+            "pagination": 0,
+            "min": 0,
+            "max": 0,
+            "collapsed": "",
+            "button_label": "Add project",
+            "rows_per_page": 20,
+            "sub_fields": [
+                {
+                    "aria-label": "",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "key": "field_sv_proof_work",
+                    "label": "Case study",
+                    "name": "work",
+                    "type": "post_object",
+                    "post_type": [
+                        "work"
+                    ],
+                    "post_status": "",
+                    "taxonomy": "",
+                    "return_format": "id",
+                    "multiple": 0,
+                    "allow_null": 1,
+                    "bidirectional": 0,
+                    "ui": 1,
+                    "bidirectional_target": [],
+                    "parent_repeater": "field_sv_proof"
+                },
+                {
+                    "aria-label": "",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "key": "field_sv_proof_line",
+                    "label": "One line on what we did",
+                    "name": "line",
+                    "type": "textarea",
+                    "default_value": "",
+                    "maxlength": "",
+                    "rows": 3,
+                    "placeholder": "",
+                    "new_lines": "",
+                    "parent_repeater": "field_sv_proof"
+                }
+            ]
+        },
+        {
+            "aria-label": "",
+            "instructions": "Defaults to \"Who you'll work with\".",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "key": "field_sv_team_eyebrow",
+            "label": "Team — eyebrow",
+            "name": "svc_team_eyebrow",
+            "type": "text",
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "aria-label": "",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "key": "field_sv_team_title",
+            "label": "Team — heading",
+            "name": "service_team_title",
+            "type": "text",
+            "default_value": "",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "aria-label": "",
+            "instructions": "Leave empty to hide the section.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "key": "field_sv_team_text",
+            "label": "Team — text",
+            "name": "service_team_text",
+            "type": "textarea",
+            "default_value": "",
+            "maxlength": "",
+            "rows": 3,
+            "placeholder": "",
+            "new_lines": ""
+        },
+        {
+            "aria-label": "",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "key": "field_sv_team_image",
+            "label": "Team — photo",
+            "name": "service_team_image",
+            "type": "image",
+            "return_format": "id",
+            "library": "all",
+            "min_width": "",
+            "min_height": "",
+            "min_size": "",
+            "max_width": "",
+            "max_height": "",
+            "max_size": "",
+            "mime_types": "",
+            "preview_size": "medium"
+        },
+        {
             "key": "field_sv_faq",
             "label": "FAQ",
             "name": "service_faq",
@@ -1032,5 +1416,5 @@
     "display_title": "",
     "allow_ai_access": false,
     "ai_description": "",
-    "modified": 1793913378
+    "modified": 1794054916
 }

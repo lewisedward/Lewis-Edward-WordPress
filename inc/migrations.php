@@ -1379,3 +1379,112 @@ add_action( 'init', function () {
 	}
 	update_option( 'le_migration_service_titles_2026_11_06', gmdate( 'c' ) . ' ' . implode( ' | ', $log ), false );
 }, 20 );
+
+/**
+ * 2026-11-07: rewritten copy for /services/web-design/ and
+ * /services/website-support/ (cost, timeline, proof and team sections plus
+ * new hero, features, benefits and FAQs). Copy lives in
+ * inc/data/service-rewrite-2026-11.json. The previous field values are kept
+ * in option le_migration_service_rewrite_2026_11_backup so they can be put back.
+ */
+add_action( 'init', function () {
+	if ( get_option( 'le_migration_service_rewrite_2026_11' ) || ! function_exists( 'update_field' ) ) {
+		return;
+	}
+	$file = LE_DIR . '/inc/data/service-rewrite-2026-11.json';
+	$data = file_exists( $file ) ? json_decode( (string) file_get_contents( $file ), true ) : null; // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+	if ( ! is_array( $data ) ) {
+		update_option( 'le_migration_service_rewrite_2026_11', gmdate( 'c' ) . ' no-data', false );
+		return;
+	}
+	$id_of = static function ( $slug, $type ) {
+		$p = get_page_by_path( $slug, OBJECT, $type );
+		return ( $p && 'publish' === $p->post_status ) ? (int) $p->ID : 0;
+	};
+	$testimonial_ids = static function ( $names ) {
+		$all = get_posts( array( 'post_type' => 'testimonial', 'post_status' => 'publish', 'numberposts' => -1 ) );
+		$ids = array();
+		foreach ( (array) $names as $n ) {
+			foreach ( $all as $t ) {
+				$hay = $t->post_title . ' ' . (string) get_field( 'testimonial_author', $t->ID );
+				if ( false !== stripos( $hay, $n ) ) {
+					$ids[] = (int) $t->ID;
+					break;
+				}
+			}
+		}
+		return $ids;
+	};
+	$keep = array( 'service_headline', 'service_intro', 'whats_included_title', 'service_detail_features', 'service_process', 'service_benefits', 'service_faq', 'service_related_work', 'service_related', 'service_testimonials', 'svc_process_eyebrow', 'svc_process_title', 'svc_process_note', 'svc_benefits_eyebrow', 'svc_benefits_title', 'svc_benefits_intro' );
+	$backup = array();
+	$log    = array();
+	foreach ( $data as $slug => $s ) {
+		$id = $id_of( $slug, 'service' );
+		if ( ! $id ) {
+			$log[] = $slug . ':missing';
+			continue;
+		}
+		foreach ( $keep as $k ) {
+			$backup[ $slug ][ $k ] = get_field( $k, $id, false );
+		}
+		update_field( 'field_sv_headline', $s['headline'], $id );
+		update_field( 'field_sv_intro', $s['intro'], $id );
+		update_field( 'field_6a8d88e295d9a', $s['included_title'], $id );
+		update_field( 'field_sv_dfeatures', array_map( static function ( $f ) {
+			return array( 'field_sv_df_title' => $f[0], 'field_sv_df_desc' => $f[1] );
+		}, $s['features'] ), $id );
+		update_field( 'field_sv_cost_eyebrow', $s['cost_eyebrow'] ?? '', $id );
+		update_field( 'field_sv_cost_title', $s['cost_title'], $id );
+		update_field( 'field_sv_cost_intro', $s['cost_intro'], $id );
+		update_field( 'field_sv_cost_rows', array_map( static function ( $r ) {
+			return array( 'field_sv_cost_label' => $r[0], 'field_sv_cost_price' => $r[1], 'field_sv_cost_desc' => $r[2] );
+		}, $s['cost_rows'] ), $id );
+		update_field( 'field_sv_cost_note', $s['cost_note'], $id );
+		update_field( 'field_svl_process_eyebrow', $s['process_eyebrow'], $id );
+		update_field( 'field_svl_process_title', $s['process_title'], $id );
+		update_field( 'field_svl_process_note', $s['process_note'], $id );
+		update_field( 'field_sv_process_intro', $s['process_intro'], $id );
+		update_field( 'field_sv_process', array_map( static function ( $p ) {
+			return array( 'field_sv_ps_step' => $p[0], 'field_sv_ps_title' => $p[1], 'field_sv_ps_desc' => $p[2] );
+		}, $s['process'] ), $id );
+		update_field( 'field_sv_proof_eyebrow', $s['proof_eyebrow'], $id );
+		update_field( 'field_sv_proof_title', $s['proof_title'], $id );
+		$proof = array();
+		foreach ( $s['proof'] as $p ) {
+			$wid = $id_of( $p[0], 'work' );
+			if ( $wid ) {
+				$proof[] = array( 'field_sv_proof_work' => $wid, 'field_sv_proof_line' => $p[1] );
+			}
+		}
+		update_field( 'field_sv_proof', $proof, $id );
+		update_field( 'field_svl_benefits_eyebrow', $s['benefits_eyebrow'], $id );
+		update_field( 'field_svl_benefits_title', $s['benefits_title'], $id );
+		update_field( 'field_svl_benefits_intro', $s['benefits_intro'], $id );
+		update_field( 'field_sv_benefits', array_map( static function ( $b ) {
+			return array( 'field_sv_b_item' => $b );
+		}, $s['benefits'] ), $id );
+		update_field( 'field_sv_team_title', $s['team_title'], $id );
+		update_field( 'field_sv_team_text', $s['team_text'], $id );
+		update_field( 'field_sv_faq', array_map( static function ( $q ) {
+			return array( 'field_sv_faq_q' => $q[0], 'field_sv_faq_a' => $q[1] );
+		}, $s['faq'] ), $id );
+		update_field( 'field_sv_related_work', array_values( array_filter( array_map( static function ( $w ) use ( $id_of ) {
+			return $id_of( $w, 'work' );
+		}, $s['work'] ) ) ), $id );
+		update_field( 'field_sv_related', array_values( array_filter( array_map( static function ( $r ) use ( $id_of ) {
+			return $id_of( $r, 'service' );
+		}, $s['related'] ) ) ), $id );
+		$tids = $testimonial_ids( $s['testimonials'] );
+		if ( $tids ) {
+			update_field( 'field_sv_testimonials', $tids, $id );
+		}
+		wp_update_post( array( 'ID' => $id ) ); // Refresh modified date and Yoast's indexable.
+		$log[] = $slug . ':' . $id . ' proof=' . count( $proof ) . ' testimonials=' . implode( ',', $tids );
+	}
+	update_option( 'le_migration_service_rewrite_2026_11_backup', $backup, false );
+	if ( has_action( 'litespeed_purge_all' ) ) {
+		do_action( 'litespeed_purge_all' );
+		$log[] = 'litespeed-purged';
+	}
+	update_option( 'le_migration_service_rewrite_2026_11', gmdate( 'c' ) . ' ' . implode( ' | ', $log ), false );
+}, 30 );

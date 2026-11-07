@@ -85,6 +85,14 @@
 .skin-grid .g-li__desc p + p { margin-top: 0.8em; }
 .skin-grid .g-li__go { justify-self: end; align-self: center; color: hsl(var(--foreground) / 0.4); transition: color 0.2s ease, transform 0.25s ease; }
 .skin-grid a.g-li:hover .g-li__go { color: var(--g-lime); transform: translate(3px, -3px); }
+.skin-grid .g-li__price { display: block; margin-top: 10px; font-size: 13px; letter-spacing: 0.04em; }
+.skin-grid .g-li--note { grid-template-columns: 1fr; }
+.skin-grid .g-li--note .g-li__desc { color: hsl(var(--foreground) / 0.6); }
+.skin-grid .g-sec--proof .g-li__desc { display: block; margin-top: 10px; max-width: 60ch; }
+.skin-grid .g-li--team { grid-template-columns: 160px 1fr; gap: 32px; align-items: center; }
+.skin-grid .g-li--team:not(:has(.g-li__media)) { grid-template-columns: 1fr; }
+.skin-grid .g-li--team .g-li__desc { font-size: 17px; line-height: 1.6; max-width: 60ch; }
+.skin-grid .g-li__img { display: block; width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; filter: grayscale(1); }
 .skin-grid .g-li__tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
 
 /* Chips */
@@ -326,6 +334,8 @@
 	.skin-grid .g-li, .skin-grid .g-li--2, .skin-grid .g-li--3 { grid-template-columns: 28px 1fr; gap: 12px 16px; padding: 22px 20px; }
 	.skin-grid .g-li__go { display: none; }
 	.skin-grid .g-li__title { font-size: 20px; }
+	.skin-grid .g-li--team, .skin-grid .g-li--note { grid-template-columns: 1fr; gap: 20px; }
+	.skin-grid .g-li--team .g-li__media { max-width: 140px; }
 	.skin-grid .g-acc summary { grid-template-columns: 28px 1fr 16px; gap: 16px; padding: 18px 20px; }
 	.skin-grid .g-acc__q { font-size: 17px; }
 	.skin-grid .g-acc__a { padding: 0 20px 22px 64px; font-size: 14px; }

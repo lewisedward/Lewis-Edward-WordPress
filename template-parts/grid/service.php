@@ -27,6 +27,11 @@ $sv_relwk    = le_field( 'service_related_work', $sv_id );
 $sv_relwk    = is_array( $sv_relwk ) ? $sv_relwk : array();
 $sv_rel      = le_field( 'service_related', $sv_id );
 $sv_rel      = is_array( $sv_rel ) ? $sv_rel : array();
+$sv_cost     = le_field( 'service_cost_rows', $sv_id );
+$sv_cost     = is_array( $sv_cost ) ? $sv_cost : array();
+$sv_proof    = le_field( 'service_proof', $sv_id );
+$sv_proof    = is_array( $sv_proof ) ? $sv_proof : array();
+$sv_team     = trim( (string) le_field( 'service_team_text', $sv_id ) );
 $sv_pid      = static function ( $x ) {
 	return is_object( $x ) ? (int) $x->ID : (int) $x;
 };
@@ -73,12 +78,51 @@ $svc_hero_cta = le_link( 'svc_hero_cta', '/contact', __( 'Start a project', 'lew
 	</section>
 	<?php endif; ?>
 
+	<?php if ( $sv_cost ) : ?>
+	<section class="g-row g-sec g-sec--cost" aria-label="<?php esc_attr_e( 'What it costs', 'lewisedward' ); ?>">
+		<?php le_grid_intro( array( 'label' => le_field( 'svc_cost_eyebrow', $sv_id, __( 'What it costs', 'lewisedward' ) ), 'title' => esc_html( le_field( 'service_cost_title', $sv_id, __( 'Pricing.', 'lewisedward' ) ) ), 'text' => le_field( 'service_cost_intro', $sv_id ), 'class' => 'g-sec__sticky' ) ); ?>
+		<div class="g-cell g-dark g-sec__body">
+			<?php foreach ( $sv_cost as $i => $row ) : $cl = trim( (string) ( $row['label'] ?? '' ) ); if ( '' === $cl ) { continue; } ?>
+			<div class="g-li g-li--3 g-li--price">
+				<span class="g-li__num g-mono"><?php echo esc_html( str_pad( (string) ( $i + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
+				<h3 class="g-li__title"><?php echo esc_html( $cl ); ?><?php if ( ! empty( $row['price'] ) ) : ?> <span class="g-li__price g-mono g-accent"><?php echo esc_html( $row['price'] ); ?></span><?php endif; ?></h3>
+				<?php if ( ! empty( $row['description'] ) ) : ?><p class="g-li__desc"><?php echo esc_html( $row['description'] ); ?></p><?php endif; ?>
+			</div>
+			<?php endforeach; ?>
+			<?php $sv_cost_note = trim( (string) le_field( 'service_cost_note', $sv_id ) ); if ( $sv_cost_note ) : ?>
+			<div class="g-li g-li--note"><p class="g-li__desc"><?php echo esc_html( $sv_cost_note ); ?></p></div>
+			<?php endif; ?>
+		</div>
+	</section>
+	<?php endif; ?>
+
 	<?php if ( $sv_proc ) : ?>
 	<section class="g-row g-sec" aria-label="<?php esc_attr_e( 'Our approach', 'lewisedward' ); ?>">
-		<?php le_grid_intro( array( 'label' => le_field( 'svc_process_eyebrow', $sv_id, __( 'Our approach', 'lewisedward' ) ), 'count' => str_pad( (string) count( $sv_proc ), 2, '0', STR_PAD_LEFT ) . ' · ' . le_field( 'svc_process_note', $sv_id, __( 'Step by step', 'lewisedward' ) ), 'title' => esc_html( le_field( 'svc_process_title', $sv_id, __( 'How we deliver.', 'lewisedward' ) ) ), 'class' => 'g-sec__sticky' ) ); ?>
+		<?php le_grid_intro( array( 'label' => le_field( 'svc_process_eyebrow', $sv_id, __( 'Our approach', 'lewisedward' ) ), 'count' => str_pad( (string) count( $sv_proc ), 2, '0', STR_PAD_LEFT ) . ' · ' . le_field( 'svc_process_note', $sv_id, __( 'Step by step', 'lewisedward' ) ), 'title' => esc_html( le_field( 'svc_process_title', $sv_id, __( 'How we deliver.', 'lewisedward' ) ) ), 'text' => le_field( 'svc_process_intro', $sv_id ), 'class' => 'g-sec__sticky' ) ); ?>
 		<div class="g-cell <?php echo esc_attr( le_grid_cells_class( count( $sv_proc ) ) ); ?>">
 			<?php foreach ( $sv_proc as $i => $row ) : $st = trim( (string) ( $row['title'] ?? '' ) ); if ( '' === $st ) { continue; } ?>
 			<div class="g-step"><span class="g-step__num"><?php echo esc_html( ! empty( $row['step'] ) ? $row['step'] : str_pad( (string) ( $i + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span><h3 class="g-step__title"><?php echo esc_html( $st ); ?></h3><?php if ( ! empty( $row['description'] ) ) : ?><p class="g-step__desc"><?php echo esc_html( $row['description'] ); ?></p><?php endif; ?></div>
+			<?php endforeach; ?>
+		</div>
+	</section>
+	<?php endif; ?>
+
+	<?php
+	$sv_proof = array_values( array_filter( $sv_proof, static function ( $row ) use ( $sv_pid ) {
+		$wid = ! empty( $row['work'] ) ? $sv_pid( $row['work'] ) : 0;
+		return $wid && 'publish' === get_post_status( $wid );
+	} ) );
+	if ( $sv_proof ) :
+		?>
+	<section class="g-row g-sec g-sec--proof" aria-label="<?php esc_attr_e( 'Recent projects', 'lewisedward' ); ?>">
+		<?php le_grid_intro( array( 'label' => le_field( 'svc_proof_eyebrow', $sv_id, __( 'Recent projects', 'lewisedward' ) ), 'count' => str_pad( (string) count( $sv_proof ), 2, '0', STR_PAD_LEFT ), 'title' => esc_html( le_field( 'service_proof_title', $sv_id, __( 'Proof, not promises.', 'lewisedward' ) ) ), 'class' => 'g-sec__sticky' ) ); ?>
+		<div class="g-cell g-dark g-sec__body">
+			<?php foreach ( $sv_proof as $i => $row ) : $wid = $sv_pid( $row['work'] ); ?>
+			<a class="g-li g-li--2" href="<?php echo esc_url( get_permalink( $wid ) ); ?>">
+				<span class="g-li__num g-mono"><?php echo esc_html( str_pad( (string) ( $i + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
+				<span><h3 class="g-li__title g-li__title--lg"><?php echo esc_html( get_the_title( $wid ) ); ?></h3><?php if ( ! empty( $row['line'] ) ) : ?><span class="g-li__desc"><?php echo esc_html( $row['line'] ); ?></span><?php endif; ?></span>
+				<span class="g-li__go"><?php echo le_grid_arrow_diag(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
+			</a>
 			<?php endforeach; ?>
 		</div>
 	</section>
@@ -92,6 +136,18 @@ $svc_hero_cta = le_link( 'svc_hero_cta', '/contact', __( 'Start a project', 'lew
 			<li><?php echo esc_html( $b ); ?></li>
 			<?php endforeach; ?>
 		</ul>
+	</section>
+	<?php endif; ?>
+
+	<?php if ( $sv_team ) : $sv_team_img = (int) le_field( 'service_team_image', $sv_id ); ?>
+	<section class="g-row g-sec g-sec--team" aria-label="<?php esc_attr_e( "Who you'll work with", 'lewisedward' ); ?>">
+		<?php le_grid_intro( array( 'label' => le_field( 'svc_team_eyebrow', $sv_id, __( "Who you'll work with", 'lewisedward' ) ), 'title' => esc_html( le_field( 'service_team_title', $sv_id, __( 'The people doing the work.', 'lewisedward' ) ) ), 'class' => 'g-sec__sticky' ) ); ?>
+		<div class="g-cell g-dark g-sec__body">
+			<div class="g-li g-li--team">
+				<?php if ( $sv_team_img ) : ?><div class="g-li__media"><?php echo wp_get_attachment_image( $sv_team_img, 'medium', false, array( 'loading' => 'lazy', 'class' => 'g-li__img' ) ); ?></div><?php endif; ?>
+				<div class="g-li__desc"><?php echo wp_kses_post( wpautop( $sv_team ) ); ?></div>
+			</div>
+		</div>
 	</section>
 	<?php endif; ?>
 

@@ -1,0 +1,131 @@
+{
+  "web-design": {
+    "headline": "WordPress web design company in London",
+    "intro": "We design and build bespoke WordPress websites for organisations that need more than a template, from Lord's and ArtsEd to local businesses and growing brands. The same small London team takes your site from first wireframe to launch, so nothing gets lost in handover, and you get a site your team can update without calling a developer. Fixed-price quotes from £5,000.",
+    "included_title": "WordPress web design tailored to your brand.",
+    "features": [
+      ["Wireframes & prototypes", "Clickable prototypes and wireframes, so you can try the site before a line of code is written."],
+      ["UI & UX design", "Clear layouts and journeys designed around what your visitors need to do: book, buy, enquire or find out more."],
+      ["Responsive design", "Layouts that work properly on every screen, from large desktops to phones, tested on real devices."],
+      ["Brand systems", "Type, colour and a component library that keep every page consistent as the site grows."],
+      ["Redesigns", "A fresh design for an existing WordPress site, keeping your content, URLs and rankings intact."],
+      ["Motion & interaction", "Purposeful animation that guides people through the page, like the scroll-driven story we built for Lord's."]
+    ],
+    "cost_title": "What a WordPress website costs.",
+    "cost_intro": "Every site is quoted at a fixed price after a short scoping call, so you know the cost before we start. As a guide:",
+    "cost_rows": [
+      ["Focused brochure site", "from £5,000", "A bespoke design and build for a smaller site with a handful of page templates, contact forms and the essentials done properly."],
+      ["Larger content-led site", "from £8,000", "More page templates and content types, such as news, events, case studies or a resources library, plus more content to move across."],
+      ["Complex build", "from £15,000", "Bookings, memberships, payments, e-commerce or integrations with other systems, built around how your organisation works."]
+    ],
+    "cost_note": "What moves the price: the number of unique page templates, custom functionality, how much content we migrate, and whether we write the copy. Design, build, testing and launch are all included in the quote.",
+    "process_eyebrow": "Timeline",
+    "process_title": "From first call to launch.",
+    "process_note": "4-8 weeks",
+    "process_intro": "Most projects launch in 4-8 weeks from signing off the scope. When the deadline is tight we can move faster: ArtsEd's rebrand relaunch went live after around a week of build time.",
+    "process": [
+      ["01", "Discovery & scope", "We learn about your audience, goals and competitors, then send a written scope and a fixed price."],
+      ["02", "Wireframes & design", "Wireframes first, then full designs in Figma for desktop and mobile. Unlimited revisions until you're happy."],
+      ["03", "Build", "A hand-coded WordPress theme with flexible sections, so your team can build new pages from the same blocks."],
+      ["04", "Test & launch", "Cross-browser and device testing, redirects from your old URLs, speed and accessibility checks, then launch and training."]
+    ],
+    "proof_eyebrow": "Recent projects",
+    "proof_title": "Recent WordPress web design projects.",
+    "proof": [
+      ["lords-cricket-ground", "A cinematic partnerships microsite for MCC, with a heritage timeline from 1787, an interactive global reach map and scroll-driven animation."],
+      ["vauxhall-one", "A brand-new design and custom build for the Vauxhall BID, with an interactive area map, events calendar and business directory."],
+      ["classic-shoe-repairs", "A full website design and bespoke build with 15+ service pages, a before/after portfolio and a custom CRM for quotes and payments."]
+    ],
+    "benefits_eyebrow": "Why work with us",
+    "benefits_title": "Why clients choose us.",
+    "benefits_intro": "You work directly with the people designing and building your site, with a fixed price agreed before we start.",
+    "benefits": [
+      "You work with the people who design and build your site, start to finish",
+      "Fixed prices and honest timelines, agreed before we start",
+      "Unlimited design revisions",
+      "Figma source files included with every project",
+      "Accessibility-considered design (WCAG 2.1 AA)",
+      "Your team can edit and add pages without a developer",
+      "Support, hosting and same-day fixes after launch, if you want them"
+    ],
+    "team_title": "The people doing the work.",
+    "team_text": "I'm Lewis, and I've been designing and building WordPress websites since 2011. I'm hands-on with every project, working alongside a small team of trusted developers, so you deal directly with the people doing the work, not an account manager.",
+    "faq": [
+      ["How much does a WordPress website cost?", "Bespoke sites start from £5,000, larger content-led sites from around £8,000 and complex builds from around £15,000. Every project gets a fixed-price quote after a short scoping call, so there are no surprises."],
+      ["How long does a new website take?", "Most sites launch in 4-8 weeks from signing off the scope. We can work to tighter deadlines when needed."],
+      ["Do I own the website?", "Yes. You own the design, the code and the content, and you get the Figma files. You're free to host it anywhere."],
+      ["Can you redesign my existing WordPress site without losing our Google rankings?", "Yes. We keep your URLs where possible, set up redirects for any that change, and check everything in Google Search Console after launch."],
+      ["Will we be able to update the site ourselves?", "Yes. Every page is built from flexible sections your team can add, reorder and edit in WordPress, and we include training at launch."],
+      ["How many design revisions are included?", "We don't cap revisions. We keep going until you're happy with the designs, and in practice it rarely takes many."],
+      ["Can you work with our in-house team or brand agency?", "Yes. We often build from another agency's designs, or design within an existing brand system. We also offer a <a href=\"https://lewisedward.com/services/wordpress-agency-partnership/\">white-label service for agencies</a>."],
+      ["What happens after launch?", "You can manage the site yourself, or we can host and support it, with <a href=\"https://lewisedward.com/services/website-support/\">support plans</a> from £100 a month and same-day fixes."]
+    ],
+    "work": ["lords-cricket-ground", "vauxhall-one", "classic-shoe-repairs", "artsed", "storezar"],
+    "related": ["web-development", "wordpress-agency", "website-audits", "e-commerce", "website-support"],
+    "testimonials": ["Paul Hattam", "Isobel Pickles", "Ian Hoy"]
+  },
+  "website-support": {
+    "headline": "WordPress support & maintenance",
+    "intro": "Monthly WordPress support from a London team that keeps your site secure, up to date and working, with same-day fixes when something breaks. You get developers who know your site, a clear log of every task, and plans from £100 a month with no long-term contract.",
+    "included_title": "WordPress support that feels in-house.",
+    "features": [
+      ["Updates, done safely", "WordPress core, theme and plugin updates tested on a staging copy first, so an update never takes your live site down."],
+      ["Daily backups", "Automated daily backups stored off-site, with restores handled for you."],
+      ["Security monitoring", "Ongoing checks for malware and vulnerable plugins. If your site is ever hacked, we clean it up, usually the same day."],
+      ["Same-day fixes", "Bugs, broken layouts and errors fixed fast. Urgent issues are acknowledged within an hour during business hours."],
+      ["Content & new pages", "Page updates, new sections, banners and blog posts, built to match your existing site."],
+      ["New features", "Integrations, forms, booking and payment flows as your needs grow, like the Spektrix ticketing integration we built for Brighton & Hove Museums."]
+    ],
+    "cost_eyebrow": "Plans & pricing",
+    "cost_title": "Support plans.",
+    "cost_intro": "Every plan includes a full log of what we did and how long it took, and can be cancelled with one month's notice.",
+    "cost_rows": [
+      ["Maintenance plan", "from £100 a month", "Updates tested on staging, daily off-site backups and security monitoring. Changes and fixes are quoted or billed as extra time."],
+      ["Monthly or quarterly retainer", "quoted", "A set number of hours each month or quarter for changes, fixes and improvements. Unused time rolls over."],
+      ["Prepaid hours", "quoted", "Buy a block of hours and use them over 12 months for occasional changes. Top up when you need to."],
+      ["One-off support", "quoted upfront", "A single task or to-do list, priced before we start."]
+    ],
+    "cost_note": "",
+    "process_eyebrow": "How it works",
+    "process_title": "How support works.",
+    "process_note": "Step by step",
+    "process_intro": "",
+    "process": [
+      ["01", "Onboarding", "We take a full backup, review your site's plugins, hosting and security, and tell you about anything that needs fixing straight away."],
+      ["02", "Send us requests", "By email, through our support portal, or WhatsApp for out-of-hours emergencies. Every request gets a ticket so nothing gets lost."],
+      ["03", "We fix and log it", "Most bugs are fixed within 24 hours, often the same day. You see every task and the time it took."],
+      ["04", "Monthly upkeep", "Updates, backups and security checks run in the background, with a note of anything we spotted."]
+    ],
+    "proof_eyebrow": "Recent projects",
+    "proof_title": "Sites we look after.",
+    "proof": [
+      ["brighton-hove-museums", "Ongoing support and development since 2025 for the trust behind five of the city's venues, including a custom Spektrix booking and donation integration."],
+      ["artsed", "We rebuilt the site, cut the plugins from 60 to 25, and continue to support it, including the seat-naming fundraising tool."]
+    ],
+    "benefits_eyebrow": "Why work with us",
+    "benefits_title": "Why clients stay with us.",
+    "benefits_intro": "We keep clients through quality of service, not contracts.",
+    "benefits": [
+      "Developers who know your site, not a ticket queue",
+      "Same-day fixes for most issues",
+      "Updates tested on staging before they go live",
+      "No long-term contracts: one month's notice to cancel",
+      "Every task logged, so you see exactly where the time goes",
+      "Hosting, domains, DNS and email handled too, if you want"
+    ],
+    "team_title": "Who looks after your site.",
+    "team_text": "I'm Lewis, and I've been building and supporting WordPress sites since 2011. Support requests come to me and a small team of developers who know your site, so you never have to explain it from scratch.",
+    "faq": [
+      ["How much does WordPress support cost?", "Maintenance plans start from £100 a month, covering updates, daily backups and security monitoring. Extra time for changes is quoted upfront, and retainers, prepaid hours and one-off quotes are available too."],
+      ["What's included in a support plan?", "Every plan covers updates tested on staging, daily backups and security monitoring. On top of that we can include time each month for fixes, content changes and improvements, tailored to what your site needs."],
+      ["How quickly do you respond to urgent issues?", "Urgent issues are acknowledged within an hour during business hours (Mon-Fri, 8am-8pm). Most bugs are fixed within 24 hours, often the same day, and there's a WhatsApp line for out-of-hours emergencies."],
+      ["Can you support a site another agency built?", "Yes. We regularly take on WordPress sites built by other agencies. Brighton & Hove Museums came to us that way. We start with a review so we know exactly what we're working with."],
+      ["My site has been hacked. Can you help?", "Yes. We <a href=\"https://lewisedward.com/services/website-security/\">clean up hacked WordPress sites</a>, usually the same day, find out how they got in and close the gap. Then we keep it patched and monitored."],
+      ["Do you host the site as well?", "We can. Our managed WordPress hosting includes tech support, daily backups and green energy. We can also support sites on your existing hosting."],
+      ["Can I change or cancel my plan?", "Yes. Plans can be cancelled with one month's notice, and prepaid hours last 12 months. Some regulated clients, like financial services firms, prefer a formal contract, and we're happy to provide one."]
+    ],
+    "work": ["brighton-hove-museums", "artsed", "church-of-england", "lords-cricket-ground", "classic-shoe-repairs"],
+    "related": ["website-security", "web-hosting", "website-optimisation", "web-development", "website-training"],
+    "testimonials": ["Rob White", "Zena Kamgaing", "Celia Almeida"]
+  }
+}
