@@ -85,7 +85,7 @@ $pp      = le_journal_page_id();
 	 */
 	$jr_svc_map = array(
 		'web-design'      => array( 'web-design', 'wordpress-agency', 'website-support' ),
-		'web-development' => array( 'web-development', 'wordpress-development-agency', 'website-support' ),
+		'web-development' => array( 'web-development', 'wordpress-agency', 'website-support' ),
 		'ai'              => array( 'ai-development', 'web-development', 'wordpress-agency' ),
 		'industry'        => array( 'wordpress-agency', 'wordpress-agency-partnership', 'web-design' ),
 	);

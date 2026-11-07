@@ -38,6 +38,8 @@ function le_legacy_redirects() {
 		'/london-wordpress-and-ai-developers' => '/services/ai-development',
 		// 2026-10: the Lovable-era "story" page was folded into About (was indexed).
 		'/story' => '/about',
+		// 2026-11: development agency page merged into Web development.
+		'/services/wordpress-development-agency' => '/services/web-development',
 		'/charity-donations-for-wordpress' => '/services/e-commerce',
 		'/services/ecommerce' => '/services/e-commerce',
 		'/upgrade-to-https' => '/services/website-security',

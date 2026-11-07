@@ -1,0 +1,69 @@
+{
+  "web-development": {
+    "headline": "WordPress development agency in London",
+    "intro": "We're a small London team of senior WordPress developers who hand-code every theme, plugin and integration. Brands come to us for bespoke builds; creative agencies and in-house teams come to us when they need serious WordPress engineering without hiring for it. We've been building on WordPress since 2011, and the person who scopes your build is the person who builds it.",
+    "included_title": "WordPress development, done properly.",
+    "features": [
+      ["Bespoke theme development", "Every site is coded from your designs (or ours) into a clean, custom theme, with no bloated frameworks or unused options. Your team can edit almost everything from WordPress."],
+      ["Flexible content with ACF", "Structured, editable sections your team can add and rearrange, so new pages don't need a developer."],
+      ["Custom plugins", "Functionality built for your site, without the bloat, licence costs and security risks of third-party plugins."],
+      ["Integrations & APIs", "CRMs, payment gateways, booking and ticketing systems, HubSpot, Stripe, Teachable and custom APIs. If it has an endpoint, we've probably connected WordPress to it."],
+      ["WooCommerce development", "Custom shops, checkout flows and product logic that go well beyond off-the-shelf WooCommerce."],
+      ["Headless & performance", "Headless WordPress with React or Next.js when it's the right call, and serious Core Web Vitals work when it isn't. Fast either way."]
+    ],
+    "cost_eyebrow": "What it costs",
+    "cost_title": "What WordPress development costs.",
+    "cost_intro": "Every project gets a short written scope and a fixed price before we start.",
+    "cost_rows": [
+      ["Bespoke WordPress build", "from £5,000", "A custom theme from your designs or ours, flexible editable sections, testing and launch."],
+      ["Plugins & integrations", "quoted", "Custom plugins, API connections and booking or payment flows, scoped and priced upfront."],
+      ["Agency builds", "fixed price or day rate", "Builds from your agency's Figma files, white label if you prefer, priced per build or by the day."]
+    ],
+    "cost_note": "Larger builds with integrations, bookings or e-commerce typically start from £15,000.",
+    "process_eyebrow": "How we deliver",
+    "process_title": "From scope to launch.",
+    "process_note": "Fixed price",
+    "process_intro": "",
+    "process": [
+      ["01", "Scope & architecture", "We read the designs, the brief and the data, then write a short technical scope: templates, fields, integrations and hosting. Fixed price, dated plan."],
+      ["02", "Front-end build", "Designs are coded into responsive templates first, so you see the real thing in a browser early."],
+      ["03", "WordPress integration", "Templates become a theme, content becomes editable fields, and integrations are wired up and tested. You get a staging site from week one."],
+      ["04", "QA, launch & handover", "Cross-browser and device testing, speed and SEO checks, redirects, then launch. Every build comes with a month's bug guarantee, documentation and optional support."]
+    ],
+    "proof_eyebrow": "Recent projects",
+    "proof_title": "Recent WordPress development.",
+    "proof": [
+      ["brighton-hove-museums", "Replaced Spektrix's embedded widgets with a custom integration on the Spektrix API, so booking, basket and donations run as one journey."],
+      ["storezar", "One storefront combining WooCommerce, Paddle and Teachable, with custom API integrations syncing course catalogues in real time."],
+      ["classic-shoe-repairs", "A bespoke build plus a custom CRM payment tool with Stripe and PayPal for quotes and repairs."],
+      ["artsed", "A refactored rebuild that cut the plugin count from 60 to 25 and moved page templates to modular, editable sections."]
+    ],
+    "benefits_eyebrow": "Why work with us",
+    "benefits_title": "Why teams choose us.",
+    "benefits_intro": "Senior developers, hand-coded builds and a fixed price agreed before we start.",
+    "benefits": [
+      "Hand-coded themes by default, so there's no technical debt on day one",
+      "Senior developers only: the person scoping your build is the person building it",
+      "Integrations as standard: HubSpot, Stripe, WooCommerce, Teachable, custom APIs and AI tools",
+      "Core Web Vitals treated as a requirement, not a plugin",
+      "Git version control and a documented codebase you own",
+      "A month's bug guarantee after launch",
+      "Agency-friendly: Figma in, pixel-perfect WordPress out, white label if you want it"
+    ],
+    "team_title": "The people writing the code.",
+    "team_text": "I'm Lewis, and I've been building WordPress sites since 2011, for clients from easyJet to the Church of England. I scope and build alongside a small team of senior developers, so you always talk to the people writing the code.",
+    "faq": [
+      ["What does a WordPress development agency do?", "A WordPress development agency builds and engineers WordPress websites professionally: custom themes, plugins, integrations and performance, rather than assembling sites from templates. We do this for brands directly, and as a <a href=\"https://lewisedward.com/services/wordpress-agency-partnership/\">white-label partner for creative agencies</a>."],
+      ["How much does WordPress development cost?", "Bespoke builds start from £5,000 and go up with the number of templates, integrations and custom functionality. Agencies working with us regularly can have a day rate or a fixed price per build. We always quote a fixed figure after scoping."],
+      ["Do you build from our designs?", "Yes, that's most of what we do for agencies. Send Figma, Adobe XD, Sketch or PDFs and we'll code them pixel-perfect, including hover states, animations and the responsive breakpoints you haven't drawn yet."],
+      ["Can you work with our existing WordPress site?", "Yes. We review the codebase first and tell you honestly whether to extend it, refactor it or rebuild. Plenty of our work starts with someone else's theme."],
+      ["Do you use page builders like Elementor?", "We hand-code by default because it's faster, more secure and easier to maintain. If there's a good reason to use a page builder, we can."],
+      ["Do you do headless WordPress?", "When it's the right fit, yes: WordPress as the CMS with a React or Next.js front end. For most content sites a well-built classic theme is quicker to ship and easier to run, and we'll tell you which you need."],
+      ["Who owns the code?", "You do. Every build is delivered as a clean, documented theme in a Git repository you own, with no licence fees or lock-in."],
+      ["What about hosting?", "We can host it on our <a href=\"https://lewisedward.com/services/web-hosting/\">managed WordPress hosting</a>, which includes tech support and daily backups, or deploy to your existing host."]
+    ],
+    "work": ["brighton-hove-museums", "storezar", "classic-shoe-repairs", "artsed", "church-of-england"],
+    "related": ["wordpress-agency", "wordpress-agency-partnership", "api-integrations", "e-commerce", "website-support"],
+    "testimonials": ["Celia Almeida", "Tristan Parker", "Rob White"]
+  }
+}
