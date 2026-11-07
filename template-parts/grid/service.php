@@ -85,7 +85,7 @@ $svc_hero_cta = le_link( 'svc_hero_cta', '/contact', __( 'Start a project', 'lew
 			<?php foreach ( $sv_cost as $i => $row ) : $cl = trim( (string) ( $row['label'] ?? '' ) ); if ( '' === $cl ) { continue; } ?>
 			<div class="g-li g-li--3 g-li--price">
 				<span class="g-li__num g-mono"><?php echo esc_html( str_pad( (string) ( $i + 1 ), 2, '0', STR_PAD_LEFT ) ); ?></span>
-				<h3 class="g-li__title"><?php echo esc_html( $cl ); ?><?php if ( ! empty( $row['price'] ) ) : ?> <span class="g-li__price g-mono g-accent"><?php echo esc_html( $row['price'] ); ?></span><?php endif; ?></h3>
+				<h3 class="g-li__title"><?php echo esc_html( $cl ); ?><?php if ( ! empty( $row['price'] ) ) : ?> <span class="g-li__price g-mono"><?php echo esc_html( $row['price'] ); ?></span><?php endif; ?></h3>
 				<?php if ( ! empty( $row['description'] ) ) : ?><p class="g-li__desc"><?php echo esc_html( $row['description'] ); ?></p><?php endif; ?>
 			</div>
 			<?php endforeach; ?>

@@ -85,7 +85,7 @@
 .skin-grid .g-li__desc p + p { margin-top: 0.8em; }
 .skin-grid .g-li__go { justify-self: end; align-self: center; color: hsl(var(--foreground) / 0.4); transition: color 0.2s ease, transform 0.25s ease; }
 .skin-grid a.g-li:hover .g-li__go { color: var(--g-lime); transform: translate(3px, -3px); }
-.skin-grid .g-li__price { display: block; margin-top: 10px; font-size: 13px; letter-spacing: 0.04em; }
+.skin-grid .g-li__price { display: block; margin-top: 10px; font-size: 13px; letter-spacing: 0.04em; color: var(--g-lime); }
 .skin-grid .g-li--note { grid-template-columns: 1fr; }
 .skin-grid .g-li--note .g-li__desc { color: hsl(var(--foreground) / 0.6); }
 .skin-grid .g-sec--proof .g-li__desc { display: block; margin-top: 10px; max-width: 60ch; }
